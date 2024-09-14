@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
+  m_Name: Earth Rune
+  m_EditorClassIdentifier: 
+  actionName: 
+  actionDescription: 
+  actionImage: {fileID: 0}
+  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
+  maxUses: 0
+  type: 0
+  timing: 4
+  effects:
+  - rid: 9031231598746927113
+  references:
+    version: 2
+    RefIds:
+    - rid: 9031231598746927113
+      type: {class: Rune_Earth, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231598746927114
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        opposite: {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
+        damageEffect:
+          targetSelector:
+            rid: 9031231598746927127
+          owner: {fileID: 0}
+          target: {fileID: 0}
+          effectMultiplier: 1
+          damage: 0.1
+          ignoreFrames: 10
+          skipFlatDamageReduction: 1
+          preventTriggers: 0
+          damageTypes: 2
+          temporaryEffects: []
+        AoEBuff:
+          rid: 9031231598746927128
+        targeting:
+          rid: 9031231598746927130
+        orbitHoming: {fileID: 0}
+        trackingHoming: {fileID: 0}
+    - rid: 9031231598746927114
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231598746927127
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231598746927128
+      type: {class: PE_AoEBuff, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231598746927129
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        multiplier: 2
+    - rid: 9031231598746927129
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231598746927130
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+        radius: 0.1
+        angle: 180

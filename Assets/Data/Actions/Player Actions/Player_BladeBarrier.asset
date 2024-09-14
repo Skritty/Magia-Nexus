@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99361f67ec070d34baf993aa7a932169, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Player_BladeBarrier
   m_EditorClassIdentifier: 
   actionName: 
@@ -19,31 +19,7 @@ MonoBehaviour:
   maxUses: 0
   type: 0
   timing: 1
-  effect:
-    rid: 9031231465990389773
-  aoe:
-    rid: 9031231465990389772
+  effects: []
   references:
     version: 2
-    RefIds:
-    - rid: 9031231465990389772
-      type: {class: AoE_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        entitiesAffected: 5
-        radius: 5
-        angle: 180
-    - rid: 9031231465990389773
-      type: {class: PE_DefensiveBuff, ns: , asm: Assembly-CSharp}
-      data:
-        tick: 0
-        tickDuration: 50
-        maxStacks: 4
-        refreshDuration: 1
-        modifiers:
-          damageTypeModifiers:
-            serializedPairs:
-            - key: 14
-              value:
-                multiplier: 0.6
-                increased: 1
-                flat: 0
+    RefIds: []

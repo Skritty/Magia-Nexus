@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats:
+  - rid: 9031231598746927251
+  - rid: 9031231598746927416
   - rid: 9031231527144652968
   - rid: 9031231416496816165
   - rid: 9031231416496816166
@@ -116,3 +118,15 @@ MonoBehaviour:
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
+    - rid: 9031231598746927251
+      type: {class: Stat_Proxy, ns: , asm: Assembly-CSharp}
+      data:
+        owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        proxyOwner: {fileID: 0}
+    - rid: 9031231598746927416
+      type: {class: Stat_Team, ns: , asm: Assembly-CSharp}
+      data:
+        owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        team: 0

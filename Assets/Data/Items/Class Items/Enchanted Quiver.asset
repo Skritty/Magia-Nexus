@@ -28,8 +28,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 9031231481910394880
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
@@ -45,18 +43,18 @@ MonoBehaviour:
         trigger:
           rid: 9031231481910394881
         effect:
-          rid: 9031231527144652853
+          rid: 9031231598746927163
     - rid: 9031231481910394881
       type: {class: Trigger_ProjectileCreated, ns: , asm: Assembly-CSharp}
       data: 
     - rid: 9031231527144652808
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 9031231527144652853
-      type: {class: PE_HomeToTargetMoveDirection, ns: , asm: Assembly-CSharp}
+    - rid: 9031231598746927163
+      type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
       data:
         targetSelector:
-          rid: 9031231527144652854
+          rid: 9031231598746927164
         owner: {fileID: 0}
         target: {fileID: 0}
         effectMultiplier: 1
@@ -65,6 +63,6 @@ MonoBehaviour:
         maxStacks: 1
         refreshDuration: 1
         homingRateDegreesPerSecond: 140
-    - rid: 9031231527144652854
+    - rid: 9031231598746927164
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data: 

@@ -20,9 +20,13 @@ public class CreateEntity : Effect
     public override void Activate()
     {
         Entity spawnedEntity = GameObject.Instantiate(entity, spawnOnTarget? target.transform.position : owner.transform.position, Quaternion.identity);
+        spawnedEntity.gameObject.SetActive(true);
 
+        spawnedEntity.Stat<Stat_Proxy>().proxyOwner = owner;
         spawnedEntity.Stat<Stat_Team>().team = owner.Stat<Stat_Team>().team;
         spawnedEntity.Stat<Stat_Target>().target = target;
+        spawnedEntity.Stat<Stat_Movement>().facingDir = (target.transform.position - owner.transform.position).normalized;
+
         switch (entityType)
         {
             case EntityType.Basic:
@@ -32,14 +36,11 @@ public class CreateEntity : Effect
             case EntityType.Projectile:
                 {
                     spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, owner.Stat<Stat_Movement>().facingDir);
-                    spawnedEntity.Stat<Stat_Movement>().facingDir = (target.transform.position - owner.transform.position).normalized;
                     owner.Trigger<Trigger_ProjectileCreated>(spawnedEntity);
                     //original target, number of projectiles (done here), projectile speed,
                     //lifetime, damage modifiers, additional behavior
                     break;
                 }
         }
-
-        spawnedEntity.gameObject.SetActive(true);
     }
 }

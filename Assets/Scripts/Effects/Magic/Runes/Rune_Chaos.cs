@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Rune_Chaos : Rune
 {
+    [SerializeReference]
+    public PersistentEffect debuff;
+    [SerializeReference]
+    public PersistentEffect effectMultiBuff;
+
     public override void SpellEffect(Spell spell)
     {
-
+        effectMultiBuff.Create(spell, spell.entity);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)
@@ -45,7 +50,10 @@ public class Rune_Chaos : Rune
                     return this;
                 }
             default:
-                return this;
+                {
+                    spell.effect = debuff.Clone();
+                    return this;
+                }
         }
     }
 
@@ -85,7 +93,10 @@ public class Rune_Chaos : Rune
                     return this;
                 }
             default:
-                return this;
+                {
+                    spell.effect.targetSelector = spell.owner.Stat<Stat_Target>().targetingType;
+                    return this;
+                }
         }
     }
 }

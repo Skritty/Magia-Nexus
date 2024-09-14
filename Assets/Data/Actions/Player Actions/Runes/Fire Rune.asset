@@ -32,9 +32,10 @@ MonoBehaviour:
         owner: {fileID: 0}
         target: {fileID: 0}
         effectMultiplier: 1
+        opposite: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
         damageEffect:
           targetSelector:
-            rid: 9031231527144652816
+            rid: 9031231598746927133
           owner: {fileID: 0}
           target: {fileID: 0}
           effectMultiplier: 1
@@ -42,7 +43,7 @@ MonoBehaviour:
           ignoreFrames: 500
           skipFlatDamageReduction: 0
           preventTriggers: 0
-          damageTypes: 0
+          damageTypes: 32
           temporaryEffects: []
         targeting:
           rid: 9031231527144652819
@@ -50,15 +51,6 @@ MonoBehaviour:
           rid: 9031231527144652820
         effectMultiBuff:
           rid: 9031231527144652822
-    - rid: 9031231527144652816
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        entitiesAffected: 8
-        sortingMethod: 1
-        targetingRange: {x: 0, y: 1}
-        numberOfTargets: -1
-        radius: 2
-        angle: 180
     - rid: 9031231527144652817
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data: 
@@ -67,7 +59,6 @@ MonoBehaviour:
       data:
         entitiesAffected: 8
         sortingMethod: 1
-        targetingRange: {x: 0, y: 1}
         numberOfTargets: -1
         radius: 2
         angle: 180
@@ -101,5 +92,8 @@ MonoBehaviour:
         refreshDuration: 1
         multiplier: 1
     - rid: 9031231527144652823
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231598746927133
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data: 

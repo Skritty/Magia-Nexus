@@ -35,6 +35,7 @@ public class Invoke : Effect
         if (index == 0)
         {
             spell = new Spell(runes[index], runes);
+            spell.owner = owner;
             spells.Add(spell);
             PreassembleSpells(spells, spell, runes, ++index);
             return;

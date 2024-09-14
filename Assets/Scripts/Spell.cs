@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Spell
 {
+    public Entity owner;
     // For creating the spell entity
     public CreateEntity castSpell = new CreateEntity();
     public Entity entity;
@@ -16,8 +17,8 @@ public class Spell
 
     // What the spell entity does
     public Action spellAction;
-    public Effect spellEffect;
-    public int projectiles = 0;
+    public Effect effect;
+    public int targets = 1;
     public int lifetime = 125;
 
     public Spell(Rune effect, List<Rune> effectModifiers)
@@ -40,11 +41,9 @@ public class Spell
 
         GenerateSpellEffect();
         GenerateTargeting();
+        castSpell.source = this;
+        castSpell.owner = owner;
         castSpell.entity = entity;
-        if (projectiles > 0)
-        {
-            castSpell.entityType = CreateEntity.EntityType.Projectile;
-        }
 
         if (chainCast != null)
         {
@@ -59,7 +58,8 @@ public class Spell
     {
         effectRune.EffectFormula(this, null);
         EffectFormula(effectRune, 0);
-        spellAction.effects.Add(spellEffect);
+        effectRune.FinalizeEffectFormula(this);
+        spellAction.effects.Add(effect);
     }
 
     private void EffectFormula(Rune previousRune, int index)
@@ -70,7 +70,7 @@ public class Spell
 
     private void GenerateTargeting()
     {
-        shapeModifiers[0].EffectFormula(this, null);
+        shapeModifiers[0].TargetingFormula(this, null);
         TargetingFormula(shapeModifiers[0], 1);
     }
 

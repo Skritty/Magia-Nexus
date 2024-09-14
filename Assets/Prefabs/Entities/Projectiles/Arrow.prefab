@@ -87,6 +87,7 @@ MonoBehaviour:
   - rid: 9031231465990389760
   - rid: 9031231527144652843
   - rid: 9031231527144653381
+  - rid: 9031231598746927269
   references:
     version: 2
     RefIds:
@@ -105,7 +106,6 @@ MonoBehaviour:
         stunned: 0
         actionsPerTurn: 5
         repeatActions:
-        - {fileID: 11400000, guid: f238e70f3d70fd34ca88b4a741ffaf99, type: 2}
         - {fileID: 11400000, guid: 49243ad2f7fec714dbba9c0f8292f636, type: 2}
         actions: []
     - rid: 3492845359303229451
@@ -236,6 +236,12 @@ MonoBehaviour:
       data:
         owner: {fileID: 6345354840142092050}
         baseStat: 0
+    - rid: 9031231598746927269
+      type: {class: Stat_Proxy, ns: , asm: Assembly-CSharp}
+      data:
+        owner: {fileID: 6345354840142092050}
+        baseStat: 0
+        proxyOwner: {fileID: 0}
 --- !u!1 &7062227953910008534
 GameObject:
   m_ObjectHideFlags: 0

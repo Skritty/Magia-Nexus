@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Rune_Earth : Rune
 {
+    public DamageInstance damageEffect;
+    [SerializeReference]
+    public PersistentEffect AoEBuff;
+    [SerializeReference]
+    public Targeting targeting;
     public Action orbitHoming;
     public Action trackingHoming;
 
     public override void SpellEffect(Spell spell)
     {
-
+        AoEBuff.Create(spell, spell.entity);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)
@@ -49,6 +54,7 @@ public class Rune_Earth : Rune
                 }
             default:
                 {
+                    spell.effect = damageEffect.Clone();
                     return this;
                 }
         }
@@ -91,6 +97,9 @@ public class Rune_Earth : Rune
                 }
             default:
                 {
+                    spell.effect.targetSelector = targeting;
+                    spell.castSpell.entityType = CreateEntity.EntityType.Projectile;
+                    spell.entity.Stat<Stat_Movement>().movementSpeed = 10;
                     return this;
                 }
         }

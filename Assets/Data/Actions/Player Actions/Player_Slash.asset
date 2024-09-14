@@ -9,34 +9,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99361f67ec070d34baf993aa7a932169, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Player_Slash
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: Slash
   actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   type: 0
   timing: 1
-  effect:
-    rid: 9031231465990389769
-  aoe:
-    rid: 9031231465990389768
+  effects:
+  - rid: 9031231598746927104
   references:
     version: 2
     RefIds:
-    - rid: 9031231465990389768
-      type: {class: AoE_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        entitiesAffected: 8
-        radius: 1
-        angle: 30
-    - rid: 9031231465990389769
+    - rid: 9031231598746927104
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
+        targetSelector:
+          rid: 9031231598746927106
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
         damage: 7
+        ignoreFrames: 0
         skipFlatDamageReduction: 0
         preventTriggers: 0
-        damageTypes: 4
+        damageTypes: 0
         temporaryEffects: []
+    - rid: 9031231598746927106
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 8
+        sortingMethod: 1
+        targetingRange: {x: 0, y: 0}
+        numberOfTargets: 0
+        radius: 0
+        angle: 45

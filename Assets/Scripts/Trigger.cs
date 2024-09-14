@@ -82,4 +82,5 @@ public class Trigger_WhenHit : Trigger<Trigger_WhenHit> { }
 public class Trigger_OnDamageRecieved : Trigger<Trigger_OnDamageRecieved> { }
 public class Trigger_OnDie : Trigger<Trigger_OnDie> { }
 public class Trigger_OnProjectilePierce : Trigger<Trigger_OnProjectilePierce> { }
+public class Trigger_OnPersistantEffectApplied : Trigger<Trigger_OnPersistantEffectApplied> { }
 public class Trigger_OnSpellEffectApplied : Trigger<Trigger_OnSpellEffectApplied> { }

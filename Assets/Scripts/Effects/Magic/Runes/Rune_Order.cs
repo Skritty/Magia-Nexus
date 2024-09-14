@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class Rune_Order : Rune
 {
+    [SerializeReference]
+    public Targeting targeting;
+    [SerializeReference]
+    public PersistentEffect defensiveBuff;
+    [SerializeReference]
+    public PersistentEffect AoEBuff;
     public override void SpellEffect(Spell spell)
     {
-
+        AoEBuff.Create(spell, spell.entity);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)
@@ -46,6 +52,7 @@ public class Rune_Order : Rune
                 }
             default:
                 {
+                    spell.effect = defensiveBuff.Clone();
                     return this;
                 }
         }
@@ -88,6 +95,7 @@ public class Rune_Order : Rune
                 }
             default:
                 {
+                    spell.effect.targetSelector = targeting;
                     return this;
                 }
         }

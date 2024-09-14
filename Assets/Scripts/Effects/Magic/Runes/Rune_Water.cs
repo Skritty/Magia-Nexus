@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Rune_Water : Rune
 {
+    [SerializeReference]
+    public Targeting targeting;
     public int shotgunProjectileCountMulti = 5;
+    [SerializeReference]
+    public PersistentEffect movementSpeedDebuff;
+    [SerializeReference]
+    public PersistentEffect AoEBuff;
 
     public override void SpellEffect(Spell spell)
     {
-
+        AoEBuff.Create(spell, spell.entity);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)
@@ -47,7 +53,10 @@ public class Rune_Water : Rune
                     return this;
                 }
             default:
-                return this;
+                {
+                    spell.effect = movementSpeedDebuff.Clone();
+                    return this;
+                }
         }
     }
 
@@ -87,7 +96,10 @@ public class Rune_Water : Rune
                     return this;
                 }
             default:
-                return this;
+                {
+                    spell.effect.targetSelector = targeting;
+                    return this;
+                }
         }
     }
 }

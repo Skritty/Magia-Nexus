@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Rune_Fire : Rune
 {
     public DamageInstance damageEffect;
     [SerializeReference]
-    public Targeting_Radial targeting;
+    public Targeting targeting;
     [SerializeReference]
     public PersistentEffect AoEBuff;
     [SerializeReference]
@@ -14,50 +15,61 @@ public class Rune_Fire : Rune
 
     public override void SpellEffect(Spell spell)
     {
-
+        effectMultiBuff.Create(spell, spell.entity);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)
     {
+        /*if(combiningRune == null)
+        {
+            spell.effect = damageEffect.Clone();
+            return this;
+        }*/
+
         string name = combiningRune == null ? "" : combiningRune.GetType().Name;
         switch (name)
         {
             case nameof(Rune_Fire):
                 {
-                    effectMultiBuff.Create(spell, spell.entity);
+                    //(spell.effect as DamageInstance).damageTypes |= DamageType.Fire;
                     return this;
                 }
             case nameof(Rune_Water):
                 {
-                    
+                    //(spell.effect as DamageInstance).damageTypes |= DamageType.Cold;
                     return this;
                 }
             case nameof(Rune_Wind):
                 {
-                    
+                    //(spell.effect as DamageInstance).damageTypes |= DamageType.Lightning;
                     return this;
                 }
             case nameof(Rune_Earth):
                 {
-
+                    //(spell.effect as DamageInstance).damageTypes |=  DamageType.Slashing;
                     return this;
                 }
             case nameof(Rune_Order):
                 {
-                    
+                    //(spell.effect as DamageInstance).damageTypes |= DamageType.Bludgeoning;
                     return this;
                 }
             case nameof(Rune_Chaos):
                 {
-                    
+                    //(spell.effect as DamageInstance).damageTypes |= DamageType.Piercing;
                     return this;
                 }
             default:
                 {
-                    spell.spellEffect = damageEffect;
+                    spell.effect = damageEffect.Clone();
                     return this;
                 }
         }
+    }
+
+    public override void FinalizeEffectFormula(Spell spell)
+    {
+
     }
 
     public override Rune TargetingFormula(Spell spell, Rune combiningRune)
@@ -67,7 +79,7 @@ public class Rune_Fire : Rune
         {
             case nameof(Rune_Fire):
                 {
-                    AoEBuff.Create(spell, spell.entity);
+                    //AoEBuff.Create(spell, spell.entity);
                     return this;
                 }
             case nameof(Rune_Water):
@@ -97,7 +109,8 @@ public class Rune_Fire : Rune
                 }
             default:
                 {
-                    spell.spellEffect.targetSelector = targeting;
+                    spell.effect.targetSelector = targeting;
+                    spell.castSpell.spawnOnTarget = true;
                     return this;
                 }
         }

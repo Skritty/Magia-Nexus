@@ -36,7 +36,7 @@ public abstract class MultiTargeting : Targeting
 {
     public TargetFilter entitiesAffected = TargetFilter.Enemies;
     public TargetSorting sortingMethod = TargetSorting.None;
-    public Vector2 targetingRange;
+    //public Vector2 targetingRange;
     public int numberOfTargets;
 
     public override List<Entity> GetTargets(object source, Entity owner)
@@ -55,7 +55,7 @@ public abstract class MultiTargeting : Targeting
             {
                 targetType = TargetFilter.Enemies;
             }
-            else if(entity == owner)
+            else if(entity == owner || entity == owner.Stat<Stat_Proxy>().proxyOwner)
             {
                 targetType = TargetFilter.Self;
             }
@@ -66,9 +66,9 @@ public abstract class MultiTargeting : Targeting
             if (!entitiesAffected.HasFlag(targetType)) continue;
 
             // Is it within the targeting range?
-            float distance = Vector3.Distance(entity.transform.position, owner.transform.position);
-            if (distance < targetingRange.x * owner.Stat<Stat_Effect>().aoeMultiplier) continue;
-            if (distance > targetingRange.y * owner.Stat<Stat_Effect>().aoeMultiplier) continue;
+            //float distance = Vector3.Distance(entity.transform.position, owner.transform.position);
+            //if (distance < targetingRange.x * owner.Stat<Stat_Effect>().aoeMultiplier) continue;
+            //if (distance > targetingRange.y * owner.Stat<Stat_Effect>().aoeMultiplier) continue;
 
             targets.Add(entity);
         }

@@ -10,46 +10,58 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Player_Approach
+  m_Name: Chaos Rune
   m_EditorClassIdentifier: 
-  actionName: Approach
+  actionName: Chaos
   actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   type: 0
-  timing: 2
+  timing: 4
   effects:
-  - rid: 9031231598746927107
-  - rid: 9031231598746927109
+  - rid: 9031231598746927111
   references:
     version: 2
     RefIds:
-    - rid: 9031231598746927107
-      type: {class: Movement_DirectlyToTarget, ns: , asm: Assembly-CSharp}
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 9031231598746927111
+      type: {class: Rune_Chaos, ns: , asm: Assembly-CSharp}
       data:
         targetSelector:
-          rid: 9031231598746927108
+          rid: 9031231598746927123
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        opposite: {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
+        debuff:
+          rid: 9031231598746927131
+        effectMultiBuff:
+          rid: -2
+    - rid: 9031231598746927123
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231598746927131
+      type: {class: PE_DefensiveBuff, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231598746927132
         owner: {fileID: 0}
         target: {fileID: 0}
         effectMultiplier: 1
         tick: 0
-        tickDuration: -1
+        tickDuration: 125
         maxStacks: 1
         refreshDuration: 1
-    - rid: 9031231598746927108
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 9031231598746927109
-      type: {class: Move, ns: , asm: Assembly-CSharp}
-      data:
-        targetSelector:
-          rid: 9031231598746927110
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
-        movementSpeedMultiplier: 1
-        rotate: 0
-    - rid: 9031231598746927110
+        modifiers:
+          damageTypeModifiers:
+            serializedPairs:
+            - key: 254
+              value:
+                multiplier: 2
+                increased: 1
+                flat: 0
+    - rid: 9031231598746927132
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data: 

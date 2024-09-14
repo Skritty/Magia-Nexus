@@ -17,10 +17,10 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // Rune                  Shape                      Effect/Effect Modifier     Spell Modifier
 // Fire  (Damage):       Circle AoE (On Target),    Damage,                    Effect Multiplier
 // Water (CC):           Cone AoE,                  CC,                        Mana Consumption
-// Wind  (Utility):      Line AoE,                  Speed,                     AoE Size/Range/Number of Projectiles/Number of Targets
-// Earth (Combo):        Projectile,                Field Effects,             Duration (converts to DoT damage)
-// Order (Defensive):    Circle AoE (On You),       Buff (allies),             Defensive
-// Chaos (Persistent):   Auto Target,               Debuff,                    Persistent Effects
+// Wind  (Utility):      Line AoE,                  Utility,                   Number of Projectiles/Number of Targets
+// Earth (Combo):        Projectile,                Field Effects,             AoE Size
+// Order (Defensive):    Circle AoE (On You),       ,                          Auto Target nearby ally (starting with you)
+// Chaos (Persistent):   Auto Target,               Buff/Debuff,                    
 
 // Metaspellcasting:
 // Invoke: Start - mark AoEs/Targets, End - casts the spell
@@ -53,6 +53,7 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // Cleanse Ignite: order, order, order, fire
 // Damage Buff: order, fire, order
 // Chain Lightning: extend, fire, wind, wind, wind, chaos, invoke
+// Thunderclap Totems: earth, earth, fire, wind, invoke
 
 // Shapes
 // Fire + Fire = Bigger Circle
@@ -81,3 +82,45 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // Earth + Chaos = Perfect projectile target homing
 
 // Order + Chaos = Global (effect scales on number of targets)
+
+// ---------- EFFECT FORMULAS -----------
+// (Effect Rune + Effect Type Rune [ignored]) + (Secondary Formula Runes [damage type determination])
+
+// --Fire (damage type)--
+// Enemy Targeted:
+// (Damage Type Formula): Each damage type
+// Ally Targeted:
+// Healing
+
+// --Water (CC type)--
+// Enemy Targeted:
+// Slow
+// Knockback
+// Charm
+// Ally Targeted:
+
+// --Wind (Utility)--
+// Enemy Targeted:
+// Reveal
+// Inturrupt
+// Ally Targeted:
+// Invisibility
+// Movement/blink
+
+// --Earth (Field Effects)--
+// Fire: DoT Ground
+// Water: Ice Barrier (blocks movement and hits, Formed in AoE (or around the target))
+// Wind: Wind Barrier (blocks or enhances projectiles passing through the barrier, Formed in AoE (or around the target))
+// Earth: Totems (subtract the first two earth runes, totems have life and cast the remaining spell runes once a turn)
+// Order: Minion (has life, chases after enemies, and does an attack based off of other runes in the formula)
+// Chaos: 
+
+// --Order ()--
+// Enemy Targeted:
+// Cleanse Buffs
+// Ally Targeted:
+// Cleanse Debuffs/DoT
+
+// --Chaos (Buffs/Debuffs)--
+// Fire/Wind/Chaos: Damage Buff/Debuff (Buff added damage types, in tiers based on the number of each rune)
+// Earth/Water/Order: Defensive Buff/Debuff (Buff added defensive damage types, in tiers based on the number of each rune)

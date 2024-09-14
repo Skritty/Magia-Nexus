@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class Rune_Wind : Rune
 {
+    [SerializeReference]
+    public Targeting targeting;
+    [SerializeReference]
+    public PersistentEffect movementSpeedDebuff;
+    [SerializeReference]
+    public PersistentEffect movementSpeedBuff;
+    [SerializeReference]
+    public PersistentEffect invisibility;
     public override void SpellEffect(Spell spell)
     {
-
+        spell.targets++;
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)
@@ -46,9 +54,16 @@ public class Rune_Wind : Rune
                 }
             default:
                 {
+                    spell.effect = movementSpeedDebuff.Clone();
+                    //new TriggeredEffect(new Trigger_OnSpellEffectApplied(), movementSpeedBuff).Create(spell, owner);
                     return this;
                 }
         }
+    }
+
+    public override void FinalizeEffectFormula(Spell spell)
+    {
+
     }
 
     public override Rune TargetingFormula(Spell spell, Rune combiningRune)
@@ -88,6 +103,7 @@ public class Rune_Wind : Rune
                 }
             default:
                 {
+                    spell.effect.targetSelector = targeting;
                     return this;
                 }
         }

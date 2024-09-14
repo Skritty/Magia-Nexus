@@ -72,6 +72,11 @@ public class Stat_Exists : GenericStat<Stat_Exists>
     public Action<Entity> OnExpire;
 }
 
+public class Stat_Proxy : GenericStat<Stat_Proxy>
+{
+    public Entity proxyOwner;
+}
+
 public class Stat_PlayerCharacter : GenericStat<Stat_PlayerCharacter>
 {
 
