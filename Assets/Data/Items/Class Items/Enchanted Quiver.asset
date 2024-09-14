@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
+  m_Name: Enchanted Quiver
+  m_EditorClassIdentifier: 
+  hidden: 0
+  itemName: Enchanted Quiver
+  itemDescription: '+1 projectile
+
+    Projectiles home toward your target'
+  cost: 0
+  itemImage: {fileID: 0}
+  damageTypeColor: {r: 0.49217427, g: 0.7610062, b: 0.35657206, a: 1}
+  craftingRecipe: []
+  grantedActions: []
+  actionCountModifier: 0
+  itemEffects:
+  - rid: 9031231481910394880
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 9031231481910394880
+      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231527144652808
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 0
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        trigger:
+          rid: 9031231481910394881
+        effect:
+          rid: 9031231527144652853
+    - rid: 9031231481910394881
+      type: {class: Trigger_ProjectileCreated, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231527144652808
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231527144652853
+      type: {class: PE_HomeToTargetMoveDirection, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231527144652854
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        homingRateDegreesPerSecond: 140
+    - rid: 9031231527144652854
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 

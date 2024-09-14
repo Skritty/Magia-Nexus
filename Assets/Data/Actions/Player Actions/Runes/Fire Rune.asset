@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
+  m_Name: Fire Rune
+  m_EditorClassIdentifier: 
+  actionName: Fire Rune
+  actionDescription: Add fire to your spell
+  actionImage: {fileID: 0}
+  damageTypeColor: {r: 0.735849, g: 0.10412948, b: 0.10412948, a: 1}
+  maxUses: 0
+  type: 0
+  timing: 4
+  effects:
+  - rid: 9031231527144652811
+  references:
+    version: 2
+    RefIds:
+    - rid: 9031231527144652811
+      type: {class: Rune_Fire, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231527144652817
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        damageEffect:
+          targetSelector:
+            rid: 9031231527144652816
+          owner: {fileID: 0}
+          target: {fileID: 0}
+          effectMultiplier: 1
+          damage: 1
+          ignoreFrames: 500
+          skipFlatDamageReduction: 0
+          preventTriggers: 0
+          damageTypes: 0
+          temporaryEffects: []
+        targeting:
+          rid: 9031231527144652819
+        AoEBuff:
+          rid: 9031231527144652820
+        effectMultiBuff:
+          rid: 9031231527144652822
+    - rid: 9031231527144652816
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 8
+        sortingMethod: 1
+        targetingRange: {x: 0, y: 1}
+        numberOfTargets: -1
+        radius: 2
+        angle: 180
+    - rid: 9031231527144652817
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231527144652819
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 8
+        sortingMethod: 1
+        targetingRange: {x: 0, y: 1}
+        numberOfTargets: -1
+        radius: 2
+        angle: 180
+    - rid: 9031231527144652820
+      type: {class: PE_AoEBuff, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231527144652821
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        multiplier: 2
+    - rid: 9031231527144652821
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231527144652822
+      type: {class: PE_EffectMuliplierBuff, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231527144652823
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        tick: 0
+        tickDuration: -1
+        maxStacks: 10
+        refreshDuration: 1
+        multiplier: 1
+    - rid: 9031231527144652823
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 

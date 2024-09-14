@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
+  m_Name: BurningSuffusion
+  m_EditorClassIdentifier: 
+  hidden: 0
+  itemName: Burning Suffusion
+  itemDescription: 'On hit: ignite (2 fire/0.5s)'
+  cost: 0
+  itemImage: {fileID: 0}
+  damageTypeColor: {r: 0.91194963, g: 0.3429839, b: 0.2896443, a: 1}
+  craftingRecipe:
+  - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
+  - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
+  - {fileID: 11400000, guid: cf7cd7de6af40a84381d78a138533f34, type: 2}
+  grantedActions: []
+  actionCountModifier: 0
+  itemEffects:
+  - rid: 9031231527144652844
+  references:
+    version: 2
+    RefIds:
+    - rid: 9031231527144652844
+      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231527144652845
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        trigger:
+          rid: 9031231527144652846
+        effect:
+          rid: 9031231527144652847
+    - rid: 9031231527144652845
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231527144652846
+      type: {class: Trigger_OnDamageDealt, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231527144652847
+      type: {class: PE_DamageOverTime, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231527144652848
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        tick: 0
+        tickDuration: 25
+        maxStacks: 1
+        refreshDuration: 1
+        damage:
+          targetSelector:
+            rid: 9031231527144652850
+          owner: {fileID: 0}
+          target: {fileID: 0}
+          effectMultiplier: 0.08
+          damage: 0
+          skipFlatDamageReduction: 1
+          preventTriggers: 1
+          damageTypes: 32
+          temporaryEffects: []
+    - rid: 9031231527144652848
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231527144652850
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
