@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Player_Arrow
   m_EditorClassIdentifier: 
-  actionName: 
-  actionDescription: 
+  actionName: Arrow
+  actionDescription: Fires an arrow at your target, dealing 1 damage
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
+  hidden: 0
   maxUses: 0
   type: 0
   timing: 1
@@ -34,6 +35,7 @@ MonoBehaviour:
         effectMultiplier: 1
         entityType: 2
         entity: {fileID: 6345354840142092050, guid: d5ac2c4bb3ee1ff429d0da7e0753d3c2, type: 3}
+        spawnOnTarget: 0
     - rid: 9031231527144652831
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
       data: 

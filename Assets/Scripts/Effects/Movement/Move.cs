@@ -11,7 +11,7 @@ public class Move : Effect
     {
         if (rotate)
         {
-            owner.transform.forward = owner.Stat<Stat_Movement>().facingDir;
+            owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, owner.Stat<Stat_Movement>().facingDir);
         }
 
         owner.transform.position +=

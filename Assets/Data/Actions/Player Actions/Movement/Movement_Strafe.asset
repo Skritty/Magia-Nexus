@@ -10,27 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Player_BladeBarrier
+  m_Name: Movement_Strafe
   m_EditorClassIdentifier: 
-  actionName: Blade Barrier
-  actionDescription: 'You and nearby allies: Take 10% less physical damage for 10
-    seconds (stacks)'
+  actionName: Strafe
+  actionDescription: Strafe around your target, maintaining distance
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
-  hidden: 0
   maxUses: 0
   type: 0
-  timing: 1
+  timing: 2
   effects:
-  - rid: 9031231646177165325
+  - rid: 9031231598746927107
+  - rid: 9031231598746927109
   references:
     version: 2
     RefIds:
-    - rid: 9031231646177165325
-      type: {class: PE_DefensiveBuff, ns: , asm: Assembly-CSharp}
+    - rid: 9031231598746927107
+      type: {class: Movement_DirectlyToTarget, ns: , asm: Assembly-CSharp}
       data:
         targetSelector:
-          rid: 9031231646177165326
+          rid: 9031231598746927108
         owner: {fileID: 0}
         target: {fileID: 0}
         effectMultiplier: 1
@@ -38,14 +37,19 @@ MonoBehaviour:
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
-        modifiers:
-          damageTypeModifiers:
-            serializedPairs:
-            - key: 14
-              value:
-                multiplier: 0.9
-                increased: 1
-                flat: 0
-    - rid: 9031231646177165326
+    - rid: 9031231598746927108
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 9031231598746927109
+      type: {class: Move, ns: , asm: Assembly-CSharp}
+      data:
+        targetSelector:
+          rid: 9031231598746927110
+        owner: {fileID: 0}
+        target: {fileID: 0}
+        effectMultiplier: 1
+        movementSpeedMultiplier: 1
+        rotate: 0
+    - rid: 9031231598746927110
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data: 

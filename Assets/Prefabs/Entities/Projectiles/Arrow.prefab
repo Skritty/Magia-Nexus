@@ -107,6 +107,7 @@ MonoBehaviour:
         actionsPerTurn: 5
         repeatActions:
         - {fileID: 11400000, guid: 49243ad2f7fec714dbba9c0f8292f636, type: 2}
+        - {fileID: 11400000, guid: 74b77c58d3f604a409a57b692fdc4836, type: 2}
         actions: []
     - rid: 3492845359303229451
       type: {class: Stat_Damage, ns: , asm: Assembly-CSharp}

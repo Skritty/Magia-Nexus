@@ -84,3 +84,5 @@ public class Trigger_OnDie : Trigger<Trigger_OnDie> { }
 public class Trigger_OnProjectilePierce : Trigger<Trigger_OnProjectilePierce> { }
 public class Trigger_OnPersistantEffectApplied : Trigger<Trigger_OnPersistantEffectApplied> { }
 public class Trigger_OnSpellEffectApplied : Trigger<Trigger_OnSpellEffectApplied> { }
+public class Trigger_OnRuneUsed : Trigger<Trigger_OnRuneUsed> { }
+public class Trigger_OnActionStart : Trigger<Trigger_OnActionStart> { }

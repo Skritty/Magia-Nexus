@@ -59,7 +59,7 @@ public class Shop : MonoBehaviour
             display.title.text = item.itemName;
             display.desc.text = item.itemDescription;
             display.id.text = "i" + (ownedItems.IndexOf(item) + 1);
-            display.cost.text = item.cost+"g";
+            display.cost.text = item.cost + "g";
         }
 
         // Basic Targeting
@@ -74,43 +74,49 @@ public class Shop : MonoBehaviour
         // Items/Item Actions
         foreach (Item item in ownedItems)
         {
-            if (shopItems.Contains(item)) continue;
-            CheckForPlaceholder(itemDisplayLayout.childCount);
+            CreateItemUI(item);
+        }
+    }
 
-            DisplayItem display = Instantiate(itemDisplayPrefab, itemDisplayLayout);
-            display.title.text = item.itemName;
-            display.desc.text = item.itemDescription;
-            display.id.text = "i" + (ownedItems.IndexOf(item) + 1);
-            display.background.color = item.damageTypeColor;
-            display.subboxes = item.grantedActions.Count;
-            string recipe = "";
-            foreach(Item ingredient in item.craftingRecipe)
-            {
-                recipe += "i" + (ownedItems.IndexOf(ingredient) + 1) + ", ";
-            }
-            //recipe = recipe.Remove(recipe.Length - 2, 2);
-            display.recipe.text = recipe;
+    private void CreateItemUI(Item item)
+    {
+        if (shopItems.Contains(item)) return;
+        CheckForPlaceholder(itemDisplayLayout.childCount);
 
-            int a = 0;
-            foreach(Action action in item.grantedActions)
+        DisplayItem display = Instantiate(itemDisplayPrefab, itemDisplayLayout);
+        display.title.text = item.itemName;
+        display.desc.text = item.itemDescription;
+        display.id.text = "i" + (ownedItems.IndexOf(item) + 1);
+        display.background.color = item.damageTypeColor;
+        display.subboxes = item.grantedActions.Count;
+        string recipe = "";
+        foreach (Item ingredient in item.craftingRecipe)
+        {
+            recipe += "i" + (ownedItems.IndexOf(ingredient) + 1) + ", ";
+        }
+        if(recipe.Length > 0)
+            recipe = recipe.Remove(recipe.Length - 2, 2);
+        display.recipe.text = recipe;
+
+        int a = 0;
+        foreach (Action action in item.grantedActions)
+        {
+            DisplayItem displayAction = Instantiate(actionDisplayPrefab, display.transform);
+            displayAction.GetComponent<RectTransform>().anchoredPosition =
+                new Vector2(0, ++a * -displayAction.GetComponent<RectTransform>().sizeDelta.y);
+            displayAction.title.text = action.actionName;
+            displayAction.desc.text = action.actionDescription;
+            switch (action.type)
             {
-                DisplayItem displayAction = Instantiate(actionDisplayPrefab, display.transform);
-                displayAction.GetComponent<RectTransform>().anchoredPosition = 
-                    new Vector2(0, ++a * -displayAction.GetComponent<RectTransform>().sizeDelta.y);
-                displayAction.title.text = action.actionName;
-                displayAction.desc.text = action.actionDescription;
-                switch (action.type)
-                {
-                    case ActionType.Targeting:
-                        displayAction.id.text = "t" + (ownedTargeting.IndexOf(action) + 1); 
-                        break;
-                    case ActionType.Basic:
-                    default:
-                        displayAction.id.text = "a" + (ownedActions.IndexOf(action) + 1); 
-                        break;
-                }
-                displayAction.background.color = item.damageTypeColor;
+                case ActionType.Targeting:
+                    displayAction.id.text = "t" + (ownedTargeting.IndexOf(action) + 1);
+                    break;
+                case ActionType.Basic:
+                default:
+                    displayAction.id.text = "a" + (ownedActions.IndexOf(action) + 1);
+                    break;
             }
+            displayAction.background.color = item.damageTypeColor;
         }
     }
 
@@ -198,7 +204,30 @@ public class Shop : MonoBehaviour
                 }
                 viewer.items.Add(craft);
                 message = craft.itemName;
-                // TODO: Add new item to UI and owned
+                if (!ownedItems.Contains(craft))
+                {
+                    ownedItems.Add(craft);
+                    foreach (Action action in craft.grantedActions)
+                    {
+                        switch (action.type)
+                        {
+                            case ActionType.Targeting:
+                                if (!ownedTargeting.Contains(action))
+                                {
+                                    ownedTargeting.Add(action);
+                                }
+                                break;
+                            case ActionType.Basic:
+                            default:
+                                if (!ownedActions.Contains(action))
+                                {
+                                    ownedActions.Add(action);
+                                }
+                                break;
+                        }
+                    }
+                    CreateItemUI(craft);
+                }
                 return true;
             }
         }

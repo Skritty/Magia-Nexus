@@ -1,0 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public enum EffectTargetingSelector { Owner, Target }
+public class Targeting_TriggeredDamage : Targeting
+{
+    public EffectTargetingSelector selector = EffectTargetingSelector.Target;
+    public override List<Entity> GetTargets(object source, Entity owner)
+    {
+        return new List<Entity>() { owner };
+    }
+
+    public override List<Entity> GetTargets(object source, Trigger trigger, Entity owner)
+    {
+        Entity target;
+        if (selector == EffectTargetingSelector.Owner)
+        {
+            target = trigger.Data<DamageInstance>().owner;
+        }
+        else
+        {
+            target = trigger.Data<DamageInstance>().target;
+        }
+         
+        return GetTargets(source, target == null ? owner : target);
+    }
+}

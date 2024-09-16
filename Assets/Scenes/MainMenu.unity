@@ -1200,7 +1200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[0].key
-      value: Fortress
+      value: Fighter
       objectReference: {fileID: 0}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[1].key
@@ -1260,7 +1260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[0].value.viewerName
-      value: Fortress
+      value: Fighter
       objectReference: {fileID: 0}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[1].value.targetType
@@ -1311,8 +1311,16 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
+      propertyPath: startingClasses.serializedPairs.Array.data[1].value.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
+      propertyPath: startingClasses.serializedPairs.Array.data[6].value.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[0].value.actions.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[1].value.actions.Array.size
@@ -1371,6 +1379,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 314c4d451d802d1428da0c3fb677d269, type: 2}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
+      propertyPath: startingClasses.serializedPairs.Array.data[0].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 685890fe3347ff54c8d6c055120ccac7, type: 2}
+    - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
+      propertyPath: startingClasses.serializedPairs.Array.data[1].value.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 88f952d1265c8dc4688b3afe143c349c, type: 2}
+    - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
+      propertyPath: startingClasses.serializedPairs.Array.data[6].value.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 39485894faf673f4bb72972a38f34c31, type: 2}
+    - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[0].value.actions.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
@@ -1391,6 +1411,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
+      propertyPath: viewers.serializedPairs.Array.data[0].value.actions.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
+    - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[1].value.actions.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
@@ -1409,7 +1433,7 @@ PrefabInstance:
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[1].value.actions.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+      objectReference: {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
     - target: {fileID: 7465332868357499639, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

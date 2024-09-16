@@ -13,7 +13,7 @@ public class Targeting_Line : MultiTargeting
     }
     public float length, width;
 
-    protected override bool Filter(Entity target)
+    protected override bool IsValidTarget(Entity target)
     {
         if (length == 0 || width == 0) return false;
 

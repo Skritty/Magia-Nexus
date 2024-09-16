@@ -99,6 +99,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
                     a?.OnEnd(owner);
                 a?.OnStart(owner);
                 owner.Stat<Stat_PersistentEffects>().OnAction();
+                owner.Trigger<Trigger_OnActionStart>(this);
             }
             currentAction?.OnStart(owner);
         }

@@ -11,6 +11,7 @@ public class Targeting_Self : Targeting
 
     public override List<Entity> GetTargets(object source, Trigger trigger, Entity owner)
     {
-        return GetTargets(source, owner);
+        Entity target = trigger.Data<Entity>();
+        return GetTargets(source, target == null ? owner : target);
     }
 }

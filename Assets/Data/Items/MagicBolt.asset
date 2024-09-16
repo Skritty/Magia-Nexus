@@ -21,9 +21,7 @@ MonoBehaviour:
   craftingRecipe:
   - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
   - {fileID: 11400000, guid: cf7cd7de6af40a84381d78a138533f34, type: 2}
-  grantedActions:
-  - {fileID: 11400000, guid: 80da79633b9a762489cbce76d3a282da, type: 2}
-  - {fileID: 11400000, guid: 71239e4195c11e845a19dbe093a9725f, type: 2}
+  grantedActions: []
   actionCountModifier: 0
   itemEffects: []
   references:

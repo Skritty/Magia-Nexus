@@ -62,7 +62,7 @@ MonoBehaviour:
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
-        homingRateDegreesPerSecond: 140
+        homingRateDegreesPerSecond: 120
     - rid: 9031231598746927164
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data: 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Flags]
+[Flags]
 public enum ActionEventTiming
 {
     OnStart = 1,
@@ -21,6 +21,7 @@ public class Action : ScriptableObject
     public string actionDescription;
     public Sprite actionImage;
     public Color damageTypeColor = Color.white;
+    public bool hidden;
     public int maxUses;
     public ActionType type;
     public ActionEventTiming timing = ActionEventTiming.OnStart;
