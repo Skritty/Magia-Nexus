@@ -7,11 +7,11 @@ public class PE_AoEBuff : PersistentEffect
     public float multiplier = 1;
     public override void OnGained()
     {
-        target.Stat<Stat_Effect>().aoeMultiplier += multiplier;
+        Target.Stat<Stat_EffectModifiers>().aoeMultiplier += multiplier;
     }
 
     public override void OnLost()
     {
-        target.Stat<Stat_Effect>().aoeMultiplier -= multiplier;
+        Target.Stat<Stat_EffectModifiers>().aoeMultiplier -= multiplier;
     }
 }

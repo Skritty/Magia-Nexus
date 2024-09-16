@@ -11,13 +11,13 @@ public class Move : Effect
     {
         if (rotate)
         {
-            owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, owner.Stat<Stat_Movement>().facingDir);
+            Owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);
         }
 
-        owner.transform.position +=
-            owner.Stat<Stat_Movement>().facingDir
+        Owner.transform.position +=
+            Owner.Stat<Stat_Movement>().facingDir
             * movementSpeedMultiplier
-            * Mathf.Clamp(owner.Stat<Stat_Movement>().movementSpeed, 0, 10)
+            * Mathf.Clamp(Owner.Stat<Stat_Movement>().movementSpeed, 0, 10)
             * Time.fixedDeltaTime;
     }
 }

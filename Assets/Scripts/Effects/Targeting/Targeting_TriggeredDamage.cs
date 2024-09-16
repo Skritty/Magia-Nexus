@@ -16,11 +16,11 @@ public class Targeting_TriggeredDamage : Targeting
         Entity target;
         if (selector == EffectTargetingSelector.Owner)
         {
-            target = trigger.Data<DamageInstance>().owner;
+            target = trigger.Data<DamageInstance>().Owner;
         }
         else
         {
-            target = trigger.Data<DamageInstance>().target;
+            target = trigger.Data<DamageInstance>().Target;
         }
          
         return GetTargets(source, target == null ? owner : target);

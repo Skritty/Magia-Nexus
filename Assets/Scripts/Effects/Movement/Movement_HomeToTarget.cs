@@ -19,22 +19,22 @@ public class Movement_HomeToTarget : PersistentEffect
     private void SetMoveDir()
     {
         Vector3 dirToTarget = Vector3.zero;
-        if (target.Stat<Stat_Target>().target != null)
+        if (Target.Stat<Stat_Movement>().movementTarget != null)
         {
-            dirToTarget = (target.Stat<Stat_Target>().target.transform.position - target.transform.position).normalized;
+            dirToTarget = (Target.Stat<Stat_Movement>().movementTarget.transform.position - Target.transform.position).normalized;
         }
         else
         {
-            dirToTarget = target.Stat<Stat_Movement>().facingDir;
+            dirToTarget = Target.Stat<Stat_Movement>().facingDir;
         }
-        Quaternion angleChange = Quaternion.FromToRotation(target.Stat<Stat_Movement>().facingDir, dirToTarget);
+        Quaternion angleChange = Quaternion.FromToRotation(Target.Stat<Stat_Movement>().facingDir, dirToTarget);
         bool negative = angleChange.eulerAngles.z > 180;
         dirToTarget =
             Quaternion.Euler(0, 0, (negative ? -1 : 1) *
             Mathf.Clamp(homingRateDegreesPerSecond * Time.fixedDeltaTime,
             0, negative ? -(angleChange.eulerAngles.z - 360) : angleChange.eulerAngles.z))
-            * target.Stat<Stat_Movement>().facingDir;
-        target.Stat<Stat_Movement>().facingDir = dirToTarget;
-        target.transform.localRotation = Quaternion.FromToRotation(Vector3.up, dirToTarget);
+            * Target.Stat<Stat_Movement>().facingDir;
+        Target.Stat<Stat_Movement>().facingDir = dirToTarget;
+        Target.transform.localRotation = Quaternion.FromToRotation(Vector3.up, dirToTarget);
     }
 }

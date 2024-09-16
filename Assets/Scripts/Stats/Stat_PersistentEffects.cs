@@ -7,12 +7,11 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
 {
     protected override void Initialize()
     {
-        foreach (PersistentEffect status in persistentEffects)
+        // Set up any persistent effects that were on an instantiated entity
+        foreach (PersistentEffect effect in persistentEffects)
         {
-            status.source = owner;
-            status.owner = owner;
-            status.target = owner;
-            status.OnGained();
+            effect.SetInfo(effect, owner, owner);
+            effect.OnGained();
         }
     }
 
@@ -20,12 +19,20 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
     [SerializeReference]
     public List<PersistentEffect> persistentEffects = new List<PersistentEffect>();
 
-    public bool AcceptsEffect(object source, PersistentEffect effect)
+    public void ApplyEffect(PersistentEffect effect)
+    {
+        if (!AcceptsEffect(effect)) return;
+        effect.tick = 0;
+        persistentEffects.Add(effect);
+        effect.OnGained();
+    }
+
+    private bool AcceptsEffect(PersistentEffect effect)
     {
         int stacks = 0;
         foreach (PersistentEffect e in persistentEffects)
         {
-            if (e.source == source)
+            if (e.Source == effect.Source)
             {
                 stacks++;
                 if (e.refreshDuration)
@@ -36,19 +43,6 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         }
         if (stacks >= effect.maxStacks) return false;
         return true;
-    }
-
-    public void AddEffect(PersistentEffect effect)
-    {
-        persistentEffects.Add(effect);
-    }
-
-    public void OnAction()
-    {
-        foreach (PersistentEffect effect in persistentEffects)
-        {
-            effect.OnAction();
-        }
     }
 
     public override void Tick()

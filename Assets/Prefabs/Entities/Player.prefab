@@ -301,31 +301,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats:
-  - rid: 9031231390210850842
+  - rid: 9031231661127237636
+  - rid: 3492845359303229454
   - rid: 3492845359303229445
   - rid: 3492845359303229448
-  - rid: 2953181870642692136
   - rid: 3492845359303229458
   - rid: 3492845359303229451
-  - rid: 3492845359303229454
-  - rid: 9031231465990389774
-  - rid: 9031231527144652869
   - rid: 9031231527144652886
-  - rid: 9031231527144653323
+  - rid: 9031231661127237638
+  - rid: 9031231465990389774
   references:
     version: 2
     RefIds:
-    - rid: 2953181870642692136
-      type: {class: Stat_Items, ns: , asm: Assembly-CSharp}
-      data:
-        owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        items: []
     - rid: 3492845359303229445
       type: {class: Stat_Life, ns: , asm: Assembly-CSharp}
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
+        mergeBehavior: 0
         healthBar: {fileID: 9101917831146373091}
         maxLife: 100
         currentLife: 100
@@ -336,6 +329,7 @@ MonoBehaviour:
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
+        mergeBehavior: 0
         tick: 0
         stunned: 0
         actionsPerTurn: 5
@@ -346,48 +340,68 @@ MonoBehaviour:
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
+        mergeBehavior: 0
         damageModifers: []
     - rid: 3492845359303229454
       type: {class: Stat_Team, ns: , asm: Assembly-CSharp}
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
+        mergeBehavior: 0
         team: 0
     - rid: 3492845359303229458
       type: {class: Stat_Movement, ns: , asm: Assembly-CSharp}
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
+        mergeBehavior: 0
+        movementTarget: {fileID: 0}
         movementSpeed: 3
         facingDir: {x: 1, y: 0, z: 0}
-    - rid: 9031231390210850842
-      type: {class: Stat_PlayerCharacter, ns: , asm: Assembly-CSharp}
-      data:
-        owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        characterNamePlate: {fileID: 233806103433016068}
     - rid: 9031231465990389774
       type: {class: Stat_PersistentEffects, ns: , asm: Assembly-CSharp}
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
+        mergeBehavior: 0
         persistentEffects: []
-    - rid: 9031231527144652869
-      type: {class: Stat_Target, ns: , asm: Assembly-CSharp}
-      data:
-        owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        target: {fileID: 0}
     - rid: 9031231527144652886
       type: {class: Stat_Magic, ns: , asm: Assembly-CSharp}
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
-    - rid: 9031231527144653323
-      type: {class: Stat_Ignored, ns: , asm: Assembly-CSharp}
+        mergeBehavior: 0
+    - rid: 9031231661127237636
+      type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
+        mergeBehavior: 0
+        playerCharacter: 1
+        characterNamePlate: {fileID: 233806103433016068}
+        playerEntity: {fileID: 0}
+        player:
+          viewerID: 0
+          viewerName: 
+          currency: 0
+          targetType:
+            rid: 9031231661127237637
+          items: []
+          actions: []
+    - rid: 9031231661127237637
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: 0
+    - rid: 9031231661127237638
+      type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
+      data:
+        owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        mergeBehavior: 0
+        effectMultiplier: 1
+        aoeMultiplier: 1
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0

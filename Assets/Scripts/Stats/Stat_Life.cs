@@ -22,6 +22,12 @@ public class Stat_Life : GenericStat<Stat_Life>
     public List<DamageModifier> damageModifers = new List<DamageModifier>();
     #endregion
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+        owner.Subscribe<Trigger_OnDie>((x) => Debug.Log($"{x.Data<DamageInstance>().Target} DIED"));
+    }
+
     public void TakeDamage(DamageInstance damage)
     {
         // Apply Defenses
@@ -38,15 +44,15 @@ public class Stat_Life : GenericStat<Stat_Life>
         defense.ApplyModifiers(damage);
 
         // Calculate Damage
-        damage.owner.Stat<Stat_Damage>().CalculateDamage(damage);
+        damage.Owner.Stat<Stat_Damage>().CalculateDamage(damage);
 
         // Handle Life
-        Debug.Log($"{damage.source} dealing {damage.damage} damage from {damage.owner} to {damage.target}");
+        Debug.Log($"{damage.Source} dealing {damage.damage} damage from {damage.Owner} to {damage.Target}");
         currentLife = Mathf.Clamp(currentLife - damage.damage, 0, maxLife);
         if (!damage.preventTriggers)
         {
             owner.Trigger<Trigger_OnDamageRecieved>(damage);
-            damage.owner.Trigger<Trigger_OnDamageDealt>(damage);
+            damage.Owner.Trigger<Trigger_OnDamageDealt>(damage);
         }
 
         if (currentLife <= 0) owner.Trigger<Trigger_OnDie>(damage);

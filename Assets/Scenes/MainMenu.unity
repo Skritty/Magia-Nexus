@@ -1320,7 +1320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[0].value.actions.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7172017706544389701, guid: 90609850b67063e4e80603c0e43de22a, type: 3}
       propertyPath: viewers.serializedPairs.Array.data[1].value.actions.Array.size

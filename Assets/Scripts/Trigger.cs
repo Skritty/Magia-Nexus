@@ -4,15 +4,15 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// Stores methods to call, as well as holds data pertaining to the callback.
+/// Stores methods to call and holds data pertaining to the callback
 /// </summary>
 [Serializable]
 public abstract class Trigger
 {
     protected Action<Trigger> ToTrigger;
-    private Action<Trigger> CleanupCallback;
     public DataType Data<DataType>() => IBoundInstances<Trigger, DataType>.GetInstance(this, false);
-    public abstract void SetInstanceOwner(Entity source);
+    public abstract void AddInstance(Entity source);
+    public abstract void RemoveInstance(Entity source);
     public virtual void Subscribe(Action<Trigger> method)
     {
         ToTrigger += method;
@@ -29,18 +29,21 @@ public abstract class Trigger
     public void Invoke<T>(T data)
     {
         if (ToTrigger == null) return;
-        IBoundInstances<Trigger, T>.SetInstanceOwner(data, this, CleanupCallback);
+        IBoundInstances<Trigger, T>.AddInstance(data, this);
         ToTrigger.Invoke(this);
-        //Debug.Log(CleanupCallback.GetHashCode()); TODO: why?? AHHHHH
-        //CleanupCallback.Invoke(this);
+        IBoundInstances<Trigger, T>.RemoveInstance(this);
     }
 }
 
 public abstract class Trigger<T> : Trigger where T : Trigger<T>
 {
-    public override void SetInstanceOwner(Entity owner)
+    public override void AddInstance(Entity owner)
     {
-        IBoundInstances<Entity, T>.SetInstanceOwner((T)this, owner, owner.CleanupCallback);
+        IBoundInstances<Entity, T>.AddInstance((T)this, owner);
+    }
+    public override void RemoveInstance(Entity owner)
+    {
+        IBoundInstances<Entity, T>.RemoveInstance(owner);
     }
 }
 
@@ -48,11 +51,11 @@ public static class TriggerExtensions
 {
     public static void Subscribe<T>(this Entity source, Action<Trigger> method) where T : Trigger
     {
-        IBoundInstances<Entity, T>.GetOrCreateInstance(source, source.CleanupCallback).Subscribe(method);
+        IBoundInstances<Entity, T>.GetOrCreateInstance(source).Subscribe(method);
     }
     public static void Unsubscribe<T>(this Entity source, Action<Trigger> method) where T : Trigger
     {
-        IBoundInstances<Entity, T>.GetOrCreateInstance(source, source.CleanupCallback).Unsubscribe(method);
+        IBoundInstances<Entity, T>.GetOrCreateInstance(source).Unsubscribe(method);
     }
     public static void Trigger<T>(this Entity source) where T : Trigger
     {

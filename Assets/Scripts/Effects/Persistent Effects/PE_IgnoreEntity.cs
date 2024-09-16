@@ -6,11 +6,11 @@ public class PE_IgnoreEntity : PersistentEffect
 {
     public override void OnGained()
     {
-        owner.Stat<Stat_Ignored>().AddIgnored(source, target);
+        Owner.Stat<Stat_Targetable>().AddIgnored(Source, Target);
     }
 
     public override void OnLost()
     {
-        owner.Stat<Stat_Ignored>().RemoveIgnored(source, target);
+        Owner.Stat<Stat_Targetable>().RemoveIgnored(Source, Target);
     }
 }

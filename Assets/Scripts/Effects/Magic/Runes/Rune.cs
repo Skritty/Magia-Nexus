@@ -8,8 +8,8 @@ public abstract class Rune : Effect
 
     public override void Activate()
     {
-        owner.Stat<Stat_Magic>().runes.Add(this);
-        owner.Trigger<Trigger_OnRuneUsed>(this);
+        Owner.Stat<Stat_Magic>().runes.Add(this);
+        Owner.Trigger<Trigger_OnRuneUsed>(this);
     }
     public abstract void SpellEffect(Spell spell);
     public abstract Rune EffectFormula(Spell spell, Rune combiningRune);

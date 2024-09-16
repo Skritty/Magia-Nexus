@@ -94,7 +94,7 @@ public class Rune_Chaos : Rune
                 }
             default:
                 {
-                    spell.effect.targetSelector = spell.owner.Stat<Stat_Target>().targetingType;
+                    spell.effect.targetSelector = spell.owner.Stat<Stat_PlayerOwner>().player.targetType;
                     return this;
                 }
         }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TE_GrantEntityActions : Effect
+public class GrantEntityActions : Effect
 {
     [SerializeReference]
     public List<Action> actions = new();
@@ -12,11 +12,11 @@ public class TE_GrantEntityActions : Effect
     {
         foreach (Action action in actions)
         {
-            target.Stat<Stat_Actions>().AddAction(action);
+            Target.Stat<Stat_Actions>().AddAction(action);
         }
         foreach (Action action in repeatActions)
         {
-            target.Stat<Stat_Actions>().AddRepeatAction(action);
+            Target.Stat<Stat_Actions>().AddRepeatAction(action);
         }
     }
 }

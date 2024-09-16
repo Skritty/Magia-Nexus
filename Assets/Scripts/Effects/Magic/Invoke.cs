@@ -11,7 +11,7 @@ public class Invoke : Effect
     public override void Activate()
     {
         List<Spell> spells = new List<Spell>();
-        PreassembleSpells(spells, null, owner.Stat<Stat_Magic>().runes, 0);
+        PreassembleSpells(spells, null, Owner.Stat<Stat_Magic>().runes, 0);
 
         Spell triggeredSpell = null;
         for (int i = spells.Count - 1; 0 <= i; i--)
@@ -20,8 +20,7 @@ public class Invoke : Effect
             triggeredSpell = spells[i];
         }
 
-        owner.Stat<Stat_Magic>().runes.Clear();
-        spells[0].castSpell.spawnOnTarget = true;
+        Owner.Stat<Stat_Magic>().runes.Clear();
         spells[0].castSpell.Create(this);
         foreach (Spell spell in spells)
         {
@@ -35,7 +34,7 @@ public class Invoke : Effect
         if (index == 0)
         {
             spell = new Spell(runes[index], runes);
-            spell.owner = owner;
+            spell.owner = Owner;
             spells.Add(spell);
             PreassembleSpells(spells, spell, runes, ++index);
             return;

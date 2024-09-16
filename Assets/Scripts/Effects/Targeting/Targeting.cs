@@ -47,17 +47,20 @@ public abstract class MultiTargeting : Targeting
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>())
         {
             // Can it be targeted?
-            if (entity.Stat<Stat_Untargetable>().untargetable) continue;
-            if (owner.Stat<Stat_Ignored>().IsIgnored(source, entity)) continue;
+            if (owner.Stat<Stat_Targetable>().IsTargetable(source, entity)) continue;
 
             // Is it in the affected entities?
             if(entity.Stat<Stat_Team>().team != owner.Stat<Stat_Team>().team)
             {
                 targetType = TargetFilter.Enemies;
             }
-            else if(entity == owner || entity == owner.Stat<Stat_Proxy>().proxyOwner)
+            else if(entity == owner)
             {
                 targetType = TargetFilter.Self;
+            }
+            else if (entity == owner.Stat<Stat_PlayerOwner>().playerCharacter)
+            {
+                targetType = TargetFilter.Owner;
             }
             else
             {

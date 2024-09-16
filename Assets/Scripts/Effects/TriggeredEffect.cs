@@ -21,16 +21,17 @@ public class TriggeredEffect : PersistentEffect
     public Effect effect;
     public override void OnGained()
     {
-        trigger.SetInstanceOwner(owner);
+        trigger.AddInstance(Owner);
         trigger.Subscribe(OnTrigger);
     }
     public override void OnLost()
     {
         trigger.Unsubscribe(OnTrigger);
+        trigger.RemoveInstance(Owner);
     }
 
     protected void OnTrigger(Trigger trigger)
     {
-        effect.Create(this, owner, trigger);
+        effect.Create(this, Owner, trigger);
     }
 }

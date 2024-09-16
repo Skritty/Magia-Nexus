@@ -39,12 +39,12 @@ public abstract class Phase_Combat : Phase
         foreach (EntitySpawns spawns in GetEntitySpawns())
         {
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawns.position, Quaternion.identity);
-            entity.Stat<Stat_PlayerCharacter>().Player = spawns.owner;
+            entity.Stat<Stat_PlayerOwner>().SetPlayer(spawns.owner, entity);
             entity.Stat<Stat_Team>().team = spawns.team;
-            entity.Stat<Stat_Target>().targetingType = spawns.owner.targetType;
+            entity.Stat<Stat_Movement>().targetingType = spawns.owner.targetType;
             foreach (Item item in spawns.owner.items)
             {
-                entity.Stat<Stat_Items>().AddItem(item);
+                item.OnGained(entity);
             }
             for (int i = 0; i < spawns.owner.actions.Count; i++)
             {

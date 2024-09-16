@@ -21,8 +21,8 @@ public class Targeting_Line : MultiTargeting
         Vector3 dirToTarget = owner.Stat<Stat_Movement>().facingDir;
         Vector3 projectedDir = Vector3.Project(dirToEntity, dirToTarget);
         if (Vector3.Dot(dirToEntity, dirToTarget) < 0) return false;
-        if (projectedDir.magnitude > length * owner.Stat<Stat_Effect>().aoeMultiplier) return false;
-        if ((dirToEntity - projectedDir).magnitude > width * owner.Stat<Stat_Effect>().aoeMultiplier) return false;
+        if (projectedDir.magnitude > length * owner.Stat<Stat_EffectModifiers>().aoeMultiplier) return false;
+        if ((dirToEntity - projectedDir).magnitude > width * owner.Stat<Stat_EffectModifiers>().aoeMultiplier) return false;
         return true;
     }
 

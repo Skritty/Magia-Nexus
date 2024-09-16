@@ -19,18 +19,10 @@ public abstract class PersistentEffect: Effect
 
     public override void Activate()
     {
-        if (!target.Stat<Stat_PersistentEffects>().AcceptsEffect(source, this)) return;
-
-        PersistentEffect clone = Clone();
-        clone.tick = 0;
-
-        target.Stat<Stat_PersistentEffects>().AddEffect(clone);
-
-        clone.OnGained();
+        Target.Stat<Stat_PersistentEffects>().ApplyEffect(this);
     }
 
     public virtual void OnGained() { }
-    public virtual void OnAction() { }
     public virtual void OnTick() { }
     public virtual void OnLost() { }
 

@@ -7,11 +7,11 @@ public class PE_OffensiveBuff : PersistentEffect
     public DamageModifier modifiers;
     public override void OnGained()
     {
-        target.Stat<Stat_Damage>().damageModifers.Add(modifiers);
+        Target.Stat<Stat_Damage>().damageModifers.Add(modifiers);
     }
 
     public override void OnLost()
     {
-        target.Stat<Stat_Damage>().damageModifers.Remove(modifiers);
+        Target.Stat<Stat_Damage>().damageModifers.Remove(modifiers);
     }
 }

@@ -1,10 +1,11 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Stat_Magic : GenericStat<Stat_Magic>
 {
-    [SerializeReference]
+    [SerializeReference, FoldoutGroup("Magic")]
     public List<Rune> runes = new List<Rune>(); // spellcasting queue
 }
 

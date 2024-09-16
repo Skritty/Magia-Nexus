@@ -41,8 +41,6 @@ public class Spell
 
         GenerateSpellEffect();
         GenerateTargeting();
-        castSpell.source = this;
-        castSpell.owner = owner;
         castSpell.entity = entity;
 
         if (chainCast != null)
@@ -50,7 +48,7 @@ public class Spell
             TriggeredEffect nextSpellcastTrigger = new TriggeredEffect();
             nextSpellcastTrigger.effect = chainCast.castSpell;
             nextSpellcastTrigger.trigger = nextSpellTrigger;
-            entity.Stat<Stat_PersistentEffects>().AddEffect(nextSpellcastTrigger);
+            entity.Stat<Stat_PersistentEffects>().ApplyEffect(nextSpellcastTrigger);
         }
     }
 

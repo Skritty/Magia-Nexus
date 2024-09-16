@@ -8,7 +8,7 @@ public class PE_StatModifier : PersistentEffect
     public BaseStat statModifier;
     public override void OnGained()
     {
-        base.OnGained();
+        statModifier.ModifyStat(Target);
     }
 
     public override void OnTick()

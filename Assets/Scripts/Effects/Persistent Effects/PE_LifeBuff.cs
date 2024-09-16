@@ -8,12 +8,12 @@ public class PE_LifeBuff : PersistentEffect
     public float currentLifeChange;
     public override void OnGained()
     {
-        target.Stat<Stat_Life>().maxLife += maxLifeChange;
-        target.Stat<Stat_Life>().currentLife += currentLifeChange;
+        Target.Stat<Stat_Life>().maxLife += maxLifeChange;
+        Target.Stat<Stat_Life>().currentLife += currentLifeChange;
     }
 
     public override void OnLost()
     {
-        target.Stat<Stat_Life>().maxLife -= maxLifeChange;
+        Target.Stat<Stat_Life>().maxLife -= maxLifeChange;
     }
 }

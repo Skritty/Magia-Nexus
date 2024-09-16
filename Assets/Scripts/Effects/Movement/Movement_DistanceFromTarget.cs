@@ -17,15 +17,15 @@ public class Movement_DistanceFromTarget : PersistentEffect
 
     private void SetMoveDir()
     {
-        if (target.Stat<Stat_Target>().target == null)
+        if (Target.Stat<Stat_Movement>().movementTarget == null)
         {
-            target.Stat<Stat_Movement>().facingDir = Vector3.zero;
+            Target.Stat<Stat_Movement>().facingDir = Vector3.zero;
         }
         else
         {
-            Vector3 dirFromTarget = target.transform.position - target.Stat<Stat_Target>().target.transform.position;
+            Vector3 dirFromTarget = Target.transform.position - Target.Stat<Stat_Movement>().movementTarget.transform.position;
             dirFromTarget = dirFromTarget - dirFromTarget.normalized * distanceFromTarget;
-            target.Stat<Stat_Movement>().facingDir = dirFromTarget.normalized;
+            Target.Stat<Stat_Movement>().facingDir = dirFromTarget.normalized;
         }
     }
 }

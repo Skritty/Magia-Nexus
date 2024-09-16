@@ -10,25 +10,23 @@ public class Entity : MonoBehaviour
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
     private List<BaseStat> baseStats = new List<BaseStat>();
     public T Stat<T>() where T : BaseStat => IBoundInstances<Entity, T>.GetInstance(this);
-    public System.Action<Entity> CleanupCallback;
 
     private void Awake()
     {
         Initialize();
     }
 
-    private void FixedUpdate()
-    {
-        HandleStats();
-    }
-
     private void Initialize()
     {
         foreach (BaseStat stat in baseStats)
         {
-            stat.SetInstanceOwner(this);
+            stat.AddInstance(this);
         }
-        this.Subscribe<Trigger_OnDie>((x) => Debug.Log($"{x.Data<DamageInstance>().target} DIED"));
+    }
+
+    private void FixedUpdate()
+    {
+        HandleStats();
     }
 
     private void HandleStats()
@@ -41,13 +39,17 @@ public class Entity : MonoBehaviour
 
     private void OnDestroy()
     {
-        CleanupCallback?.Invoke(this);
+        foreach (BaseStat stat in baseStats)
+        {
+            stat.RemoveInstance(this);
+        }
     }
 
     private void OnValidate()
     {
         foreach (BaseStat stat in baseStats)
         {
+            if (stat == null) continue;
             stat.owner = this;
         }
     }

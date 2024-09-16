@@ -6,11 +6,11 @@ public class PE_Invulnerable : PersistentEffect
 {
     public override void OnGained()
     {
-        target.Stat<Stat_Life>().invulnerable = true;
+        Target.Stat<Stat_Life>().invulnerable = true;
     }
 
     public override void OnLost()
     {
-        target.Stat<Stat_Life>().invulnerable = false;
+        Target.Stat<Stat_Life>().invulnerable = false;
     }
 }

@@ -98,7 +98,6 @@ public class Stat_Actions : GenericStat<Stat_Actions>
                 if(tick != 0)
                     a?.OnEnd(owner);
                 a?.OnStart(owner);
-                owner.Stat<Stat_PersistentEffects>().OnAction();
                 owner.Trigger<Trigger_OnActionStart>(this);
             }
             currentAction?.OnStart(owner);

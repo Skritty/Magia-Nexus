@@ -7,6 +7,6 @@ public class PE_ExpireEntity : PersistentEffect
     public override void OnLost()
     {
         //owner.ReleaseObject();
-        Object.Destroy(owner.gameObject);
+        Object.Destroy(Owner.gameObject);
     }
 }

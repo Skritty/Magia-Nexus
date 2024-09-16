@@ -17,7 +17,7 @@ public class DamageInstance : Effect
 
     public override void Activate()
     {
-        if (target.Stat<Stat_Life>().maxLife <= 0) return;
+        if (Target.Stat<Stat_Life>().maxLife <= 0) return;
 
         foreach (PersistentEffect effect in temporaryEffects)
         {
@@ -25,11 +25,11 @@ public class DamageInstance : Effect
         }
         if (!preventTriggers)
         {
-            owner.Trigger<Trigger_OnHit>(this);
-            target.Trigger<Trigger_WhenHit>(this);
+            Owner.Trigger<Trigger_OnHit>(this);
+            Target.Trigger<Trigger_WhenHit>(this);
         }
-        damage *= owner.Stat<Stat_Effect>().effectMultiplier;
-        target.Stat<Stat_Life>().TakeDamage(this);
+        damage *= Owner.Stat<Stat_EffectModifiers>().effectMultiplier;
+        Target.Stat<Stat_Life>().TakeDamage(this);
         foreach (PersistentEffect effect in temporaryEffects)
         {
             effect.OnLost();

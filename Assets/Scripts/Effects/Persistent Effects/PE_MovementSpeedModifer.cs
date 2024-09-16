@@ -7,11 +7,11 @@ public class PE_MovementSpeedModifer : PersistentEffect
     public float speedIncrease;
     public override void OnGained()
     {
-        target.Stat<Stat_Movement>().movementSpeed += speedIncrease; 
+        Target.Stat<Stat_Movement>().movementSpeed += speedIncrease; 
     }
 
     public override void OnLost()
     {
-        target.Stat<Stat_Movement>().movementSpeed -= speedIncrease;
+        Target.Stat<Stat_Movement>().movementSpeed -= speedIncrease;
     }
 }

@@ -19,7 +19,7 @@ public class Targeting_Radial : MultiTargeting
     protected override bool IsValidTarget(Entity target)
     {
         Vector3 dirToEntity = target.transform.position - owner.transform.position;
-        if (dirToEntity.magnitude > radius * owner.Stat<Stat_Effect>().aoeMultiplier) return false;
+        if (dirToEntity.magnitude > radius * owner.Stat<Stat_EffectModifiers>().aoeMultiplier) return false;
         if (angle >= 180) return true;
 
         Vector3 dirToTarget = owner.Stat<Stat_Movement>().facingDir;
