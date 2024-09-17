@@ -6,8 +6,6 @@ using UnityEngine;
 public class Stat_Movement : GenericStat<Stat_Movement>
 {
     [FoldoutGroup("Movement")]
-    public Targeting targetingType = new Targeting_Distance();
-    [FoldoutGroup("Movement")]
     public Entity movementTarget;
     [FoldoutGroup("Movement")]
     public float movementSpeed;

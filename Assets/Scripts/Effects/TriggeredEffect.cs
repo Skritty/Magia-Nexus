@@ -32,6 +32,6 @@ public class TriggeredEffect : PersistentEffect
 
     protected void OnTrigger(Trigger trigger)
     {
-        effect.Create(this, Owner, trigger);
+        effect.Create(Owner, trigger);
     }
 }

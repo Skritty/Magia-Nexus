@@ -15,7 +15,7 @@ public class Rune_Fire : Rune
 
     public override void SpellEffect(Spell spell)
     {
-        effectMultiBuff.Create(spell, spell.entity);
+        effectMultiBuff.Create(spell.entity);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)

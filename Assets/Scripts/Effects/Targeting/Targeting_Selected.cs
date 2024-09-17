@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Targeting_Selected : Targeting
 {
-    public override List<Entity> GetTargets(object source, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Entity owner)
     {
-        return owner.Stat<Stat_PlayerOwner>().player.targetType.GetTargets(source, owner);
+        return owner.Stat<Stat_Targeting>().targetingType.GetTargets(source, owner);
     }
 
-    public override List<Entity> GetTargets(object source, Trigger trigger, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
     {
-        return owner.Stat<Stat_PlayerOwner>().player.targetType.GetTargets(source, trigger, owner);
+        return owner.Stat<Stat_Targeting>().targetingType.GetTargets(source, trigger, owner);
     }
 }

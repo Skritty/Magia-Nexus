@@ -11,7 +11,7 @@ public class Rune_Chaos : Rune
 
     public override void SpellEffect(Spell spell)
     {
-        effectMultiBuff.Create(spell, spell.entity);
+        effectMultiBuff.Create(spell.entity);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)
@@ -94,7 +94,7 @@ public class Rune_Chaos : Rune
                 }
             default:
                 {
-                    spell.effect.targetSelector = spell.owner.Stat<Stat_PlayerOwner>().player.targetType;
+                    spell.effect.targetSelector = spell.owner.Stat<Stat_Targeting>().targetingType;
                     return this;
                 }
         }

@@ -14,12 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidden: 0
   itemName: Spell Focus
-  itemDescription: 
+  itemDescription: Grants Fire, Earth, Wind, and Water Rune actions
   cost: 0
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.35975704, g: 0.21146306, b: 0.8301887, a: 1}
   craftingRecipe: []
-  grantedActions: []
+  grantedActions:
+  - {fileID: 11400000, guid: 7ea5c5f86f30d3d45a4da9fd515b8c69, type: 2}
+  - {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
+  - {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
+  - {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
+  - {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
   actionCountModifier: 0
   itemEffects: []
   references:

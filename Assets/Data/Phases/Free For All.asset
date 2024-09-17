@@ -16,4 +16,4 @@ MonoBehaviour:
   tickDuration: 6000
   sceneToLoad: 1v1
   baseGoldGain: 100
-  minMaxSpawnDistance: {x: 2, y: 3}
+  minMaxSpawnDistance: {x: 3, y: 4}

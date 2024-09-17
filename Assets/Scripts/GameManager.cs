@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     private Coroutine phaseTimer;
 
     public Entity defaultPlayer;
+    [SerializeReference]
+    public Targeting defaultTargeting;
     public SerializedDictionary<string, List<Item>> startingClasses;
     public int baseGold;
     public SerializedDictionary<string, Viewer> viewers = new SerializedDictionary<string, Viewer>();
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
             viewer.viewerName = user;
             viewer.items.AddRange(startingClasses[args[0]]);
             viewer.currency = baseGold;
+            viewer.targetType = defaultTargeting;
             viewers.Add(user, viewer);
         }
         return new CommandError(true, "");

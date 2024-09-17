@@ -21,7 +21,8 @@ public class Invoke : Effect
         }
 
         Owner.Stat<Stat_Magic>().runes.Clear();
-        spells[0].castSpell.Create(this);
+        if(spells.Count > 0)
+            spells[0].castSpell.Create(this);
         foreach (Spell spell in spells)
         {
             GameObject.Destroy(spell.entity.gameObject);

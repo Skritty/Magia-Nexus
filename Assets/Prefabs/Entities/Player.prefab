@@ -306,6 +306,8 @@ MonoBehaviour:
   - rid: 3492845359303229445
   - rid: 3492845359303229448
   - rid: 3492845359303229458
+  - rid: 9031231668284555682
+  - rid: 9031231668284555680
   - rid: 3492845359303229451
   - rid: 9031231527144652886
   - rid: 9031231661127237638
@@ -333,7 +335,8 @@ MonoBehaviour:
         tick: 0
         stunned: 0
         actionsPerTurn: 5
-        repeatActions: []
+        repeatActions:
+        - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
         actions: []
     - rid: 3492845359303229451
       type: {class: Stat_Damage, ns: , asm: Assembly-CSharp}
@@ -391,6 +394,8 @@ MonoBehaviour:
     - rid: 9031231661127237637
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
+        name: 
+        description: 
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
@@ -402,6 +407,32 @@ MonoBehaviour:
         mergeBehavior: 0
         effectMultiplier: 1
         aoeMultiplier: 1
+        projectilesFired: 1
+        projectileSpeedMultiplier: 1
+    - rid: 9031231668284555680
+      type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
+      data:
+        owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        mergeBehavior: 0
+        targetingType:
+          rid: 9031231668284555681
+        numberOfTargets: 1
+    - rid: 9031231668284555681
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+    - rid: 9031231668284555682
+      type: {class: Stat_Targetable, ns: , asm: Assembly-CSharp}
+      data:
+        owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        mergeBehavior: 0
+        untargetable: 0
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0

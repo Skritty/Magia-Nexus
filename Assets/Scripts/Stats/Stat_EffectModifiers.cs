@@ -9,4 +9,8 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
     public float effectMultiplier = 1;
     [FoldoutGroup("Effect Modifiers")]
     public float aoeMultiplier = 1;
+    [FoldoutGroup("Effect Modifiers")]
+    public int projectilesFired = 1;
+    [FoldoutGroup("Effect Modifiers")]
+    public int projectileSpeedMultiplier = 1;
 }

@@ -21,36 +21,7 @@ MonoBehaviour:
   craftingRecipe: []
   grantedActions: []
   actionCountModifier: 0
-  itemEffects:
-  - rid: 9031231527144652805
+  itemEffects: []
   references:
     version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 9031231527144652805
-      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
-      data:
-        targetSelector:
-          rid: 9031231527144652807
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 0
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        refreshDuration: 1
-        trigger:
-          rid: 9031231527144652806
-        effect:
-          rid: -2
-    - rid: 9031231527144652806
-      type: {class: Trigger_OnHit, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 9031231527144652807
-      type: {class: AoE_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        entitiesAffected: 8
-        numberOfTargets: 1
-        radius: 0
-        angle: 180
+    RefIds: []

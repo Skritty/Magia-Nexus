@@ -36,7 +36,7 @@ public class Spell
         entity.Stat<Stat_Actions>().AddRepeatAction(this.spellAction);
         PE_ExpireEntity expire = new PE_ExpireEntity();
         expire.tickDuration = lifetime;
-        expire.Create(this, entity);
+        expire.Create(entity);
 
 
         GenerateSpellEffect();

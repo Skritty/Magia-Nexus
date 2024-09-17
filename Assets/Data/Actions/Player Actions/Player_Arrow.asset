@@ -18,7 +18,6 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  type: 0
   timing: 1
   effects:
   - rid: 9031231527144652829
@@ -28,14 +27,16 @@ MonoBehaviour:
     - rid: 9031231527144652829
       type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
       data:
+        EffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652831
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         entityType: 2
         entity: {fileID: 6345354840142092050, guid: d5ac2c4bb3ee1ff429d0da7e0753d3c2, type: 3}
         spawnOnTarget: 0
+        projectileFanType: 2
+        projectileFanAngle: 45
     - rid: 9031231527144652831
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 

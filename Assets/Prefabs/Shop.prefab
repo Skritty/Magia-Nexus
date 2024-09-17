@@ -156,7 +156,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
   - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
   - {fileID: 11400000, guid: cf7cd7de6af40a84381d78a138533f34, type: 2}
-  basicTargeting: []
+  basicTargeting:
+  - rid: 9031231670877684057
+  - rid: 9031231670877684058
+  - rid: 9031231670877684059
   itemDisplayPrefab: {fileID: 5681345479888109855, guid: 3430ac1655aac2746bfcc6c988d45d75, type: 3}
   actionDisplayPrefab: {fileID: 5681345479888109855, guid: d6745f87e5682c245a760c6a030ef9ae, type: 3}
   shopItemDisplayPrefab: {fileID: 5681345479888109855, guid: 41c874952e4c55a4a9dd28ba06cdb67d, type: 3}
@@ -172,6 +175,33 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 71bdb7d2f35eb9b459968bc9a1c26a5a, type: 2}
   - {fileID: 11400000, guid: 314c4d451d802d1428da0c3fb677d269, type: 2}
   - {fileID: 11400000, guid: 205e9f846b89c854d9c35116b223c3f9, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 9031231670877684057
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        name: Closest Enemy
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 0
+    - rid: 9031231670877684058
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        name: Farthest Enemy
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 0
+    - rid: 9031231670877684059
+      type: {class: Targeting_Life, ns: , asm: Assembly-CSharp}
+      data:
+        name: Highest Life Enemy
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 0
 --- !u!1 &3798764917201986294
 GameObject:
   m_ObjectHideFlags: 0

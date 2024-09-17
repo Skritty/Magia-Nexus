@@ -20,11 +20,13 @@ public enum TargetSorting
     Random = 8
 }
 
+[Serializable]
 public abstract class Targeting
 {
     protected Entity owner;
-    public abstract List<Entity> GetTargets(object source, Entity owner);
-    public abstract List<Entity> GetTargets(object source, Trigger trigger, Entity owner);
+    public string name, description;
+    public abstract List<Entity> GetTargets(Effect source, Entity owner);
+    public abstract List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner);
     public virtual void OnDrawGizmos(Transform owner) { }
     public virtual T Clone<T>() where T : Effect
     {
@@ -32,14 +34,15 @@ public abstract class Targeting
     }
 }
 
+[Serializable]
 public abstract class MultiTargeting : Targeting
 {
     public TargetFilter entitiesAffected = TargetFilter.Enemies;
     public TargetSorting sortingMethod = TargetSorting.None;
     //public Vector2 targetingRange;
-    public int numberOfTargets;
+    public int numberOfTargets = -1;
 
-    public override List<Entity> GetTargets(object source, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Entity owner)
     {
         this.owner = owner;
         List<Entity> targets = new List<Entity>();
@@ -47,7 +50,7 @@ public abstract class MultiTargeting : Targeting
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>())
         {
             // Can it be targeted?
-            if (owner.Stat<Stat_Targetable>().IsTargetable(source, entity)) continue;
+            if (!entity.Stat<Stat_Targetable>().IsTargetable(source)) continue;
 
             // Is it in the affected entities?
             if(entity.Stat<Stat_Team>().team != owner.Stat<Stat_Team>().team)
@@ -79,11 +82,13 @@ public abstract class MultiTargeting : Targeting
 
         if(sortingMethod != TargetSorting.None)
             targets.Sort(SortTargets);
-        if (numberOfTargets > 0 && targets.Count > numberOfTargets)
-            targets.RemoveRange(numberOfTargets, targets.Count - numberOfTargets);
+
+        int actualNumberOfTargets = numberOfTargets + owner.Stat<Stat_Targeting>().numberOfTargets;
+        if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
+            targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
         return targets;
     }
-    public override List<Entity> GetTargets(object source, Trigger trigger, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
     {
         return GetTargets(source, owner);
     }

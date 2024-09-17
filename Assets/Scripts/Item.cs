@@ -16,6 +16,7 @@ public class Item : ScriptableObject
     public Color damageTypeColor = Color.white;
     public List<Item> craftingRecipe = new List<Item>();
     public List<Action> grantedActions = new List<Action>();
+    public List<Targeting> grantedTargeting = new List<Targeting>();
     public int actionCountModifier;
     [SerializeReference]
     public List<Effect> itemEffects = new();
@@ -24,7 +25,7 @@ public class Item : ScriptableObject
     {
         foreach(Effect effect in itemEffects)
         {
-            effect.Create(this, entity);
+            effect.Create(entity);
         }
     }
 }

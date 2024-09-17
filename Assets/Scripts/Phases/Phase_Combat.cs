@@ -41,7 +41,7 @@ public abstract class Phase_Combat : Phase
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawns.position, Quaternion.identity);
             entity.Stat<Stat_PlayerOwner>().SetPlayer(spawns.owner, entity);
             entity.Stat<Stat_Team>().team = spawns.team;
-            entity.Stat<Stat_Movement>().targetingType = spawns.owner.targetType;
+            entity.Stat<Stat_Targeting>().targetingType = spawns.owner.targetType;
             foreach (Item item in spawns.owner.items)
             {
                 item.OnGained(entity);

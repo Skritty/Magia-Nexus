@@ -18,7 +18,6 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  type: 0
   timing: 2
   effects:
   - rid: 9031231646890721447
@@ -29,29 +28,30 @@ MonoBehaviour:
     - rid: 9031231598746927109
       type: {class: Move, ns: , asm: Assembly-CSharp}
       data:
+        EffectMultiplier: 1
         targetSelector:
           rid: 9031231598746927110
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
-        movementSpeedMultiplier: 1
+        movementSpeedMultiplier: 0.8
         rotate: 0
     - rid: 9031231598746927110
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
     - rid: 9031231646890721447
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:
+        EffectMultiplier: 1
         targetSelector:
           rid: 9031231646890721448
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
         distanceFromTarget: 10
+        threshold: 0.25
     - rid: 9031231646890721448
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 

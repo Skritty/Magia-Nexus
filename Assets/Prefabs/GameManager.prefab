@@ -50,17 +50,17 @@ MonoBehaviour:
   defaultActionsPerTurn: 5
   initialPhase: {fileID: 0}
   defaultPlayer: {fileID: 4300648619749440453, guid: b7fc92d34dbec554eb4b7acca034fc24, type: 3}
-  defaultTargetType: {fileID: 11400000, guid: 5f502a4e714f97a42af9148f71d118da, type: 2}
+  defaultTargeting:
+    rid: 9031231670877684061
   startingClasses:
     serializedPairs:
     - key: fighter
       value:
       - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-      - {fileID: 11400000, guid: 71bdb7d2f35eb9b459968bc9a1c26a5a, type: 2}
-    - key: mage
+      - {fileID: 11400000, guid: 685890fe3347ff54c8d6c055120ccac7, type: 2}
+    - key: wizard
       value:
       - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-      - {fileID: 11400000, guid: f0764aaa47967d54cb9ffcf8f44d747c, type: 2}
       - {fileID: 11400000, guid: 88f952d1265c8dc4688b3afe143c349c, type: 2}
     - key: cultist
       value:
@@ -82,72 +82,86 @@ MonoBehaviour:
       value:
       - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
       - {fileID: 11400000, guid: e62bdb27cb48f5643844b72e0a1b23bf, type: 2}
+      - {fileID: 11400000, guid: 39485894faf673f4bb72972a38f34c31, type: 2}
     - key: bard
       value:
       - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
       - {fileID: 11400000, guid: a483f666bf3790749b08a51e12f13b79, type: 2}
+    - key: spellsword
+      value: []
+    - key: summoner
+      value: []
+    - key: necromancer
+      value: []
+    - key: jester
+      value: []
+    - key: wildmage
+      value: []
   baseGold: 100
   viewers:
     serializedPairs:
-    - key: Test2
+    - key: Fighter
       value:
         viewerID: 0
-        viewerName: Test2
+        viewerName: Fighter
         currency: 0
-        targetType: {fileID: 0}
+        targetType:
+          rid: 9031231527144652855
         items:
-        - {fileID: 11400000, guid: b571f4d1b2b908947af79aae821b30a2, type: 2}
-        - {fileID: 11400000, guid: 55435ea5b39e8804cb91c4705c48af43, type: 2}
-        - {fileID: 11400000, guid: 71bdb7d2f35eb9b459968bc9a1c26a5a, type: 2}
-        - {fileID: 11400000, guid: 314c4d451d802d1428da0c3fb677d269, type: 2}
-        - {fileID: 11400000, guid: 4d031efdf97f7a4459fa5cf427a3b2ac, type: 2}
-        - {fileID: 11400000, guid: 0be1260055e34684580feff5050756b8, type: 2}
-        actions:
-        - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
-        - {fileID: 11400000, guid: e611dcab08914e24b9fce0e77d88ce5b, type: 2}
-        - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
-        - {fileID: 11400000, guid: abc15f872f2312b4fb836de96eeba2f4, type: 2}
-        - {fileID: 11400000, guid: abc15f872f2312b4fb836de96eeba2f4, type: 2}
-    - key: Test1
-      value:
-        viewerID: 0
-        viewerName: Test1
-        currency: 0
-        targetType: {fileID: 0}
-        items:
-        - {fileID: 11400000, guid: b571f4d1b2b908947af79aae821b30a2, type: 2}
-        - {fileID: 11400000, guid: 55435ea5b39e8804cb91c4705c48af43, type: 2}
-        - {fileID: 11400000, guid: ee991da15b3b81a488611148d2669fe5, type: 2}
-        - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
-        - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
-        - {fileID: 11400000, guid: 4d031efdf97f7a4459fa5cf427a3b2ac, type: 2}
-        - {fileID: 11400000, guid: 205e9f846b89c854d9c35116b223c3f9, type: 2}
-        - {fileID: 11400000, guid: 88f952d1265c8dc4688b3afe143c349c, type: 2}
-        - {fileID: 11400000, guid: fcf552edc0c1bce4e8e6a98f36a7e0d5, type: 2}
-        actions:
-        - {fileID: 11400000, guid: 5f502a4e714f97a42af9148f71d118da, type: 2}
-        - {fileID: 11400000, guid: 80da79633b9a762489cbce76d3a282da, type: 2}
-        - {fileID: 11400000, guid: 80da79633b9a762489cbce76d3a282da, type: 2}
-        - {fileID: 11400000, guid: 80da79633b9a762489cbce76d3a282da, type: 2}
-        - {fileID: 11400000, guid: 80da79633b9a762489cbce76d3a282da, type: 2}
-    - key: Dummy
-      value:
-        viewerID: -1
-        viewerName: Dummy
-        currency: 0
-        targetType: {fileID: 0}
-        items:
-        - {fileID: 11400000, guid: 3156628d3afed5e4db8d8a53992b04e3, type: 2}
-        - {fileID: 11400000, guid: 88f952d1265c8dc4688b3afe143c349c, type: 2}
-        - {fileID: 11400000, guid: e62bdb27cb48f5643844b72e0a1b23bf, type: 2}
-        - {fileID: 11400000, guid: a483f666bf3790749b08a51e12f13b79, type: 2}
-        - {fileID: 11400000, guid: e20134dda11542f47aea807e1488f451, type: 2}
-        - {fileID: 11400000, guid: 685890fe3347ff54c8d6c055120ccac7, type: 2}
-        - {fileID: 11400000, guid: fcf552edc0c1bce4e8e6a98f36a7e0d5, type: 2}
-        - {fileID: 11400000, guid: 258cbda16d982384ca90636f280fd266, type: 2}
-        - {fileID: 11400000, guid: f0764aaa47967d54cb9ffcf8f44d747c, type: 2}
         - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-        actions: []
+        - {fileID: 11400000, guid: fcf552edc0c1bce4e8e6a98f36a7e0d5, type: 2}
+        - {fileID: 11400000, guid: 71bdb7d2f35eb9b459968bc9a1c26a5a, type: 2}
+        actions:
+        - {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
+        - {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
+        - {fileID: 11400000, guid: 7ea5c5f86f30d3d45a4da9fd515b8c69, type: 2}
+        - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
+        - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+    - key: Archer
+      value:
+        viewerID: 0
+        viewerName: Archer
+        currency: 0
+        targetType:
+          rid: 9031231527144652856
+        items:
+        - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
+        - {fileID: 11400000, guid: e62bdb27cb48f5643844b72e0a1b23bf, type: 2}
+        - {fileID: 11400000, guid: 4d031efdf97f7a4459fa5cf427a3b2ac, type: 2}
+        - {fileID: 11400000, guid: e62bdb27cb48f5643844b72e0a1b23bf, type: 2}
+        actions:
+        - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+        - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+        - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+        - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+        - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 9031231527144652855
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 1
+    - rid: 9031231527144652856
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 1
+    - rid: 9031231670877684061
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 0
 --- !u!1 &6866419784172424677
 GameObject:
   m_ObjectHideFlags: 0

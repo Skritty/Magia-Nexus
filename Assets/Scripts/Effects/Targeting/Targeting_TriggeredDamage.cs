@@ -6,12 +6,12 @@ public enum EffectTargetingSelector { Owner, Target }
 public class Targeting_TriggeredDamage : Targeting
 {
     public EffectTargetingSelector selector = EffectTargetingSelector.Target;
-    public override List<Entity> GetTargets(object source, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Entity owner)
     {
         return new List<Entity>() { owner };
     }
 
-    public override List<Entity> GetTargets(object source, Trigger trigger, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
     {
         Entity target;
         if (selector == EffectTargetingSelector.Owner)

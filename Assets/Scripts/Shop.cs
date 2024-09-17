@@ -6,7 +6,8 @@ using TwitchLib.Api.Helix;
 public class Shop : MonoBehaviour
 {
     public List<Item> shopItems = new List<Item>();
-    public List<Action> basicTargeting = new List<Action>();
+    [SerializeReference]
+    public List<Targeting> basicTargeting = new List<Targeting>();
     
     public DisplayItem itemDisplayPrefab, actionDisplayPrefab, shopItemDisplayPrefab, basicTargetingDisplayPrefab;
     public GameObject placeholder;
@@ -16,7 +17,7 @@ public class Shop : MonoBehaviour
 
     private List<Item> ownedItems = new List<Item>();
     private List<Action> ownedActions = new List<Action>();
-    private List<Action> ownedTargeting = new List<Action>();
+    private List<Targeting> ownedTargeting = new List<Targeting>();
 
     private void OnEnable()
     {
@@ -63,12 +64,12 @@ public class Shop : MonoBehaviour
         }
 
         // Basic Targeting
-        foreach (Action action in basicTargeting)
+        foreach (Targeting targeting in basicTargeting)
         {
             DisplayItem display = Instantiate(basicTargetingDisplayPrefab, basicTargetingLayout);
-            display.title.text = action.actionName;
-            display.desc.text = action.actionDescription;
-            display.id.text = "t" + (ownedTargeting.IndexOf(action) + 1);
+            display.title.text = targeting.name;
+            display.desc.text = targeting.description;
+            display.id.text = "t" + (ownedTargeting.IndexOf(targeting) + 1);
         }
 
         // Items/Item Actions
@@ -106,16 +107,18 @@ public class Shop : MonoBehaviour
                 new Vector2(0, ++a * -displayAction.GetComponent<RectTransform>().sizeDelta.y);
             displayAction.title.text = action.actionName;
             displayAction.desc.text = action.actionDescription;
-            switch (action.type)
-            {
-                case ActionType.Targeting:
-                    displayAction.id.text = "t" + (ownedTargeting.IndexOf(action) + 1);
-                    break;
-                case ActionType.Basic:
-                default:
-                    displayAction.id.text = "a" + (ownedActions.IndexOf(action) + 1);
-                    break;
-            }
+            displayAction.id.text = "a" + (ownedActions.IndexOf(action) + 1);
+            displayAction.background.color = item.damageTypeColor;
+        }
+
+        foreach (Targeting targeting in item.grantedTargeting)
+        {
+            DisplayItem displayAction = Instantiate(actionDisplayPrefab, display.transform);
+            displayAction.GetComponent<RectTransform>().anchoredPosition =
+                new Vector2(0, ++a * -displayAction.GetComponent<RectTransform>().sizeDelta.y);
+            displayAction.title.text = targeting.name;
+            displayAction.desc.text = targeting.description;
+            displayAction.id.text = "t" + (ownedTargeting.IndexOf(targeting) + 1);
             displayAction.background.color = item.damageTypeColor;
         }
     }
@@ -209,21 +212,16 @@ public class Shop : MonoBehaviour
                     ownedItems.Add(craft);
                     foreach (Action action in craft.grantedActions)
                     {
-                        switch (action.type)
+                        if (!ownedActions.Contains(action))
                         {
-                            case ActionType.Targeting:
-                                if (!ownedTargeting.Contains(action))
-                                {
-                                    ownedTargeting.Add(action);
-                                }
-                                break;
-                            case ActionType.Basic:
-                            default:
-                                if (!ownedActions.Contains(action))
-                                {
-                                    ownedActions.Add(action);
-                                }
-                                break;
+                            ownedActions.Add(action);
+                        }
+                    }
+                    foreach (Targeting targeting in craft.grantedTargeting)
+                    {
+                        if (!ownedTargeting.Contains(targeting))
+                        {
+                            ownedTargeting.Add(targeting);
                         }
                     }
                     CreateItemUI(craft);
@@ -250,18 +248,33 @@ public class Shop : MonoBehaviour
         }
     }
 
-    private Action GetActionFromNameOrID(string input, List<Action> list)
+    private Action GetActionFromNameOrID(string input)
     {
         int id;
         if (int.TryParse(input.Remove(0, 1), out id))
         {
             id--;
-            if (id < 0 || id >= list.Count) return null;
-            return list[id];
+            if (id < 0 || id >= ownedActions.Count) return null;
+            return ownedActions[id];
         }
         else
         {
-            return list.Find((action) => input.ToLower().Replace(" ", "").Equals(action.actionName.ToLower().Replace(" ", "")));
+            return ownedActions.Find((action) => input.ToLower().Replace(" ", "").Equals(action.actionName.ToLower().Replace(" ", "")));
+        }
+    }
+
+    private Targeting GetTargetingFromNameOrID(string input)
+    {
+        int id;
+        if (int.TryParse(input.Remove(0, 1), out id))
+        {
+            id--;
+            if (id < 0 || id >= ownedTargeting.Count) return null;
+            return ownedTargeting[id];
+        }
+        else
+        {
+            return ownedTargeting.Find((targeting) => input.ToLower().Replace(" ", "").Equals(targeting.name.ToLower().Replace(" ", "")));
         }
     }
 
@@ -289,23 +302,27 @@ public class Shop : MonoBehaviour
             {
                 foreach (Action action in item.grantedActions)
                 {
-                    switch (action.type)
+                    if (!ownedActions.Contains(action))
                     {
-                        case ActionType.Targeting:
-                            if (!ownedTargeting.Contains(action))
-                            {
-                                ownedTargeting.Add(action);
-                            }
-                            break;
-                        case ActionType.Basic:
-                        default:
-                            if (!ownedActions.Contains(action))
-                            {
-                                ownedActions.Add(action);
-                            }
-                            break;
+                        ownedActions.Add(action);
                     }
-                    
+                }
+            }
+        }
+    }
+
+    public void FindAllAvailableTargeting()
+    {
+        foreach (KeyValuePair<string, Viewer> viewer in GameManager.Instance.viewers)
+        {
+            foreach (Item item in viewer.Value.items)
+            {
+                foreach (Targeting targeting in item.grantedTargeting)
+                {
+                    if (!ownedTargeting.Contains(targeting))
+                    {
+                        ownedTargeting.Add(targeting);
+                    }
                 }
             }
         }
@@ -348,7 +365,7 @@ public class Shop : MonoBehaviour
         string turn = "";
         foreach (string input in turnActions)
         {
-            Action action = GetActionFromNameOrID(input, this.ownedActions);
+            Action action = GetActionFromNameOrID(input);
             if (action == null)
             {
                 message = "This action doesn't exist!";
@@ -369,16 +386,16 @@ public class Shop : MonoBehaviour
 
     public bool SetTargeting(Viewer viewer, string targetingType, out string message)
     {
-        Action targetingAction = GetActionFromNameOrID(targetingType, ownedTargeting);
-        if(targetingAction == null)
+        Targeting targeting = GetTargetingFromNameOrID(targetingType);
+        if(targeting == null)
         {
             message = $"Targeting type does not exist!";
             return false;
         }
         else
         {
-            message = targetingAction.actionName;
-            //viewer.targetType = targetingAction; TODO
+            message = targeting.name;
+            viewer.targetType = targeting;
             return true;
         }
     }

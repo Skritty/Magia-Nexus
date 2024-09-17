@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Fire Rune
   m_EditorClassIdentifier: 
-  actionName: Fire Rune
+  actionName: Fire
   actionDescription: Add fire to your spell
   actionImage: {fileID: 0}
   damageTypeColor: {r: 0.735849, g: 0.10412948, b: 0.10412948, a: 1}
+  hidden: 0
   maxUses: 0
-  type: 0
   timing: 4
   effects:
   - rid: 9031231527144652811
@@ -27,18 +27,14 @@ MonoBehaviour:
     - rid: 9031231527144652811
       type: {class: Rune_Fire, ns: , asm: Assembly-CSharp}
       data:
+        EffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652817
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         opposite: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
         damageEffect:
+          EffectMultiplier: 1
           targetSelector:
             rid: 9031231598746927133
-          owner: {fileID: 0}
-          target: {fileID: 0}
-          effectMultiplier: 1
           damage: 1
           ignoreFrames: 500
           skipFlatDamageReduction: 0
@@ -53,10 +49,14 @@ MonoBehaviour:
           rid: 9031231527144652822
     - rid: 9031231527144652817
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
     - rid: 9031231527144652819
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
+        name: 
+        description: 
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
@@ -65,11 +65,9 @@ MonoBehaviour:
     - rid: 9031231527144652820
       type: {class: PE_AoEBuff, ns: , asm: Assembly-CSharp}
       data:
+        EffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652821
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         tick: 0
         tickDuration: -1
         maxStacks: 1
@@ -77,15 +75,15 @@ MonoBehaviour:
         multiplier: 2
     - rid: 9031231527144652821
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
     - rid: 9031231527144652822
       type: {class: PE_EffectMuliplierBuff, ns: , asm: Assembly-CSharp}
       data:
+        EffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652823
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         tick: 0
         tickDuration: -1
         maxStacks: 10
@@ -93,7 +91,11 @@ MonoBehaviour:
         multiplier: 1
     - rid: 9031231527144652823
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
     - rid: 9031231598746927133
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 

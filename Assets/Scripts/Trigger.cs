@@ -89,3 +89,4 @@ public class Trigger_OnPersistantEffectApplied : Trigger<Trigger_OnPersistantEff
 public class Trigger_OnSpellEffectApplied : Trigger<Trigger_OnSpellEffectApplied> { }
 public class Trigger_OnRuneUsed : Trigger<Trigger_OnRuneUsed> { }
 public class Trigger_OnActionStart : Trigger<Trigger_OnActionStart> { }
+public class Trigger_OnMovementStart : Trigger<Trigger_OnMovementStart> { }

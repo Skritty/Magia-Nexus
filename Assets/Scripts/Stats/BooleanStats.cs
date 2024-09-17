@@ -1,13 +1,10 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 
-public abstract class BooleanStat<T> : GenericStat<T> where T : BooleanStat<T>
+public abstract class StackBoolean
 {
-    private int amount;
+    private int amount;// TODO make this
     [ShowInInspector]
     public bool Value => amount > 0;
-    protected override void Merge(T other)
-    {
-        amount += other.Value ? 1 : -1;
-    }
 }

@@ -11,8 +11,6 @@ public enum ActionEventTiming
     OnEnd = 4
 }
 
-public enum ActionType { Basic, Targeting, Movement }
-
 [Serializable, CreateAssetMenu(menuName = "Action")]
 public class Action : ScriptableObject
 {
@@ -23,7 +21,6 @@ public class Action : ScriptableObject
     public Color damageTypeColor = Color.white;
     public bool hidden;
     public int maxUses;
-    public ActionType type;
     public ActionEventTiming timing = ActionEventTiming.OnStart;
     [SerializeReference]
     public List<Effect> effects = new List<Effect>();
@@ -33,7 +30,7 @@ public class Action : ScriptableObject
         {
             foreach(Effect effect in effects)
             {
-                effect.Create(this, owner);
+                effect.Create(effect, owner);
             }
         }
     }
@@ -43,7 +40,7 @@ public class Action : ScriptableObject
         {
             foreach (Effect effect in effects)
             {
-                effect.Create(this, owner);
+                effect.Create(effect, owner);
             }
         }
     }
@@ -53,7 +50,7 @@ public class Action : ScriptableObject
         {
             foreach (Effect effect in effects)
             {
-                effect.Create(this, owner);
+                effect.Create(effect, owner);
             }
         }
     }

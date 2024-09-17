@@ -1,5 +1,142 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &410112129319510692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 515127256584244600}
+  - component: {fileID: 4285603957655776734}
+  - component: {fileID: 6866110741974183243}
+  - component: {fileID: 352147294710412038}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &515127256584244600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410112129319510692}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.36497167, y: 0.27781588, z: -0.1150751, w: 0.8811196}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8614082237929897821}
+  m_LocalEulerAnglesHint: {x: 45, y: 35, z: 0}
+--- !u!33 &4285603957655776734
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410112129319510692}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6866110741974183243
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410112129319510692}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &352147294710412038
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 410112129319510692}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &4268340851911659209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8614082237929897821}
+  m_Layer: 0
+  m_Name: Visuals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8614082237929897821
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268340851911659209}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 515127256584244600}
+  m_Father: {fileID: 5444420482956494905}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5630421904790809788
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,7 +166,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8614082237929897821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4300648619749440453
@@ -48,6 +186,7 @@ MonoBehaviour:
   - rid: 9031231661127237639
   - rid: 9031231598746927416
   - rid: 9031231527144652968
+  - rid: 9031231668284555342
   - rid: 9031231416496816165
   - rid: 9031231416496816166
   - rid: 9031231527144652970
@@ -70,8 +209,10 @@ MonoBehaviour:
         mergeBehavior: 0
         tick: 0
         stunned: 0
-        actionsPerTurn: 0
-        repeatActions: []
+        actionsPerTurn: 5
+        repeatActions:
+        - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
+        - {fileID: 11400000, guid: 74b77c58d3f604a409a57b692fdc4836, type: 2}
         actions: []
     - rid: 9031231481910394895
       type: {class: Stat_PersistentEffects, ns: , asm: Assembly-CSharp}
@@ -86,7 +227,6 @@ MonoBehaviour:
         owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        numberOfProjectiles: 1
         piercesRemaining: 0
     - rid: 9031231527144652970
       type: {class: Stat_Movement, ns: , asm: Assembly-CSharp}
@@ -124,6 +264,8 @@ MonoBehaviour:
     - rid: 9031231661127237640
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
+        name: 
+        description: 
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
@@ -135,3 +277,22 @@ MonoBehaviour:
         mergeBehavior: 0
         effectMultiplier: 1
         aoeMultiplier: 1
+        projectilesFired: 1
+        projectileSpeedMultiplier: 1
+    - rid: 9031231668284555342
+      type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
+      data:
+        owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        mergeBehavior: 0
+        targetingType:
+          rid: 9031231668284555343
+        numberOfTargets: 1
+    - rid: 9031231668284555343
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1

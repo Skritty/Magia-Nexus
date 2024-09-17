@@ -12,7 +12,7 @@ public class Rune_Order : Rune
     public PersistentEffect AoEBuff;
     public override void SpellEffect(Spell spell)
     {
-        AoEBuff.Create(spell, spell.entity);
+        AoEBuff.Create(spell.entity);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune)

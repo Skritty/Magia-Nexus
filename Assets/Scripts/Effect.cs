@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
 [Serializable]
 public abstract class Effect
 {
     /// <summary>
     /// Ability that applied this effect (to prevent duplicates)
     /// </summary>
-    public object Source => _source;
-    private object _source;
+    public Effect Source => _source;// TODO AAAAAAAAA
+    private Effect _source;
 
     /// <summary>
     /// Entity that applied the effect
@@ -38,7 +39,7 @@ public abstract class Effect
     /// <summary>
     /// Set the effect info without creating a clone
     /// </summary>
-    public void SetInfo(object source, Entity owner, Entity target)
+    public void SetInfo(Effect source, Entity owner, Entity target)
     {
         _source = source;
         _owner = owner;
@@ -48,7 +49,22 @@ public abstract class Effect
     /// <summary>
     /// Activates a clone of the effect to targets returned by the targetSelector
     /// </summary>
-    public void Create(object source, Entity owner)
+    public void Create(Entity owner)
+    {
+        foreach (Entity target in targetSelector.GetTargets(this, owner))
+        {
+            Effect e = Clone();
+            e._source = this;
+            e._owner = owner;
+            e._target = target;
+            e.Activate();
+        }
+    }
+
+    /// <summary>
+    /// Activates a clone of the effect to targets returned by the targetSelector
+    /// </summary>
+    public void Create(Effect source, Entity owner)
     {
         foreach (Entity target in targetSelector.GetTargets(source, owner))
         {
@@ -63,7 +79,7 @@ public abstract class Effect
     /// <summary>
     /// Activates a clone of the effect with manually input source, owner, and target
     /// </summary>
-    public void Create(object source, Entity owner, Entity target)
+    public void Create(Effect source, Entity owner, Entity target)
     {
         Effect e = Clone();
         e._source = source;
@@ -75,12 +91,12 @@ public abstract class Effect
     /// <summary>
     /// Activates a clone of the effect to targets returned by the targetSelector, which is given the trigger
     /// </summary>
-    public void Create(object source, Entity owner, Trigger trigger)
+    public void Create(Entity owner, Trigger trigger)
     {
-        foreach (Entity target in targetSelector.GetTargets(source, trigger, owner))
+        foreach (Entity target in targetSelector.GetTargets(this, trigger, owner))
         {
             Effect e = Clone();
-            e._source = source;
+            e._source = this;
             e._owner = owner;
             e._target = target;
             e.Activate(trigger);
