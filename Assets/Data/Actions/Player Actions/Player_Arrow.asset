@@ -27,14 +27,16 @@ MonoBehaviour:
     - rid: 9031231527144652829
       type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652831
         entityType: 2
         entity: {fileID: 6345354840142092050, guid: d5ac2c4bb3ee1ff429d0da7e0753d3c2, type: 3}
         spawnOnTarget: 0
-        projectileFanType: 2
-        projectileFanAngle: 45
+        projectileFanType: 1
+        projectileFanAngle: 30
     - rid: 9031231527144652831
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
       data:

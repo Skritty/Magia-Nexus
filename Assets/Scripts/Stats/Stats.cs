@@ -7,15 +7,16 @@ public enum MergeBehavior { Additive, Multiplicative, Force }
 public abstract class BaseStat
 {
     [HideInInspector]
-    public Entity owner;
+    public Entity Owner;
     [HideInInspector]
     public bool baseStat;
-    [ShowIf("@owner == null")]
+    [ShowIf("@Owner == null")]
     public MergeBehavior mergeBehavior;
     public abstract void AddInstance(Entity owner);
     public abstract void RemoveInstance(Entity owner);
     protected virtual void Initialize() { }
     public virtual void Tick() { }
+    public virtual void OnDestroy() { }
 
     /// <summary>
     /// Modifies the equivalent stat on the target entity
@@ -27,7 +28,7 @@ public abstract class GenericStat<T> : BaseStat, IBoundInstances<Entity, T> wher
 {
     public override void AddInstance(Entity owner)
     {
-        this.owner = owner;
+        this.Owner = owner;
         baseStat = true;
         IBoundInstances<Entity, T>.AddInstance((T)this, owner);
         Initialize();

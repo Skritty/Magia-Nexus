@@ -82,7 +82,6 @@ MonoBehaviour:
   - rid: 2953181870642692187
   - rid: 9031231372545491043
   - rid: 3492845359303229448
-  - rid: 3492845359303229451
   - rid: 9031231668284555760
   - rid: 9031231668284555340
   - rid: 3492845359303229456
@@ -94,14 +93,14 @@ MonoBehaviour:
     - rid: 2953181870642692187
       type: {class: Stat_Team, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
         team: 0
     - rid: 3492845359303229448
       type: {class: Stat_Actions, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
         tick: 0
@@ -112,33 +111,26 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
         - {fileID: 11400000, guid: 74b77c58d3f604a409a57b692fdc4836, type: 2}
         actions: []
-    - rid: 3492845359303229451
-      type: {class: Stat_Damage, ns: , asm: Assembly-CSharp}
-      data:
-        owner: {fileID: 6345354840142092050}
-        baseStat: 0
-        mergeBehavior: 0
-        damageModifers: []
     - rid: 3492845359303229456
       type: {class: Stat_Movement, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
         movementTarget: {fileID: 0}
-        movementSpeed: 20
+        baseMovementSpeed: 10
         facingDir: {x: 1, y: 0, z: 0}
     - rid: 9031231372545491043
       type: {class: Stat_Projectile, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
         piercesRemaining: 0
     - rid: 9031231465990389760
       type: {class: Stat_PersistentEffects, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
         persistentEffects:
@@ -147,23 +139,29 @@ MonoBehaviour:
     - rid: 9031231465990389775
       type: {class: PE_ExpireEntity, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652832
         tick: 0
-        tickDuration: 100
+        tickDuration: 200
         maxStacks: 1
         refreshDuration: 1
     - rid: 9031231465990389781
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652834
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        exactTagMatch: 0
+        triggerOrder: 99
         trigger:
           rid: 9031231465990389782
         effect:
@@ -184,7 +182,7 @@ MonoBehaviour:
     - rid: 9031231661127237644
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
         playerCharacter: 0
@@ -193,6 +191,7 @@ MonoBehaviour:
         player:
           viewerID: 0
           viewerName: 
+          points: 0
           currency: 0
           targetType:
             rid: 9031231661127237645
@@ -209,19 +208,18 @@ MonoBehaviour:
     - rid: 9031231661127237646
       type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
-        effectMultiplier: 1
-        aoeMultiplier: 1
-        projectilesFired: 1
-        projectileSpeedMultiplier: 1
     - rid: 9031231661127237651
       type: {class: Expire, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231661127237652
+        disable: 0
         delay: 0
     - rid: 9031231661127237652
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
@@ -231,7 +229,7 @@ MonoBehaviour:
     - rid: 9031231668284555340
       type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
         targetingType:
@@ -248,7 +246,7 @@ MonoBehaviour:
     - rid: 9031231668284555760
       type: {class: Stat_Targetable, ns: , asm: Assembly-CSharp}
       data:
-        owner: {fileID: 6345354840142092050}
+        Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
         untargetable: 1

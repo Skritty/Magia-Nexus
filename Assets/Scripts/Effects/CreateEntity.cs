@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,13 +20,23 @@ public class CreateEntity : Effect
         Shotgun = 4,
     }
 
+    [FoldoutGroup("@GetType()")]
     public EntityType entityType = EntityType.Basic;
+    [FoldoutGroup("@GetType()")]
     public Entity entity;
+    [FoldoutGroup("@GetType()")]
     public bool spawnOnTarget;
+    [FoldoutGroup("Projectile Behavior")]
     public ProjectileFanType projectileFanType = ProjectileFanType.Sequence;
+    [FoldoutGroup("Projectile Behavior")]
     public float projectileFanAngle = 45;
 
     public override void Activate()
+    {
+        Owner.StartCoroutine(SpawnEntity());
+    }
+
+    private IEnumerator SpawnEntity()
     {
         switch (entityType)
         {
@@ -36,32 +47,43 @@ public class CreateEntity : Effect
                 }
             case EntityType.Projectile:
                 {
-                    for(int i = 0; i < Owner.Stat<Stat_EffectModifiers>().projectilesFired; i++)
+                    int numberOfProjectiles = (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectile, EffectTag.Targets);
+                    for (int i = 0; i < numberOfProjectiles; i++)
                     {
                         Entity spawnedEntity = Create();
-                        switch (projectileFanType)
-                        {
-                            case ProjectileFanType.EvenlySpaced:
-                                {
-                                    spawnedEntity.Stat<Stat_Movement>().facingDir = 
-                                        Quaternion.Euler(0, 
-                                        Mathf.Lerp(-projectileFanAngle, projectileFanAngle, 
-                                        i * 1f / (Owner.Stat<Stat_EffectModifiers>().projectilesFired-1)), 0) 
-                                        * spawnedEntity.Stat<Stat_Movement>().facingDir;
-                                    break;
-                                }
-                            case ProjectileFanType.Shotgun:
-                                {
-                                    spawnedEntity.Stat<Stat_Movement>().facingDir =
-                                        Quaternion.Euler(0,
-                                        Mathf.Lerp(-projectileFanAngle, projectileFanAngle,
-                                        UnityEngine.Random.Range(0f, 1f)), 0)
-                                        * spawnedEntity.Stat<Stat_Movement>().facingDir;
-                                    break;
-                                }
-                        }
+                        if(numberOfProjectiles > 1)
+                            switch (projectileFanType)
+                            {
+                                case ProjectileFanType.EvenlySpaced:
+                                    {
+                                        spawnedEntity.Stat<Stat_Movement>().facingDir =
+                                            Quaternion.Euler(0, 0,
+                                            Mathf.Lerp(-projectileFanAngle, projectileFanAngle,
+                                            i * 1f / (numberOfProjectiles - 1)))
+                                            * spawnedEntity.Stat<Stat_Movement>().facingDir;
+                                        break;
+                                    }
+                                case ProjectileFanType.Shotgun:
+                                    {
+                                        spawnedEntity.Stat<Stat_Movement>().facingDir =
+                                            Quaternion.Euler(0, 0,
+                                            Mathf.Lerp(-projectileFanAngle, projectileFanAngle,
+                                            UnityEngine.Random.Range(0f, 1f)))
+                                            * spawnedEntity.Stat<Stat_Movement>().facingDir;
+                                        break;
+                                    }
+                                case ProjectileFanType.Sequence:
+                                    {
+                                        int tickDelay = (int)(1f * Owner.Stat<Stat_Actions>().ticksPerPhase / numberOfProjectiles);
+                                        for (int tick = 0; tick < tickDelay; tick++)
+                                        {
+                                            yield return new WaitForFixedUpdate();
+                                        }
+                                        break;
+                                    }
+                            }
                         spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);
-                        Owner.Trigger<Trigger_ProjectileCreated>(spawnedEntity);
+                        Owner.Stat<Stat_PlayerOwner>().Proxy(x => x.Trigger<Trigger_ProjectileCreated>(spawnedEntity, this));
                     }
                     break;
                 }

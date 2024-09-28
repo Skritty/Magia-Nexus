@@ -21,31 +21,7 @@ MonoBehaviour:
   craftingRecipe: []
   grantedActions: []
   actionCountModifier: 0
-  itemEffects:
-  - rid: 9031231643882095583
+  itemEffects: []
   references:
     version: 2
-    RefIds:
-    - rid: 9031231643882095583
-      type: {class: PE_OffensiveBuff, ns: , asm: Assembly-CSharp}
-      data:
-        targetSelector:
-          rid: 9031231643882095584
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        refreshDuration: 1
-        modifiers:
-          damageTypeModifiers:
-            serializedPairs:
-            - key: 14
-              value:
-                multiplier: 1
-                increased: 1
-                flat: 0.2
-    - rid: 9031231643882095584
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+    RefIds: []

@@ -27,26 +27,28 @@ MonoBehaviour:
     - rid: 9031231527144652811
       type: {class: Rune_Fire, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652817
         opposite: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
         damageEffect:
-          EffectMultiplier: 1
+          contributeToAssists: 0
+          <Tags>k__BackingField: 0
+          baseEffectMultiplier: 2
           targetSelector:
             rid: 9031231598746927133
-          damage: 1
           ignoreFrames: 500
           skipFlatDamageReduction: 0
           preventTriggers: 0
-          damageTypes: 32
           temporaryEffects: []
         targeting:
           rid: 9031231527144652819
         AoEBuff:
-          rid: 9031231527144652820
+          rid: 9031231777024770060
         effectMultiBuff:
-          rid: 9031231527144652822
+          rid: 9031231918534820522
     - rid: 9031231527144652817
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -62,39 +64,45 @@ MonoBehaviour:
         numberOfTargets: -1
         radius: 2
         angle: 180
-    - rid: 9031231527144652820
-      type: {class: PE_AoEBuff, ns: , asm: Assembly-CSharp}
+    - rid: 9031231598746927133
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        name: 
+        description: 
+    - rid: 9031231777024770060
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 2
         targetSelector:
-          rid: 9031231527144652821
+          rid: 9031231777024770061
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
-        multiplier: 2
-    - rid: 9031231527144652821
+        modifierType: 0
+        modifierTags: 0
+    - rid: 9031231777024770061
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
-    - rid: 9031231527144652822
-      type: {class: PE_EffectMuliplierBuff, ns: , asm: Assembly-CSharp}
+    - rid: 9031231918534820522
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
-          rid: 9031231527144652823
+          rid: 9031231918534820523
         tick: 0
         tickDuration: -1
-        maxStacks: 10
+        maxStacks: 1
         refreshDuration: 1
-        multiplier: 1
-    - rid: 9031231527144652823
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-    - rid: 9031231598746927133
+        modifierType: 1
+        modifierTags: 2147483647
+    - rid: 9031231918534820523
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 

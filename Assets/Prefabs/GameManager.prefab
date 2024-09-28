@@ -100,16 +100,16 @@ MonoBehaviour:
   baseGold: 100
   viewers:
     serializedPairs:
-    - key: Fighter
+    - key: Wizard
       value:
         viewerID: 0
-        viewerName: Fighter
+        viewerName: Wizard
         currency: 0
         targetType:
           rid: 9031231527144652855
         items:
         - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-        - {fileID: 11400000, guid: fcf552edc0c1bce4e8e6a98f36a7e0d5, type: 2}
+        - {fileID: 11400000, guid: 88f952d1265c8dc4688b3afe143c349c, type: 2}
         - {fileID: 11400000, guid: 71bdb7d2f35eb9b459968bc9a1c26a5a, type: 2}
         actions:
         - {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
@@ -128,13 +128,29 @@ MonoBehaviour:
         - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
         - {fileID: 11400000, guid: e62bdb27cb48f5643844b72e0a1b23bf, type: 2}
         - {fileID: 11400000, guid: 4d031efdf97f7a4459fa5cf427a3b2ac, type: 2}
-        - {fileID: 11400000, guid: e62bdb27cb48f5643844b72e0a1b23bf, type: 2}
         actions:
         - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
         - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
         - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+        - {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
         - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
-        - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+    - key: Fighter
+      value:
+        viewerID: 0
+        viewerName: Fighter
+        currency: 0
+        targetType:
+          rid: 9031231692007800958
+        items:
+        - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
+        - {fileID: 11400000, guid: 685890fe3347ff54c8d6c055120ccac7, type: 2}
+        - {fileID: 11400000, guid: 314c4d451d802d1428da0c3fb677d269, type: 2}
+        actions:
+        - {fileID: 11400000, guid: e611dcab08914e24b9fce0e77d88ce5b, type: 2}
+        - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
+        - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+        - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
+        - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
   references:
     version: 2
     RefIds:
@@ -144,8 +160,8 @@ MonoBehaviour:
         name: 
         description: 
         entitiesAffected: 8
-        sortingMethod: 2
-        numberOfTargets: 1
+        sortingMethod: 4
+        numberOfTargets: 0
     - rid: 9031231527144652856
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
@@ -153,9 +169,17 @@ MonoBehaviour:
         description: 
         entitiesAffected: 8
         sortingMethod: 2
-        numberOfTargets: 1
+        numberOfTargets: 0
     - rid: 9031231670877684061
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 0
+    - rid: 9031231692007800958
+      type: {class: Targeting_Life, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 

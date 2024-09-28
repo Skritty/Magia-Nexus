@@ -1,9 +1,11 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement_HomeToTarget : PersistentEffect
 {
+    [FoldoutGroup("@GetType()")]
     public float homingRateDegreesPerSecond;
 
     public override void OnGained()

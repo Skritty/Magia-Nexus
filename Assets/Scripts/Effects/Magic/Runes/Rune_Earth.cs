@@ -99,7 +99,7 @@ public class Rune_Earth : Rune
                 {
                     spell.effect.targetSelector = targeting;
                     spell.castSpell.entityType = CreateEntity.EntityType.Projectile;
-                    spell.entity.Stat<Stat_Movement>().movementSpeed = 10;
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed = 10f;
                     return this;
                 }
         }

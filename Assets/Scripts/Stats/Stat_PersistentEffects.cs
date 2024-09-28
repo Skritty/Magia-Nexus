@@ -10,7 +10,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         // Set up any persistent effects that were on an instantiated entity
         foreach (PersistentEffect effect in persistentEffects)
         {
-            effect.SetInfo(effect, owner, owner);
+            effect.SetInfo(effect, Owner, Owner);
             effect.OnGained();
         }
     }
@@ -37,6 +37,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
                 stacks++;
                 if (e.refreshDuration)
                 {
+                    e.ApplyContribution();
                     e.tick = 0;
                 }
             }
@@ -53,6 +54,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
             if(effect.tickDuration >= 0 && effect.tick >= effect.tickDuration)
             {
                 effect.OnLost();
+                effect.ApplyContribution();
                 persistentEffects.Remove(effect);
                 continue;
             }

@@ -1,12 +1,13 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GrantEntityActions : Effect
 {
-    [SerializeReference]
+    [SerializeReference, FoldoutGroup("@GetType()")]
     public List<Action> actions = new();
-    [SerializeReference]
+    [SerializeReference, FoldoutGroup("@GetType()")]
     public List<Action> repeatActions = new();
     public override void Activate()
     {

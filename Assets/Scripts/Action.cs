@@ -30,7 +30,7 @@ public class Action : ScriptableObject
         {
             foreach(Effect effect in effects)
             {
-                effect.Create(effect, owner);
+                effect.Create(owner);
             }
         }
     }
@@ -40,7 +40,7 @@ public class Action : ScriptableObject
         {
             foreach (Effect effect in effects)
             {
-                effect.Create(effect, owner);
+                effect.Create(owner);
             }
         }
     }
@@ -50,7 +50,7 @@ public class Action : ScriptableObject
         {
             foreach (Effect effect in effects)
             {
-                effect.Create(effect, owner);
+                effect.Create(owner);
             }
         }
     }

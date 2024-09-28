@@ -1,10 +1,13 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement_DistanceFromTarget : PersistentEffect
 {
+    [FoldoutGroup("@GetType()")]
     public float distanceFromTarget;
+    [FoldoutGroup("@GetType()")]
     public float threshold = 0.25f;
     public override void OnGained()
     {

@@ -28,6 +28,7 @@ MonoBehaviour:
       type: {class: SetMovementTarget, ns: , asm: Assembly-CSharp}
       data:
         EffectMultiplier: 1
+        contributeToPoints: 0
         targetSelector:
           rid: 9031231668284555267
     - rid: 9031231668284555267

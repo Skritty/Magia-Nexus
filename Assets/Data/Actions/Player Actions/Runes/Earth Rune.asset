@@ -27,22 +27,24 @@ MonoBehaviour:
     - rid: 9031231598746927113
       type: {class: Rune_Earth, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231598746927114
         opposite: {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
         damageEffect:
-          EffectMultiplier: 1
+          contributeToAssists: 0
+          <Tags>k__BackingField: 0
+          baseEffectMultiplier: 0.2
           targetSelector:
             rid: 9031231598746927127
-          damage: 0.1
           ignoreFrames: 10
           skipFlatDamageReduction: 1
           preventTriggers: 0
-          damageTypes: 2
           temporaryEffects: []
         AoEBuff:
-          rid: 9031231598746927128
+          rid: 9031231777024770058
         targeting:
           rid: 9031231598746927130
         orbitHoming: {fileID: 0}
@@ -57,22 +59,6 @@ MonoBehaviour:
       data:
         name: 
         description: 
-    - rid: 9031231598746927128
-      type: {class: PE_AoEBuff, ns: , asm: Assembly-CSharp}
-      data:
-        EffectMultiplier: 1
-        targetSelector:
-          rid: 9031231598746927129
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        refreshDuration: 1
-        multiplier: 2
-    - rid: 9031231598746927129
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
     - rid: 9031231598746927130
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
@@ -81,5 +67,24 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
-        radius: 0.1
+        radius: 0.5
         angle: 180
+    - rid: 9031231777024770058
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 2
+        targetSelector:
+          rid: 9031231777024770059
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        modifierType: 0
+        modifierTags: 0
+    - rid: 9031231777024770059
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 

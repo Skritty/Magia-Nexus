@@ -27,14 +27,14 @@ MonoBehaviour:
     - rid: 9031231527144652837
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 1
+        <Tags>k__BackingField: 4
+        baseEffectMultiplier: 0.75
         targetSelector:
           rid: 9031231527144652840
-        damage: 1
-        ignoreFrames: 20
+        ignoreFrames: 50
         skipFlatDamageReduction: 0
         preventTriggers: 0
-        damageTypes: 8
         temporaryEffects: []
     - rid: 9031231527144652840
       type: {class: Targeting_Line, ns: , asm: Assembly-CSharp}

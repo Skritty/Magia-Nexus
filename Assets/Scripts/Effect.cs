@@ -12,13 +12,17 @@ public abstract class Effect
     /// <summary>
     /// Ability that applied this effect (to prevent duplicates)
     /// </summary>
-    public Effect Source => _source;// TODO AAAAAAAAA
+    public Effect Source => _source;
     private Effect _source;
 
     /// <summary>
     /// Entity that applied the effect
     /// </summary>
-    public Entity Owner => _owner;
+    public Entity Owner
+    {
+        get => _owner;
+        set => _owner = value;
+    }
     private Entity _owner;
 
     /// <summary>
@@ -27,13 +31,31 @@ public abstract class Effect
     public Entity Target => _target;
     private Entity _target;
 
+    [FoldoutGroup("@GetType()")]
+    public bool contributeToAssists = false;
+
+    [field: SerializeField, FoldoutGroup("@GetType()")]
+    public virtual EffectTag Tags { get; set; }
+
     /// <summary>
     /// Multiplies the output of the effect, multiplied through chains of effects
     /// </summary>
-    [HideInInspector]
-    public float EffectMultiplier = 1;
+    public float EffectMultiplier
+    {
+        get
+        {
+            return Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CalculateModifier(this, 0, 0, Tags);
+        }
 
-    [SerializeReference]
+        set
+        {
+            baseEffectMultiplier = value;
+        }
+    }
+    [FoldoutGroup("@GetType()")]
+    public float baseEffectMultiplier = 1;
+    
+    [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
 
     /// <summary>
@@ -57,22 +79,24 @@ public abstract class Effect
             e._source = this;
             e._owner = owner;
             e._target = target;
-            e.Activate();
+            e.DoEffect();
         }
     }
 
     /// <summary>
-    /// Activates a clone of the effect to targets returned by the targetSelector
+    /// Activates a clone of the effect to targets returned by the targetSelector, which is given the trigger
     /// </summary>
-    public void Create(Effect source, Entity owner)
+    public void Create(Entity owner, Trigger trigger, Effect triggeringEffect)
     {
-        foreach (Entity target in targetSelector.GetTargets(source, owner))
+        foreach (Entity target in targetSelector.GetTargets(this, trigger, owner))
         {
             Effect e = Clone();
-            e._source = source;
+            e._source = this;
             e._owner = owner;
             e._target = target;
-            e.Activate();
+            if(triggeringEffect != null)
+                e.baseEffectMultiplier *= triggeringEffect.baseEffectMultiplier;
+            e.DoEffect();
         }
     }
 
@@ -85,22 +109,7 @@ public abstract class Effect
         e._source = source;
         e._owner = owner;
         e._target = target;
-        e.Activate();
-    }
-
-    /// <summary>
-    /// Activates a clone of the effect to targets returned by the targetSelector, which is given the trigger
-    /// </summary>
-    public void Create(Entity owner, Trigger trigger)
-    {
-        foreach (Entity target in targetSelector.GetTargets(this, trigger, owner))
-        {
-            Effect e = Clone();
-            e._source = this;
-            e._owner = owner;
-            e._target = target;
-            e.Activate(trigger);
-        }
+        e.DoEffect();
     }
 
     /// <summary>
@@ -109,10 +118,11 @@ public abstract class Effect
     public void Create(Effect inherit)
     {
         Effect e = Clone();
-        e._source = inherit.Source;
+        e._source = this;
         e._owner = inherit.Owner;
         e._target = inherit.Target;
-        e.Activate();
+        e.baseEffectMultiplier *= inherit.baseEffectMultiplier;
+        e.DoEffect();
     }
 
     private Effect Clone()
@@ -120,9 +130,15 @@ public abstract class Effect
         return (Effect)MemberwiseClone();
     }
     
-    public abstract void Activate();
-    public virtual void Activate(Trigger trigger) 
+    public virtual void DoEffect()
     {
+        Owner.Trigger<Trigger_OnActivateEffect>(this, this);
+        if (contributeToAssists)
+        {
+            //Owner.Stat<Stat_PlayerOwner>().ApplyContribution(Target, baseEffectMultiplier);
+        }
         Activate();
     }
+
+    public abstract void Activate();
 }

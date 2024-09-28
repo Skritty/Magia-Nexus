@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidden: 0
   itemName: Enchanted Quiver
-  itemDescription: '+1 projectile
+  itemDescription: '+2 projectile
 
     Projectiles home toward your target'
   cost: 0
@@ -25,21 +25,24 @@ MonoBehaviour:
   actionCountModifier: 0
   itemEffects:
   - rid: 9031231481910394880
+  - rid: 9031231822436499456
   references:
     version: 2
     RefIds:
     - rid: 9031231481910394880
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652808
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 0
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        exactTagMatch: 0
+        triggerOrder: 0
         trigger:
           rid: 9031231481910394881
         effect:
@@ -49,20 +52,43 @@ MonoBehaviour:
       data: 
     - rid: 9031231527144652808
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
     - rid: 9031231598746927163
       type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
       data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231598746927164
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
-        homingRateDegreesPerSecond: 120
+        homingRateDegreesPerSecond: 60
     - rid: 9031231598746927164
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
+    - rid: 9031231822436499456
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 2
+        targetSelector:
+          rid: 9031231822436499457
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        modifierType: 0
+        modifierTags: 69632
+    - rid: 9031231822436499457
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 

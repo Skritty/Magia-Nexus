@@ -13,44 +13,39 @@ MonoBehaviour:
   m_Name: Player_Warcry
   m_EditorClassIdentifier: 
   actionName: Warcry
-  actionDescription: 'You and nearby allies: Deal 10% increased physical damage for
+  actionDescription: 'You and nearby allies: Deal 5% increased physical damage for
     10 seconds (stacks)'
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  type: 0
   timing: 1
   effects:
-  - rid: 9031231646177165322
+  - rid: 9031231777024770052
   references:
     version: 2
     RefIds:
-    - rid: 9031231646177165322
-      type: {class: PE_OffensiveBuff, ns: , asm: Assembly-CSharp}
+    - rid: 9031231777024770052
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 0.05
         targetSelector:
-          rid: 9031231646177165324
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
+          rid: 9031231777024770072
         tick: 0
         tickDuration: 500
         maxStacks: 20
-        refreshDuration: 1
-        modifiers:
-          damageTypeModifiers:
-            serializedPairs:
-            - key: 14
-              value:
-                multiplier: 1
-                increased: 1.1
-                flat: 0
-    - rid: 9031231646177165324
+        refreshDuration: 0
+        modifierType: 1
+        modifierTags: 8199
+    - rid: 9031231777024770072
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
-        entitiesAffected: 5
+        name: 
+        description: 
+        entitiesAffected: 7
         sortingMethod: 1
-        numberOfTargets: 0
-        radius: 5
+        numberOfTargets: -1
+        radius: 4
         angle: 180

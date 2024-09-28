@@ -8,6 +8,7 @@ public class Viewer
 {
     public int viewerID;
     public string viewerName;
+    public float points;
     public int currency;
     [SerializeReference]
     public Targeting targetType = new Targeting_Distance();

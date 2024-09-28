@@ -16,8 +16,8 @@ MonoBehaviour:
   actionDescription: Casts your spell
   actionImage: {fileID: 0}
   damageTypeColor: {r: 0.5442267, g: 0.25649688, b: 0.8238993, a: 1}
+  hidden: 0
   maxUses: 0
-  type: 0
   timing: 4
   effects:
   - rid: 9031231527144652824
@@ -27,17 +27,17 @@ MonoBehaviour:
     - rid: 9031231527144652824
       type: {class: Invoke, ns: , asm: Assembly-CSharp}
       data:
+        EffectMultiplier: 1
+        contributeToPoints: 0
         targetSelector:
           rid: 9031231527144653249
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         spellPrefab: {fileID: 4300648619749440453, guid: 1b5a9dd3aeef568429994bd7f63261b9, type: 3}
         spellAction: {fileID: 11400000, guid: 020f7e0e21e74bb4b978415d7c253ebd, type: 2}
     - rid: 9031231527144653249
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
+        name: 
+        description: 
         entitiesAffected: 8
         sortingMethod: 2
-        targetingRange: {x: 0, y: 10}
         numberOfTargets: 1

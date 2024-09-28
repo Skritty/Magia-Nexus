@@ -16,52 +16,67 @@ MonoBehaviour:
   actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
+  hidden: 0
   maxUses: 0
-  type: 0
   timing: 4
   effects:
   - rid: 9031231598746927111
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 9031231598746927111
       type: {class: Rune_Chaos, ns: , asm: Assembly-CSharp}
       data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231598746927123
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         opposite: {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
         debuff:
-          rid: 9031231598746927131
+          rid: 9031231777024770054
         effectMultiBuff:
-          rid: -2
+          rid: 9031231777024770056
     - rid: 9031231598746927123
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 9031231598746927131
-      type: {class: PE_DefensiveBuff, ns: , asm: Assembly-CSharp}
       data:
+        name: 
+        description: 
+    - rid: 9031231777024770054
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
-          rid: 9031231598746927132
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
+          rid: 9031231777024770055
         tick: 0
         tickDuration: 125
         maxStacks: 1
         refreshDuration: 1
-        modifiers:
-          damageTypeModifiers:
-            serializedPairs:
-            - key: 254
-              value:
-                multiplier: 2
-                increased: 1
-                flat: 0
-    - rid: 9031231598746927132
+        modifierType: 1
+        modifierTags: 16639
+    - rid: 9031231777024770055
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
+    - rid: 9031231777024770056
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
+        targetSelector:
+          rid: 9031231777024770057
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        modifierType: 1
+        modifierTags: 2147483647
+    - rid: 9031231777024770057
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 

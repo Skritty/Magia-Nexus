@@ -32,13 +32,17 @@ MonoBehaviour:
     - rid: 9031231527144652844
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231527144652845
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        exactTagMatch: 0
+        triggerOrder: 0
         trigger:
           rid: 9031231527144652846
         effect:
@@ -54,30 +58,34 @@ MonoBehaviour:
     - rid: 9031231527144652847
       type: {class: PE_DamageOverTime, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
+        contributeToAssists: 1
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 0.02
         targetSelector:
-          rid: 9031231527144652848
+          rid: 9031231777024770348
         tick: 0
         tickDuration: 25
         maxStacks: 1
         refreshDuration: 1
         damage:
-          EffectMultiplier: 1
+          contributeToAssists: 0
+          <Tags>k__BackingField: 32776
+          baseEffectMultiplier: 1
           targetSelector:
             rid: 9031231527144652850
           damage: 0.02
           ignoreFrames: 0
           skipFlatDamageReduction: 1
           preventTriggers: 1
-          damageTypes: 32
           temporaryEffects: []
-    - rid: 9031231527144652848
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
     - rid: 9031231527144652850
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
+    - rid: 9031231777024770348
+      type: {class: Targeting_TriggeredDamage, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        selector: 1

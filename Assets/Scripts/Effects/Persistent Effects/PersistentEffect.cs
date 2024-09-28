@@ -8,23 +8,36 @@ using UnityEngine;
 [Serializable]
 public abstract class PersistentEffect: Effect
 {
-    [BoxGroup("Persistent Effect"), ReadOnly]
+    [FoldoutGroup("PersistentEffect", -9), ReadOnly]
     public int tick;
-    [BoxGroup("Persistent Effect")]
+    [FoldoutGroup("PersistentEffect", -9)]
     public int tickDuration = -1;
-    [BoxGroup("Persistent Effect")]
+    [FoldoutGroup("PersistentEffect", -9)]
     public int maxStacks = 1;
-    [BoxGroup("Persistent Effect")]
+    [FoldoutGroup("PersistentEffect", -9)]
     public bool refreshDuration = true;
+
+    public override void DoEffect()
+    {
+        Owner.Trigger<Trigger_OnActivateEffect>(this, this);
+        Activate();
+    }
 
     public override void Activate()
     {
+        Owner = Owner.Stat<Stat_PlayerOwner>().playerEntity;
         Target.Stat<Stat_PersistentEffects>().ApplyEffect(this);
     }
 
     public virtual void OnGained() { }
     public virtual void OnTick() { }
     public virtual void OnLost() { }
+
+    public virtual void ApplyContribution()
+    {
+        if (!contributeToAssists || tick <= 0) return;
+        Owner.Stat<Stat_PlayerOwner>().ApplyContribution(Target, baseEffectMultiplier * tick);
+    }
 
     public PersistentEffect Clone()
     {

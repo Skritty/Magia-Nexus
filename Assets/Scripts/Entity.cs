@@ -41,6 +41,7 @@ public class Entity : MonoBehaviour
     {
         foreach (BaseStat stat in baseStats)
         {
+            stat.OnDestroy();
             stat.RemoveInstance(this);
         }
     }
@@ -50,7 +51,7 @@ public class Entity : MonoBehaviour
         foreach (BaseStat stat in baseStats)
         {
             if (stat == null) continue;
-            stat.owner = this;
+            stat.Owner = this;
         }
     }
 }

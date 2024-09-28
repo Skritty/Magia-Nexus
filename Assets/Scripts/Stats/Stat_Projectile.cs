@@ -12,7 +12,13 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
     protected override void Initialize()
     {
         base.Initialize();
-        owner.Subscribe<Trigger_OnHit>(OnHit);
+        Owner.Subscribe<Trigger_OnHit>(OnHit);
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        Owner.Unsubscribe<Trigger_OnHit>(OnHit);
     }
 
     private void OnHit(Trigger trigger)
@@ -20,11 +26,11 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
         DamageInstance damage = trigger.Data<DamageInstance>();
         if (--piercesRemaining < 0)
         {
-            owner.Trigger<Trigger_Expire>(damage.Owner);
+            Owner.Trigger<Trigger_Expire>(damage.Owner);
         }
         else
         {
-            owner.Trigger<Trigger_OnProjectilePierce>(damage);
+            Owner.Stat<Stat_PlayerOwner>().Proxy(x => x.Trigger<Trigger_OnProjectilePierce>(damage, damage));
         }
     }
 }

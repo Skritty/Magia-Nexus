@@ -44,13 +44,18 @@ public abstract class MultiTargeting : Targeting
 
     public override List<Entity> GetTargets(Effect source, Entity owner)
     {
+        if(owner == null)
+        {
+            Debug.LogWarning("Owner of Targeting is null!");
+            return new List<Entity>();
+        }
         this.owner = owner;
         List<Entity> targets = new List<Entity>();
         TargetFilter targetType;
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>())
         {
             // Can it be targeted?
-            if (!entity.Stat<Stat_Targetable>().IsTargetable(source)) continue;
+            if (!entity.Stat<Stat_Targetable>().IsTargetable(owner, source)) continue;
 
             // Is it in the affected entities?
             if(entity.Stat<Stat_Team>().team != owner.Stat<Stat_Team>().team)

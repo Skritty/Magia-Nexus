@@ -19,7 +19,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     [FoldoutGroup("Actions")]
     public List<Action> actions = new List<Action>();
 
-    private int ticksPerPhase => (int)(GameManager.Instance.timePerTurn / actionsPerTurn * (1 / Time.fixedDeltaTime));
+    public int ticksPerPhase => (int)(GameManager.Instance.timePerTurn / actionsPerTurn * (1 / Time.fixedDeltaTime));
     private int phase;
     private Action currentAction;
 
@@ -91,16 +91,16 @@ public class Stat_Actions : GenericStat<Stat_Actions>
         {
             phase++;
             if (phase - 1 == actions.Count) phase = 1;
-            currentAction?.OnEnd(owner);
+            currentAction?.OnEnd(Owner);
             currentAction = actions[phase - 1];
             foreach (Action a in repeatActions)
             {
                 if(tick != 0)
-                    a?.OnEnd(owner);
-                a?.OnStart(owner);
-                owner.Trigger<Trigger_OnActionStart>(this);
+                    a?.OnEnd(Owner);
+                a?.OnStart(Owner);
             }
-            currentAction?.OnStart(owner);
+            currentAction?.OnStart(Owner);
+            Owner.Trigger<Trigger_OnActionStart>(currentAction);
         }
     }
 
@@ -108,8 +108,8 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     {
         foreach (Action a in repeatActions)
         {
-            a?.Tick(owner);
+            a?.Tick(Owner);
         }
-        currentAction?.Tick(owner);
+        currentAction?.Tick(Owner);
     }
 }

@@ -30,42 +30,46 @@ MonoBehaviour:
     - rid: 9031231646177165315
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
+        contributeToAssists: 0
+        <Tags>k__BackingField: 0
+        baseEffectMultiplier: 1
         targetSelector:
           rid: 9031231646177165316
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        exactTagMatch: 0
+        triggerOrder: 0
         trigger:
           rid: 9031231646177165317
         effect:
           rid: 9031231646177165318
     - rid: 9031231646177165316
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
     - rid: 9031231646177165317
       type: {class: Trigger_OnActionStart, ns: , asm: Assembly-CSharp}
       data: 
     - rid: 9031231646177165318
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
+        contributeToAssists: 1
+        <Tags>k__BackingField: 514
+        baseEffectMultiplier: 0.5
         targetSelector:
           rid: 9031231646177165319
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
-        damage: 0.5
         ignoreFrames: 0
         skipFlatDamageReduction: 0
         preventTriggers: 0
-        damageTypes: 4
         temporaryEffects: []
     - rid: 9031231646177165319
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
+        name: 
+        description: 
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
