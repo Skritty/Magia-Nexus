@@ -47,7 +47,7 @@ public class CreateEntity : Effect
                 }
             case EntityType.Projectile:
                 {
-                    int numberOfProjectiles = (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectile, EffectTag.Targets);
+                    int numberOfProjectiles = (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectile | EffectTag.Targets);
                     for (int i = 0; i < numberOfProjectiles; i++)
                     {
                         Entity spawnedEntity = Create();

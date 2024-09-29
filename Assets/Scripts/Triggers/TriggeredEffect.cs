@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -23,7 +24,10 @@ public class TriggeredEffect : PersistentEffect
     public override void OnGained()
     {
         trigger.AddInstance(Owner);
-        trigger.Subscribe(OnTrigger, Tags, exactTagMatch, triggerOrder);
+        foreach (KeyValuePair<EffectTag, float> tag in effectTags)
+        {
+            trigger.Subscribe(OnTrigger, tag.Key, exactTagMatch, triggerOrder);// TODO 
+        }
     }
     public override void OnLost()
     {

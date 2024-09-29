@@ -1,16 +1,16 @@
 using Sirenix.OdinInspector;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using TwitchLib.Api.Helix.Models.Common;
 
 public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 {
     public class EffectModifier
     {
         public Effect effect;
-        public EffectModifierType type;
+        public EffectModifierCalculationType type;
         public EffectTag tag;
+        public EffectTag grantedTag;
         public float modifier;
 
         public float buffedModifier;
@@ -19,32 +19,55 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
         public List<EffectModifier> additive = new List<EffectModifier>();// At most 1 additive if there are multipliers
         public List<EffectModifier> multipliers = new List<EffectModifier>();
 
-        public EffectModifier(bool root, Effect effect = null, EffectModifierType type = EffectModifierType.Base, EffectTag tag = EffectTag.None, float modifier = 0)
+        public EffectModifier(Effect effect = null, EffectModifierCalculationType type = EffectModifierCalculationType.Flat, EffectTag tag = EffectTag.None, EffectTag grantedTag = EffectTag.None, float modifier = 0)
         {
             this.effect = effect;
             this.type = type;
             this.tag = tag;
+            this.grantedTag = grantedTag;
             this.modifier = modifier;
-            if (root)
+        }
+
+        public EffectModifier GetSubcalculation(EffectTag tags)
+        {
+            EffectModifier subcalculation = null;
+            foreach (EffectModifier calculation in additive)
             {
-                additive.Add(new EffectModifier(false));
-                multipliers.Add(new EffectModifier(false));
+                if (tags == calculation.tag)
+                {
+                    subcalculation = calculation;
+                    break;
+                }
             }
+            return subcalculation;
         }
 
-        public void AddBase(EffectModifier modifier)
+        public EffectModifier AddFlat(EffectModifier modifier)
         {
-            additive[0].additive.Add(modifier);
+            // Root: ((damage type subcalculation) + ...)
+            // Damage type subcalculation: ((Flat + ...) * (Increased + ...) * Multiplier * ...)
+            // TODO: Do damage taken on second step
+            EffectModifier subcalculation = GetSubcalculation(modifier.tag);
+            if (subcalculation == null)
+            {
+                subcalculation = new EffectModifier();
+                subcalculation.tag = modifier.tag;
+                subcalculation.additive.Add(new EffectModifier());
+                subcalculation.multipliers.Add(new EffectModifier());
+                additive.Add(subcalculation);
+            }
+            subcalculation.additive[0].additive.Add(modifier);
+            return subcalculation;
         }
 
-        public void AddAdditive(EffectModifier modifier)
+        public void AddAdditive(EffectModifier modifier, EffectModifier subcalculation)
         {
-            multipliers[0].additive.Add(modifier);
+            subcalculation.multipliers[0].additive.Add(modifier);
         }
 
-        public void AddMultiplicative(EffectModifier modifier)
+        public void AddMultiplicative(EffectModifier modifier, EffectModifier subcalculation)
         {
-            multipliers.Add(modifier);
+            subcalculation.multipliers.Add(modifier);
         }
 
         public float CalculateModifier(Effect contributingEffect, float contributionMultiplier, float negativeContributionMultiplier)
@@ -100,6 +123,12 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
         {
             if (effect != null && effect.Owner && modifier != 0)
             {
+                if (positive == 0) damageDealt = 0;
+                else damageDealt = damageDealt / totalPositive * positive;
+
+                if (negative == 0) damageMitigated = 0;
+                else damageMitigated = damageMitigated / totalNegative * negative;
+
                 if (modifier > 0)
                 {
                     effect.Owner.Stat<Stat_PlayerOwner>().ApplyContribution(contributingEffect.Target, damageDealt);
@@ -109,12 +138,6 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
                     effect.Owner.Stat<Stat_PlayerOwner>().ApplyContribution(contributingEffect.Owner, damageMitigated);
                 }
             }
-
-            if (positive == 0) damageDealt = 0;
-            else damageDealt = damageDealt / totalPositive * positive;
-
-            if (negative == 0) damageMitigated = 0;
-            else damageMitigated = damageMitigated / totalNegative * negative;
 
             foreach (EffectModifier damageCalculation in additive)
             {
@@ -128,77 +151,81 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
     }
 
     [ShowInInspector, ReadOnly, FoldoutGroup("Effect Modifiers")]
-    public Dictionary<Effect, EffectModifier> effectModifier = new Dictionary<Effect, EffectModifier>();
-    public void AddMultiplier(Effect effect, EffectModifierType type, EffectTag tag, float modifier)
+    public List<EffectModifier> effectModifiers = new List<EffectModifier>();
+    public void AddModifier(Effect effect, EffectModifierCalculationType type, EffectTag tag, EffectTag grantedTag, float modifier)
     {
-        effectModifier.Add(effect, new EffectModifier(false, effect, type, tag, modifier));
+        effectModifiers.Add(new EffectModifier(effect, type, tag, grantedTag, modifier));
     }
 
-    public void RemoveMultiplier(Effect effect)
+    public void RemoveModifier(Effect effect)
     {
-        effectModifier.Remove(effect);
+        effectModifiers.RemoveAll(x => x.effect == effect);
     }
 
-    public float CalculateModifier(params EffectTag[] tags)
+    public float CalculateModifier(EffectTag additionalRequiredTags = EffectTag.None)
     {
-        return CalculateModifier(null, 0, 0, tags);
+        return CalculateModifier(null, 0, 0, additionalRequiredTags);
     }
 
-    public float CalculateModifier(Effect contributingEffect, float contributionMultiplier, float negativeContributionMultiplier, params EffectTag[] tags)
+    public float CalculateModifier(Effect contributingEffect, float contributionMultiplier, float negativeContributionMultiplier, EffectTag additionalRequiredTags = EffectTag.None)
     {
-        return CreateCalculation(null, contributingEffect, tags).CalculateModifier(contributingEffect, contributionMultiplier, negativeContributionMultiplier);
+        return CreateCalculation(null, contributingEffect, additionalRequiredTags).CalculateModifier(contributingEffect, contributionMultiplier, negativeContributionMultiplier);
     }
 
-    public EffectModifier CreateCalculation(EffectModifier calculation, Effect contributingEffect, params EffectTag[] tags)
+    public EffectModifier CreateCalculation(EffectModifier rootCalculation, Effect contributingEffect, EffectTag additionalRequiredTags)
     {
-        if (calculation == null)
+        if (rootCalculation == null)
         {
-            calculation = new EffectModifier(true);
+            rootCalculation = new EffectModifier();
             if (contributingEffect == null)
             {
-                calculation.AddBase(new EffectModifier(false, null, EffectModifierType.Base, EffectTag.Global, 1));
+                rootCalculation.AddFlat(new EffectModifier(null, EffectModifierCalculationType.Flat, EffectTag.None | additionalRequiredTags, EffectTag.None, 1));
             }
             else
             {
-                calculation.AddBase(new EffectModifier(false, contributingEffect, EffectModifierType.Base, contributingEffect.Tags, 1));
-                calculation.AddBase(new EffectModifier(false, contributingEffect, EffectModifierType.Multiplicative, contributingEffect.Tags, contributingEffect.baseEffectMultiplier - 1));
+                rootCalculation.multipliers.Add(new EffectModifier(contributingEffect, EffectModifierCalculationType.Multiplicative, EffectTag.None, EffectTag.None, contributingEffect.effectMultiplier - 1));
+                foreach (KeyValuePair<EffectTag, float> tag in contributingEffect.effectTags)
+                {
+                    EffectModifier subcalculation = rootCalculation.AddFlat(new EffectModifier(contributingEffect, EffectModifierCalculationType.Flat, tag.Key, tag.Key, 1));
+                    rootCalculation.AddMultiplicative(new EffectModifier(contributingEffect, EffectModifierCalculationType.Multiplicative, tag.Key, tag.Key, tag.Value - 1), subcalculation);
+                }
             }
         }
 
-        foreach (KeyValuePair<Effect, EffectModifier> kvp in effectModifier)
+        for(int i = 0; i < rootCalculation.additive.Count; i++)
         {
-            EffectModifier modifier = kvp.Value;
-            bool valid = true;
-            foreach (EffectTag tag in tags)
+            EffectModifier subcalculation = rootCalculation.additive[i];
+            HashSet<EffectModifier> flatGained = new HashSet<EffectModifier>();
+            foreach (EffectModifier modifier in effectModifiers)
             {
-                if ((modifier.tag & tag) == 0)
+                if(!flatGained.Contains(modifier) && (modifier.tag & (subcalculation.tag | additionalRequiredTags)) == (subcalculation.tag | additionalRequiredTags))
                 {
-                    valid = false;
-                }
-            }
-            if (valid)
-            {
-                switch (modifier.type)
-                {
-                    case EffectModifierType.Multiplicative:
-                        {
-                            calculation.AddMultiplicative(modifier);
-                            break;
-                        }
-                    case EffectModifierType.Additive:
-                        {
-                            calculation.AddAdditive(modifier);
-                            break;
-                        }
-                    case EffectModifierType.Base:
-                        {
-                            calculation.AddBase(modifier);
-                            break;
-                        }
+                    switch (modifier.type)
+                    {
+                        case EffectModifierCalculationType.Multiplicative:
+                            {
+                                subcalculation.AddMultiplicative(modifier, subcalculation);
+                                break;
+                            }
+                        case EffectModifierCalculationType.Additive:
+                            {
+                                subcalculation.AddAdditive(modifier, subcalculation);
+                                break;
+                            }
+                        case EffectModifierCalculationType.Flat:
+                            {
+                                flatGained.Add(modifier);
+                                rootCalculation.AddFlat(new EffectModifier(modifier.effect, modifier.type, modifier.grantedTag, modifier.grantedTag, modifier.modifier));
+                                break;
+                            }
+                    }
                 }
             }
         }
-        return calculation;
+        // (fire, spell) from (attack)
+        // (1 (slashing, attack)) * 1.5 + (1 (fire, spell) from buff) * 1.5
+        // 1 * 1.5 + 1 * 1.5 = 3, (1 + 1) * 1.5 = 3
+        return rootCalculation;
     }
 }
 
@@ -240,9 +267,16 @@ public enum EffectTag
     Global        = int.MaxValue
 }
 
-public enum EffectModifierType
+public enum EffectModifierCalculationType
 {
-    Base,
+    Flat,
     Additive,
     Multiplicative
 }
+
+// Damage Type Needs
+// DamageInstance must support multiple damage type values (Give it a dictionary<damagetype, float> with a default value)
+// Each damage type value is buffed by different things during damage calculation ("subcalculations" / find modifiers per damagetype)
+// Activate triggers per damage type (done in damageinstance)
+
+// RF (Fire, Burning, DoT) <- affected by DoT targeting support gem (grants Duration tag)

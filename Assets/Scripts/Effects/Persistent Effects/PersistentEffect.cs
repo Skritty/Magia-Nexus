@@ -16,6 +16,8 @@ public abstract class PersistentEffect: Effect
     public int maxStacks = 1;
     [FoldoutGroup("PersistentEffect", -9)]
     public bool refreshDuration = true;
+    [FoldoutGroup("PersistentEffect", -9)]
+    public bool contributeToAssists = false;
 
     public override void DoEffect()
     {
@@ -36,7 +38,7 @@ public abstract class PersistentEffect: Effect
     public virtual void ApplyContribution()
     {
         if (!contributeToAssists || tick <= 0) return;
-        Owner.Stat<Stat_PlayerOwner>().ApplyContribution(Target, baseEffectMultiplier * tick);
+        Owner.Stat<Stat_PlayerOwner>().ApplyContribution(Target, effectMultiplier * tick);
     }
 
     public PersistentEffect Clone()

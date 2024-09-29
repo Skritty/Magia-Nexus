@@ -29,15 +29,20 @@ MonoBehaviour:
     - rid: 9031231643882095565
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231643882095567
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
+        exactTagMatch: 0
+        triggerOrder: 0
         trigger:
           rid: 9031231643882095568
         effect:
@@ -45,6 +50,8 @@ MonoBehaviour:
     - rid: 9031231643882095567
       type: {class: Targeting_TriggeredDamage, ns: , asm: Assembly-CSharp}
       data:
+        name: 
+        description: 
         selector: 1
     - rid: 9031231643882095568
       type: {class: Trigger_OnDamageDealt, ns: , asm: Assembly-CSharp}
@@ -52,31 +59,38 @@ MonoBehaviour:
     - rid: 9031231643882095569
       type: {class: PE_DamageOverTime, ns: , asm: Assembly-CSharp}
       data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231643882095570
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         tick: 0
         tickDuration: 125
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         damage:
+          effectMultiplier: 1
+          effectTags:
+            serializedPairs:
+            - key: 2056
+              value: 0.008
           targetSelector:
             rid: 9031231643882095573
-          owner: {fileID: 0}
-          target: {fileID: 0}
-          effectMultiplier: 1
-          damage: 0.008
           ignoreFrames: 0
           skipFlatDamageReduction: 1
           preventTriggers: 1
-          damageTypes: 32
           temporaryEffects: []
     - rid: 9031231643882095570
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 
     - rid: 9031231643882095573
       type: {class: Targeting_TriggeredDamage, ns: , asm: Assembly-CSharp}
       data:
+        name: 
+        description: 
         selector: 1

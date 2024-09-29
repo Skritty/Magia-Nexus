@@ -27,9 +27,11 @@ MonoBehaviour:
     - rid: 9031231527144652837
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 1
-        <Tags>k__BackingField: 4
-        baseEffectMultiplier: 0.75
+        effectMultiplier: 0.6
+        effectTags:
+          serializedPairs:
+          - key: 4100
+            value: 1
         targetSelector:
           rid: 9031231527144652840
         ignoreFrames: 50

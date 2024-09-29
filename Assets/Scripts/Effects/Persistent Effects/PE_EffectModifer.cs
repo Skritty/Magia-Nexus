@@ -6,17 +6,20 @@ using UnityEngine;
 public class PE_EffectModifer : PersistentEffect
 {
     [FoldoutGroup("@GetType()")]
-    public EffectModifierType modifierType;
+    public EffectModifierCalculationType modifierType;
     [FoldoutGroup("@GetType()")]
-    public EffectTag modifierTags;
+    public EffectTag grantedTag;
 
     public override void OnGained()
     {
-        Target.Stat<Stat_EffectModifiers>().AddMultiplier(this, modifierType, modifierTags, baseEffectMultiplier);
+        foreach (KeyValuePair<EffectTag, float> tag in effectTags)
+        {
+            Target.Stat<Stat_EffectModifiers>().AddModifier(this, modifierType, tag.Key, grantedTag, tag.Value);
+        }
     }
 
     public override void OnLost()
     {
-        Target.Stat<Stat_EffectModifiers>().RemoveMultiplier(this);
+        Target.Stat<Stat_EffectModifiers>().RemoveModifier(this);
     }
 }

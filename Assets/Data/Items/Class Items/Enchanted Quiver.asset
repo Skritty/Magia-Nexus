@@ -32,15 +32,18 @@ MonoBehaviour:
     - rid: 9031231481910394880
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231527144652808
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         exactTagMatch: 0
         triggerOrder: 0
         trigger:
@@ -58,16 +61,19 @@ MonoBehaviour:
     - rid: 9031231598746927163
       type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231598746927164
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
-        homingRateDegreesPerSecond: 60
+        contributeToAssists: 0
+        homingRateDegreesPerSecond: 75
     - rid: 9031231598746927164
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -76,17 +82,20 @@ MonoBehaviour:
     - rid: 9031231822436499456
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 2
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 69632
+            value: 2
         targetSelector:
           rid: 9031231822436499457
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         modifierType: 0
-        modifierTags: 69632
+        grantedTag: 69632
     - rid: 9031231822436499457
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

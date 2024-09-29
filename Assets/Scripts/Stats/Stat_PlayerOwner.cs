@@ -45,6 +45,7 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
 
     public void ApplyContribution(Entity target, float effectMultiplier)
     {
+        if (playerEntity == target) return;
         target = target.Stat<Stat_PlayerOwner>().playerEntity;
         Viewer player = playerEntity.Stat<Stat_PlayerOwner>().player;
         if (!target.Stat<Stat_PlayerOwner>().assists.TryAdd(player, Mathf.Abs(effectMultiplier)))

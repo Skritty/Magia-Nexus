@@ -15,10 +15,10 @@ public class Move : Effect
             Owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);
         }
 
-        Owner.transform.position += 
-            Owner.Stat<Stat_Movement>().facingDir 
+        Owner.transform.position +=
+            Owner.Stat<Stat_Movement>().facingDir
             * Owner.Stat<Stat_Movement>().baseMovementSpeed
-            * EffectMultiplier 
+            * GetMultiplier(EffectTag.MovementSpeed) 
             * Time.fixedDeltaTime;
     }
 }

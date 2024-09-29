@@ -31,32 +31,31 @@ public abstract class Effect
     public Entity Target => _target;
     private Entity _target;
 
-    [FoldoutGroup("@GetType()")]
-    public bool contributeToAssists = false;
-
-    [field: SerializeField, FoldoutGroup("@GetType()")]
-    public virtual EffectTag Tags { get; set; }
-
     /// <summary>
     /// Multiplies the output of the effect, multiplied through chains of effects
     /// </summary>
-    public float EffectMultiplier
-    {
-        get
-        {
-            return Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CalculateModifier(this, 0, 0, Tags);
-        }
-
-        set
-        {
-            baseEffectMultiplier = value;
-        }
-    }
     [FoldoutGroup("@GetType()")]
-    public float baseEffectMultiplier = 1;
+    public float effectMultiplier = 1;
+    [FoldoutGroup("@GetType()")]
+    public SerializedDictionary<EffectTag, float> effectTags = new SerializedDictionary<EffectTag, float>() { {EffectTag.None, 1f} };
     
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
+
+    public float GetMultiplier()
+    {
+        float multiplier = 0;
+        foreach (KeyValuePair<EffectTag, float> tag in effectTags)
+        {
+            multiplier += Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CalculateModifier(tag.Key);
+        }
+        return multiplier;
+    }
+
+    public float GetMultiplier(EffectTag tags)
+    {
+        return Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CalculateModifier(tags);
+    }
 
     /// <summary>
     /// Set the effect info without creating a clone
@@ -95,7 +94,7 @@ public abstract class Effect
             e._owner = owner;
             e._target = target;
             if(triggeringEffect != null)
-                e.baseEffectMultiplier *= triggeringEffect.baseEffectMultiplier;
+                e.effectMultiplier *= triggeringEffect.effectMultiplier;
             e.DoEffect();
         }
     }
@@ -121,7 +120,7 @@ public abstract class Effect
         e._source = this;
         e._owner = inherit.Owner;
         e._target = inherit.Target;
-        e.baseEffectMultiplier *= inherit.baseEffectMultiplier;
+        e.effectMultiplier *= inherit.effectMultiplier;
         e.DoEffect();
     }
 
@@ -133,10 +132,6 @@ public abstract class Effect
     public virtual void DoEffect()
     {
         Owner.Trigger<Trigger_OnActivateEffect>(this, this);
-        if (contributeToAssists)
-        {
-            //Owner.Stat<Stat_PlayerOwner>().ApplyContribution(Target, baseEffectMultiplier);
-        }
         Activate();
     }
 

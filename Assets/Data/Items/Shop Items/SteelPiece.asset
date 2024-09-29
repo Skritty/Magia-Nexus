@@ -29,17 +29,22 @@ MonoBehaviour:
     - rid: 9031231643882095574
       type: {class: PE_LifeBuff, ns: , asm: Assembly-CSharp}
       data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231643882095575
-        owner: {fileID: 0}
-        target: {fileID: 0}
-        effectMultiplier: 1
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         maxLifeChange: 10
         currentLifeChange: 10
     - rid: 9031231643882095575
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        name: 
+        description: 

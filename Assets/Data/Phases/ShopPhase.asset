@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ShopPhase
   m_EditorClassIdentifier: 
   nextPhase: {fileID: 11400000, guid: 26fb657ae4f821f4ea5f23269abb0f5f, type: 2}
-  tickDuration: 300000
+  tickDuration: 3000000
   sceneToLoad: ShopPhase
