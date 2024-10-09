@@ -10,17 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Sword
+  m_Name: Class_Tower Shield
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Sword
-  itemDescription: Grants [Slash]
+  itemName: Tower Shield
+  itemDescription: '+50 max life
+
+    Take 10% less damage'
   cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.57861626, g: 0.57861626, b: 0.57861626, a: 1}
-  craftingRecipe:
-  - {fileID: 11400000, guid: 0be1260055e34684580feff5050756b8, type: 2}
-  - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
-  grantedActions:
-  - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+  damageTypeColor: {r: 0.57232696, g: 0.57232696, b: 0.57232696, a: 1}
+  craftingRecipe: []
+  grantedActions: []
   actionCountModifier: 0
+  itemEffects: []
+  references:
+    version: 2
+    RefIds: []

@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Tower Shield
+  m_Name: Class_Juggling Club
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Tower Shield
-  itemDescription: '+50 max life
+  itemName: Juggling Club
+  itemDescription: 'When you use an action, juggle your next action, up to (actions
+    - 2)
 
-    Take 10% less damage'
+    (juggled actions are removed from your turn until you exceed your max
+    amount juggled)'
   cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.57232696, g: 0.57232696, b: 0.57232696, a: 1}
+  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   craftingRecipe: []
   grantedActions: []
   actionCountModifier: 0

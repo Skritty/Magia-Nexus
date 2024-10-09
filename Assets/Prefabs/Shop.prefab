@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shopItems:
+  - {fileID: 11400000, guid: da2ae0772fe25054fa22f8e7e1cd63e9, type: 2}
   - {fileID: 11400000, guid: 0be1260055e34684580feff5050756b8, type: 2}
   - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
   - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
@@ -171,7 +172,7 @@ MonoBehaviour:
   craftableItems:
   - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
   - {fileID: 11400000, guid: 4d031efdf97f7a4459fa5cf427a3b2ac, type: 2}
-  - {fileID: 11400000, guid: ee991da15b3b81a488611148d2669fe5, type: 2}
+  - {fileID: 11400000, guid: 39485894faf673f4bb72972a38f34c31, type: 2}
   - {fileID: 11400000, guid: 71bdb7d2f35eb9b459968bc9a1c26a5a, type: 2}
   - {fileID: 11400000, guid: 314c4d451d802d1428da0c3fb677d269, type: 2}
   - {fileID: 11400000, guid: 205e9f846b89c854d9c35116b223c3f9, type: 2}

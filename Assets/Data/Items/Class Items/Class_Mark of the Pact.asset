@@ -10,14 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Quick Wit
+  m_Name: Class_Mark of the Pact
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Quick Wit
-  itemDescription: 
+  itemName: Mark of the Pact
+  itemDescription: 'You can have up to 3 summons (add more targeting types to declare
+    more minions)
+
+    Summons use your non-movement actions instead of you'
   cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.27216086, g: 0.5650549, b: 0.6226415, a: 1}
+  damageTypeColor: {r: 0.81761, g: 0.20825908, b: 0.7271255, a: 1}
   craftingRecipe: []
   grantedActions: []
   actionCountModifier: 0

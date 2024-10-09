@@ -26,12 +26,12 @@ public class TriggeredEffect : PersistentEffect
         trigger.AddInstance(Owner);
         foreach (KeyValuePair<EffectTag, float> tag in effectTags)
         {
-            trigger.Subscribe(OnTrigger, tag.Key, exactTagMatch, triggerOrder);// TODO 
+            trigger.Subscribe(Owner, OnTrigger, tag.Key, exactTagMatch, triggerOrder);
         }
     }
     public override void OnLost()
     {
-        trigger.Unsubscribe(OnTrigger);
+        trigger.Unsubscribe(Owner, OnTrigger);
         trigger.RemoveInstance(Owner);
     }
 

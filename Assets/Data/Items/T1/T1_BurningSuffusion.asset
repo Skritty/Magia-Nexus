@@ -10,23 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Torch
+  m_Name: T1_BurningSuffusion
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Torch
-  itemDescription: 'On hit with attacks: ignite (1 fire/2.5s)'
-  cost: 25
+  itemName: Burning Suffusion
+  itemDescription: 'On hit: ignite (0.5 fire/0.5s)'
+  cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.9559748, g: 0.7058059, b: 0.1653414, a: 0}
-  craftingRecipe: []
+  damageTypeColor: {r: 0.91194963, g: 0.3429839, b: 0.2896443, a: 1}
+  craftingRecipe:
+  - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
+  - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
+  - {fileID: 11400000, guid: cf7cd7de6af40a84381d78a138533f34, type: 2}
   grantedActions: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 9031231643882095565
+  - rid: 9031231527144652844
   references:
     version: 2
     RefIds:
-    - rid: 9031231643882095565
+    - rid: 9031231527144652844
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
@@ -35,7 +38,7 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 9031231643882095567
+          rid: 9031231527144652845
         tick: 0
         tickDuration: -1
         maxStacks: 1
@@ -44,19 +47,18 @@ MonoBehaviour:
         exactTagMatch: 0
         triggerOrder: 0
         trigger:
-          rid: 9031231643882095568
+          rid: 9031231527144652846
         effect:
-          rid: 9031231643882095569
-    - rid: 9031231643882095567
-      type: {class: Targeting_TriggeredDamage, ns: , asm: Assembly-CSharp}
+          rid: 9031231527144652847
+    - rid: 9031231527144652845
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
-        selector: 1
-    - rid: 9031231643882095568
+    - rid: 9031231527144652846
       type: {class: Trigger_OnDamageDealt, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 9031231643882095569
+    - rid: 9031231527144652847
       type: {class: PE_DamageOverTime, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
@@ -65,30 +67,30 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 9031231643882095570
+          rid: 9031231777024770348
         tick: 0
-        tickDuration: 125
+        tickDuration: 25
         maxStacks: 1
         refreshDuration: 1
-        contributeToAssists: 0
+        contributeToAssists: 1
         damage:
           effectMultiplier: 1
           effectTags:
             serializedPairs:
             - key: 2056
-              value: 0.008
+              value: 0.02
           targetSelector:
-            rid: 9031231643882095573
+            rid: 9031231527144652850
           ignoreFrames: 0
           skipFlatDamageReduction: 1
           preventTriggers: 1
           temporaryEffects: []
-    - rid: 9031231643882095570
+    - rid: 9031231527144652850
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
-    - rid: 9031231643882095573
+    - rid: 9031231777024770348
       type: {class: Targeting_TriggeredDamage, ns: , asm: Assembly-CSharp}
       data:
         name: 

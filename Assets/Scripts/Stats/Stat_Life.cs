@@ -48,7 +48,7 @@ public class Stat_Life : GenericStat<Stat_Life>
         // Handle Life
         if (totalDamage > 0)
             Owner.Stat<Stat_PlayerOwner>().ApplyContribution(damage.Owner, totalDamage * TankContributionMultiplier);
-        Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
+        //Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
         currentLife = Mathf.Clamp(currentLife - totalDamage, 0, maxLife);
         if (!damage.preventTriggers)
         {

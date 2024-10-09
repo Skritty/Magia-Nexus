@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Twin Axes
+  m_Name: Class_Magic Rapier
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Twin Axes
+  itemName: Magic Rapier
   itemDescription: 
   cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.6855345, g: 0.3426424, b: 0.20910947, a: 1}
+  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   craftingRecipe: []
   grantedActions: []
   actionCountModifier: 0

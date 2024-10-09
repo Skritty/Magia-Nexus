@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 1v1
   m_EditorClassIdentifier: 
   nextPhase: {fileID: 11400000, guid: 993b0d7af92f085438db9d52f4e17b57, type: 2}
-  tickDuration: 6000
+  tickDuration: 60000
   sceneToLoad: 1v1
-  baseGoldGain: 100
+  basePointGain: 0
+  winPointGain: 0

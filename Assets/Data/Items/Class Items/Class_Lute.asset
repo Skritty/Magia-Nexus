@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
+  m_Name: Class_Lute
+  m_EditorClassIdentifier: 
+  hidden: 0
+  itemName: Lute
+  itemDescription: 'You have unlimited actions
+
+    Only do your next action when
+    an ally does an action (0.1s cooldown)'
+  cost: 0
+  itemImage: {fileID: 0}
+  damageTypeColor: {r: 0.5849056, g: 0.43794626, b: 0.27038085, a: 1}
+  craftingRecipe: []
+  grantedActions: []
+  actionCountModifier: 0
+  itemEffects:
+  - rid: 3963142589493018955
+  references:
+    version: 2
+    RefIds:
+    - rid: 3963142589493018955
+      type: {class: PE_StartingDelay, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
+        targetSelector:
+          rid: 3963142589493018956
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        refreshDuration: 1
+        contributeToAssists: 0
+        tickDelay: -50
+    - rid: 3963142589493018956
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 

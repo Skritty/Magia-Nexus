@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Death Sycthe
+  m_Name: T1_Boots
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Death Sycthe
-  itemDescription: 
+  itemName: Boots
+  itemDescription: Grants [Move] action
   cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
-  craftingRecipe: []
-  grantedActions: []
+  damageTypeColor: {r: 0.44654083, g: 0.322573, b: 0.22046196, a: 1}
+  craftingRecipe:
+  - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
+  - {fileID: 11400000, guid: da2ae0772fe25054fa22f8e7e1cd63e9, type: 2}
+  grantedActions:
+  - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
+  - {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
   actionCountModifier: 0
   itemEffects: []
   references:

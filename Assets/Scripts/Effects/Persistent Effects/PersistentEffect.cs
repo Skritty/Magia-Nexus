@@ -27,7 +27,7 @@ public abstract class PersistentEffect: Effect
 
     public override void Activate()
     {
-        Owner = Owner.Stat<Stat_PlayerOwner>().playerEntity;
+        //Owner = Owner.Stat<Stat_PlayerOwner>().playerEntity;
         Target.Stat<Stat_PersistentEffects>().ApplyEffect(this);
     }
 

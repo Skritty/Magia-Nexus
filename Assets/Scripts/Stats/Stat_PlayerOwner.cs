@@ -52,7 +52,7 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
         {
             target.Stat<Stat_PlayerOwner>().assists[player] += Mathf.Abs(effectMultiplier);
         }
-        Debug.Log($"{playerEntity.name} gaining {effectMultiplier} contribution points towards the kill on {target.name} | Now at {target.Stat<Stat_PlayerOwner>().assists[player]}");
+        //Debug.Log($"{playerEntity.name} gaining {effectMultiplier} contribution points towards the kill on {target.name} | Now at {target.Stat<Stat_PlayerOwner>().assists[player]}");
     }
 
     public void DistributeRewards()

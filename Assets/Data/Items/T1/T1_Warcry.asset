@@ -10,17 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: BladeBarrier
+  m_Name: T1_Warcry
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Blade Barrier
-  itemDescription: Grants [Blade Barrier]
+  itemName: Warcry
+  itemDescription: Grants [Warcry]
   cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.5510066, g: 0.8805031, b: 0.8181944, a: 1}
+  damageTypeColor: {r: 0.8805031, g: 0.468812, b: 0.16336374, a: 1}
   craftingRecipe:
-  - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
   - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
+  - {fileID: 11400000, guid: 0be1260055e34684580feff5050756b8, type: 2}
   grantedActions:
-  - {fileID: 11400000, guid: 0cb067aef1583e748bd2904e8642c6cd, type: 2}
+  - {fileID: 11400000, guid: e611dcab08914e24b9fce0e77d88ce5b, type: 2}
   actionCountModifier: 0
+  itemEffects: []
+  references:
+    version: 2
+    RefIds: []

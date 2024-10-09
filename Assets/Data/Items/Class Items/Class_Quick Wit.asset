@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Ritual Dagger
+  m_Name: Class_Quick Wit
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Ritual Dagger
+  itemName: Quick Wit
   itemDescription: 
   cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.4274113, g: 0.27095437, b: 0.6289307, a: 1}
+  damageTypeColor: {r: 0.27216086, g: 0.5650549, b: 0.6226415, a: 1}
   craftingRecipe: []
   grantedActions: []
   actionCountModifier: 0

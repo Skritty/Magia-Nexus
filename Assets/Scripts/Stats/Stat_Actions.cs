@@ -15,6 +15,8 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     [FoldoutGroup("Actions")]
     public int actionsPerTurn;
     [FoldoutGroup("Actions")]
+    public int startingTickDelay;
+    [FoldoutGroup("Actions")]
     public List<Action> repeatActions = new List<Action>(); // Happen before each action (Only do OnStart)
     [FoldoutGroup("Actions")]
     public List<Action> actions = new List<Action>();
@@ -86,7 +88,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
 
     private void FetchNextAction()
     {
-        if (actions.Count == 0) return;
+        if (actions.Count == 0 || tick <= startingTickDelay) return;
         if (tick % ticksPerPhase == 0)
         {
             phase++;

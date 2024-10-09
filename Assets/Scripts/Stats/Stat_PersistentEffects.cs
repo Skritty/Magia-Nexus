@@ -32,7 +32,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         int stacks = 0;
         foreach (PersistentEffect e in persistentEffects)
         {
-            if (e.Source == effect.Source)
+            if (e.Source == effect.Source && e.Owner == effect.Owner)
             {
                 stacks++;
                 if (e.refreshDuration)
@@ -42,7 +42,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
                 }
             }
         }
-        if (stacks >= effect.maxStacks) return false;
+        if (effect.maxStacks >= 0 && stacks >= effect.maxStacks) return false;
         return true;
     }
 
@@ -60,5 +60,15 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
             }
             effect.OnTick();
         }
+    }
+
+    public override void OnDestroy()
+    {
+        foreach (PersistentEffect effect in persistentEffects)
+        {
+            effect.OnLost();
+            effect.ApplyContribution();
+        }
+        persistentEffects.Clear();
     }
 }

@@ -42,11 +42,13 @@ public abstract class Phase_Combat : Phase
     private void SpawnEntities()
     {
         spawns = GetEntitySpawns();
+        remainingPlayers.Clear();
         foreach (EntitySpawns spawn in spawns)
         {
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawn.position, Quaternion.identity);
             entity.Stat<Stat_PlayerOwner>().SetPlayer(spawn.owner, entity);
             entity.Stat<Stat_Team>().team = spawn.team;
+            entity.Stat<Stat_Actions>().startingTickDelay = (int)(GameManager.Instance.timePerTurn * 50);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
             entity.Stat<Stat_Targeting>().targetingType = spawn.owner.targetType;
             entity.Subscribe<Trigger_OnDie>(TrackKill);

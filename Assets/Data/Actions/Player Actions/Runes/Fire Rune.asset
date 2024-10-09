@@ -79,7 +79,7 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 0
+          - key: 32768
             value: 1
         targetSelector:
           rid: 9031231777024770061
@@ -89,6 +89,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0
+        grantedTag: 32768
     - rid: 9031231777024770061
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -100,8 +101,8 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 2147483647
-            value: 1
+          - key: 1966591
+            value: 2
         targetSelector:
           rid: 9031231918534820523
         tick: 0
@@ -110,6 +111,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 1
+        grantedTag: 1966591
     - rid: 9031231918534820523
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

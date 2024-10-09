@@ -46,8 +46,13 @@ public class Shop : MonoBehaviour
     private void Start()
     {
         ownedTargeting.AddRange(basicTargeting);
+        FindAllOwnedItems();
+        foreach (Item item in craftableItems) // TODO: Placeholder (shows all items)
+        {
+            if (ownedItems.Contains(item)) continue;
+            ownedItems.Add(item);
+        }
         FindAllAvailableActions();
-        FindAllAvailableItems();
         UpdateDisplay();
     }
 
@@ -296,16 +301,13 @@ public class Shop : MonoBehaviour
 
     public void FindAllAvailableActions()
     {
-        foreach (KeyValuePair<string, Viewer> viewer in GameManager.Instance.viewers)
+        foreach (Item item in ownedItems)
         {
-            foreach (Item item in viewer.Value.items)
+            foreach (Action action in item.grantedActions)
             {
-                foreach (Action action in item.grantedActions)
+                if (!ownedActions.Contains(action))
                 {
-                    if (!ownedActions.Contains(action))
-                    {
-                        ownedActions.Add(action);
-                    }
+                    ownedActions.Add(action);
                 }
             }
         }
@@ -313,22 +315,19 @@ public class Shop : MonoBehaviour
 
     public void FindAllAvailableTargeting()
     {
-        foreach (KeyValuePair<string, Viewer> viewer in GameManager.Instance.viewers)
+        foreach (Item item in ownedItems)
         {
-            foreach (Item item in viewer.Value.items)
+            foreach (Targeting targeting in item.grantedTargeting)
             {
-                foreach (Targeting targeting in item.grantedTargeting)
+                if (!ownedTargeting.Contains(targeting))
                 {
-                    if (!ownedTargeting.Contains(targeting))
-                    {
-                        ownedTargeting.Add(targeting);
-                    }
+                    ownedTargeting.Add(targeting);
                 }
             }
         }
     }
 
-    public void FindAllAvailableItems()
+    public void FindAllOwnedItems()
     {
         List<Item> items = new List<Item>();
         items.AddRange(shopItems);
@@ -404,6 +403,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_CheckGold(string user, List<string> args)
     {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You have: {GameManager.Instance.viewers[user].currency}";
         TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
@@ -411,6 +411,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_ListHeldItems(string user, List<string> args)
     {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You have: ";
         foreach (Item item in GameManager.Instance.viewers[user].items)
         {
@@ -424,6 +425,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_BuyItems(string user, List<string> args)
     {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You purchased: ";
         string outMessage;
         if(args.Count == 0)
@@ -449,6 +451,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_CraftItem(string user, List<string> args)
     {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You crafted: ";
         string outMessage;
         if (CraftItem(GameManager.Instance.viewers[user], args, out outMessage))
@@ -466,6 +469,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_ListActions(string user, List<string> args)
     {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You have: ";
         foreach (Action action in FindAvailableActions(GameManager.Instance.viewers[user]))
         {
@@ -478,6 +482,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_CreateTurn(string user, List<string> args)
     {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = "";
         string outMessage;
         if (CreateTurn(GameManager.Instance.viewers[user], args, out outMessage))
@@ -494,6 +499,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_ListTurn(string user, List<string> args)
     {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = $"@{user} Your turn will be: ";
         foreach (Action action in GameManager.Instance.viewers[user].actions)
         {
@@ -506,6 +512,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_SetTargeting(string user, List<string> args)
     {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         if (args.Count == 0)
         {
             return new CommandError(false, $"{@GameManager.Instance.viewers[user].viewerName} Please provide a targeting type.");

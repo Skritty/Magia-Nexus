@@ -27,9 +27,11 @@ MonoBehaviour:
     - rid: 9031231527144652829
       type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231527144652831
         entityType: 2

@@ -106,6 +106,7 @@ MonoBehaviour:
         tick: 0
         stunned: 0
         actionsPerTurn: 5
+        startingTickDelay: 0
         repeatActions:
         - {fileID: 11400000, guid: 49243ad2f7fec714dbba9c0f8292f636, type: 2}
         - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
@@ -139,27 +140,33 @@ MonoBehaviour:
     - rid: 9031231465990389775
       type: {class: PE_ExpireEntity, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231527144652832
         tick: 0
         tickDuration: 200
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
     - rid: 9031231465990389781
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231527144652834
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         exactTagMatch: 0
         triggerOrder: 99
         trigger:
@@ -214,9 +221,11 @@ MonoBehaviour:
     - rid: 9031231661127237651
       type: {class: Expire, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231661127237652
         disable: 0

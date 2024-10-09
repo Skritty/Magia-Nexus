@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Free For All
   m_EditorClassIdentifier: 
   nextPhase: {fileID: 11400000, guid: 993b0d7af92f085438db9d52f4e17b57, type: 2}
-  tickDuration: 6000
+  tickDuration: 60000
   sceneToLoad: 1v1
   basePointGain: 50
   winPointGain: 10

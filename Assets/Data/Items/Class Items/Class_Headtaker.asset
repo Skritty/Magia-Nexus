@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Headtaker
+  m_Name: Class_Headtaker
   m_EditorClassIdentifier: 
   hidden: 0
   itemName: Headtaker
@@ -30,15 +30,18 @@ MonoBehaviour:
     - rid: 9031231646177165315
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231646177165316
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         exactTagMatch: 0
         triggerOrder: 0
         trigger:
@@ -56,9 +59,11 @@ MonoBehaviour:
     - rid: 9031231646177165318
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 1
-        <Tags>k__BackingField: 514
-        baseEffectMultiplier: 0.5
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 2
+            value: 0.5
         targetSelector:
           rid: 9031231646177165319
         ignoreFrames: 0

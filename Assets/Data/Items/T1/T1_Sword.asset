@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
-  m_Name: Bow
+  m_Name: T1_Sword
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Bow
+  itemName: Sword
   itemDescription: Grants [Slash]
   cost: 0
   itemImage: {fileID: 0}
@@ -22,9 +22,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0be1260055e34684580feff5050756b8, type: 2}
   - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
   grantedActions:
-  - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+  - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
   actionCountModifier: 0
-  itemEffects: []
-  references:
-    version: 2
-    RefIds: []

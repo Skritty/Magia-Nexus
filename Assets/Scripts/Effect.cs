@@ -117,7 +117,7 @@ public abstract class Effect
     public void Create(Effect inherit)
     {
         Effect e = Clone();
-        e._source = this;
+        e._source = inherit.Source;
         e._owner = inherit.Owner;
         e._target = inherit.Target;
         e.effectMultiplier *= inherit.effectMultiplier;

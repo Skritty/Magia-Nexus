@@ -67,7 +67,8 @@ public class TwitchClient : MonoBehaviour
 
     public void SendChatMessage(string message)
     {
-        Debug.Log($"Sending message: {message}");
+        if (!client.IsConnected) return;
+        Debug.Log($"Sending message: \"{message}\" in {client.JoinedChannels[0].Channel}'s chat");
         client.SendMessage(client.JoinedChannels[0], message);
     }
 
@@ -94,6 +95,7 @@ public class TwitchClient : MonoBehaviour
             .Select(x => x.ToLower())
             .Where(x => !string.IsNullOrEmpty(x)).ToList();
         Debug.Log($"Command Detected");
+        if (command.Count == 0) return null;
 
         string commandName = command[0];
         command.RemoveAt(0);

@@ -35,7 +35,7 @@ public class DamageInstance : Effect
         {
             effect.OnLost();
         }
-        if(ignoreFrames <= 0)
+        if (ignoreFrames > 0)
             new PE_IgnoreEntity(ignoreFrames).Create(this);
     }
 

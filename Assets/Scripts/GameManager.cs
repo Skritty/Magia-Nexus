@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
             viewer.targetType = defaultTargeting;
             viewers.Add(user, viewer);
         }
+        TwitchClient.Instance.SendChatMessage($"@{user} joined as {args[0]}");
         return new CommandError(true, "");
     }
 

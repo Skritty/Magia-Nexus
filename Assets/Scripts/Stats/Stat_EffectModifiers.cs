@@ -1,7 +1,6 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using TwitchLib.Api.Helix.Models.Common;
 
 public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 {
@@ -192,10 +191,10 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
             }
         }
 
-        for(int i = 0; i < rootCalculation.additive.Count; i++)
+        HashSet<EffectModifier> flatGained = new HashSet<EffectModifier>();
+        for (int i = 0; i < rootCalculation.additive.Count; i++)
         {
             EffectModifier subcalculation = rootCalculation.additive[i];
-            HashSet<EffectModifier> flatGained = new HashSet<EffectModifier>();
             foreach (EffectModifier modifier in effectModifiers)
             {
                 if(!flatGained.Contains(modifier) && (modifier.tag & (subcalculation.tag | additionalRequiredTags)) == (subcalculation.tag | additionalRequiredTags))

@@ -425,17 +425,20 @@ MonoBehaviour:
     - rid: 9031231727694250688
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231727694250689
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         exactTagMatch: 0
-        triggerOrder: 0
+        triggerOrder: 99
         trigger:
           rid: 9031231727694250690
         effect:
@@ -451,9 +454,11 @@ MonoBehaviour:
     - rid: 9031231727694250761
       type: {class: Expire, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231727694250762
         disable: 1

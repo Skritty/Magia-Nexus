@@ -14,14 +14,16 @@ public abstract class Trigger
 {
     public class TriggerSubscription
     {
+        public Entity source;
         private EffectTag tags;
         private bool exactMatch;
         public Action<Trigger> method;
         public int order = 0;
         public bool remove;
 
-        public TriggerSubscription(Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
+        public TriggerSubscription(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
         {
+            this.source = source;
             this.tags = tags;
             this.exactMatch = exactMatch;
             this.method = method;
@@ -56,9 +58,9 @@ public abstract class Trigger
     public Effect TriggeringEffect { get; set; }
     public abstract void AddInstance(Entity source);
     public abstract void RemoveInstance(Entity source);
-    public virtual void Subscribe(Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
+    public virtual void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
     {
-        subscriptions.Add(new TriggerSubscription(method, tags, exactMatch, order));
+        subscriptions.Add(new TriggerSubscription(source, method, tags, exactMatch, order));
         subscriptions.Sort((x,y) =>
         {
             if (x.order == y.order) return 0;
@@ -66,11 +68,11 @@ public abstract class Trigger
             return -1;
         });
     }
-    public virtual void Unsubscribe(Action<Trigger> method)
+    public virtual void Unsubscribe(Entity source, Action<Trigger> method)
     {
         foreach (TriggerSubscription subscription in subscriptions)
         {
-            if(subscription.method == method)
+            if(subscription.source == source)
             {
                 subscription.remove = true;
             }
@@ -79,6 +81,7 @@ public abstract class Trigger
     public void Invoke(Effect triggeringEffect, EffectTag tags)
     {
         TriggeringEffect = triggeringEffect;
+        subscriptions.RemoveAll(x => x.source == null);
         foreach (TriggerSubscription subscription in subscriptions)
         {
             subscription.Invoke(this, tags);
@@ -88,6 +91,7 @@ public abstract class Trigger
     {
         TriggeringEffect = triggeringEffect;
         IBoundInstances<Trigger, T>.AddInstance(data, this);
+        subscriptions.RemoveAll(x => x.source == null);
         foreach (TriggerSubscription subscription in subscriptions)
         {
             subscription.Invoke(this, tags);
@@ -113,11 +117,11 @@ public static class TriggerExtensions
 {
     public static void Subscribe<T>(this Entity source, Action<Trigger> method, EffectTag tags = EffectTag.Global, bool exactMatch = false, int order = 0) where T : Trigger
     {
-        IBoundInstances<Entity, T>.GetOrCreateInstance(source).Subscribe(method, tags, exactMatch, order);
+        IBoundInstances<Entity, T>.GetOrCreateInstance(source).Subscribe(source, method, tags, exactMatch, order);
     }
     public static void Unsubscribe<T>(this Entity source, Action<Trigger> method) where T : Trigger
     {
-        IBoundInstances<Entity, T>.GetOrCreateInstance(source).Unsubscribe(method);
+        IBoundInstances<Entity, T>.GetOrCreateInstance(source).Unsubscribe(source, method);
     }
     public static void Trigger<T>(this Entity source, Effect triggeringEffect = null, EffectTag tags = EffectTag.Global) where T : Trigger
     {
@@ -131,11 +135,11 @@ public static class TriggerExtensions
 
 public class Trigger_Immediate : Trigger<Trigger_Immediate>
 {
-    public override void Subscribe(Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
+    public override void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
     {
         method.Invoke(this);
     }
-    public override void Unsubscribe(Action<Trigger> method) { }
+    public override void Unsubscribe(Entity source, Action<Trigger> method) { }
 }
 public class Trigger_Expire : Trigger<Trigger_Expire> { }
 public class Trigger_ProjectileCreated : Trigger<Trigger_ProjectileCreated> { }
