@@ -8,13 +8,13 @@ public class PE_EffectModifer : PersistentEffect
     [FoldoutGroup("@GetType()")]
     public EffectModifierCalculationType modifierType;
     [FoldoutGroup("@GetType()")]
-    public EffectTag grantedTag;
+    public EffectTag modifierTags;
 
     public override void OnGained()
     {
         foreach (KeyValuePair<EffectTag, float> tag in effectTags)
         {
-            Target.Stat<Stat_EffectModifiers>().AddModifier(this, modifierType, tag.Key, grantedTag, tag.Value);
+            Target.Stat<Stat_EffectModifiers>().AddModifier(this, modifierType, tag.Key, modifierTags, tag.Value);
         }
     }
 

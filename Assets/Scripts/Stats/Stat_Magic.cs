@@ -18,7 +18,7 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // Rune                  Shape                      Effect/Effect Modifier     Spell Modifier
 // Fire  (Damage):       Circle AoE (On Target),    Damage,                    Effect Multiplier
 // Water (CC):           Cone AoE,                  CC,                        Mana Consumption
-// Wind  (Utility):      Line AoE,                  Utility,                   Number of Projectiles/Number of Targets
+// Wind  (Utility):      Line AoE,                  Movement,                  Number of Projectiles/Number of Targets
 // Earth (Combo):        Projectile,                Field Effects,             AoE Size
 // Order (Defensive):    Circle AoE (On You),       ,                          Auto Target nearby ally (starting with you)
 // Chaos (Persistent):   Auto Target,               Buff/Debuff,                    
@@ -42,7 +42,6 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // Chaos: Chaos
 // Healing: Order (does minor damage to enemies) (healing falls off the more an entity is healed)
 
-// First (Shape) - (Effect) - Last (Modifier)
 // First rune: Effect
 // Even rune: Spell Modifier
 // Odd rune (except for the first if there are 3 or more runes): Shape

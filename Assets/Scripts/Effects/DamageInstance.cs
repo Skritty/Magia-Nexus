@@ -13,15 +13,28 @@ public class DamageInstance : Effect
     public bool skipFlatDamageReduction;
     [FoldoutGroup("@GetType()")]
     public bool preventTriggers;
+    
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public List<Effect> ownerEffects = new();
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public List<Effect> targetEffects = new();
     [SerializeReference, FoldoutGroup("@GetType()"), InfoBox("These are in effect until the end of damage calculation")]
-    public List<PersistentEffect> temporaryEffects = new();
+    public List<TriggeredEffect> temporaryTriggeredEffects = new();
 
     public override void Activate()
     {
         if (Target.Stat<Stat_Life>().maxLife <= 0) return;
-        foreach (PersistentEffect effect in temporaryEffects)
+        foreach (TriggeredEffect effect in temporaryTriggeredEffects)
         {
-            effect.OnGained();
+            effect.Create(Source, Owner, Owner);
+        }
+        foreach (Effect effect in targetEffects)
+        {
+            effect.Create(Source, Owner, Target);
+        }
+        foreach (Effect effect in ownerEffects)
+        {
+            effect.Create(Source, Owner, Owner);
         }
         if (!preventTriggers)
         {
@@ -31,9 +44,9 @@ public class DamageInstance : Effect
 
         Target.Stat<Stat_Life>().TakeDamage(this);
 
-        foreach (PersistentEffect effect in temporaryEffects)
+        foreach (TriggeredEffect effect in temporaryTriggeredEffects)
         {
-            effect.OnLost();
+            Owner.Stat<Stat_PersistentEffects>().RemoveSimilarEffect(effect, Owner);
         }
         if (ignoreFrames > 0)
             new PE_IgnoreEntity(ignoreFrames).Create(this);
@@ -42,7 +55,9 @@ public class DamageInstance : Effect
     public DamageInstance Clone()
     {
         DamageInstance clone = (DamageInstance)MemberwiseClone();
-        clone.temporaryEffects = temporaryEffects;
+        clone.ownerEffects = ownerEffects;
+        clone.targetEffects = targetEffects;
+        clone.temporaryTriggeredEffects = temporaryTriggeredEffects;
         return clone;
     }
 }

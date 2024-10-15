@@ -27,7 +27,10 @@ public class Stat_Actions : GenericStat<Stat_Actions>
 
     public override void Tick()
     {
-        tick++;
+        if (!stunned)
+        {
+            tick++;
+        }
         FetchNextAction();
         DoCurrentAction();
     }
@@ -108,6 +111,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
 
     private void DoCurrentAction()
     {
+        if (stunned) return;
         foreach (Action a in repeatActions)
         {
             a?.Tick(Owner);

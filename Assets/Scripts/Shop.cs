@@ -430,7 +430,7 @@ public class Shop : MonoBehaviour
         string outMessage;
         if(args.Count == 0)
         {
-            return new CommandError(false, "Please enter items to buy...");
+            return new CommandError(false, "Please enter items to buy");
         }
         foreach(string itemName in args)
         {

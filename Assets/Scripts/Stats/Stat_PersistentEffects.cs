@@ -46,6 +46,31 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         return true;
     }
 
+    public List<PersistentEffect> GetEffectsViaReference(PersistentEffect reference, Entity owner = null)
+    {
+        List<PersistentEffect> effects = new List<PersistentEffect>();
+        foreach (PersistentEffect e in persistentEffects.ToArray())
+        {
+            if (reference.GetUID() == e.Source.GetUID() && (owner == null || owner == e.Owner))
+            {
+                effects.Add(e);
+            }
+        }
+        return effects;
+    }
+
+    public void RemoveSimilarEffect(PersistentEffect reference, Entity owner = null)
+    {
+        foreach (PersistentEffect e in persistentEffects.ToArray())
+        {
+            if (reference.GetUID() == e.Source.GetUID() && (owner == null || owner == e.Owner))
+            {
+                e.OnLost();
+                persistentEffects.Remove(e);
+            }
+        }
+    }
+
     public override void Tick()
     {
         foreach (PersistentEffect effect in persistentEffects.ToArray())

@@ -44,7 +44,7 @@ public abstract class Effect
 
     public float GetMultiplier()
     {
-        float multiplier = 0;
+        float multiplier = 0;// TODO: split up multipliers? might be too complicated
         foreach (KeyValuePair<EffectTag, float> tag in effectTags)
         {
             multiplier += Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CalculateModifier(tag.Key);
@@ -136,4 +136,14 @@ public abstract class Effect
     }
 
     public abstract void Activate();
+
+    public int GetUID()
+    {
+        int UID = (int)effectMultiplier + GetType().GetHashCode();
+        foreach (KeyValuePair<EffectTag, float> tag in effectTags)
+        {
+            UID += (int)tag.Key + (int)tag.Value;
+        }
+        return UID;
+    }
 }

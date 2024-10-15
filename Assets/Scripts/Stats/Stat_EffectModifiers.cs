@@ -258,7 +258,7 @@ public enum EffectTag
     DamageTaken   = 1 << 14,
     AoE           = 1 << 15,
     Targets       = 1 << 16,
-    Slow          = 1 << 17,
+    Removeable    = 1 << 17,
     Knockback     = 1 << 18,
     MovementSpeed = 1 << 19,
     Initiative    = 1 << 20,
