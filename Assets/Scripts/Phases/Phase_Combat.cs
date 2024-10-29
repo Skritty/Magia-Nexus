@@ -19,24 +19,13 @@ public abstract class Phase_Combat : Phase
         }
     }
 
-    public int basePointGain;
     public int winPointGain;
     private Dictionary<int, int> remainingPlayers = new Dictionary<int, int>();
-    private List<EntitySpawns> spawns;
+    public List<EntitySpawns> spawns;
 
     public override void OnEnter()
     {
         SpawnEntities();
-        GivePlayersGold();
-    }
-
-    private void GivePlayersGold()
-    {
-        foreach(Viewer viewer in GameManager.Viewers)
-        {
-            viewer.points += basePointGain;
-            viewer.currency += basePointGain;
-        }
     }
 
     private void SpawnEntities()

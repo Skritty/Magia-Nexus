@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae55f81d6d7ca3b4f954888dd90d110d, type: 3}
-  m_Name: ShopPhase
+  m_Script: {fileID: 11500000, guid: 93e46803330be9343923c7bbbdd69c99, type: 3}
+  m_Name: Shop
   m_EditorClassIdentifier: 
   nextPhase: {fileID: 11400000, guid: 26fb657ae4f821f4ea5f23269abb0f5f, type: 2}
   tickDuration: 3000000
   sceneToLoad: ShopPhase
+  baseGoldGain: 25

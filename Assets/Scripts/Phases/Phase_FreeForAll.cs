@@ -28,9 +28,9 @@ public class Phase_FreeForAll : Phase_Combat
             do
             {
                 spawnPoint = center + new Vector3(
+                Mathf.Cos(Random.Range(0, Mathf.PI * 2)),//x=rcos(theta),y=rsin(theta), and z=z
                 Mathf.Cos(Random.Range(0, Mathf.PI * 2)),
-                Mathf.Cos(Random.Range(0, Mathf.PI * 2)),
-                0) * spawnRadius;
+                0) * Random.Range(0, spawnRadius);
             } while (tries++ < 10000 && spawns.Exists(e => Vector3.Distance(e.position, spawnPoint) < minMaxSpawnDistance.x));
             spawnRadius += minMaxSpawnDistance.y;
             spawns.Add(new EntitySpawns(spawnPoint, viewer.Value, ++team));

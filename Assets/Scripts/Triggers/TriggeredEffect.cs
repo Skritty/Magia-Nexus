@@ -23,7 +23,6 @@ public class TriggeredEffect : PersistentEffect
     
     public override void OnGained()
     {
-        trigger.AddInstance(Owner);
         foreach (KeyValuePair<EffectTag, float> tag in effectTags)
         {
             trigger.Subscribe(Owner, OnTrigger, tag.Key, exactTagMatch, triggerOrder);

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidden: 0
   itemName: Butter
-  itemDescription: +1 speed
+  itemDescription: +1 speed (max 125 stacks)
   cost: 5
   itemImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -38,7 +38,7 @@ MonoBehaviour:
           rid: 3963142589493018898
         tick: 0
         tickDuration: -1
-        maxStacks: -1
+        maxStacks: 125
         refreshDuration: 1
         contributeToAssists: 0
         tickDelay: -1

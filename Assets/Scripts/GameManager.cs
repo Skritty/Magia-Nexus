@@ -25,18 +25,19 @@ public class GameManager : MonoBehaviour
     [SerializeReference]
     public Targeting defaultTargeting;
     public SerializedDictionary<string, List<Item>> startingClasses;
-    public int baseGold;
     public SerializedDictionary<string, Viewer> viewers = new SerializedDictionary<string, Viewer>();
     public static Viewer[] Viewers => Instance.viewers.Select(x => x.Value).ToArray();
 
     private void OnEnable()
     {
         TwitchClient.Instance.AddCommand("join", Command_JoinGame);
+        TwitchClient.Instance.AddCommand("leave", Command_LeaveGame);
     }
 
     private void OnDisable()
     {
         TwitchClient.Instance.RemoveCommand("join");
+        TwitchClient.Instance.RemoveCommand("leave");
     }
 
     private CommandError Command_JoinGame(string user, List<string> args)
@@ -46,22 +47,35 @@ public class GameManager : MonoBehaviour
             string classes = "";
             foreach(KeyValuePair<string, List<Item>> c in startingClasses)
             {
+                if (c.Value.Count == 0) continue;
                 classes += $"{c.Key}, ";
             }
             classes = classes.Remove(classes.Length -2, 2);
             return new CommandError(false, $"Please pick a valid starting class out of: {classes}");
         }
 
-        if (!viewers.ContainsKey(user))
+        if (viewers.ContainsKey(user))
         {
-            Viewer viewer = new Viewer();
-            viewer.viewerName = user;
-            viewer.items.AddRange(startingClasses[args[0]]);
-            viewer.currency = baseGold;
-            viewer.targetType = defaultTargeting;
-            viewers.Add(user, viewer);
+            viewers.Remove(user);
         }
+
+        Viewer viewer = new Viewer();
+        viewer.viewerName = user;
+        viewer.items.AddRange(startingClasses[args[0]]);
+        viewer.targetType = defaultTargeting;
+        viewers.Add(user, viewer);
+
         TwitchClient.Instance.SendChatMessage($"@{user} joined as {args[0]}");
+        return new CommandError(true, "");
+    }
+
+    private CommandError Command_LeaveGame(string user, List<string> args)
+    {
+        if (viewers.ContainsKey(user))
+        {
+            viewers.Remove(user);
+        }
+        TwitchClient.Instance.SendChatMessage($"@{user} left the game");
         return new CommandError(true, "");
     }
 

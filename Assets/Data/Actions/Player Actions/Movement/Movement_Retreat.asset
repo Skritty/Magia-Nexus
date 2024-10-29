@@ -28,9 +28,11 @@ MonoBehaviour:
     - rid: 9031231598746927109
       type: {class: Move, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231598746927110
         rotate: 0
@@ -42,15 +44,18 @@ MonoBehaviour:
     - rid: 9031231646890721447
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231646890721448
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         distanceFromTarget: 7
         threshold: 0.25
     - rid: 9031231646890721448

@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TwitchLib.Api.Helix;
+using UnityEngine.Windows;
+using System;
+using TwitchLib.Api.Helix.Models.Teams;
 
 public class Shop : MonoBehaviour
 {
@@ -24,6 +27,7 @@ public class Shop : MonoBehaviour
         TwitchClient.Instance.AddCommand("items", Command_ListHeldItems);
         TwitchClient.Instance.AddCommand("buy", Command_BuyItems);
         TwitchClient.Instance.AddCommand("craft", Command_CraftItem);
+        TwitchClient.Instance.AddCommand("gold", Command_CurrentGold);
 
         TwitchClient.Instance.AddCommand("actions", Command_ListActions);
         TwitchClient.Instance.AddCommand("createturn", Command_CreateTurn);
@@ -36,6 +40,7 @@ public class Shop : MonoBehaviour
         TwitchClient.Instance.RemoveCommand("items");
         TwitchClient.Instance.RemoveCommand("buy");
         TwitchClient.Instance.RemoveCommand("craft");
+        TwitchClient.Instance.RemoveCommand("gold");
 
         TwitchClient.Instance.RemoveCommand("actions");
         TwitchClient.Instance.RemoveCommand("createturn");
@@ -164,6 +169,58 @@ public class Shop : MonoBehaviour
         viewer.currency -= item.cost;
         viewer.items.Add(item);
         message = $"{item.itemName}, ";
+        return true;
+    }
+
+    public bool CraftItem(Viewer viewer, string itemToCraft, out string message)
+    {
+        Item craft = GetItemFromNameOrID(itemToCraft);
+        if(craft.craftingRecipe.Count == 0)
+        {
+            message = "This item cannot be crafted";
+            return false;
+        }
+        List<Item> components = new();
+        components.AddRange(craft.craftingRecipe);
+        foreach (Item item in viewer.items)
+        {
+            components.Remove(item);
+        }
+        if(components.Count > 0)
+        {
+            message = "You don't have ";
+            foreach (Item component in components)
+            {
+                message += component.itemName + ", ";
+            }
+            message = message.Remove(message.Length - 2, 2);
+            return false;
+        }
+        foreach (Item material in craft.craftingRecipe)
+        {
+            viewer.items.Remove(material);
+        }
+        viewer.items.Add(craft);
+        message = craft.itemName;
+        if (!ownedItems.Contains(craft))
+        {
+            ownedItems.Add(craft);
+            foreach (Action action in craft.grantedActions)
+            {
+                if (!ownedActions.Contains(action))
+                {
+                    ownedActions.Add(action);
+                }
+            }
+            foreach (Targeting targeting in craft.grantedTargeting)
+            {
+                if (!ownedTargeting.Contains(targeting))
+                {
+                    ownedTargeting.Add(targeting);
+                }
+            }
+            CreateItemUI(craft);
+        }
         return true;
     }
 
@@ -432,17 +489,37 @@ public class Shop : MonoBehaviour
         {
             return new CommandError(false, "Please enter items to buy");
         }
-        foreach(string itemName in args)
+        if(args.Count == 2 && int.TryParse(args[0], out int amt) && amt > 0)
         {
-            if(BuyItem(GameManager.Instance.viewers[user], itemName, out outMessage))
+            string m2 = "";
+            for(int i = 0; i < amt; i++)
             {
-                message += outMessage;
+                if (BuyItem(GameManager.Instance.viewers[user], args[1], out outMessage))
+                {
+                    m2 = outMessage;
+                }
+                else
+                {
+                    return new CommandError(false, outMessage);
+                }
             }
-            else
+            message += amt + " " + m2;
+        }
+        else
+        {
+            foreach (string itemName in args)
             {
-                return new CommandError(false, outMessage);
+                if (BuyItem(GameManager.Instance.viewers[user], itemName, out outMessage))
+                {
+                    message += outMessage;
+                }
+                else
+                {
+                    return new CommandError(false, outMessage);
+                }
             }
         }
+        
         message = message.Remove(message.Length - 2, 2);
         message += $"! You now have {GameManager.Instance.viewers[user].currency}g";
         TwitchClient.Instance.SendChatMessage(message);
@@ -454,13 +531,27 @@ public class Shop : MonoBehaviour
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You crafted: ";
         string outMessage;
-        if (CraftItem(GameManager.Instance.viewers[user], args, out outMessage))
+        if (args.Count == 1)
         {
-            message += outMessage;
+            if (CraftItem(GameManager.Instance.viewers[user], args[0], out outMessage))
+            {
+                message += outMessage;
+            }
+            else
+            {
+                return new CommandError(false, outMessage);
+            }
         }
-        else
+        else if(args.Count > 0)
         {
-            return new CommandError(false, outMessage);
+            if (CraftItem(GameManager.Instance.viewers[user], args, out outMessage))
+            {
+                message += outMessage;
+            }
+            else
+            {
+                return new CommandError(false, outMessage);
+            }
         }
         message += '!';
         TwitchClient.Instance.SendChatMessage(message);
@@ -506,6 +597,14 @@ public class Shop : MonoBehaviour
             message += $"{action.actionName}, ";
         }
         message = message.Remove(message.Length - 2, 2);
+        TwitchClient.Instance.SendChatMessage(message);
+        return new CommandError(true, "");
+    }
+
+    public CommandError Command_CurrentGold(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        string message = $"@{user} You have {GameManager.Instance.viewers[user].currency} gold";
         TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
     }

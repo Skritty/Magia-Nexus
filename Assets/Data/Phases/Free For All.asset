@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9e554b8f9a6bda4a965757f3c280436, type: 3}
   m_Name: Free For All
   m_EditorClassIdentifier: 
-  nextPhase: {fileID: 11400000, guid: 993b0d7af92f085438db9d52f4e17b57, type: 2}
+  nextPhase: {fileID: 11400000, guid: 1f9abf8d7d5d4a74b97de2c7c370a4c1, type: 2}
   tickDuration: 60000
   sceneToLoad: 1v1
-  basePointGain: 50
-  winPointGain: 10
+  winPointGain: 6
   minMaxSpawnDistance: {x: 3, y: 4}

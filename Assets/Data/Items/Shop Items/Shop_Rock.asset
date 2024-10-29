@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: 'Slows you by 2% per rock
 
     Grants [Throw Rock] '
-  cost: 30
+  cost: 40
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.3207547, g: 0.287532, b: 0.27334756, a: 1}
   craftingRecipe: []

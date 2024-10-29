@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidden: 0
   itemName: Knife
-  itemDescription: +0.1 flat physical damage
+  itemDescription: +0.1 flat physical damage (max 10 stacks)
   cost: 15
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0, g: 0, b: 0, a: 0}
@@ -38,7 +38,7 @@ MonoBehaviour:
           rid: 9031231937507230430
         tick: 0
         tickDuration: -1
-        maxStacks: -1
+        maxStacks: 10
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0

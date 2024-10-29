@@ -27,22 +27,28 @@ MonoBehaviour:
     - rid: 9031231598746927113
       type: {class: Rune_Earth, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231598746927114
         opposite: {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
         damageEffect:
-          contributeToAssists: 0
-          <Tags>k__BackingField: 0
-          baseEffectMultiplier: 0.2
+          effectMultiplier: 1
+          effectTags:
+            serializedPairs:
+            - key: 0
+              value: 1
           targetSelector:
             rid: 9031231598746927127
           ignoreFrames: 10
           skipFlatDamageReduction: 1
           preventTriggers: 0
-          temporaryEffects: []
+          ownerEffects: []
+          targetEffects: []
+          temporaryTriggeredEffects: []
         AoEBuff:
           rid: 9031231777024770058
         targeting:
@@ -72,15 +78,18 @@ MonoBehaviour:
     - rid: 9031231777024770058
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 2
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 2
         targetSelector:
           rid: 9031231777024770059
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         modifierType: 0
         modifierTags: 0
     - rid: 9031231777024770059

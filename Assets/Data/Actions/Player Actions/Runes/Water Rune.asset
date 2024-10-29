@@ -29,9 +29,11 @@ MonoBehaviour:
     - rid: 9031231598746927115
       type: {class: Rune_Water, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231598746927116
         opposite: {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
@@ -68,15 +70,18 @@ MonoBehaviour:
     - rid: 9031231777024770062
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 32768
+            value: 1
         targetSelector:
           rid: 9031231777024770063
         tick: 0
         tickDuration: -1
         maxStacks: 1
         refreshDuration: 1
+        contributeToAssists: 0
         modifierType: 0
         modifierTags: 32768
     - rid: 9031231777024770063

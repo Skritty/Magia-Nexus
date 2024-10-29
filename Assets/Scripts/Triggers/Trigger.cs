@@ -58,16 +58,24 @@ public abstract class Trigger
     public Effect TriggeringEffect { get; set; }
     public abstract void AddInstance(Entity source);
     public abstract void RemoveInstance(Entity source);
-    public virtual void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
+    public virtual void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order, bool bindToSource = true)
     {
-        subscriptions.Add(new TriggerSubscription(source, method, tags, exactMatch, order));
-        subscriptions.Sort((x,y) =>
+        if (bindToSource)
         {
-            if (x.order == y.order) return 0;
-            if (x.order > y.order) return 1;
-            return -1;
-        });
+            Subscribe(source, method, tags, exactMatch, order);
+        }
+        else
+        {
+            subscriptions.Add(new TriggerSubscription(source, method, tags, exactMatch, order));
+            subscriptions.Sort((x, y) =>
+            {
+                if (x.order == y.order) return 0;
+                if (x.order > y.order) return 1;
+                return -1;
+            });
+        }
     }
+    protected abstract void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order);
     public virtual void Unsubscribe(Entity source, Action<Trigger> method)
     {
         foreach (TriggerSubscription subscription in subscriptions)
@@ -111,13 +119,17 @@ public abstract class Trigger<T> : Trigger where T : Trigger<T>
     {
         IBoundInstances<Entity, T>.RemoveInstance(owner);
     }
+    protected override void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
+    {
+        source.Subscribe<T>(method, tags, exactMatch, order);
+    }
 }
 
 public static class TriggerExtensions
 {
     public static void Subscribe<T>(this Entity source, Action<Trigger> method, EffectTag tags = EffectTag.Global, bool exactMatch = false, int order = 0) where T : Trigger
     {
-        IBoundInstances<Entity, T>.GetOrCreateInstance(source).Subscribe(source, method, tags, exactMatch, order);
+        IBoundInstances<Entity, T>.GetOrCreateInstance(source).Subscribe(source, method, tags, exactMatch, order, false);
     }
     public static void Unsubscribe<T>(this Entity source, Action<Trigger> method) where T : Trigger
     {
@@ -135,7 +147,7 @@ public static class TriggerExtensions
 
 public class Trigger_Immediate : Trigger<Trigger_Immediate>
 {
-    public override void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order)
+    public override void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, bool exactMatch, int order, bool globalSubscribe = false)
     {
         method.Invoke(this);
     }

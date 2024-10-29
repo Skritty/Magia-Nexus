@@ -46,7 +46,9 @@ MonoBehaviour:
           ignoreFrames: 500
           skipFlatDamageReduction: 0
           preventTriggers: 0
-          temporaryEffects: []
+          ownerEffects: []
+          targetEffects: []
+          temporaryTriggeredEffects: []
         targeting:
           rid: 9031231527144652819
         AoEBuff:
@@ -80,7 +82,7 @@ MonoBehaviour:
         effectTags:
           serializedPairs:
           - key: 32768
-            value: 1
+            value: 2
         targetSelector:
           rid: 9031231777024770061
         tick: 0
@@ -89,7 +91,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0
-        grantedTag: 32768
+        modifierTags: 32768
     - rid: 9031231777024770061
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -111,7 +113,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 1
-        grantedTag: 1966591
+        modifierTags: 0
     - rid: 9031231918534820523
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

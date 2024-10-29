@@ -68,6 +68,7 @@ public class Spell
 
     private void GenerateTargeting()
     {
+        if (shapeModifiers.Count == 0) shapeModifiers.Add(effectRune);
         shapeModifiers[0].TargetingFormula(this, null);
         TargetingFormula(shapeModifiers[0], 1);
     }

@@ -38,7 +38,7 @@ MonoBehaviour:
           rid: 9031231643882095577
         tick: 0
         tickDuration: -1
-        maxStacks: 1
+        maxStacks: 10
         refreshDuration: 1
         contributeToAssists: 0
         exactTagMatch: 0
@@ -59,13 +59,15 @@ MonoBehaviour:
         effectTags:
           serializedPairs:
           - key: 256
-            value: -0.1
+            value: -0.03
         targetSelector:
           rid: 9031231643882095581
         ignoreFrames: 0
         skipFlatDamageReduction: 1
         preventTriggers: 1
-        temporaryEffects: []
+        ownerEffects: []
+        targetEffects: []
+        temporaryTriggeredEffects: []
     - rid: 9031231643882095581
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

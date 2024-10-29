@@ -63,17 +63,11 @@ MonoBehaviour:
       - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
       - {fileID: 11400000, guid: 88f952d1265c8dc4688b3afe143c349c, type: 2}
     - key: cultist
-      value:
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-      - {fileID: 11400000, guid: e20134dda11542f47aea807e1488f451, type: 2}
+      value: []
     - key: berserker
-      value:
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-      - {fileID: 11400000, guid: 258cbda16d982384ca90636f280fd266, type: 2}
+      value: []
     - key: rogue
-      value:
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-      - {fileID: 11400000, guid: 3156628d3afed5e4db8d8a53992b04e3, type: 2}
+      value: []
     - key: fortress
       value:
       - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
@@ -84,9 +78,7 @@ MonoBehaviour:
       - {fileID: 11400000, guid: e62bdb27cb48f5643844b72e0a1b23bf, type: 2}
       - {fileID: 11400000, guid: 39485894faf673f4bb72972a38f34c31, type: 2}
     - key: bard
-      value:
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-      - {fileID: 11400000, guid: a483f666bf3790749b08a51e12f13b79, type: 2}
+      value: []
     - key: spellsword
       value: []
     - key: summoner
@@ -97,13 +89,15 @@ MonoBehaviour:
       value: []
     - key: wildmage
       value: []
-  baseGold: 100
   viewers:
     serializedPairs:
     - key: Wizard
       value:
         viewerID: 0
         viewerName: Wizard
+        newPlayer: 1
+        points: 0
+        roundPoints: 0
         currency: 0
         targetType:
           rid: 9031231527144652855
@@ -121,6 +115,9 @@ MonoBehaviour:
       value:
         viewerID: 0
         viewerName: Archer
+        newPlayer: 1
+        points: 0
+        roundPoints: 0
         currency: 0
         targetType:
           rid: 9031231527144652856
@@ -138,6 +135,9 @@ MonoBehaviour:
       value:
         viewerID: 0
         viewerName: Fighter
+        newPlayer: 1
+        points: 0
+        roundPoints: 0
         currency: 0
         targetType:
           rid: 9031231692007800958

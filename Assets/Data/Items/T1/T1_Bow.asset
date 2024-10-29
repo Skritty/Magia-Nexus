@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidden: 0
   itemName: Bow
-  itemDescription: Grants [Slash]
+  itemDescription: Grants [Arrow]
   cost: 0
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.57861626, g: 0.57861626, b: 0.57861626, a: 1}

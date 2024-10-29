@@ -62,14 +62,16 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 2
+          - key: 514
             value: 0.5
         targetSelector:
           rid: 9031231646177165319
         ignoreFrames: 0
         skipFlatDamageReduction: 0
         preventTriggers: 0
-        temporaryEffects: []
+        ownerEffects: []
+        targetEffects: []
+        temporaryTriggeredEffects: []
     - rid: 9031231646177165319
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
