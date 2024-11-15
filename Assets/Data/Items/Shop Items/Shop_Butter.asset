@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Shop_Butter
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Butter
+  itemAliases:
+  - Butter
   itemDescription: +1 speed (max 125 stacks)
   cost: 5
   itemImage: {fileID: 0}
@@ -39,6 +40,8 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 125
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         tickDelay: -1

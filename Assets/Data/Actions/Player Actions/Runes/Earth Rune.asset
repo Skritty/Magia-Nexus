@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Earth Rune
   m_EditorClassIdentifier: 
-  actionName: Earth
+  actionAliases:
+  - Earth
+  - skritt3Earth
   actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -88,10 +90,12 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0
-        modifierTags: 0
+        scaleWithEffectMulti: 0
     - rid: 9031231777024770059
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

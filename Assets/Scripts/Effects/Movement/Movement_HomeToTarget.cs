@@ -3,17 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement_HomeToTarget : PersistentEffect
+public class Movement_HomeToTarget : Effect
 {
     [FoldoutGroup("@GetType()")]
     public float homingRateDegreesPerSecond;
 
-    public override void OnGained()
-    {
-        SetMoveDir();
-    }
-
-    public override void OnTick()
+    public override void Activate()
     {
         SetMoveDir();
     }
@@ -37,6 +32,7 @@ public class Movement_HomeToTarget : PersistentEffect
             0, negative ? -(angleChange.eulerAngles.z - 360) : angleChange.eulerAngles.z))
             * Target.Stat<Stat_Movement>().facingDir;
         Target.Stat<Stat_Movement>().facingDir = dirToTarget;
+        Target.Stat<Stat_Movement>().dirMovementSpeedMulti = effectMultiplier;
         Target.transform.localRotation = Quaternion.FromToRotation(Vector3.up, dirToTarget);
     }
 }

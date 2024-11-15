@@ -12,8 +12,7 @@ public class TriggeredEffect : PersistentEffect
         this.trigger = trigger;
         this.effect = effect;
     }
-    [FoldoutGroup("@GetType()")]
-    public bool exactTagMatch;
+    [InfoBox("Each effect tag is a trigger that must match the tags of the triggering effect. (ie. Trigger when dealing piercing+attack+projectile OR on non-projectile)")]
     [FoldoutGroup("@GetType()")]
     public int triggerOrder;
     [SerializeReference, FoldoutGroup("@GetType()")]
@@ -25,17 +24,22 @@ public class TriggeredEffect : PersistentEffect
     {
         foreach (KeyValuePair<EffectTag, float> tag in effectTags)
         {
-            trigger.Subscribe(Owner, OnTrigger, tag.Key, exactTagMatch, triggerOrder);
+            trigger.Subscribe(Target, OnTrigger, tag.Key, triggerOrder);
         }
     }
     public override void OnLost()
     {
-        trigger.Unsubscribe(Owner, OnTrigger);
-        trigger.RemoveInstance(Owner);
+        trigger.Unsubscribe(Target, OnTrigger);
+        trigger.RemoveInstance(Target);
     }
 
     protected void OnTrigger(Trigger trigger)
     {
+        if(effect == null)
+        {
+            Debug.LogWarning($"{Owner}'s {this.GetType()} from {Source} has no assigned effect");
+            return;
+        }
         effect.Create(Owner, trigger, trigger.TriggeringEffect);
     }
 }

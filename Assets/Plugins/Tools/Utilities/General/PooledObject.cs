@@ -15,77 +15,58 @@ namespace Skritty.Tools.Utilities
 
         private class Pool
         {
-            public GameObject prefab;
-            Queue<GameObject> pool = new Queue<GameObject>();
-            int maxSize;
-            int currentSize = 0;
-            int avaliable = 0;
-            public bool ObjectAvaliable
-            {
-                get
-                {
-                    return pool.Count > 0 || currentSize < maxSize;
-                }
-            }
+            public PooledObject prefab;
+            Queue<PooledObject> pool = new Queue<PooledObject>();
 
-            public Pool(int maxSize, GameObject prefab)
+            public Pool(PooledObject prefab)
             {
-                this.maxSize = maxSize;
                 this.prefab = prefab;
             }
 
-            public GameObject Get()
+            public PooledObject Get()
             {
-                GameObject obj = null;
+                PooledObject obj = null;
                 if (pool.Count > 0)
                 {
                     obj = pool.Dequeue();
                     if (obj == null) obj = Get();
-                    if (obj == null) return null;
-                    avaliable--;
-                    obj.SetActive(true);
+                    obj.gameObject.SetActive(true);
                 }
-                else if (currentSize < maxSize)
+                if (pool.Count == 0 && obj == null)
                 {
-                    currentSize++;
                     obj = Instantiate(prefab);
                 }
                 //obj = Instantiate(prefab);
                 return obj;
             }
 
-            public void Release(GameObject obj)
+            public void Release(PooledObject obj)
             {
                 pool.Enqueue(obj);
                 //Debug.Log($"Pool size: {pool.Count} - {currentSize}/{maxSize}");
                 //Destroy(obj);
                 //currentSize--;
-                avaliable++;
             }
         }
 
-        [SerializeField]
-        private int maximumPoolSize = 20;
         [SerializeField, HideInInspector]
         private int poolID;
 
-        public GameObject Prefab => pools[poolID].prefab;
-        public bool ObjectAvaliable => pools.ContainsKey(poolID) ? pools[poolID].ObjectAvaliable : true;
-        public UnityEvent<GameObject> OnGet;
-        public System.Action<GameObject> OnGetReset;
-        public UnityEvent<GameObject> OnRelease;
-        public System.Action<GameObject> OnReleaseReset;
+        public UnityEvent<PooledObject> OnGet;
+        public System.Action<PooledObject> OnGetReset;
+        public UnityEvent<PooledObject> OnRelease;
+        public System.Action<PooledObject> OnReleaseReset;
 
-        public GameObject RequestObject()
+        public T RequestObject<T>() where T : PooledObject
         {
             CheckForPool();
-            GameObject obj = pools[poolID].Get();
+            PooledObject obj = pools[poolID].Get();
             obj.GetComponent<PooledObject>().ResetObject();
             OnGet?.Invoke(obj);
             OnGetReset?.Invoke(obj);
             OnReleaseReset = null;
             OnGetReset = null;
-            return obj;
+            return (T)obj;
         }
 
         public void ReleaseObject()
@@ -93,9 +74,9 @@ namespace Skritty.Tools.Utilities
             CheckForPool();
             if (!pools.ContainsKey(poolID)) return;
 
-            OnRelease?.Invoke(gameObject);
-            OnReleaseReset?.Invoke(gameObject);
-            pools[poolID].Release(gameObject);
+            OnRelease?.Invoke(this);
+            OnReleaseReset?.Invoke(this);
+            pools[poolID].Release(this);
             gameObject.SetActive(false);
         }
 
@@ -109,7 +90,7 @@ namespace Skritty.Tools.Utilities
             poolID = gameObject.GetInstanceID();
             if (!pools.ContainsKey(poolID))
             {
-                pools.Add(poolID, new Pool(maximumPoolSize, gameObject));
+                pools.Add(poolID, new Pool(this));
             }
         }
     }

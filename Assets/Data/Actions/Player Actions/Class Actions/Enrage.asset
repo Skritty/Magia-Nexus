@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Enrage
   m_EditorClassIdentifier: 
-  actionName: Enrage
+  actionAliases:
+  - Enrage
   actionDescription: Add a random action to your turn and shuffle your turn order
   actionImage: {fileID: 0}
   damageTypeColor: {r: 0.5660378, g: 0.19432876, b: 0.03025984, a: 1}
+  hidden: 0
   maxUses: 0
-  type: 0
   timing: 1
   effects: []
   references:

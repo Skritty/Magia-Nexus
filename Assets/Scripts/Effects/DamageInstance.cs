@@ -46,7 +46,7 @@ public class DamageInstance : Effect
 
         foreach (TriggeredEffect effect in temporaryTriggeredEffects)
         {
-            Owner.Stat<Stat_PersistentEffects>().RemoveSimilarEffect(effect, Owner);
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, Owner);
         }
         if (ignoreFrames > 0)
             new PE_IgnoreEntity(ignoreFrames).Create(this);

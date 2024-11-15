@@ -45,7 +45,7 @@ MonoBehaviour:
         targetSelector:
           rid: 3963142723388571650
         tick: 0
-        tickDuration: 25
+        tickDuration: 15
         maxStacks: 1
         refreshDuration: 1
         contributeToAssists: 0
@@ -57,10 +57,10 @@ MonoBehaviour:
     - rid: 9031231527144652837
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1.5
+        effectMultiplier: 0.5
         effectTags:
           serializedPairs:
-          - key: 4097
+          - key: 73747
             value: 1
         targetSelector:
           rid: 3963142721972731907

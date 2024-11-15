@@ -41,6 +41,7 @@ public abstract class MultiTargeting : Targeting
     public TargetSorting sortingMethod = TargetSorting.None;
     //public Vector2 targetingRange;
     public int numberOfTargets = -1;
+    public VFX vfx;
 
     public override List<Entity> GetTargets(Effect source, Entity owner)
     {

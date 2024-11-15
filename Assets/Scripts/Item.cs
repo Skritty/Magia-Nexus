@@ -8,7 +8,17 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public bool hidden;
-    public string itemName;
+    public List<string> itemAliases = new List<string>();
+    public string ItemName => itemAliases.Count == 0 ? "" : itemAliases[0];
+    public bool NameMatch(string s)
+    {
+        s = s.ToLower().Replace(" ", "");
+        foreach (string name in itemAliases)
+        {
+            if (name.ToLower().Replace(" ", "").Equals(s)) return true;
+        }
+        return false;
+    }
     [TextArea]
     public string itemDescription;
     public int cost;

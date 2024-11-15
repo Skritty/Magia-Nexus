@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: T1_Warcry
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Warcry
+  itemAliases:
+  - Warcry
   itemDescription: Grants [Warcry]
   cost: 0
   itemImage: {fileID: 0}

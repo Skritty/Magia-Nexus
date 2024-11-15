@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Player_Slash
   m_EditorClassIdentifier: 
-  actionName: Slash
+  actionAliases:
+  - Slash
   actionDescription: Deal 2 slashing damage in a cone
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -30,14 +31,16 @@ MonoBehaviour:
         effectMultiplier: 2
         effectTags:
           serializedPairs:
-          - key: 514
+          - key: 8227
             value: 1
         targetSelector:
           rid: 9031231598746927106
         ignoreFrames: 0
         skipFlatDamageReduction: 0
         preventTriggers: 0
-        temporaryEffects: []
+        ownerEffects: []
+        targetEffects: []
+        temporaryTriggeredEffects: []
     - rid: 9031231598746927106
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:

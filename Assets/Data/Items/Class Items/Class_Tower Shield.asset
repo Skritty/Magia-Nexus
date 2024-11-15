@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Class_Tower Shield
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Tower Shield
-  itemDescription: '+50 max life
+  itemAliases:
+  - Tower Shield
+  itemDescription: '+5000 max life
 
     Take 10% less damage'
   cost: 0
@@ -42,6 +43,8 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         maxLifeChange: 50
@@ -64,10 +67,12 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 1
-        modifierTags: 255
+        scaleWithEffectMulti: 0
     - rid: 3963143039375638959
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

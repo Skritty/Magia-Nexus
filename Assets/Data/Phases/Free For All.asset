@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Free For All
   m_EditorClassIdentifier: 
   nextPhase: {fileID: 11400000, guid: 1f9abf8d7d5d4a74b97de2c7c370a4c1, type: 2}
-  tickDuration: 60000
+  tickDuration: 15000
   sceneToLoad: 1v1
-  winPointGain: 6
+  winPointGain: 2
   minMaxSpawnDistance: {x: 3, y: 4}

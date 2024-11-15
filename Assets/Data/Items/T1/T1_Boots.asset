@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: T1_Boots
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Boots
+  itemAliases:
+  - Boots
   itemDescription: '10% increased movement speed
 
     Grants [Move] action'
@@ -38,17 +39,19 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 524288
+          - key: 8388608
             value: 0.1
         targetSelector:
           rid: 3963142952671773267
         tick: 0
         tickDuration: -1
         maxStacks: 10
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 1
-        modifierTags: 524288
+        scaleWithEffectMulti: 0
     - rid: 3963142952671773267
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

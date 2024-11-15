@@ -21,14 +21,34 @@ MonoBehaviour:
   timing: 1
   effects:
   - rid: 9031231668284555265
+  - rid: 2626413410273722934
   references:
     version: 2
     RefIds:
+    - rid: 2626413410273722934
+      type: {class: Move, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
+        targetSelector:
+          rid: 2626413410273722935
+        rotate: 0
+    - rid: 2626413410273722935
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
     - rid: 9031231668284555265
       type: {class: SetMovementTarget, ns: , asm: Assembly-CSharp}
       data:
-        EffectMultiplier: 1
-        contributeToPoints: 0
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
           rid: 9031231668284555267
     - rid: 9031231668284555267

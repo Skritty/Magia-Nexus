@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Class_Enchanted Quiver
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Enchanted Quiver
+  itemAliases:
+  - Enchanted Quiver
   itemDescription: '+2 projectile
 
     Projectiles home toward your target'
@@ -29,6 +30,50 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2626413410273722936
+      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
+        targetSelector:
+          rid: 2626413410273722937
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        triggerOrder: 0
+        trigger:
+          rid: 2626413410273722940
+        effect:
+          rid: 2626413410273722938
+    - rid: 2626413410273722937
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+    - rid: 2626413410273722938
+      type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs: []
+        targetSelector:
+          rid: 2626413410273722939
+        homingRateDegreesPerSecond: 75
+    - rid: 2626413410273722939
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+    - rid: 2626413410273722940
+      type: {class: Trigger_MovementDirectionCalc, ns: , asm: Assembly-CSharp}
+      data: 
     - rid: 9031231481910394880
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
@@ -42,39 +87,19 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        exactTagMatch: 0
         triggerOrder: 0
         trigger:
           rid: 9031231481910394881
         effect:
-          rid: 9031231598746927163
+          rid: 2626413410273722936
     - rid: 9031231481910394881
       type: {class: Trigger_ProjectileCreated, ns: , asm: Assembly-CSharp}
       data: 
     - rid: 9031231527144652808
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-    - rid: 9031231598746927163
-      type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
-        targetSelector:
-          rid: 9031231598746927164
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        refreshDuration: 1
-        contributeToAssists: 0
-        homingRateDegreesPerSecond: 75
-    - rid: 9031231598746927164
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
@@ -85,17 +110,19 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 69632
+          - key: 1114112
             value: 2
         targetSelector:
           rid: 9031231822436499457
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0
-        grantedTag: 69632
+        scaleWithEffectMulti: 0
     - rid: 9031231822436499457
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

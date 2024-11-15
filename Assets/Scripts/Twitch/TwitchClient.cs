@@ -16,8 +16,7 @@ public class TwitchClient : MonoBehaviour
     public Client client;
     public Api api;
     private string channelName = "skritty";
-    private Dictionary<string, Func<string, List<string>, CommandError>> commands = 
-        new Dictionary<string, Func<string, List<string>, CommandError>>();
+    private List<(string, Func<string, List<string>, CommandError>)> commands = new();
 
     private void Awake()
     {
@@ -79,12 +78,12 @@ public class TwitchClient : MonoBehaviour
 
     public void AddCommand(string commandName, Func<string, List<string>, CommandError> method)
     {
-        commands.Add(commandName, method);
+        commands.Add((commandName, method));
     }
 
-    public void RemoveCommand(string commandName)
+    public void RemoveCommand(string commandName, Func<string, List<string>, CommandError> method)
     {
-        commands.Remove(commandName);
+        commands.Remove((commandName, method));
     }
 
     private Task CommandHandler(object sender, OnMessageReceivedArgs args)
@@ -99,12 +98,13 @@ public class TwitchClient : MonoBehaviour
 
         string commandName = command[0];
         command.RemoveAt(0);
-        if (commands.ContainsKey(commandName))
+        foreach((string, Func<string, List<string>, CommandError>) c in commands)
         {
-            CommandError error = commands[commandName].Invoke(args.ChatMessage.Username, command);
+            if (c.Item1 != commandName) continue;
+            CommandError error = c.Item2.Invoke(args.ChatMessage.Username, command);
             if (!error.successful)
             {
-                SendChatMessage($"@{args.ChatMessage.Username} "+error.errorMessage);
+                SendChatMessage($"@{args.ChatMessage.Username} " + error.errorMessage);
             }
         }
 

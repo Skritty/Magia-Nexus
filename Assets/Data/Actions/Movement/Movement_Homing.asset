@@ -10,50 +10,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Movement_Approach
+  m_Name: Movement_Homing
   m_EditorClassIdentifier: 
-  actionName: Approach
-  actionDescription: Maintain a close distance to your target
+  actionAliases: []
+  actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 2
+  timing: 1
   effects:
-  - rid: 9031231646890721280
-  - rid: 9031231646890721282
+  - rid: 2626413410273722723
+  - rid: 2626413410273722932
   references:
     version: 2
     RefIds:
-    - rid: 9031231646890721280
-      type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
+    - rid: 2626413410273722723
+      type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs: []
         targetSelector:
-          rid: 9031231646890721281
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        refreshDuration: 1
-        distanceFromTarget: 1.5
-        threshold: 0.25
-    - rid: 9031231646890721281
+          rid: 2626413410273722724
+        homingRateDegreesPerSecond: 75
+    - rid: 2626413410273722724
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
-    - rid: 9031231646890721282
+    - rid: 2626413410273722932
       type: {class: Move, ns: , asm: Assembly-CSharp}
       data:
-        contributeToAssists: 0
-        <Tags>k__BackingField: 0
-        baseEffectMultiplier: 1
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
         targetSelector:
-          rid: 9031231646890721283
+          rid: 2626413410273722933
         rotate: 0
-    - rid: 9031231646890721283
+        obeyMapEdge: 0
+    - rid: 2626413410273722933
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 

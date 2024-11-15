@@ -9,6 +9,8 @@ public class Stat_Life : GenericStat<Stat_Life>
     #region Internal Variables
     [SerializeField, FoldoutGroup("Life"), ShowIf("@Owner != null")]
     private RectTransform healthBar;
+    [SerializeField, FoldoutGroup("Life"), ShowIf("@Owner != null")]
+    public VFX_TextPopup damagePopup;
     #endregion
 
     #region Stats
@@ -48,8 +50,10 @@ public class Stat_Life : GenericStat<Stat_Life>
         // Handle Life
         if (totalDamage > 0)
             Owner.Stat<Stat_PlayerOwner>().ApplyContribution(damage.Owner, totalDamage * TankContributionMultiplier);
-        //Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
+        Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
         currentLife = Mathf.Clamp(currentLife - totalDamage, 0, maxLife);
+        damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, true)
+            ?.ApplyPopupInfo(Mathf.Round(totalDamage).ToString("0"), new Color(.9f, .2f, .2f));
         if (!damage.preventTriggers)
         {
             Owner.Trigger<Trigger_OnDamageRecieved>(damage, damage);

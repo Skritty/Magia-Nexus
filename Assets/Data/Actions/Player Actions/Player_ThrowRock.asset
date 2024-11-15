@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Player_ThrowRock
   m_EditorClassIdentifier: 
-  actionName: Throw Rock
+  actionAliases:
+  - Throw Rock
+  - Stone
   actionDescription: 'Throws a rock at your target, dealing 1.5 bludgeoning damage
     and stunning for 0.5s
 
@@ -41,8 +43,8 @@ MonoBehaviour:
         referenceEffect:
           rid: 3963142723388571829
         requiredAmount: 1
-        addedOnSuccess: -1
-        addedOnFailure: 1
+        stacksAddedOnSuccess: -1
+        stacksAddedOnFailure: 1
         effectsOnSuccess:
         - rid: 3963142721972731920
         effectsOnFailure: []
@@ -82,10 +84,12 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 99
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 2
-        modifierTags: 524288
+        scaleWithEffectMulti: 0
     - rid: 3963142723388571830
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

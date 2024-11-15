@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: T1_BladeBarrier
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Blade Barrier
+  itemAliases:
+  - Blade Barrier
+  - BB
   itemDescription: Grants [Blade Barrier]
   cost: 0
   itemImage: {fileID: 0}
@@ -24,3 +26,7 @@ MonoBehaviour:
   grantedActions:
   - {fileID: 11400000, guid: 0cb067aef1583e748bd2904e8642c6cd, type: 2}
   actionCountModifier: 0
+  itemEffects: []
+  references:
+    version: 2
+    RefIds: []

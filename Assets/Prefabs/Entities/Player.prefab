@@ -314,6 +314,32 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2626413593285099745
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 131073
+            value: 100
+          - key: 135176
+            value: 100
+        targetSelector:
+          rid: 2626413593285099746
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        modifierType: 2
+        scaleWithEffectMulti: 0
+    - rid: 2626413593285099746
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
     - rid: 3492845359303229445
       type: {class: Stat_Life, ns: , asm: Assembly-CSharp}
       data:
@@ -321,8 +347,9 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         healthBar: {fileID: 9101917831146373091}
-        maxLife: 100
-        currentLife: 100
+        damagePopup: {fileID: 1206888003998408235, guid: bbe9e86b035842c49b2eae50fa2df8ef, type: 3}
+        maxLife: 10000
+        currentLife: 10000
         invulnerable: 0
     - rid: 3492845359303229448
       type: {class: Stat_Actions, ns: , asm: Assembly-CSharp}
@@ -333,6 +360,7 @@ MonoBehaviour:
         tick: 0
         stunned: 0
         actionsPerTurn: 5
+        startingTickDelay: 0
         repeatActions:
         - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
         actions: []
@@ -352,6 +380,7 @@ MonoBehaviour:
         movementTarget: {fileID: 0}
         baseMovementSpeed: 1
         facingDir: {x: 1, y: 0, z: 0}
+        dirMovementSpeedMulti: 1
     - rid: 9031231465990389774
       type: {class: Stat_PersistentEffects, ns: , asm: Assembly-CSharp}
       data:
@@ -360,6 +389,7 @@ MonoBehaviour:
         mergeBehavior: 0
         persistentEffects:
         - rid: 9031231727694250688
+        - rid: 2626413593285099745
     - rid: 9031231527144652886
       type: {class: Stat_Magic, ns: , asm: Assembly-CSharp}
       data:
@@ -379,7 +409,9 @@ MonoBehaviour:
           viewerID: 0
           viewerName: 
           points: 0
+          roundPoints: 0
           currency: 0
+          loanAmount: 0
           targetType:
             rid: 9031231661127237637
           items: []
@@ -392,6 +424,7 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
+        vfx: {fileID: 0}
     - rid: 9031231661127237638
       type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
       data:
@@ -415,6 +448,7 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
+        vfx: {fileID: 0}
     - rid: 9031231668284555682
       type: {class: Stat_Targetable, ns: , asm: Assembly-CSharp}
       data:
@@ -435,9 +469,10 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        exactTagMatch: 0
         triggerOrder: 99
         trigger:
           rid: 9031231727694250690

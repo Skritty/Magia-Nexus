@@ -21,29 +21,37 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
 
     public void ApplyEffect(PersistentEffect effect)
     {
-        if (!AcceptsEffect(effect)) return;
-        effect.tick = 0;
-        persistentEffects.Add(effect);
-        effect.OnGained();
-    }
-
-    private bool AcceptsEffect(PersistentEffect effect)
-    {
+        // Check stack limits
         int stacks = 0;
         foreach (PersistentEffect e in persistentEffects)
         {
-            if (e.Source == effect.Source && e.Owner == effect.Owner)
+            // Same effect?
+            if (e.Source == effect.Source)
             {
-                stacks++;
+                // Refresh the duration
                 if (e.refreshDuration)
                 {
-                    e.ApplyContribution();
+                    e.ApplyToAllStacks(() => e.ApplyContribution());
                     e.tick = 0;
                 }
+
+                // Can be stacked as a single effect? (is e the same owner and can effect be applied it?)
+                // (is the duration infinite or the tick is the same?)
+                if (!(effect.perPlayer && e.Owner != effect.Owner) && (effect.tickDuration < 0 || e.refreshDuration))
+                {
+                    e.stacks = Mathf.Clamp(e.stacks + effect.stacks, 0, e.maxStacks);
+                    effect.ApplyToAllStacks(() => effect.OnGained());
+                    return;
+                }
+                stacks++;
             }
         }
-        if (effect.maxStacks >= 0 && stacks >= effect.maxStacks) return false;
-        return true;
+        if (effect.maxStacks >= 0 && stacks >= effect.maxStacks) return;
+
+        // Add effect
+        effect.tick = 0;
+        persistentEffects.Add(effect);
+        effect.OnGained();
     }
 
     public List<PersistentEffect> GetEffectsViaReference(PersistentEffect reference, Entity owner = null)
@@ -59,14 +67,22 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         return effects;
     }
 
-    public void RemoveSimilarEffect(PersistentEffect reference, Entity owner = null)
+    public void AddOrRemoveSimilarEffect(PersistentEffect reference, Entity owner = null)
     {
         foreach (PersistentEffect e in persistentEffects.ToArray())
         {
             if (reference.GetUID() == e.Source.GetUID() && (owner == null || owner == e.Owner))
             {
-                e.OnLost();
-                persistentEffects.Remove(e);
+                if(reference.stacks > 0)
+                {
+                    reference.ApplyToAllStacks(() => reference.Create(owner));
+                }
+                else if(reference.stacks < 0)
+                {
+                    e.ApplyToAllStacks(() => e.OnLost(), Mathf.Clamp(-reference.stacks, 0, e.stacks));
+                    e.stacks += reference.stacks;
+                    if (e.stacks <= 0) persistentEffects.Remove(e);
+                }
             }
         }
     }
@@ -78,12 +94,15 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
             effect.tick++;
             if(effect.tickDuration >= 0 && effect.tick >= effect.tickDuration)
             {
-                effect.OnLost();
-                effect.ApplyContribution();
+                effect.ApplyToAllStacks(() =>
+                {
+                    effect.OnLost();
+                    effect.ApplyContribution();
+                });
                 persistentEffects.Remove(effect);
                 continue;
             }
-            effect.OnTick();
+            effect.ApplyToAllStacks(() => effect.OnTick());
         }
     }
 
@@ -91,8 +110,11 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
     {
         foreach (PersistentEffect effect in persistentEffects)
         {
-            effect.OnLost();
-            effect.ApplyContribution();
+            effect.ApplyToAllStacks(() =>
+            {
+                effect.OnLost();
+                effect.ApplyContribution();
+            });
         }
         persistentEffects.Clear();
     }

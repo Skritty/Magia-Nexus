@@ -3,23 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using TMPro;
+using System;
+using Skritty.Tools.Utilities;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager Instance;
-
-    private void Awake()
-    {
-        if (Instance != null) Destroy(this);
-        Instance = this;
-        DontDestroyOnLoad(this);
-    }
-
     public float timePerTurn;
     public int defaultActionsPerTurn;
     public Phase initialPhase;
     private Phase currentPhase;
     private Coroutine phaseTimer;
+    public TextMeshProUGUI timer;
 
     public Entity defaultPlayer;
     [SerializeReference]
@@ -32,12 +27,26 @@ public class GameManager : MonoBehaviour
     {
         TwitchClient.Instance.AddCommand("join", Command_JoinGame);
         TwitchClient.Instance.AddCommand("leave", Command_LeaveGame);
+
+        TwitchClient.Instance.AddCommand("gold", Command_CurrentGold);
+        TwitchClient.Instance.AddCommand("points", Command_CurrentPoints);
+
+        TwitchClient.Instance.AddCommand("items", Command_ListHeldItems);
+        TwitchClient.Instance.AddCommand("actions", Command_ListActions);
+        TwitchClient.Instance.AddCommand("turn", Command_ListTurn);
     }
 
     private void OnDisable()
     {
-        TwitchClient.Instance.RemoveCommand("join");
-        TwitchClient.Instance.RemoveCommand("leave");
+        TwitchClient.Instance.RemoveCommand("join", Command_JoinGame);
+        TwitchClient.Instance.RemoveCommand("leave", Command_LeaveGame);
+
+        TwitchClient.Instance.RemoveCommand("gold", Command_CurrentGold);
+        TwitchClient.Instance.RemoveCommand("points", Command_CurrentPoints);
+
+        TwitchClient.Instance.RemoveCommand("items", Command_ListHeldItems);
+        TwitchClient.Instance.RemoveCommand("actions", Command_ListActions);
+        TwitchClient.Instance.RemoveCommand("turn", Command_ListTurn);
     }
 
     private CommandError Command_JoinGame(string user, List<string> args)
@@ -114,8 +123,89 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < phase.tickDuration; i++)
         {
+            timer.text = new DateTime().AddSeconds((int)((phase.tickDuration - i) / 50)).ToString("mm:ss");
             yield return new WaitForFixedUpdate();
         }
         StartPhase(phase.nextPhase);
+    }
+
+    public CommandError Command_ListHeldItems(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+
+        string message = $"@{user} You have: ";
+        Dictionary<string, int> itemAmounts = new();
+        foreach (Item item in GameManager.Instance.viewers[user].items)
+        {
+            if (item.hidden) continue;
+            if (itemAmounts.ContainsKey(item.ItemName))
+            {
+                itemAmounts[item.ItemName]++;
+            }
+            else
+            {
+                itemAmounts.Add(item.ItemName, 1);
+            }
+        }
+        foreach (KeyValuePair<string, int> item in itemAmounts)
+        {
+            if (item.Value == 1) message += $"{item.Key}, ";
+            else
+            {
+                message += $"{item.Key} ({item.Value}), ";
+            }
+        }
+        message = message.Remove(message.Length - 2, 2);
+        TwitchClient.Instance.SendChatMessage(message);
+
+        return new CommandError(true, "");
+    }
+
+    public CommandError Command_ListTurn(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        string message = $"@{user} Your turn will be: ";
+        foreach (Action action in GameManager.Instance.viewers[user].actions)
+        {
+            message += $"{action.ActionName}, ";
+        }
+        message = message.Remove(message.Length - 2, 2);
+        TwitchClient.Instance.SendChatMessage(message);
+        return new CommandError(true, "");
+    }
+
+    public CommandError Command_CurrentGold(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        string message = $"@{user} You have {GameManager.Instance.viewers[user].currency} gold";
+        TwitchClient.Instance.SendChatMessage(message);
+        return new CommandError(true, "");
+    }
+
+    public CommandError Command_CurrentPoints(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        string message = $"@{user} You have {GameManager.Instance.viewers[user].points} points";
+        TwitchClient.Instance.SendChatMessage(message);
+        return new CommandError(true, "");
+    }
+
+    public CommandError Command_ListActions(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        string message = $"@{user} You have: ";
+        HashSet<Action> actions = new HashSet<Action>();
+        foreach (Item item in GameManager.Instance.viewers[user].items)
+        {
+            foreach(Action action in item.grantedActions)
+            {
+                if (actions.Contains(action)) continue;
+                actions.Add(action);
+                message += $"{action.ActionName}, ";
+            }
+        }
+        message = message.Remove(message.Length - 2, 2);
+        TwitchClient.Instance.SendChatMessage(message);
+        return new CommandError(true, "");
     }
 }

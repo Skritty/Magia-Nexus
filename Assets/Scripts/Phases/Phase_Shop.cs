@@ -9,6 +9,7 @@ public class Phase_Shop : Phase
     public int baseGoldGain;
     public override void OnEnter()
     {
+        TwitchClient.Instance.AddCommand("join", Command_GiveNewPlayerGold);
         roundsPast++;
         base.OnEnter();
         GivePlayersGold();
@@ -16,6 +17,7 @@ public class Phase_Shop : Phase
 
     public override void OnExit()
     {
+        TwitchClient.Instance.RemoveCommand("join", Command_GiveNewPlayerGold);
         base.OnExit();
     }
 
@@ -23,9 +25,18 @@ public class Phase_Shop : Phase
     {
         foreach (Viewer viewer in GameManager.Viewers)
         {
-            viewer.currency += baseGoldGain * (viewer.newPlayer ? roundsPast : 1) + (int)viewer.roundPoints;
-            viewer.newPlayer = false;
+            viewer.currency += baseGoldGain + (int)viewer.roundPoints;
             viewer.roundPoints = 0;
         }
+    }
+
+    private CommandError Command_GiveNewPlayerGold(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(true, "");
+
+        Viewer viewer = GameManager.Instance.viewers[user];
+        viewer.currency += baseGoldGain * roundsPast;
+
+        return new CommandError(true, "");
     }
 }

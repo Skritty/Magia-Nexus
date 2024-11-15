@@ -1,6 +1,8 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 {
@@ -8,23 +10,21 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
     {
         public Effect effect;
         public EffectModifierCalculationType type;
-        public EffectTag tag;
-        public EffectTag grantedTag;
-        public float modifier;
+        public (EffectTag, float)[] effectTags; // (tag, magnitude)
 
+        public EffectTag Tag => effectTags[0].Item1;
+        public float magnitude;
         public float buffedModifier;
         public float positive;
         public float negative;
         public List<EffectModifier> additive = new List<EffectModifier>();// At most 1 additive if there are multipliers
         public List<EffectModifier> multipliers = new List<EffectModifier>();
 
-        public EffectModifier(Effect effect = null, EffectModifierCalculationType type = EffectModifierCalculationType.Flat, EffectTag tag = EffectTag.None, EffectTag grantedTag = EffectTag.None, float modifier = 0)
+        public EffectModifier(Effect effect = null, EffectModifierCalculationType type = EffectModifierCalculationType.Flat, params (EffectTag, float)[] effectTags)
         {
             this.effect = effect;
             this.type = type;
-            this.tag = tag;
-            this.grantedTag = grantedTag;
-            this.modifier = modifier;
+            this.effectTags = effectTags;
         }
 
         public EffectModifier GetSubcalculation(EffectTag tags)
@@ -32,7 +32,7 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
             EffectModifier subcalculation = null;
             foreach (EffectModifier calculation in additive)
             {
-                if (tags == calculation.tag)
+                if (tags == calculation.Tag)
                 {
                     subcalculation = calculation;
                     break;
@@ -46,26 +46,28 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
             // Root: ((damage type subcalculation) + ...)
             // Damage type subcalculation: ((Flat + ...) * (Increased + ...) * Multiplier * ...)
             // TODO: Do damage taken on second step
-            EffectModifier subcalculation = GetSubcalculation(modifier.tag);
+            EffectModifier subcalculation = GetSubcalculation(modifier.Tag);
             if (subcalculation == null)
             {
                 subcalculation = new EffectModifier();
-                subcalculation.tag = modifier.tag;
-                subcalculation.additive.Add(new EffectModifier());
-                subcalculation.multipliers.Add(new EffectModifier());
+                subcalculation.effectTags = modifier.effectTags;
+                subcalculation.multipliers.Add(new EffectModifier(modifier.effect, EffectModifierCalculationType.Additive, modifier.effectTags));
                 additive.Add(subcalculation);
             }
-            subcalculation.additive[0].additive.Add(modifier);
+            modifier.magnitude = modifier.effectTags[0].Item2;
+            subcalculation.additive.Add(modifier);
             return subcalculation;
         }
 
         public void AddAdditive(EffectModifier modifier, EffectModifier subcalculation)
         {
+            modifier.magnitude = modifier.effectTags[0].Item2;
             subcalculation.multipliers[0].additive.Add(modifier);
         }
 
         public void AddMultiplicative(EffectModifier modifier, EffectModifier subcalculation)
         {
+            modifier.magnitude = modifier.effectTags[0].Item2 - 1;
             subcalculation.multipliers.Add(modifier);
         }
 
@@ -73,25 +75,25 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
         {
             Solve();
             if (contributingEffect != null && (contributionMultiplier != 0 && negativeContributionMultiplier != 0))
-                Contribute(modifier * contributionMultiplier, (buffedModifier - modifier) * negativeContributionMultiplier, positive, negative, contributingEffect);
-            return modifier;
+                Contribute(magnitude * contributionMultiplier, (buffedModifier - magnitude) * negativeContributionMultiplier, positive, negative, contributingEffect);
+            return magnitude;
         }
 
         private float Solve()
         {
-            if (modifier < 0)
+            if (magnitude < 0)
             {
-                negative = modifier;
+                negative = magnitude;
             }
             else
             {
-                positive = modifier;
+                positive = magnitude;
             }
             foreach (EffectModifier damageCalculation in additive)
             {
                 float amt = damageCalculation.Solve();
-                modifier += amt;
-                if (modifier < 0)
+                magnitude += amt;
+                if (magnitude < 0)
                 {
                     negative += damageCalculation.negative;
                 }
@@ -104,8 +106,8 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
             foreach (EffectModifier damageCalculation in multipliers)
             {
                 float amt = damageCalculation.Solve();
-                modifier *= 1 + amt;
-                if (modifier < 0)
+                magnitude *= 1 + amt;
+                if (magnitude < 0)
                 {
                     negative += damageCalculation.negative;
                 }
@@ -115,12 +117,12 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
                     positive += damageCalculation.positive;
                 }
             }
-            return modifier;
+            return magnitude;
         }
 
         private void Contribute(float damageDealt, float damageMitigated, float totalPositive, float totalNegative, Effect contributingEffect)
         {
-            if (effect != null && effect.Owner && modifier != 0)
+            if (effect != null && effect.Owner && magnitude != 0)
             {
                 if (positive == 0) damageDealt = 0;
                 else damageDealt = damageDealt / totalPositive * positive;
@@ -128,7 +130,7 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
                 if (negative == 0) damageMitigated = 0;
                 else damageMitigated = damageMitigated / totalNegative * negative;
 
-                if (modifier > 0)
+                if (magnitude > 0)
                 {
                     effect.Owner.Stat<Stat_PlayerOwner>().ApplyContribution(contributingEffect.Target, damageDealt);
                 }
@@ -151,9 +153,18 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 
     [ShowInInspector, ReadOnly, FoldoutGroup("Effect Modifiers")]
     public List<EffectModifier> effectModifiers = new List<EffectModifier>();
-    public void AddModifier(Effect effect, EffectModifierCalculationType type, EffectTag tag, EffectTag grantedTag, float modifier)
+    public void AddModifier(Effect effect, EffectModifierCalculationType type, float modifier)
     {
-        effectModifiers.Add(new EffectModifier(effect, type, tag, grantedTag, modifier));
+        switch (type)
+        {
+            case EffectModifierCalculationType.Flat:
+                effectModifiers.Insert(0, new EffectModifier(effect, type, effect.effectTags.Select(x => (x.Key, x.Value)).ToArray()));
+                break;
+            default:
+                effectModifiers.Add(new EffectModifier(effect, type, effect.effectTags.Select(x => (x.Key, x.Value)).ToArray()));
+                break;
+        }
+        
     }
 
     public void RemoveModifier(Effect effect)
@@ -178,52 +189,63 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
             rootCalculation = new EffectModifier();
             if (contributingEffect == null)
             {
-                rootCalculation.AddFlat(new EffectModifier(null, EffectModifierCalculationType.Flat, EffectTag.None | additionalRequiredTags, EffectTag.None, 1));
+                rootCalculation.AddFlat(new EffectModifier(null, EffectModifierCalculationType.Flat, (EffectTag.None | additionalRequiredTags, 1)));
             }
             else
             {
-                rootCalculation.multipliers.Add(new EffectModifier(contributingEffect, EffectModifierCalculationType.Multiplicative, EffectTag.None, EffectTag.None, contributingEffect.effectMultiplier - 1));
+                rootCalculation.AddMultiplicative(new EffectModifier(contributingEffect, EffectModifierCalculationType.Multiplicative, (EffectTag.None, contributingEffect.effectMultiplier)), rootCalculation);
                 foreach (KeyValuePair<EffectTag, float> tag in contributingEffect.effectTags)
                 {
-                    EffectModifier subcalculation = rootCalculation.AddFlat(new EffectModifier(contributingEffect, EffectModifierCalculationType.Flat, tag.Key, tag.Key, 1));
-                    rootCalculation.AddMultiplicative(new EffectModifier(contributingEffect, EffectModifierCalculationType.Multiplicative, tag.Key, tag.Key, tag.Value - 1), subcalculation);
+                    EffectModifier subcalculation = rootCalculation.AddFlat(new EffectModifier(contributingEffect, EffectModifierCalculationType.Flat, (tag.Key, 1)));
+                    rootCalculation.AddMultiplicative(new EffectModifier(contributingEffect, EffectModifierCalculationType.Multiplicative, (tag.Key, tag.Value)), subcalculation);
                 }
             }
         }
 
-        HashSet<EffectModifier> flatGained = new HashSet<EffectModifier>();
-        for (int i = 0; i < rootCalculation.additive.Count; i++)
+        foreach (EffectModifier modifier in effectModifiers)
         {
-            EffectModifier subcalculation = rootCalculation.additive[i];
-            foreach (EffectModifier modifier in effectModifiers)
+            foreach ((EffectTag, float) effectTag in modifier.effectTags)
             {
-                if(!flatGained.Contains(modifier) && (modifier.tag & (subcalculation.tag | additionalRequiredTags)) == (subcalculation.tag | additionalRequiredTags))
+                if (!effectTag.Item1.HasFlag(additionalRequiredTags)) continue; 
+                EffectModifier flat = null;
+                for (int i = 0; i < rootCalculation.additive.Count; i++)
                 {
-                    switch (modifier.type)
+                    EffectModifier subcalculation = rootCalculation.additive[i]; 
+                    if (subcalculation.Tag.HasFlag(effectTag.Item1 & ~(additionalRequiredTags)))
                     {
-                        case EffectModifierCalculationType.Multiplicative:
-                            {
-                                subcalculation.AddMultiplicative(modifier, subcalculation);
-                                break;
-                            }
-                        case EffectModifierCalculationType.Additive:
-                            {
-                                subcalculation.AddAdditive(modifier, subcalculation);
-                                break;
-                            }
-                        case EffectModifierCalculationType.Flat:
-                            {
-                                flatGained.Add(modifier);
-                                rootCalculation.AddFlat(new EffectModifier(modifier.effect, modifier.type, modifier.grantedTag, modifier.grantedTag, modifier.modifier));
-                                break;
-                            }
+                        switch (modifier.type)
+                        {
+                            case EffectModifierCalculationType.Multiplicative:
+                                {
+                                    subcalculation.AddMultiplicative(modifier, subcalculation);
+                                    break;
+                                }
+                            case EffectModifierCalculationType.Additive:
+                                {
+                                    subcalculation.AddAdditive(modifier, subcalculation);
+                                    break;
+                                }
+                            case EffectModifierCalculationType.Flat:
+                                {
+                                    if (flat == null)
+                                    {
+                                        flat = new EffectModifier(modifier.effect, modifier.type, effectTag);
+                                    }
+                                    else
+                                    {
+                                        flat.effectTags[0].Item1 |= effectTag.Item1;
+                                    }
+                                    break;
+                                }
+                        }
                     }
+                }
+                if(flat != null)
+                {
+                    rootCalculation.AddFlat(flat);
                 }
             }
         }
-        // (fire, spell) from (attack)
-        // (1 (slashing, attack)) * 1.5 + (1 (fire, spell) from buff) * 1.5
-        // 1 * 1.5 + 1 * 1.5 = 3, (1 + 1) * 1.5 = 3
         return rootCalculation;
     }
 }
@@ -231,37 +253,40 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 [Flags]
 public enum EffectTag
 {
-    None          = 0,
+    // Parent Types
+    None          = 0, // 0000
+    Damage        = 1, // 0000
+    Physical      = 2, // 1000
+    Elemental     = 4, // 0100
+    Divine        = 8, // 0010
 
-    // Damage Types
     // Physical
-    Bludgeoning   = 1 << 0, // Knocks back
-    Slashing      = 1 << 1, // Bleeds (scales off of base slashing damage)
-    Piercing      = 1 << 2, // +1 Piereces (Projectiles)/Hits Extra Targets (AoE, but reduced AoE Cone, longer AoE)
+    Bludgeoning   = (1 << 4) + 1 + 2, // Knocks back
+    Slashing      = (1 << 5) + 1 + 2, // Bleeds (scales off of base slashing damage)
+    Piercing      = (1 << 6) + 1 + 2, // +1 Piereces (Projectiles)/Hits Extra Targets (AoE, but reduced AoE Cone, longer AoE)
     // Elemental
-    Fire          = 1 << 3, // Ignites (scales off of base fire damage)
-    Lightning     = 1 << 4, // +1 Chains
-    Cold          = 1 << 5, // Slows
-    //Special
-    Magical       = 1 << 6, // Cannot be blocked
-    Chaos         = 1 << 7, // More damage per debuff on target
-    Healing       = 1 << 8, // More healing per buff on target
-
+    Fire          = (1 << 7) + 1 + 4, // Ignites (scales off of base fire damage)
+    Lightning     = (1 << 8) + 1 + 4, // +1 Chains
+    Cold          = (1 << 9) + 1 + 4, // Slows
+    // Divine
+    Magical       = (1 << 10) + 1 + 8, // Cannot be blocked
+    Chaos         = (1 << 11) + 1 + 8, // More damage per debuff on target
+    Healing       = (1 << 12) + 8, // More healing per buff on target
     // Sources
-    Attack        = 1 << 9,
-    Spell         = 1 << 10,
-    DoT           = 1 << 11, // Gains projectile behaviors (chain, multiple projectiles)
-    Projectile    = 1 << 12,
+    Attack        = 1 << 13,
+    Spell         = 1 << 14,
+    DoT           = 1 << 15, // Gains projectile behaviors (chain, multiple projectiles)
+    Projectile    = 1 << 16,
 
     // Effects
-    DamageDealt   = 1 << 13,
-    DamageTaken   = 1 << 14,
-    AoE           = 1 << 15,
-    Targets       = 1 << 16,
-    Removeable    = 1 << 17,
-    Knockback     = 1 << 18,
-    MovementSpeed = 1 << 19,
-    Initiative    = 1 << 20,
+    DamageDealt   = 1 << 17,
+    DamageTaken   = 1 << 18,
+    AoE           = 1 << 19,
+    Targets       = 1 << 20,
+    Removeable    = 1 << 21,
+    Knockback     = 1 << 22,
+    MovementSpeed = 1 << 23,
+    Initiative    = 1 << 24,
 
     Global        = int.MaxValue
 }

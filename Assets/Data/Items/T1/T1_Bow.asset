@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: T1_Bow
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Bow
+  itemAliases:
+  - Bow
   itemDescription: Grants [Arrow]
   cost: 0
   itemImage: {fileID: 0}

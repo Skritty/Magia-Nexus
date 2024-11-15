@@ -6,6 +6,11 @@ public class AutosizeCamera : MonoBehaviour
 {
     public Camera camera;
     public float buffer;
+    public float positionLerpSpeed = 0.5f;
+    public float sizeLerpSpeed = 0.5f;
+
+    private Vector3 targetPosition = Vector3.zero;
+    private float targetSize = 0;
 
     private void OnPreRender()
     {
@@ -19,8 +24,7 @@ public class AutosizeCamera : MonoBehaviour
             if (entity.transform.position.x > highest.x) highest.x = entity.transform.position.x;
             if (entity.transform.position.y > highest.y) highest.y = entity.transform.position.y;
         }
-
-        camera.transform.position = new Vector3((highest.x + lowest.x) / 2, (highest.y + lowest.y) / 2, -10);
+        targetPosition = new Vector3((highest.x + lowest.x) / 2, (highest.y + lowest.y) / 2, -10);
 
         float size;
         lowest -= Vector2.one * buffer;
@@ -33,7 +37,11 @@ public class AutosizeCamera : MonoBehaviour
         {
             size = (highest.y - lowest.y) / Screen.height;
         }
-        camera.orthographicSize = size / 2 * Screen.height;
+        targetSize = size / 2 * Screen.height;
 
+        if (targetPosition != Vector3.zero)
+            camera.transform.position = Vector3.Lerp(camera.transform.position, targetPosition, positionLerpSpeed);
+        if (targetSize != 0) 
+            camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, targetSize, sizeLerpSpeed);
     }
 }

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Class_Spell Focus
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Spell Focus
+  itemAliases:
+  - Spell Focus
   itemDescription: Grants Fire, Earth, Wind, and Water Rune actions
   cost: 0
   itemImage: {fileID: 0}

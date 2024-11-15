@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Player_BladeBarrier
   m_EditorClassIdentifier: 
-  actionName: Blade Barrier
+  actionAliases:
+  - Blade Barrier
+  - BB
   actionDescription: 'You and nearby allies: Take 15% reduced physical damage for
     2.5 seconds'
   actionImage: {fileID: 0}
@@ -31,17 +33,19 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 24071
+          - key: 262145
             value: -0.15
         targetSelector:
           rid: 9031231777024770073
         tick: 0
         tickDuration: 125
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 1
-        grantedTag: 0
+        scaleWithEffectMulti: 0
     - rid: 9031231777024770073
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:

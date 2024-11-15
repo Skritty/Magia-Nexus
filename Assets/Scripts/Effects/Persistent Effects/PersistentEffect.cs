@@ -15,9 +15,21 @@ public abstract class PersistentEffect: Effect
     [FoldoutGroup("PersistentEffect", -9)]
     public int maxStacks = 1;
     [FoldoutGroup("PersistentEffect", -9)]
+    public int stacks = 1;
+    [FoldoutGroup("PersistentEffect", -9)]
+    public bool perPlayer;
+    [FoldoutGroup("PersistentEffect", -9)]
     public bool refreshDuration = true;
     [FoldoutGroup("PersistentEffect", -9)]
     public bool contributeToAssists = false;
+
+    public void ApplyToAllStacks(System.Action method, int overrideAmount = 0)
+    {
+        for (int i = 0; i < (overrideAmount > 0 ? overrideAmount : stacks); i++)
+        {
+            method?.Invoke();
+        }
+    }
 
     public override void DoEffect()
     {

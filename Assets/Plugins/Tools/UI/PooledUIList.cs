@@ -20,7 +20,7 @@ namespace Skritty.Tools.UI
         /// <param name="element"></param>
         public GameObject Add()
         {
-            GameObject newElement = pooledElementAsset.RequestObject();
+            GameObject newElement = pooledElementAsset.RequestObject<PooledObject>().gameObject;
 
             if(newElement != null)
             {

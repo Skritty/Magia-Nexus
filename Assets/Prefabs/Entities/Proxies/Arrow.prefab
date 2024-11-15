@@ -109,7 +109,6 @@ MonoBehaviour:
         startingTickDelay: 0
         repeatActions:
         - {fileID: 11400000, guid: 49243ad2f7fec714dbba9c0f8292f636, type: 2}
-        - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
         - {fileID: 11400000, guid: 74b77c58d3f604a409a57b692fdc4836, type: 2}
         actions: []
     - rid: 3492845359303229456
@@ -121,6 +120,7 @@ MonoBehaviour:
         movementTarget: {fileID: 0}
         baseMovementSpeed: 10
         facingDir: {x: 1, y: 0, z: 0}
+        dirMovementSpeedMulti: 1
     - rid: 9031231372545491043
       type: {class: Stat_Projectile, ns: , asm: Assembly-CSharp}
       data:
@@ -198,7 +198,9 @@ MonoBehaviour:
         player:
           viewerID: 0
           viewerName: 
+          newPlayer: 1
           points: 0
+          roundPoints: 0
           currency: 0
           targetType:
             rid: 9031231661127237645

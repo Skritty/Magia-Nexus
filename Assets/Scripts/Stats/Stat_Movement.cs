@@ -11,4 +11,6 @@ public class Stat_Movement : GenericStat<Stat_Movement>
     public float baseMovementSpeed;
     [FoldoutGroup("Movement")]
     public Vector3 facingDir = Vector3.right;
+    [FoldoutGroup("Movement")]
+    public float dirMovementSpeedMulti = 1;
 }

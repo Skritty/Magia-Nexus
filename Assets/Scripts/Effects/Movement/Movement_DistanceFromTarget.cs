@@ -3,18 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement_DistanceFromTarget : PersistentEffect
+public class Movement_DistanceFromTarget : Effect
 {
     [FoldoutGroup("@GetType()")]
     public float distanceFromTarget;
     [FoldoutGroup("@GetType()")]
     public float threshold = 0.25f;
-    public override void OnGained()
-    {
-        SetMoveDir();
-    }
 
-    public override void OnTick()
+    public override void Activate()
     {
         SetMoveDir();
     }
@@ -36,6 +32,7 @@ public class Movement_DistanceFromTarget : PersistentEffect
             else
             {
                 Target.Stat<Stat_Movement>().facingDir = dirFromTarget.normalized;
+                Target.Stat<Stat_Movement>().dirMovementSpeedMulti = effectMultiplier;
             }
         }
     }

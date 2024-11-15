@@ -14,7 +14,17 @@ public enum ActionEventTiming
 [Serializable, CreateAssetMenu(menuName = "Action")]
 public class Action : ScriptableObject
 {
-    public string actionName;
+    public List<string> actionAliases = new List<string>();
+    public string ActionName => actionAliases.Count == 0 ? "" : actionAliases[0];
+    public bool NameMatch(string s)
+    {
+        s = s.ToLower().Replace(" ", "");
+        foreach (string name in actionAliases)
+        {
+            if (name.ToLower().Replace(" ", "").Equals(s)) return true;
+        }
+        return false;
+    }
     [TextArea]
     public string actionDescription;
     public Sprite actionImage;

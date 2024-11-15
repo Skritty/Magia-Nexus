@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: T1_Sword
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Sword
+  itemAliases:
+  - Sword
   itemDescription: Grants [Slash]
   cost: 0
   itemImage: {fileID: 0}
@@ -24,3 +25,7 @@ MonoBehaviour:
   grantedActions:
   - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
   actionCountModifier: 0
+  itemEffects: []
+  references:
+    version: 2
+    RefIds: []

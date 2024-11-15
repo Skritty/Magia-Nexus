@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Player_Warcry
   m_EditorClassIdentifier: 
-  actionName: Warcry
+  actionAliases:
+  - Warcry
   actionDescription: 'You and nearby allies: Deal 5% increased attack damage for
     10 seconds (stacks)'
   actionImage: {fileID: 0}
@@ -31,16 +32,19 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 8704
+          - key: 143872
             value: 0.05
         targetSelector:
           rid: 9031231777024770072
         tick: 0
         tickDuration: 500
         maxStacks: 20
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 0
         contributeToAssists: 0
         modifierType: 1
+        scaleWithEffectMulti: 0
     - rid: 9031231777024770072
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:

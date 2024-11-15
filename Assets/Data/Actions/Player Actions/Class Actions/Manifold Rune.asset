@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Manifold Rune
   m_EditorClassIdentifier: 
-  actionName: Manifold Rune
+  actionAliases:
+  - Manifold Rune
+  - Manifold
   actionDescription: The spell casts another when its effect is applied, as if the
     next rune were the first
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
+  hidden: 0
   maxUses: 0
-  type: 0
   timing: 4
   effects: []
   references:

@@ -8,8 +8,8 @@ public class PersistentEffectGate : Effect
     [SerializeReference, InfoBox("Ensure that this is a REFERENCE TO ANOTHER PERSISTENT EFFECT")]
     public PersistentEffect referenceEffect;
     public float requiredAmount;
-    public float addedOnSuccess;
-    public float addedOnFailure;
+    public int stacksAddedOnSuccess;
+    public int stacksAddedOnFailure;
 
     [SerializeReference]
     public List<Effect> effectsOnSuccess = new List<Effect>();
@@ -24,17 +24,8 @@ public class PersistentEffectGate : Effect
             {
                 effect.Create(Owner);
             }
-            for(int i = 0; i < Mathf.Abs(addedOnSuccess); i++)
-            {
-                if(addedOnSuccess > 0)
-                {
-                    referenceEffect.Create(Owner);
-                }
-                else
-                {
-                    Owner.Stat<Stat_PersistentEffects>().RemoveSimilarEffect(referenceEffect, Owner);
-                }
-            }
+            referenceEffect.stacks = stacksAddedOnSuccess;
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(referenceEffect, Owner);
         }
         else
         {
@@ -42,17 +33,8 @@ public class PersistentEffectGate : Effect
             {
                 effect.Create(Owner);
             }
-            for (int i = 0; i < Mathf.Abs(addedOnFailure); i++)
-            {
-                if (addedOnFailure > 0)
-                {
-                    referenceEffect.Create(Owner);
-                }
-                else
-                {
-                    Owner.Stat<Stat_PersistentEffects>().RemoveSimilarEffect(referenceEffect, Owner);
-                }
-            }
+            referenceEffect.stacks = stacksAddedOnFailure;
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(referenceEffect, Owner);
         }
     }
 }

@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Raise Dead
   m_EditorClassIdentifier: 
-  actionName: Raise Dead
+  actionAliases:
+  - Raise Dead
+  - RD
   actionDescription: Raise a skeleton minion or nearby fallen player to fight for
     you
   actionImage: {fileID: 0}
   damageTypeColor: {r: 0.8301887, g: 0.80466384, b: 0.7022665, a: 1}
+  hidden: 0
   maxUses: 0
-  type: 0
   timing: 4
   effects: []
   references:

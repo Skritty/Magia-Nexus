@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Class_Headtaker
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Headtaker
+  itemAliases:
+  - Headtaker
   itemDescription: Perform a swift attack alongside every action
   cost: 0
   itemImage: {fileID: 0}
@@ -40,9 +41,10 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        exactTagMatch: 0
         triggerOrder: 0
         trigger:
           rid: 9031231646177165317
@@ -62,7 +64,7 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 514
+          - key: 8739
             value: 0.5
         targetSelector:
           rid: 9031231646177165319

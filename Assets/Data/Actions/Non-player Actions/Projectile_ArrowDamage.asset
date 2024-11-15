@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Projectile_ArrowDamage
   m_EditorClassIdentifier: 
-  actionName: 
+  actionAliases: []
   actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -30,14 +30,16 @@ MonoBehaviour:
         effectMultiplier: 0.4
         effectTags:
           serializedPairs:
-          - key: 4100
+          - key: 73795
             value: 1
         targetSelector:
           rid: 9031231527144652840
         ignoreFrames: 50
         skipFlatDamageReduction: 0
         preventTriggers: 0
-        temporaryEffects: []
+        ownerEffects: []
+        targetEffects: []
+        temporaryTriggeredEffects: []
     - rid: 9031231527144652840
       type: {class: Targeting_Line, ns: , asm: Assembly-CSharp}
       data:
@@ -46,5 +48,6 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
+        vfx: {fileID: 0}
         length: 1
         width: 0.4

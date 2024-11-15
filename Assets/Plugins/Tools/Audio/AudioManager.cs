@@ -73,7 +73,7 @@ namespace Skritty.Tools.Audio
                 return true;
             }
 
-            GameObject sourceGameObject = group.defaultSFXSource.RequestObject();
+            GameObject sourceGameObject = group.defaultSFXSource.RequestObject<PooledObject>().gameObject;
 
             if(sourceGameObject == null)
             {

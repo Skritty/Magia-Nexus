@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Shop_Rock
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Rock
+  itemAliases:
+  - Rock
   itemDescription: 'Slows you by 2% per rock
 
     Grants [Throw Rock] '
@@ -35,17 +36,19 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 135168
+          - key: 8388608
             value: -0.02
         targetSelector:
           rid: 3963142721972731913
         tick: 0
         tickDuration: -1
         maxStacks: 99
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 1
-        modifierTags: 524288
+        scaleWithEffectMulti: 0
     - rid: 3963142721972731913
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

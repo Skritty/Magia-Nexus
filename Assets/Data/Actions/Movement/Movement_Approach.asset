@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Movement_Retreat
+  m_Name: Movement_Approach
   m_EditorClassIdentifier: 
-  actionName: Retreat
-  actionDescription: Run away!
+  actionAliases:
+  - Approach
+  actionDescription: Maintain a close distance to your target
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
   timing: 2
   effects:
-  - rid: 9031231646890721447
-  - rid: 9031231598746927109
+  - rid: 9031231646890721280
+  - rid: 2626413410273722975
   references:
     version: 2
     RefIds:
-    - rid: 9031231598746927109
+    - rid: 2626413410273722975
       type: {class: Move, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
@@ -34,14 +35,15 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 9031231598746927110
+          rid: 2626413410273722976
         rotate: 0
-    - rid: 9031231598746927110
+        obeyMapEdge: 1
+    - rid: 2626413410273722976
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
-    - rid: 9031231646890721447
+    - rid: 9031231646890721280
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
@@ -50,15 +52,10 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 9031231646890721448
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        refreshDuration: 1
-        contributeToAssists: 0
-        distanceFromTarget: 7
+          rid: 9031231646890721281
+        distanceFromTarget: 1.5
         threshold: 0.25
-    - rid: 9031231646890721448
+    - rid: 9031231646890721281
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 

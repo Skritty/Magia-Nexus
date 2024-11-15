@@ -5,6 +5,7 @@ using TwitchLib.Api.Helix;
 using UnityEngine.Windows;
 using System;
 using TwitchLib.Api.Helix.Models.Teams;
+using TMPro;
 
 public class Shop : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Shop : MonoBehaviour
     public DisplayItem itemDisplayPrefab, actionDisplayPrefab, shopItemDisplayPrefab, basicTargetingDisplayPrefab;
     public GameObject placeholder;
     public RectTransform shopLayout, basicTargetingLayout, itemDisplayLayout;
+    public TextMeshProUGUI playerList; // Temp
 
     public List<Item> craftableItems = new List<Item>();
 
@@ -24,28 +26,26 @@ public class Shop : MonoBehaviour
 
     private void OnEnable()
     {
-        TwitchClient.Instance.AddCommand("items", Command_ListHeldItems);
-        TwitchClient.Instance.AddCommand("buy", Command_BuyItems);
-        TwitchClient.Instance.AddCommand("craft", Command_CraftItem);
-        TwitchClient.Instance.AddCommand("gold", Command_CurrentGold);
+        TwitchClient.Instance.AddCommand("join", Command_NewPlayerJoined);
 
-        TwitchClient.Instance.AddCommand("actions", Command_ListActions);
+        TwitchClient.Instance.AddCommand("buy", Command_BuyItems);
+        TwitchClient.Instance.AddCommand("sell", Command_SellItems);
+        TwitchClient.Instance.AddCommand("craft", Command_CraftItem);
+        
         TwitchClient.Instance.AddCommand("createturn", Command_CreateTurn);
         TwitchClient.Instance.AddCommand("targeting", Command_SetTargeting);
-        TwitchClient.Instance.AddCommand("turn", Command_ListTurn);
     }
 
     private void OnDisable()
     {
-        TwitchClient.Instance.RemoveCommand("items");
-        TwitchClient.Instance.RemoveCommand("buy");
-        TwitchClient.Instance.RemoveCommand("craft");
-        TwitchClient.Instance.RemoveCommand("gold");
+        TwitchClient.Instance.RemoveCommand("join", Command_NewPlayerJoined);
 
-        TwitchClient.Instance.RemoveCommand("actions");
-        TwitchClient.Instance.RemoveCommand("createturn");
-        TwitchClient.Instance.RemoveCommand("targeting");
-        TwitchClient.Instance.RemoveCommand("turn");
+        TwitchClient.Instance.RemoveCommand("buy", Command_BuyItems);
+        TwitchClient.Instance.RemoveCommand("sell", Command_SellItems);
+        TwitchClient.Instance.RemoveCommand("craft", Command_CraftItem);
+        
+        TwitchClient.Instance.RemoveCommand("createturn", Command_CreateTurn);
+        TwitchClient.Instance.RemoveCommand("targeting", Command_SetTargeting);
     }
 
     private void Start()
@@ -59,6 +59,7 @@ public class Shop : MonoBehaviour
         }
         FindAllAvailableActions();
         UpdateDisplay();
+        UpdatePlayerList();
     }
 
     public void UpdateDisplay()
@@ -67,7 +68,7 @@ public class Shop : MonoBehaviour
         foreach(Item item in shopItems)
         {
             DisplayItem display = Instantiate(shopItemDisplayPrefab, shopLayout);
-            display.title.text = item.itemName;
+            display.title.text = item.ItemName;
             display.desc.text = item.itemDescription;
             display.id.text = "i" + (ownedItems.IndexOf(item) + 1);
             display.cost.text = item.cost + "g";
@@ -89,13 +90,22 @@ public class Shop : MonoBehaviour
         }
     }
 
+    public void UpdatePlayerList()
+    {
+        playerList.text = "";
+        foreach (Viewer player in GameManager.Viewers)
+        {
+            playerList.text += $"\n{player.viewerName}";
+        }
+    }
+
     private void CreateItemUI(Item item)
     {
         if (shopItems.Contains(item)) return;
         CheckForPlaceholder(itemDisplayLayout.childCount);
 
         DisplayItem display = Instantiate(itemDisplayPrefab, itemDisplayLayout);
-        display.title.text = item.itemName;
+        display.title.text = item.ItemName;
         display.desc.text = item.itemDescription;
         display.id.text = "i" + (ownedItems.IndexOf(item) + 1);
         display.background.color = item.damageTypeColor;
@@ -115,7 +125,7 @@ public class Shop : MonoBehaviour
             DisplayItem displayAction = Instantiate(actionDisplayPrefab, display.transform);
             displayAction.GetComponent<RectTransform>().anchoredPosition =
                 new Vector2(0, ++a * -displayAction.GetComponent<RectTransform>().sizeDelta.y);
-            displayAction.title.text = action.actionName;
+            displayAction.title.text = action.ActionName;
             displayAction.desc.text = action.actionDescription;
             displayAction.id.text = "a" + (ownedActions.IndexOf(action) + 1);
             displayAction.background.color = item.damageTypeColor;
@@ -168,13 +178,60 @@ public class Shop : MonoBehaviour
         }
         viewer.currency -= item.cost;
         viewer.items.Add(item);
-        message = $"{item.itemName}, ";
+        message = $"{item.ItemName}, ";
+        return true;
+    }
+
+    public bool SellItem(Viewer viewer, string toSell, out string message)
+    {
+        Item item = GetItemFromNameOrID(toSell);
+        if (item == null)
+        {
+            message = $"No item with that name found!";
+            return false;
+        }
+        if (!viewer.items.Contains(item))
+        {
+            message = $"Cannot sell an item you do not have!";
+            return false;
+        }
+        if(item.craftingRecipe.Count == 0 && item.cost == 0)
+        {
+            message = $"{item.ItemName} is unsellable!";
+            return false;
+        }
+
+        viewer.items.Remove(item);
+
+        int totalGoldCost = item.cost;
+        Queue<Item> components = new Queue<Item>();
+        foreach(Item i in item.craftingRecipe)
+        {
+            components.Enqueue(i);
+        }
+        while(components.Count > 0)
+        {
+            item = components.Dequeue();
+            totalGoldCost = item.cost;
+            foreach (Item i in item.craftingRecipe)
+            {
+                components.Enqueue(i);
+            }
+        }
+
+        viewer.currency += totalGoldCost;
+        message = $"Sold {item.ItemName} for {totalGoldCost}g";
         return true;
     }
 
     public bool CraftItem(Viewer viewer, string itemToCraft, out string message)
     {
         Item craft = GetItemFromNameOrID(itemToCraft);
+        if (craft == null)
+        {
+            message = "Item does not exist";
+            return false;
+        }
         if(craft.craftingRecipe.Count == 0)
         {
             message = "This item cannot be crafted";
@@ -191,7 +248,7 @@ public class Shop : MonoBehaviour
             message = "You don't have ";
             foreach (Item component in components)
             {
-                message += component.itemName + ", ";
+                message += component.ItemName + ", ";
             }
             message = message.Remove(message.Length - 2, 2);
             return false;
@@ -201,7 +258,7 @@ public class Shop : MonoBehaviour
             viewer.items.Remove(material);
         }
         viewer.items.Add(craft);
-        message = craft.itemName;
+        message = craft.ItemName;
         if (!ownedItems.Contains(craft))
         {
             ownedItems.Add(craft);
@@ -268,7 +325,7 @@ public class Shop : MonoBehaviour
                     viewer.items.Remove(item);
                 }
                 viewer.items.Add(craft);
-                message = craft.itemName;
+                message = craft.ItemName;
                 if (!ownedItems.Contains(craft))
                 {
                     ownedItems.Add(craft);
@@ -306,7 +363,7 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            return ownedItems.Find(item => input.ToLower().Replace(" ", "").Equals(item.itemName.ToLower().Replace(" ", "")));
+            return ownedItems.Find(item => item.NameMatch(input));
         }
     }
 
@@ -321,7 +378,7 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            return ownedActions.Find((action) => input.ToLower().Replace(" ", "").Equals(action.actionName.ToLower().Replace(" ", "")));
+            return ownedActions.Find((action) => action.NameMatch(input));
         }
     }
 
@@ -429,11 +486,11 @@ public class Shop : MonoBehaviour
             }
             if (!ownedActions.Contains(action))
             {
-                message = $"None of your items grant you the action {action.actionName}! \nUse '!actions' to see what actions you can use!";
+                message = $"None of your items grant you the action {action.ActionName}! \nUse '!actions' to see what actions you can use!";
                 return false;
             }
             actions.Add(action);
-            turn += $" {action.actionName}, ";
+            turn += $" {action.ActionName}, ";
         }
         viewer.actions = actions;
         message = $"Your new turn is:{turn.Remove(turn.Length - 2, 2)}!";
@@ -458,28 +515,6 @@ public class Shop : MonoBehaviour
 
     public void NextPhase() => GameManager.Instance.NextPhase();
 
-    public CommandError Command_CheckGold(string user, List<string> args)
-    {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
-        string message = $"@{user} You have: {GameManager.Instance.viewers[user].currency}";
-        TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
-    }
-
-    public CommandError Command_ListHeldItems(string user, List<string> args)
-    {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
-        string message = $"@{user} You have: ";
-        foreach (Item item in GameManager.Instance.viewers[user].items)
-        {
-            if (item.hidden) continue;
-            message += $"{item.itemName}, ";
-        }
-        message = message.Remove(message.Length - 2, 2);
-        TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
-    }
-
     public CommandError Command_BuyItems(string user, List<string> args)
     {
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
@@ -496,7 +531,7 @@ public class Shop : MonoBehaviour
             {
                 if (BuyItem(GameManager.Instance.viewers[user], args[1], out outMessage))
                 {
-                    m2 = outMessage;
+                    m2 = $"{i} "+outMessage;
                 }
                 else
                 {
@@ -522,6 +557,25 @@ public class Shop : MonoBehaviour
         
         message = message.Remove(message.Length - 2, 2);
         message += $"! You now have {GameManager.Instance.viewers[user].currency}g";
+        TwitchClient.Instance.SendChatMessage(message);
+        return new CommandError(true, "");
+    }
+
+    public CommandError Command_SellItems(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        string message = $"@{user} ";
+        string outMessage;
+        
+        if(SellItem(GameManager.Instance.viewers[user], args[0], out outMessage))
+        {
+            message += outMessage;
+        }
+        else
+        {
+            return new CommandError(false, outMessage);
+        }
+
         TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
     }
@@ -558,19 +612,6 @@ public class Shop : MonoBehaviour
         return new CommandError(true, "");
     }
 
-    public CommandError Command_ListActions(string user, List<string> args)
-    {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
-        string message = $"@{user} You have: ";
-        foreach (Action action in FindAvailableActions(GameManager.Instance.viewers[user]))
-        {
-            message += $"{action.actionName}, ";
-        }
-        message = message.Remove(message.Length - 2, 2);
-        TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
-    }
-
     public CommandError Command_CreateTurn(string user, List<string> args)
     {
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
@@ -585,27 +626,6 @@ public class Shop : MonoBehaviour
             return new CommandError(false, outMessage);
         }
         TwitchClient.Instance.SendChatMessage($"@{user} " + message);
-        return new CommandError(true, "");
-    }
-
-    public CommandError Command_ListTurn(string user, List<string> args)
-    {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
-        string message = $"@{user} Your turn will be: ";
-        foreach (Action action in GameManager.Instance.viewers[user].actions)
-        {
-            message += $"{action.actionName}, ";
-        }
-        message = message.Remove(message.Length - 2, 2);
-        TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
-    }
-
-    public CommandError Command_CurrentGold(string user, List<string> args)
-    {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
-        string message = $"@{user} You have {GameManager.Instance.viewers[user].currency} gold";
-        TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
     }
 
@@ -629,6 +649,34 @@ public class Shop : MonoBehaviour
             return new CommandError(false, outMessage);
         }
         TwitchClient.Instance.SendChatMessage(message);
+        return new CommandError(true, "");
+    }
+
+    public CommandError Command_NewPlayerJoined(string user, List<string> args)
+    {
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(true, "");
+
+        UpdatePlayerList();
+        Viewer viewer = GameManager.Instance.viewers[user];
+        foreach (Item item in viewer.items)
+        {
+            if (ownedItems.Contains(item)) continue;
+            ownedItems.Add(item);
+            CreateItemUI(item);
+
+            foreach (Action action in item.grantedActions)
+            {
+                if (ownedActions.Contains(action)) continue;
+                ownedActions.Add(action);
+            }
+
+            foreach (Targeting targeting in item.grantedTargeting)
+            {
+                if (ownedTargeting.Contains(targeting)) continue;
+                ownedTargeting.Add(targeting);
+            }
+        }
+
         return new CommandError(true, "");
     }
 }

@@ -17,9 +17,9 @@ public class PrepPhase : MonoBehaviour
 
     private void OnDisable()
     {
-        TwitchClient.Instance.RemoveCommand("actions");
-        TwitchClient.Instance.RemoveCommand("createturn");
-        TwitchClient.Instance.RemoveCommand("turn");
+        TwitchClient.Instance.RemoveCommand("actions", Command_ListActions);
+        TwitchClient.Instance.RemoveCommand("createturn", Command_CreateTurn);
+        TwitchClient.Instance.RemoveCommand("turn", Command_ListTurn);
     }
 
     private void Start()
@@ -82,11 +82,11 @@ public class PrepPhase : MonoBehaviour
             }
             if (!ownedActions.Contains(action))
             {
-                message = $"None of your items grant you the action {action.actionName}! \nUse '!actions' to see what actions you can use!";
+                message = $"None of your items grant you the action {action.ActionName}! \nUse '!actions' to see what actions you can use!";
                 return false;
             }
             actions.Add(action);
-            turn += $" {action.actionName}, ";
+            turn += $" {action.ActionName}, ";
         }
         viewer.actions = actions;
         message = $"Your new turn is:{turn.Remove(turn.Length - 2, 2)}!";
@@ -103,7 +103,7 @@ public class PrepPhase : MonoBehaviour
         }
         else
         {
-            return availableActions.Find((action) => input.Equals(action.actionName.ToLower()));
+            return availableActions.Find((action) => action.NameMatch(input));
         }
     }
 
@@ -117,7 +117,7 @@ public class PrepPhase : MonoBehaviour
         string message = $"@{user} You have: ";
         foreach (Action action in FindAvailableActions(GameManager.Instance.viewers[user]))
         {
-            message += $"{action.actionName}, ";
+            message += $"{action.ActionName}, ";
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
@@ -145,7 +145,7 @@ public class PrepPhase : MonoBehaviour
         string message = $"@{user} Your turn will be: ";
         foreach (Action action in GameManager.Instance.viewers[user].actions)
         {
-            message += $"{action.actionName}, ";
+            message += $"{action.ActionName}, ";
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
