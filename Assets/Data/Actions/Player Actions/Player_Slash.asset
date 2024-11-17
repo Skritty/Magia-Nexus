@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionAliases:
   - Slash
-  actionDescription: Deal 2 slashing damage in a cone
+  actionDescription: Deal 160 slashing damage in a cone
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
     - rid: 9031231598746927104
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 2
+        effectMultiplier: 1.6
         effectTags:
           serializedPairs:
           - key: 8227
@@ -49,5 +49,6 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 1
+        vfx: {fileID: 0}
         radius: 2
         angle: 45

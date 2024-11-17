@@ -16,4 +16,5 @@ MonoBehaviour:
   tickDuration: 15000
   sceneToLoad: 1v1
   winPointGain: 2
+  adjacentSpawns: 2
   minMaxSpawnDistance: {x: 3, y: 4}

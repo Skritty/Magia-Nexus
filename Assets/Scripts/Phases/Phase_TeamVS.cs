@@ -1,39 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
+using TwitchLib.Api.Helix.Models.Teams;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Phases/TeamVS")]
 public class Phase_TeamVS : Phase_Combat
 {
+    public int teamCount = 2;
+    public float teamDistFromCenter = 10f;
+    public int adjacentSpawns = 2;
     public Vector2 minMaxSpawnDistance;
-    public int teamCount;
     public override List<EntitySpawns> GetEntitySpawns()
     {
         List<EntitySpawns> spawns = new List<EntitySpawns>();
-        float spawnRadius = 0;
-        Vector3 center = Vector3.zero;
-        Vector3 spawnPoint = Vector3.zero;
-        int team = 0;
-        int tries = 0;
+        float degreesBetweenTeams = 360f / teamCount;
+        float degreesBetweenSpawns = 360f / adjacentSpawns;
+        int i = 0;
+        List<List<Vector3>> teamSpawnPositions = new List<List<Vector3>>();
+
+        // Generate a selection of possible spawn points
+        for (float t = 0; t < 360f; t += degreesBetweenTeams)
+        {
+            List<Vector3> validPositions = new List<Vector3>();
+            
+            Vector3 teamOffset = new Vector3(
+                Mathf.Cos(t * Mathf.Deg2Rad),//x=rcos(theta),y=rsin(theta), and z=z
+                Mathf.Sin(t * Mathf.Deg2Rad),
+                0) * teamDistFromCenter;
+            validPositions.Add(teamOffset);
+
+            for (i = 0; i < GameManager.Instance.viewers.Count * 2f / teamCount; i++)
+            {
+                int tries = 0;
+                for (float a = 0; a < 360f; a += degreesBetweenSpawns)
+                {
+                    Vector3 newPosition;
+                    do
+                    {
+                        float offset = Random.Range(-degreesBetweenSpawns * 0.5f, degreesBetweenSpawns * 0.5f) * Mathf.Deg2Rad;
+                        newPosition = validPositions[i] + new Vector3(
+                            Mathf.Cos(offset + a * Mathf.Deg2Rad),//x=rcos(theta),y=rsin(theta), and z=z
+                            Mathf.Sin(offset + a * Mathf.Deg2Rad),
+                            0) * Random.Range(minMaxSpawnDistance.x, minMaxSpawnDistance.y);
+                    } while (tries++ < 20 && validPositions.Exists(e => Vector3.Distance(e, newPosition) < minMaxSpawnDistance.x));
+                    if (tries > 20) break;
+                    validPositions.Add(newPosition);
+                }
+            }
+
+            validPositions.Sort((x, y) => Random.Range(-1, 2));
+            teamSpawnPositions.Add(validPositions);
+        }
+
+        // Randomize and set player spawns
+        i = 0;
         foreach (KeyValuePair<string, Viewer> viewer in GameManager.Instance.viewers)
         {
-            int i = 0;
-            foreach (EntitySpawns spawn in spawns)
-            {
-                center += spawn.position;
-                i++;
-            }
-            if (i > 0) center = center / i;
-
-            do
-            {
-                spawnPoint = center + new Vector3(
-                Mathf.Cos(Random.Range(0, Mathf.PI * 2)),//x=rcos(theta),y=rsin(theta), and z=z
-                Mathf.Cos(Random.Range(0, Mathf.PI * 2)),
-                0) * Random.Range(0, spawnRadius);
-            } while (tries++ < 10000 && spawns.Exists(e => Vector3.Distance(e.position, spawnPoint) < minMaxSpawnDistance.x));
-            spawnRadius += minMaxSpawnDistance.y;
-            spawns.Add(new EntitySpawns(spawnPoint, viewer.Value, (team = team++ % teamCount)));
+            spawns.Add(new EntitySpawns(teamSpawnPositions[i % teamCount][(i / teamCount)], viewer.Value, i % teamCount));
+            i++;
         }
 
         return spawns;

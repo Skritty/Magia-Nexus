@@ -20,6 +20,7 @@ public abstract class Phase_Combat : Phase
     }
 
     public int winPointGain;
+    public int killPointGain;
     private Dictionary<int, int> remainingPlayers = new Dictionary<int, int>();
     public List<EntitySpawns> spawns;
 
@@ -34,6 +35,7 @@ public abstract class Phase_Combat : Phase
         remainingPlayers.Clear();
         foreach (EntitySpawns spawn in spawns)
         {
+            spawn.owner.killGainMultiplier = killPointGain;
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawn.position, Quaternion.identity);
             entity.Stat<Stat_PlayerOwner>().SetPlayer(spawn.owner, entity);
             entity.Stat<Stat_Team>().team = spawn.team;

@@ -15,8 +15,6 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
     public Viewer player;
     public Dictionary<Viewer, float> assists = new Dictionary<Viewer, float>();
 
-    public static float pointsPerKill = 4; // TODO: move this to phase_combat
-
     public void SetPlayer(Viewer player, Entity playerCharacter)
     {
         this.player = player;
@@ -65,8 +63,8 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
 
         foreach (KeyValuePair<Viewer, float> assist in assists)
         {
-            float points = pointsPerKill * (assist.Value / totalContribution);
-            if (pointsPerKill * (assist.Value / totalContribution) == 0 || pointsPerKill * (assist.Value / totalContribution) == float.NaN) Debug.Log(totalContribution);
+            float points = assist.Value / totalContribution;
+            if (assist.Value / totalContribution == 0 || assist.Value / totalContribution == float.NaN) Debug.Log(totalContribution);
             assist.Key.points += points;
             assist.Key.roundPoints += points;
         }

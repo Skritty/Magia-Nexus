@@ -15,7 +15,7 @@ MonoBehaviour:
   hidden: 0
   itemAliases:
   - Headtaker
-  itemDescription: Perform a swift attack alongside every action
+  itemDescription: Perform a swift slash alongside every action
   cost: 0
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.57861626, g: 0.57861626, b: 0.57861626, a: 1}
@@ -61,11 +61,11 @@ MonoBehaviour:
     - rid: 9031231646177165318
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
+        effectMultiplier: 0.6
         effectTags:
           serializedPairs:
           - key: 8739
-            value: 0.5
+            value: 1
         targetSelector:
           rid: 9031231646177165319
         ignoreFrames: 0
@@ -82,5 +82,6 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
+        vfx: {fileID: 0}
         radius: 2
         angle: 30

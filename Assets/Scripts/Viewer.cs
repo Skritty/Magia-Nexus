@@ -10,6 +10,7 @@ public class Viewer
     public string viewerName;
     public float points;
     public float roundPoints;
+    public float killGainMultiplier;
     public int currency;
     public int loanAmount;
     [SerializeReference]

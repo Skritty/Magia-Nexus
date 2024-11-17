@@ -27,7 +27,7 @@ MonoBehaviour:
     - rid: 9031231527144652837
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 0.4
+        effectMultiplier: 0.8
         effectTags:
           serializedPairs:
           - key: 73795
