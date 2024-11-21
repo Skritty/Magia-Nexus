@@ -22,7 +22,7 @@ public class Targeting_TriggeredDamage : Targeting
         {
             target = trigger.Data<DamageInstance>().Target;
         }
-         
+        
         return GetTargets(source, target == null ? owner : target);
     }
 }

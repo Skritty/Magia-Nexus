@@ -165,7 +165,7 @@ public class Shop : MonoBehaviour
         // Parse toPurcase + figure out what item to buy
         Item item = GetItemFromNameOrID(toPurchase);
         Debug.Log(viewer.viewerName + " bought " + item);
-        if (!shopItems.Contains(item))
+        if (!shopItems.Contains(item) && item.craftingRecipe.Count == 0)
         {
             message = "Item is not purchaseable!";
             return false;
@@ -176,9 +176,42 @@ public class Shop : MonoBehaviour
             message = "You don't have enough gold to purchase that!";
             return false;
         }
-        viewer.currency -= item.cost;
-        viewer.items.Add(item);
-        message = $"{item.ItemName}, ";
+        if (!shopItems.Contains(item))
+        {
+            // check if can craft
+            int totalGoldCost = item.cost;
+            Queue<Item> components = new Queue<Item>();
+            foreach (Item i in item.craftingRecipe)
+            {
+                components.Enqueue(i);
+            }
+            while (components.Count > 0)
+            {
+                Item component = components.Dequeue();
+                totalGoldCost = component.cost;
+                foreach (Item i in component.craftingRecipe)
+                {
+                    components.Enqueue(i);
+                }
+            }
+
+            if(totalGoldCost > viewer.currency)
+            {
+                message = $"You only have {viewer.currency}g out of {totalGoldCost}g to buy a {item.ItemName}";
+                return false;
+            }
+
+            viewer.currency -= totalGoldCost;
+            viewer.items.Add(item);
+            message = $"{item.ItemName}, ";
+        }
+        else
+        {
+            viewer.currency -= item.cost;
+            viewer.items.Add(item);
+            message = $"{item.ItemName}, ";
+        }
+        
         return true;
     }
 
@@ -527,7 +560,7 @@ public class Shop : MonoBehaviour
         if(args.Count == 2 && int.TryParse(args[0], out int amt) && amt > 0)
         {
             string m2 = "";
-            for(int i = 0; i < amt; i++)
+            for(int i = 1; i <= amt; i++)
             {
                 if (BuyItem(GameManager.Instance.viewers[user], args[1], out outMessage))
                 {
@@ -538,7 +571,7 @@ public class Shop : MonoBehaviour
                     return new CommandError(false, outMessage);
                 }
             }
-            message += amt + " " + m2;
+            message += m2;
         }
         else
         {

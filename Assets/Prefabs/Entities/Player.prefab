@@ -333,7 +333,8 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        modifierType: 2
+        modifierType: 3
+        contributionMultiplier: 0
         scaleWithEffectMulti: 0
     - rid: 2626413593285099746
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
@@ -410,6 +411,7 @@ MonoBehaviour:
           viewerName: 
           points: 0
           roundPoints: 0
+          killGainMultiplier: 0
           currency: 0
           loanAmount: 0
           targetType:

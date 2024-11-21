@@ -16,7 +16,8 @@ MonoBehaviour:
   tickDuration: 15000
   sceneToLoad: 1v1
   winPointGain: 10
+  killPointGain: 0
   teamCount: 2
-  teamDistFromCenter: 6
+  teamDistFromCenter: 4
   adjacentSpawns: 3
   minMaxSpawnDistance: {x: 1.5, y: 2}

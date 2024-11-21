@@ -45,17 +45,19 @@ public class Stat_Life : GenericStat<Stat_Life>
 
         Stat_EffectModifiers.EffectModifier calculation = damage.Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CreateCalculation(null, damage, EffectTag.DamageDealt);
         damage.Target.Stat<Stat_EffectModifiers>().CreateCalculation(calculation, damage, EffectTag.DamageTaken);
-        float totalDamage = calculation.CalculateModifier(damage, 1f, TankContributionMultiplier);
+        float totalDamage = calculation.CalculateModifier(damage);
 
         // Handle Life
-        if (totalDamage > 0)
-            Owner.Stat<Stat_PlayerOwner>().ApplyContribution(damage.Owner, totalDamage * TankContributionMultiplier);
-        Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
+        //if (totalDamage > 0)
+        //    Owner.Stat<Stat_PlayerOwner>().ApplyContribution(damage.Owner, totalDamage * TankContributionMultiplier);
+        //Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
         currentLife = Mathf.Clamp(currentLife - totalDamage, 0, maxLife);
-        damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, true)
-            ?.ApplyPopupInfo(Mathf.Round(totalDamage).ToString("0"), new Color(.9f, .2f, .2f));
+        
         if (!damage.preventTriggers)
         {
+            damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, true)
+            ?.ApplyPopupInfo(Mathf.Round(totalDamage).ToString("0"), new Color(.9f, .2f, .2f));
+
             Owner.Trigger<Trigger_OnDamageRecieved>(damage, damage);
             damage.Owner.Stat<Stat_PlayerOwner>().Proxy(x => x.Trigger<Trigger_OnDamageDealt>(damage, damage));
         }

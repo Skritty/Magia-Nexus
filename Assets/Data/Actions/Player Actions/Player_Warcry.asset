@@ -43,7 +43,8 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 0
         contributeToAssists: 0
-        modifierType: 1
+        modifierType: 2
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231777024770072
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
@@ -53,5 +54,6 @@ MonoBehaviour:
         entitiesAffected: 7
         sortingMethod: 1
         numberOfTargets: -1
+        vfx: {fileID: 0}
         radius: 4
         angle: 180

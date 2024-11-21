@@ -108,7 +108,7 @@ public class GameManager : Singleton<GameManager>
     private void SceneDoneLoading(Scene scene, LoadSceneMode sceneMode)
     {
         currentPhase.OnEnter();
-        if(phaseTimer!= null) StopCoroutine(phaseTimer);
+        if(phaseTimer != null) StopCoroutine(phaseTimer);
         phaseTimer = StartCoroutine(PhaseTimer(currentPhase));
     }
 

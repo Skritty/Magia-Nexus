@@ -163,6 +163,7 @@ MonoBehaviour:
   - rid: 9031231670877684057
   - rid: 9031231670877684058
   - rid: 9031231670877684059
+  - rid: 2626413725625876548
   itemDisplayPrefab: {fileID: 5681345479888109855, guid: 3430ac1655aac2746bfcc6c988d45d75, type: 3}
   actionDisplayPrefab: {fileID: 5681345479888109855, guid: d6745f87e5682c245a760c6a030ef9ae, type: 3}
   shopItemDisplayPrefab: {fileID: 5681345479888109855, guid: 41c874952e4c55a4a9dd28ba06cdb67d, type: 3}
@@ -182,6 +183,15 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 2626413725625876548
+      type: {class: Targeting_Life, ns: , asm: Assembly-CSharp}
+      data:
+        name: Lowest Life Enemy
+        description: 
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 0
+        vfx: {fileID: 0}
     - rid: 9031231670877684057
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:

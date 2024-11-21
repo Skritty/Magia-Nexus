@@ -6,14 +6,19 @@ using UnityEngine;
 
 public class PE_EffectModifer : PersistentEffect
 {
-    [InfoBox("Individual effect tag requires AND. Each effect tag is an OR. Flat modifiers add all tag keys together.")]
+    [InfoBox("Formatting\nFlat: 0.2 = (+0.2 flat) | Increased: 0.2 = (20% increased) | More: 1.2 = (20% more)")]
     [FoldoutGroup("@GetType()")]
     public EffectModifierCalculationType modifierType;
+    [FoldoutGroup("@GetType()")]
+    public float contributionMultiplier = 1;
     [FoldoutGroup("@GetType()")]
     public bool scaleWithEffectMulti;
     public override void OnGained()
     {
-        Target.Stat<Stat_EffectModifiers>().AddModifier(this, modifierType, (scaleWithEffectMulti ? effectMultiplier : 1));
+        foreach (KeyValuePair<EffectTag, float> effectTag in effectTags)
+        {
+            Target.Stat<Stat_EffectModifiers>().AddModifier(effectTag.Key, effectTag.Value * (scaleWithEffectMulti ? effectMultiplier : 1), modifierType, contributionMultiplier, this);
+        }
     }
 
     public override void OnLost()

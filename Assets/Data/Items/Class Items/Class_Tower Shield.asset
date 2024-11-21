@@ -17,7 +17,9 @@ MonoBehaviour:
   - Tower Shield
   itemDescription: '+5000 max life
 
-    Take 10% less damage'
+    10% less damage taken
+
+    +50% enmity'
   cost: 0
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.57232696, g: 0.57232696, b: 0.57232696, a: 1}
@@ -60,7 +62,9 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 0
+          - key: 33554432
+            value: 0.5
+          - key: 262145
             value: -0.1
         targetSelector:
           rid: 3963143039375638959

@@ -13,6 +13,7 @@ using UnityEngineInternal;
 public class TwitchClient : MonoBehaviour
 {
     public static TwitchClient Instance;
+    public bool connect = true;
     public Client client;
     public Api api;
     private string channelName = "skritty";
@@ -30,6 +31,8 @@ public class TwitchClient : MonoBehaviour
             Instance = this;
         }
         Application.runInBackground = true;
+
+        if (!connect) return;
 
         ApiSetup();
         BotSetup();
