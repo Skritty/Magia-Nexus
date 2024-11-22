@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,6 +13,16 @@ public abstract class Effect
     /// <summary>
     /// Ability that applied this effect (to prevent duplicates)
     /// </summary>
+    private int _sourceID;
+    [FoldoutGroup("@GetType()"), ShowInInspector, ReadOnly]
+    private int SourceID
+    {
+        get
+        {
+            if (_sourceID == 0) _sourceID = GetUID();
+            return _sourceID;
+        }
+    }
     public Effect Source => _source;
     private Effect _source;
 
@@ -124,9 +135,12 @@ public abstract class Effect
         e.DoEffect();
     }
 
-    private Effect Clone()
+    protected Effect Clone()
     {
-        return (Effect)MemberwiseClone();
+        Effect effect = (Effect)MemberwiseClone();
+        effect.effectTags = new();
+        effect.effectTags.AddRange(effectTags);
+        return effect;
     }
     
     public virtual void DoEffect()

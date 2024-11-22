@@ -9,7 +9,7 @@ public class Rune_Chaos : Rune
     [SerializeReference]
     public PersistentEffect effectMultiBuff;
 
-    public override void SpellEffect(Spell spell)
+    public override void SpellModifier(Spell spell)
     {
         effectMultiBuff.Create(spell.entity);
     }

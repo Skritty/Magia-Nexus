@@ -36,6 +36,7 @@ MonoBehaviour:
             value: 1
         targetSelector:
           rid: 9031231598746927120
+        damageTags: 4104
         opposite: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
         targeting:
           rid: 9031231598746927134
@@ -56,6 +57,7 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
+        vfx: {fileID: 0}
         radius: 2
         angle: 180
     - rid: 9031231777024770066
@@ -76,6 +78,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231777024770067
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
@@ -100,6 +103,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231777024770069
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}

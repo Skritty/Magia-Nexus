@@ -31,7 +31,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
                 // Refresh the duration
                 if (e.refreshDuration)
                 {
-                    e.ApplyToAllStacks(() => e.ApplyContribution());
+                    e.DoForAllStacks(() => e.ApplyContribution());
                     e.tick = 0;
                 }
 
@@ -39,11 +39,12 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
                 // (is the duration infinite or the tick is the same?)
                 if (!(effect.perPlayer && e.Owner != effect.Owner) && (effect.tickDuration < 0 || e.refreshDuration))
                 {
-                    e.stacks = Mathf.Clamp(e.stacks + effect.stacks, 0, e.maxStacks);
-                    effect.ApplyToAllStacks(() => effect.OnGained());
+                    int stacksAdded = Mathf.Clamp(effect.stacks, 0, e.maxStacks - e.stacks);
+                    e.stacks += stacksAdded;
+                    e.DoForAllStacks(() => e.OnGained(), stacksAdded);
                     return;
                 }
-                stacks++;
+                stacks += e.stacks;
             }
         }
         if (effect.maxStacks >= 0 && stacks >= effect.maxStacks) return;
@@ -51,7 +52,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         // Add effect
         effect.tick = 0;
         persistentEffects.Add(effect);
-        effect.OnGained();
+        effect.DoForAllStacks(() => effect.OnGained());
     }
 
     public List<PersistentEffect> GetEffectsViaReference(PersistentEffect reference, Entity owner = null)
@@ -67,23 +68,28 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         return effects;
     }
 
-    public void AddOrRemoveSimilarEffect(PersistentEffect reference, Entity owner = null)
+    public void AddOrRemoveSimilarEffect(PersistentEffect reference, int stacks, Entity owner = null, bool addInCaseNoneFound = true)
     {
         foreach (PersistentEffect e in persistentEffects.ToArray())
         {
             if (reference.GetUID() == e.Source.GetUID() && (owner == null || owner == e.Owner))
             {
-                if(reference.stacks > 0)
+                if(stacks > 0)
                 {
-                    reference.ApplyToAllStacks(() => reference.Create(owner));
+                    reference.Create(owner);
                 }
-                else if(reference.stacks < 0)
+                else if(stacks < 0)
                 {
-                    e.ApplyToAllStacks(() => e.OnLost(), Mathf.Clamp(-reference.stacks, 0, e.stacks));
-                    e.stacks += reference.stacks;
+                    e.DoForAllStacks(() => e.OnLost(), Mathf.Clamp(-stacks, 0, e.stacks));
+                    e.stacks += stacks;
                     if (e.stacks <= 0) persistentEffects.Remove(e);
                 }
+                return;
             }
+        }
+        if (addInCaseNoneFound)
+        {
+            reference.Create(owner);
         }
     }
 
@@ -94,7 +100,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
             effect.tick++;
             if(effect.tickDuration >= 0 && effect.tick >= effect.tickDuration)
             {
-                effect.ApplyToAllStacks(() =>
+                effect.DoForAllStacks(() =>
                 {
                     effect.OnLost();
                     effect.ApplyContribution();
@@ -102,7 +108,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
                 persistentEffects.Remove(effect);
                 continue;
             }
-            effect.ApplyToAllStacks(() => effect.OnTick());
+            effect.DoForAllStacks(() => effect.OnTick());
         }
     }
 
@@ -110,7 +116,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
     {
         foreach (PersistentEffect effect in persistentEffects)
         {
-            effect.ApplyToAllStacks(() =>
+            effect.DoForAllStacks(() =>
             {
                 effect.OnLost();
                 effect.ApplyContribution();

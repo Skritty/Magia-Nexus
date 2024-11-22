@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Rune : Effect
 {
+    public EffectTag damageTags;
     public Action opposite;
 
     public override void Activate()
@@ -11,7 +12,7 @@ public abstract class Rune : Effect
         Owner.Stat<Stat_Magic>().runes.Add(this);
         Owner.Trigger<Trigger_OnRuneUsed>(this, this);
     }
-    public abstract void SpellEffect(Spell spell);
+    public abstract void SpellModifier(Spell spell);
     public abstract Rune EffectFormula(Spell spell, Rune combiningRune);
     public virtual void FinalizeEffectFormula(Spell spell) { }
     public abstract Rune TargetingFormula(Spell spell, Rune combiningRune);

@@ -82,6 +82,7 @@ MonoBehaviour:
             value: 1
         targetSelector:
           rid: 9031231598746927118
+        damageTags: 261
         opposite: {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
         targeting:
           rid: 9031231598746927143
@@ -104,6 +105,7 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
+        vfx: {fileID: 0}
         length: 4
         width: 1
     - rid: 9031231777024770064
@@ -124,6 +126,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231777024770065
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}

@@ -41,6 +41,7 @@ public class Spell
 
         GenerateSpellEffect();
         GenerateTargeting();
+        ApplySpellModifiers();
         castSpell.entity = entity;
 
         if (chainCast != null)
@@ -71,6 +72,14 @@ public class Spell
         if (shapeModifiers.Count == 0) shapeModifiers.Add(effectRune);
         shapeModifiers[0].TargetingFormula(this, null);
         TargetingFormula(shapeModifiers[0], 1);
+    }
+
+    private void ApplySpellModifiers()
+    {
+        foreach(Rune rune in spellModifiers)
+        {
+            rune.SpellModifier(this);
+        }
     }
 
     private void TargetingFormula(Rune previousRune, int index)

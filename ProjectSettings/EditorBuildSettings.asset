@@ -12,9 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/ShopPhase.unity
     guid: a0895b4b16c875a4287e8f43d3513208
   - enabled: 1
-    path: Assets/Scenes/PrepPhase.unity
-    guid: 6acf68770bd166146b3dd35d575e78cd
-  - enabled: 1
-    path: Assets/Scenes/1v1.unity
+    path: Assets/Scenes/Combat.unity
     guid: 84275e14c3308684e90b9ef8b24b432e
   m_configObjects: {}

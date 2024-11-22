@@ -10,7 +10,7 @@ public class Rune_Order : Rune
     public PersistentEffect defensiveBuff;
     [SerializeReference]
     public PersistentEffect AoEBuff;
-    public override void SpellEffect(Spell spell)
+    public override void SpellModifier(Spell spell)
     {
         AoEBuff.Create(spell.entity);
     }

@@ -26,8 +26,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 9031231527144652811
-      type: {class: Rune_Fire, ns: , asm: Assembly-CSharp}
+    - rid: 2626413822854299673
+      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         effectTags:
@@ -35,22 +35,67 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
+          rid: 2626413822854299674
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        triggerOrder: 0
+        trigger:
+          rid: 2626413822854299715
+        effect:
+          rid: 2626413822854299716
+    - rid: 2626413822854299674
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+    - rid: 2626413822854299715
+      type: {class: Trigger_OnRemove, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 2626413822854299716
+      type: {class: Expire, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
+        targetSelector:
+          rid: 2626413822854299717
+        disable: 0
+        delay: 0
+    - rid: 2626413822854299717
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+    - rid: 9031231527144652811
+      type: {class: Rune_Fire, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs: []
+        targetSelector:
           rid: 9031231527144652817
+        damageTags: 133
         opposite: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
         damageEffect:
-          effectMultiplier: 1
+          effectMultiplier: 8
           effectTags:
-            serializedPairs:
-            - key: 0
-              value: 1
+            serializedPairs: []
           targetSelector:
             rid: 9031231598746927133
-          ignoreFrames: 500
+          ignoreFrames: 0
           skipFlatDamageReduction: 0
           preventTriggers: 0
           ownerEffects: []
           targetEffects: []
-          temporaryTriggeredEffects: []
+          temporaryTriggeredEffects:
+          - rid: 2626413822854299673
         targeting:
           rid: 9031231527144652819
         AoEBuff:
@@ -70,6 +115,7 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
+        vfx: {fileID: 0}
         radius: 2
         angle: 180
     - rid: 9031231598746927133
@@ -83,18 +129,19 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 32768
+          - key: 524288
             value: 2
         targetSelector:
           rid: 9031231777024770061
         tick: 0
         tickDuration: -1
-        maxStacks: 1
+        maxStacks: 99
         stacks: 1
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        modifierType: 0
+        modifierType: 2
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231777024770061
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
@@ -107,18 +154,19 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 1966591
-            value: 2
+          - key: 131073
+            value: 3
         targetSelector:
           rid: 9031231918534820523
         tick: 0
         tickDuration: -1
-        maxStacks: 1
+        maxStacks: 99
         stacks: 1
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        modifierType: 1
+        modifierType: 2
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231918534820523
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}

@@ -12,7 +12,7 @@ public class Rune_Water : Rune
     [SerializeReference]
     public PersistentEffect AoEBuff;
 
-    public override void SpellEffect(Spell spell)
+    public override void SpellModifier(Spell spell)
     {
         AoEBuff.Create(spell.entity);
     }

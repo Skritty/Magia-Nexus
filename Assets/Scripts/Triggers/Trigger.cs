@@ -137,6 +137,15 @@ public class Trigger_Immediate : Trigger<Trigger_Immediate>
     }
     public override void Unsubscribe(Entity source, Action<Trigger> method) { }
 }
+public class Trigger_OnRemove : Trigger<Trigger_OnRemove>
+{
+    public override void Subscribe(Entity source, Action<Trigger> method, EffectTag tags, int order, bool globalSubscribe = false) { }
+    public override void Unsubscribe(Entity source, Action<Trigger> method) 
+    {
+        method.Invoke(this);
+        base.Unsubscribe(source, method);
+    }
+}
 public class Trigger_Expire : Trigger<Trigger_Expire> { }
 public class Trigger_ProjectileCreated : Trigger<Trigger_ProjectileCreated> { }
 public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCalc> { }

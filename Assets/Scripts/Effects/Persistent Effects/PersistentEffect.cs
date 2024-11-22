@@ -23,9 +23,9 @@ public abstract class PersistentEffect: Effect
     [FoldoutGroup("PersistentEffect", -9)]
     public bool contributeToAssists = false;
 
-    public void ApplyToAllStacks(System.Action method, int overrideAmount = 0)
+    public void DoForAllStacks(System.Action method, int overrideAmount = -1)
     {
-        for (int i = 0; i < (overrideAmount > 0 ? overrideAmount : stacks); i++)
+        for (int i = 0; i < (overrideAmount > -1 ? overrideAmount : stacks); i++)
         {
             method?.Invoke();
         }

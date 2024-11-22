@@ -32,7 +32,7 @@ public class Shop : MonoBehaviour
         TwitchClient.Instance.AddCommand("sell", Command_SellItems);
         TwitchClient.Instance.AddCommand("craft", Command_CraftItem);
         
-        TwitchClient.Instance.AddCommand("createturn", Command_CreateTurn);
+        TwitchClient.Instance.AddCommand("turn", Command_CreateTurn);
         TwitchClient.Instance.AddCommand("targeting", Command_SetTargeting);
     }
 
@@ -44,7 +44,7 @@ public class Shop : MonoBehaviour
         TwitchClient.Instance.RemoveCommand("sell", Command_SellItems);
         TwitchClient.Instance.RemoveCommand("craft", Command_CraftItem);
         
-        TwitchClient.Instance.RemoveCommand("createturn", Command_CreateTurn);
+        TwitchClient.Instance.RemoveCommand("turn", Command_CreateTurn);
         TwitchClient.Instance.RemoveCommand("targeting", Command_SetTargeting);
     }
 
@@ -164,22 +164,27 @@ public class Shop : MonoBehaviour
     {
         // Parse toPurcase + figure out what item to buy
         Item item = GetItemFromNameOrID(toPurchase);
-        Debug.Log(viewer.viewerName + " bought " + item);
+        if(item == null)
+        {
+            message = $"{toPurchase} does not exist!";
+            return false;
+        }
         if (!shopItems.Contains(item) && item.craftingRecipe.Count == 0)
         {
-            message = "Item is not purchaseable!";
+            message = $"{toPurchase} is not purchaseable!";
             return false;
         }
         // Buy item if enough gold
         if(viewer.currency < item.cost)
         {
-            message = "You don't have enough gold to purchase that!";
+            message = $"You don't have enough gold to purchase {toPurchase}!";
             return false;
         }
         if (!shopItems.Contains(item))
         {
             // check if can craft
             int totalGoldCost = item.cost;
+            List<Item> itemsHeld = new List<Item>();
             Queue<Item> components = new Queue<Item>();
             foreach (Item i in item.craftingRecipe)
             {
@@ -188,7 +193,12 @@ public class Shop : MonoBehaviour
             while (components.Count > 0)
             {
                 Item component = components.Dequeue();
-                totalGoldCost = component.cost;
+                if (viewer.items.Count(x => x = component) > itemsHeld.Count(x => x = component))
+                {
+                    itemsHeld.Add(component);
+                    continue;
+                }
+                totalGoldCost += component.cost;
                 foreach (Item i in component.craftingRecipe)
                 {
                     components.Enqueue(i);
@@ -201,6 +211,7 @@ public class Shop : MonoBehaviour
                 return false;
             }
 
+            foreach(Item component in itemsHeld) viewer.items.Remove(component);
             viewer.currency -= totalGoldCost;
             viewer.items.Add(item);
             message = $"{item.ItemName}, ";
@@ -215,7 +226,7 @@ public class Shop : MonoBehaviour
         return true;
     }
 
-    public bool SellItem(Viewer viewer, string toSell, out string message)
+    public bool SellItem(Viewer viewer, string toSell, ref int gold, ref bool turnInvalidated, out string message)
     {
         Item item = GetItemFromNameOrID(toSell);
         if (item == null)
@@ -236,24 +247,34 @@ public class Shop : MonoBehaviour
 
         viewer.items.Remove(item);
 
-        int totalGoldCost = item.cost;
+        int totalGoldCost = 0;
         Queue<Item> components = new Queue<Item>();
-        foreach(Item i in item.craftingRecipe)
-        {
-            components.Enqueue(i);
-        }
+        components.Enqueue(item);
+
         while(components.Count > 0)
         {
-            item = components.Dequeue();
-            totalGoldCost = item.cost;
-            foreach (Item i in item.craftingRecipe)
+            Item component = components.Dequeue();
+            totalGoldCost += component.cost;
+            foreach (Item i in component.craftingRecipe)
             {
                 components.Enqueue(i);
             }
         }
 
         viewer.currency += totalGoldCost;
-        message = $"Sold {item.ItemName} for {totalGoldCost}g";
+
+        gold += totalGoldCost;
+        message = $"{item.ItemName}, ";
+
+        foreach (Action action in item.grantedActions)
+        {
+            if (viewer.items.Exists(x => x.grantedActions.Contains(action))) continue;
+            if (!viewer.actions.Contains(action)) continue;
+            viewer.actions.Clear();
+            turnInvalidated = true;
+            break;
+        }
+
         return true;
     }
 
@@ -568,13 +589,25 @@ public class Shop : MonoBehaviour
                 }
                 else
                 {
-                    return new CommandError(false, outMessage);
+                    if(i == 1)
+                    {
+                        message = $"Failed to purchase {amt - (i - 1)} {args[0]}";
+                        
+                    }
+                    else
+                    {
+                        message += m2;
+                        message = message.Remove(message.Length - 2, 2);
+                        message += $"! Failed to purchase {amt - (i - 1)}";
+                    }
+                    return new CommandError(false, message);
                 }
             }
             message += m2;
         }
         else
         {
+            List<string> failed = new List<string>();
             foreach (string itemName in args)
             {
                 if (BuyItem(GameManager.Instance.viewers[user], itemName, out outMessage))
@@ -583,8 +616,17 @@ public class Shop : MonoBehaviour
                 }
                 else
                 {
-                    return new CommandError(false, outMessage);
+                    failed.Add(itemName);
                 }
+            }
+            if(failed.Count > 0)
+            {
+                message = message.Remove(message.Length - 2, 2);
+                message += $"! Failed to purchase ";
+            }
+            foreach (string itemName in failed)
+            {
+                message += $"{itemName}, ";
             }
         }
         
@@ -597,18 +639,53 @@ public class Shop : MonoBehaviour
     public CommandError Command_SellItems(string user, List<string> args)
     {
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
-        string message = $"@{user} ";
+        string message = $"@{user} Sold ";
         string outMessage;
-        
-        if(SellItem(GameManager.Instance.viewers[user], args[0], out outMessage))
+        bool turnInvalidated = false;
+        int gold = 0;
+
+        if (args.Count == 0)
         {
-            message += outMessage;
+            return new CommandError(false, "Please enter items to sell");
+        }
+        if (args.Count == 2 && int.TryParse(args[0], out int amt) && amt > 0)
+        {
+            for (int i = 1; i <= amt; i++)
+            {
+                string m2 = "";
+                if (SellItem(GameManager.Instance.viewers[user], args[0], ref gold, ref turnInvalidated, out outMessage))
+                {
+                    m2 = $"{i} {outMessage}";
+                }
+                else if (args.Count == 1)
+                {
+                    return new CommandError(false, outMessage);
+                }
+                message += m2;
+            }
         }
         else
         {
-            return new CommandError(false, outMessage);
+            foreach (string itemName in args)
+            {
+                if (SellItem(GameManager.Instance.viewers[user], itemName, ref gold, ref turnInvalidated, out outMessage))
+                {
+                    message += outMessage;
+                }
+                else if (args.Count == 1)
+                {
+                    return new CommandError(false, outMessage);
+                }
+            }
+            
         }
 
+        message = message.Remove(message.Length - 2, 2);
+        message += $" for {gold}g! ";
+        if (turnInvalidated)
+        {
+            message += $"Your turn is no longer valid! Please remake your turn!";
+        }
         TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
     }
@@ -647,6 +724,7 @@ public class Shop : MonoBehaviour
 
     public CommandError Command_CreateTurn(string user, List<string> args)
     {
+        if (args.Count == 0) return new CommandError(true, "");
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = "";
         string outMessage;

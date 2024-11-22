@@ -163,6 +163,7 @@ public class GameManager : Singleton<GameManager>
 
     public CommandError Command_ListTurn(string user, List<string> args)
     {
+        if(args.Count > 0) return new CommandError(true, "");
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
         string message = $"@{user} Your turn will be: ";
         foreach (Action action in GameManager.Instance.viewers[user].actions)

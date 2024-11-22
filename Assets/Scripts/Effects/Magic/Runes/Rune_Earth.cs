@@ -12,7 +12,7 @@ public class Rune_Earth : Rune
     public Action orbitHoming;
     public Action trackingHoming;
 
-    public override void SpellEffect(Spell spell)
+    public override void SpellModifier(Spell spell)
     {
         AoEBuff.Create(spell.entity);
     }

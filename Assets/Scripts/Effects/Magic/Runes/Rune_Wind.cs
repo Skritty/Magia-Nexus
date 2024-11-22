@@ -12,7 +12,7 @@ public class Rune_Wind : Rune
     public PersistentEffect movementSpeedBuff;
     [SerializeReference]
     public PersistentEffect invisibility;
-    public override void SpellEffect(Spell spell)
+    public override void SpellModifier(Spell spell)
     {
         spell.targets++;
     }

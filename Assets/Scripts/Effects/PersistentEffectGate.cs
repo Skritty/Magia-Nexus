@@ -24,8 +24,7 @@ public class PersistentEffectGate : Effect
             {
                 effect.Create(Owner);
             }
-            referenceEffect.stacks = stacksAddedOnSuccess;
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(referenceEffect, Owner);
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(referenceEffect, stacksAddedOnSuccess, Owner);
         }
         else
         {
@@ -33,8 +32,7 @@ public class PersistentEffectGate : Effect
             {
                 effect.Create(Owner);
             }
-            referenceEffect.stacks = stacksAddedOnFailure;
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(referenceEffect, Owner);
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(referenceEffect, stacksAddedOnFailure, Owner);
         }
     }
 }

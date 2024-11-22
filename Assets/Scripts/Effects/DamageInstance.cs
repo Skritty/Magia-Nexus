@@ -26,7 +26,7 @@ public class DamageInstance : Effect
         if (Target.Stat<Stat_Life>().maxLife <= 0) return;
         foreach (TriggeredEffect effect in temporaryTriggeredEffects)
         {
-            effect.Create(Source, Owner, Owner);
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
         }
         foreach (Effect effect in targetEffects)
         {
@@ -44,17 +44,18 @@ public class DamageInstance : Effect
 
         Target.Stat<Stat_Life>().TakeDamage(this);
 
-        foreach (TriggeredEffect effect in temporaryTriggeredEffects)
-        {
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, Owner);
-        }
         if (ignoreFrames > 0)
             new PE_IgnoreEntity(ignoreFrames).Create(this);
+
+        foreach (TriggeredEffect effect in temporaryTriggeredEffects)
+        {
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, -effect.stacks, Owner);
+        }
     }
 
     public DamageInstance Clone()
     {
-        DamageInstance clone = (DamageInstance)MemberwiseClone();
+        DamageInstance clone = (DamageInstance)base.Clone();
         clone.ownerEffects = ownerEffects;
         clone.targetEffects = targetEffects;
         clone.temporaryTriggeredEffects = temporaryTriggeredEffects;

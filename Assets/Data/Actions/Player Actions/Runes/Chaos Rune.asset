@@ -36,6 +36,7 @@ MonoBehaviour:
             value: 1
         targetSelector:
           rid: 9031231598746927123
+        damageTags: 2057
         opposite: {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
         debuff:
           rid: 9031231777024770054
@@ -64,6 +65,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 1
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231777024770055
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
@@ -88,6 +90,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 1
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231777024770057
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
