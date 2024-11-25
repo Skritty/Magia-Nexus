@@ -148,8 +148,10 @@ MonoBehaviour:
         targetSelector:
           rid: 9031231527144652832
         tick: 0
-        tickDuration: 200
+        tickDuration: 150
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
     - rid: 9031231465990389781
@@ -165,9 +167,10 @@ MonoBehaviour:
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        exactTagMatch: 0
         triggerOrder: 99
         trigger:
           rid: 9031231465990389782
@@ -193,15 +196,17 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         playerCharacter: 0
+        scaleWithPlayerCharacterModifiers: 1
         characterNamePlate: {fileID: 0}
         playerEntity: {fileID: 0}
         player:
           viewerID: 0
           viewerName: 
-          newPlayer: 1
           points: 0
           roundPoints: 0
+          killGainMultiplier: 0
           currency: 0
+          loanAmount: 0
           targetType:
             rid: 9031231661127237645
           items: []
@@ -214,6 +219,7 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
+        vfx: {fileID: 0}
     - rid: 9031231661127237646
       type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
       data:
@@ -254,6 +260,7 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
+        vfx: {fileID: 0}
     - rid: 9031231668284555760
       type: {class: Stat_Targetable, ns: , asm: Assembly-CSharp}
       data:

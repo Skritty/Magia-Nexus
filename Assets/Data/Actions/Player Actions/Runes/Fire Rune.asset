@@ -26,49 +26,28 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2626413822854299673
-      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
+    - rid: 2626413886055383354
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 0
-            value: 1
+          - key: 524288
+            value: 0.02
         targetSelector:
-          rid: 2626413822854299674
+          rid: 2626413886055383355
         tick: 0
         tickDuration: -1
         maxStacks: 1
-        stacks: 1
+        stacks: 10
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        triggerOrder: 0
-        trigger:
-          rid: 2626413822854299715
-        effect:
-          rid: 2626413822854299716
-    - rid: 2626413822854299674
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-    - rid: 2626413822854299715
-      type: {class: Trigger_OnRemove, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 2626413822854299716
-      type: {class: Expire, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
-        targetSelector:
-          rid: 2626413822854299717
-        disable: 0
-        delay: 0
-    - rid: 2626413822854299717
+        modifierType: 2
+        contributionMultiplier: 1
+        scaleWithEffectMulti: 0
+        multiplyByTicks: 1
+    - rid: 2626413886055383355
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
@@ -84,7 +63,7 @@ MonoBehaviour:
         damageTags: 133
         opposite: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
         damageEffect:
-          effectMultiplier: 8
+          effectMultiplier: 3
           effectTags:
             serializedPairs: []
           targetSelector:
@@ -94,14 +73,13 @@ MonoBehaviour:
           preventTriggers: 0
           ownerEffects: []
           targetEffects: []
-          temporaryTriggeredEffects:
-          - rid: 2626413822854299673
+          temporaryTriggeredEffects: []
         targeting:
           rid: 9031231527144652819
-        AoEBuff:
-          rid: 9031231777024770060
-        effectMultiBuff:
-          rid: 9031231918534820522
+        expandingAoEBuff:
+          rid: 2626413886055383354
+        spellEffectIncrease: 1
+        damageTicksPerTurn: 25
     - rid: 9031231527144652817
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -116,59 +94,9 @@ MonoBehaviour:
         sortingMethod: 1
         numberOfTargets: -1
         vfx: {fileID: 0}
-        radius: 2
+        radius: 1.5
         angle: 180
     - rid: 9031231598746927133
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-    - rid: 9031231777024770060
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 524288
-            value: 2
-        targetSelector:
-          rid: 9031231777024770061
-        tick: 0
-        tickDuration: -1
-        maxStacks: 99
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        modifierType: 2
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 0
-    - rid: 9031231777024770061
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-    - rid: 9031231918534820522
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 131073
-            value: 3
-        targetSelector:
-          rid: 9031231918534820523
-        tick: 0
-        tickDuration: -1
-        maxStacks: 99
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        modifierType: 2
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 0
-    - rid: 9031231918534820523
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 

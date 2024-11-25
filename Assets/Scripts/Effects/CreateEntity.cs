@@ -20,12 +20,16 @@ public class CreateEntity : Effect
         Shotgun = 4,
     }
 
+    
+
     [FoldoutGroup("@GetType()")]
     public EntityType entityType = EntityType.Basic;
     [FoldoutGroup("@GetType()")]
     public Entity entity;
     [FoldoutGroup("@GetType()")]
     public bool spawnOnTarget;
+    [FoldoutGroup("@GetType()")]
+    public MovementTarget movementTarget = MovementTarget.Target;
     [FoldoutGroup("Projectile Behavior")]
     public ProjectileFanType projectileFanType = ProjectileFanType.Sequence;
     [FoldoutGroup("Projectile Behavior")]
@@ -97,7 +101,15 @@ public class CreateEntity : Effect
 
         spawnedEntity.Stat<Stat_PlayerOwner>().SetPlayer(Owner.Stat<Stat_PlayerOwner>());
         spawnedEntity.Stat<Stat_Team>().team = Owner.Stat<Stat_Team>().team;
-        spawnedEntity.Stat<Stat_Movement>().movementTarget = Target;
+        switch (movementTarget)
+        {
+            case MovementTarget.Owner:
+                spawnedEntity.Stat<Stat_Movement>().movementTarget = Owner;
+                break;
+            case MovementTarget.Target:
+                spawnedEntity.Stat<Stat_Movement>().movementTarget = Target;
+                break;
+        }
         spawnedEntity.Stat<Stat_Movement>().facingDir = (Target.transform.position - Owner.transform.position).normalized;
 
         return spawnedEntity;

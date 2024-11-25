@@ -13,11 +13,28 @@ public class PE_EffectModifer : PersistentEffect
     public float contributionMultiplier = 1;
     [FoldoutGroup("@GetType()")]
     public bool scaleWithEffectMulti;
+    [FoldoutGroup("@GetType()")]
+    public bool multiplyByTicks;
     public override void OnGained()
     {
-        foreach (KeyValuePair<EffectTag, float> effectTag in effectTags)
+        if (!multiplyByTicks)
         {
-            Target.Stat<Stat_EffectModifiers>().AddModifier(effectTag.Key, effectTag.Value * (scaleWithEffectMulti ? effectMultiplier : 1), modifierType, contributionMultiplier, this);
+            foreach (KeyValuePair<EffectTag, float> effectTag in effectTags)
+            {
+                Target.Stat<Stat_EffectModifiers>().AddModifier(effectTag.Key, effectTag.Value * (scaleWithEffectMulti ? effectMultiplier : 1), modifierType, contributionMultiplier, this);
+            }
+        }
+    }
+
+    public override void OnTick()
+    {
+        if (multiplyByTicks)
+        {
+            Target.Stat<Stat_EffectModifiers>().RemoveModifier(this);
+            foreach (KeyValuePair<EffectTag, float> effectTag in effectTags)
+            {
+                Target.Stat<Stat_EffectModifiers>().AddModifier(effectTag.Key, effectTag.Value * tick * (scaleWithEffectMulti ? effectMultiplier : 1), modifierType, contributionMultiplier, this);
+            }
         }
     }
 

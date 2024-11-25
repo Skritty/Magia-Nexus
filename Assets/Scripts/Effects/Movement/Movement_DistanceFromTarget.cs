@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement_DistanceFromTarget : Effect
+public class Movement_DistanceFromTarget : MovementDirectionSelector
 {
     [FoldoutGroup("@GetType()")]
     public float distanceFromTarget;

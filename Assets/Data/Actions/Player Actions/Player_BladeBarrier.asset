@@ -15,8 +15,8 @@ MonoBehaviour:
   actionAliases:
   - Blade Barrier
   - BB
-  actionDescription: 'You and nearby allies: Take 15% reduced physical damage for
-    2.5 seconds'
+  actionDescription: 'You and nearby allies: Take 8% less physical damage for 5 seconds
+    (20 stacks max)'
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
@@ -33,18 +33,18 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 262145
-            value: -0.15
+          - key: 262147
+            value: 0.92
         targetSelector:
           rid: 9031231777024770073
         tick: 0
         tickDuration: 125
         maxStacks: 1
-        stacks: 1
+        stacks: 10
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        modifierType: 2
+        modifierType: 3
         contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231777024770073

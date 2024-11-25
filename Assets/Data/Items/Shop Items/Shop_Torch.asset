@@ -15,7 +15,7 @@ MonoBehaviour:
   hidden: 0
   itemAliases:
   - Torch
-  itemDescription: 'On hit with attacks: ignite (100 fire/2.5s)'
+  itemDescription: 'On hit with attacks: ignite (200 fire/2.5s) (does not stack)'
   cost: 25
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.9559748, g: 0.7058059, b: 0.1653414, a: 0}
@@ -90,7 +90,7 @@ MonoBehaviour:
           effectTags:
             serializedPairs:
             - key: 32901
-              value: 0.008
+              value: 0.016
           targetSelector:
             rid: 3963143067535409382
           ignoreFrames: 0

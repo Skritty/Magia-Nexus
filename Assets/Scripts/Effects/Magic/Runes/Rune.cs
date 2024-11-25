@@ -6,6 +6,7 @@ public abstract class Rune : Effect
 {
     public EffectTag damageTags;
     public Action opposite;
+    protected static string TypeName(Rune rune) => rune == null ? "" : rune.GetType().Name;
 
     public override void Activate()
     {
@@ -16,4 +17,5 @@ public abstract class Rune : Effect
     public abstract Rune EffectFormula(Spell spell, Rune combiningRune);
     public virtual void FinalizeEffectFormula(Spell spell) { }
     public abstract Rune TargetingFormula(Spell spell, Rune combiningRune);
+    public virtual void FinalizeTargetingFormula(Spell spell) { }
 }

@@ -8,8 +8,8 @@ public class Stat_Actions : GenericStat<Stat_Actions>
 {
 
     [FoldoutGroup("Actions")]
-    [Sirenix.OdinInspector.ReadOnly]
-    public int tick;
+    [ShowInInspector, Sirenix.OdinInspector.ReadOnly]
+    private int tick = -1;
     [FoldoutGroup("Actions")]
     public bool stunned;
     [FoldoutGroup("Actions")]
@@ -21,6 +21,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     [FoldoutGroup("Actions")]
     public List<Action> actions = new List<Action>();
 
+    [ShowInInspector]
     public int ticksPerPhase => (int)(GameManager.Instance.timePerTurn / actionsPerTurn * (1 / Time.fixedDeltaTime));
     private int phase;
     private Action currentAction;
@@ -41,9 +42,22 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     public void AddAction(Action action)
     {
         actions.Add(action);
+        actionsPerTurn = actions.Count;
     }
 
     public void AddAction(Action action, int phase)
+    {
+        if (phase >= actions.Count) actionsPerTurn = phase;
+        CheckActionList();
+        if (phase < 0 || phase >= actions.Count)
+        {
+            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {actions.Count})");
+            return;
+        }
+        actions[phase] = action;
+    }
+
+    public void SetAction(Action action, int phase)
     {
         CheckActionList();
         if(phase < 0 || phase >= actions.Count)
@@ -91,7 +105,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
 
     private void FetchNextAction()
     {
-        if (actions.Count == 0 || tick <= startingTickDelay) return;
+        if (actions.Count == 0 || tick < startingTickDelay) return;
         if (tick % ticksPerPhase == 0)
         {
             phase++;

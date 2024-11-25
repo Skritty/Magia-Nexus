@@ -43,10 +43,11 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // Healing: Order (does minor damage to enemies) (healing falls off the more an entity is healed)
 
 // First rune: Effect
-// Even rune: Spell Modifier
-// Odd rune (except for the first if there are 3 or more runes): Shape
+// Even rune (uses first if only 1 rune): Shape
+// Odd rune (not first): Spell Modifier
 // All runes (except for the first): Effect Modifier
 // Effect, Modifier, Shape, Modifier, Shape, Modifer, Shape, Invoke
+// Fire Fire Fire Fire Invoke
 
 // Ignite Ground: fire, earth, fire, extend, chaos, invoke
 // chaos, fire, earth, fire - Curse projectile of fire weakness
@@ -56,7 +57,14 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // Thunderclap Totems: earth, earth, fire, wind, invoke
 
 // Shapes
-// Fire + Fire = Bigger Circle
+// Fire = Delayed Circle AoE (On Target)
+// Water = Cone AoE (From Caster)
+// Wind = Line AoE (From Caster)
+// Earth = Projectile (From Caster)
+// Order = Circle AoE Persistent Aura (On You)
+// Chaos = Auto Hit Single Target (No AoE)
+
+// Fire + Fire = Additional explosion after second delay
 // Water + Water = Bigger Cone
 // Wind + Wind = Longer Line
 // Earth + Earth = More Projectiles

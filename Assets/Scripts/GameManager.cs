@@ -10,6 +10,7 @@ using Skritty.Tools.Utilities;
 public class GameManager : Singleton<GameManager>
 {
     public float timePerTurn;
+    public int ticksPerTurn => (int)(timePerTurn * 50);
     public int defaultActionsPerTurn;
     public Phase initialPhase;
     private Phase currentPhase;

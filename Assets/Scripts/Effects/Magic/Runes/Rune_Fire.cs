@@ -10,13 +10,14 @@ public class Rune_Fire : Rune
     [SerializeReference]
     public Targeting targeting;
     [SerializeReference]
-    public PersistentEffect AoEBuff;
+    public PE_EffectModifer expandingAoEBuff;
     [SerializeReference]
-    public PersistentEffect effectMultiBuff;
+    public float spellEffectIncrease;
+    public int damageTicksPerTurn;
 
     public override void SpellModifier(Spell spell)
     {
-        effectMultiBuff.Create(spell.entity);
+        spell.AddGenericSpellEffect(spellEffectIncrease, EffectModifierCalculationType.Additive);
     }
 
     public override Rune EffectFormula(Spell spell, Rune combiningRune) { return this; }
@@ -42,22 +43,22 @@ public class Rune_Fire : Rune
             {
                 case EffectTag.Chaos | EffectTag.Healing:
                     {
-                        spell.effect.effectTags.Add(EffectTag.Damage, damage);
+                        spell.effect.effectTags.Add(EffectTag.Damage | EffectTag.Spell, damage);
                         break;
                     }
                 case EffectTag.Physical | EffectTag.Cold:
                     {
-                        spell.effect.effectTags.Add(EffectTag.Bludgeoning, damage);
+                        spell.effect.effectTags.Add(EffectTag.Bludgeoning | EffectTag.Spell, damage);
                         break;
                     }
                 case EffectTag.Physical | EffectTag.Lightning:
                     {
-                        spell.effect.effectTags.Add(EffectTag.Slashing, damage);
+                        spell.effect.effectTags.Add(EffectTag.Slashing | EffectTag.Spell, damage);
                         break;
                     }
                 case EffectTag.Cold | EffectTag.Lightning:
                     {
-                        spell.effect.effectTags.Add(EffectTag.Piercing, damage);
+                        spell.effect.effectTags.Add(EffectTag.Piercing | EffectTag.Spell, damage);
                         break;
                     }
                 default:
@@ -65,60 +66,85 @@ public class Rune_Fire : Rune
                         damage /= damageType.Count;
                         foreach (EffectTag t in damageType)
                         {
-                            spell.effect.effectTags.Add(tag, damage);
+                            spell.effect.effectTags.TryAdd(t | EffectTag.Spell, damage);
                         }
                         break;
                     }
             }
-            
         }
         else
         {
-            spell.effect.effectTags.Add(damageType[0], 1);
+            spell.effect.effectTags.Add(damageType[0] | EffectTag.Spell, 1);
         }
     }
 
     public override Rune TargetingFormula(Spell spell, Rune combiningRune)
     {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
+        switch (TypeName(combiningRune))
         {
             case nameof(Rune_Fire):
                 {
-                    //AoEBuff.Create(spell, spell.entity);
+                    spell.lifetime += GameManager.Instance.ticksPerTurn;
                     return this;
                 }
             case nameof(Rune_Water):
                 {
-
+                    spell.AddAoESize(-1f, EffectModifierCalculationType.Additive);
+                    expandingAoEBuff.Create(spell.entity);
+                    spell.castSpell.spawnOnTarget = false;
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 2;
                     return this;
                 }
             case nameof(Rune_Wind):
                 {
-
+                    spell.castSpell.spawnOnTarget = false;
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 4;
+                    spell.entity.Stat<Stat_Actions>().AddAction(spell.spellAction);
+                    spell.entity.Stat<Stat_Actions>().AddAction(spell.spellAction);
+                    spell.entity.Stat<Stat_Actions>().AddAction(spell.spellAction);
                     return this;
                 }
             case nameof(Rune_Earth):
                 {
-
+                    spell.AddAoESize(2f, EffectModifierCalculationType.Additive);
+                    spell.entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.MovementSpeed, 0, EffectModifierCalculationType.Multiplicative, 1, spell.effect);
                     return this;
                 }
             case nameof(Rune_Order):
                 {
-
+                    spell.AddAoESize(1f, EffectModifierCalculationType.Additive);
+                    spell.multiplier *= 2;
+                    spell.castSpell.movementTarget = MovementTarget.Owner;
+                    spell.castSpell.spawnOnTarget = false;
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 10;
+                    spell.entity.Stat<Stat_Movement>().movementSelector = new Movement_DistanceFromTarget();
                     return this;
                 }
             case nameof(Rune_Chaos):
                 {
-
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 2;
+                    spell.entity.Stat<Stat_Movement>().movementSelector = new Movement_DistanceFromTarget();
+                    SetToDoT(spell);
                     return this;
                 }
             default:
                 {
+                    spell.spellAction.timing = ActionEventTiming.OnEnd;
+                    spell.lifetime = GameManager.Instance.ticksPerTurn;
+                    (spell.effect as DamageInstance).ignoreFrames = GameManager.Instance.ticksPerTurn;
                     spell.effect.targetSelector = targeting;
                     spell.castSpell.spawnOnTarget = true;
                     return this;
                 }
         }
+    }
+
+    private void SetToDoT(Spell spell)
+    {
+        (spell.effect as DamageInstance).ignoreFrames = GameManager.Instance.ticksPerTurn / damageTicksPerTurn;
+        //(spell.effect as DamageInstance).preventTriggers = true;
+        //(spell.effect as DamageInstance).skipFlatDamageReduction = true;
+        spell.multiplier /= damageTicksPerTurn;
+        spell.spellAction.timing = ActionEventTiming.OnTick;
     }
 }

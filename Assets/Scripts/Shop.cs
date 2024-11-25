@@ -193,7 +193,7 @@ public class Shop : MonoBehaviour
             while (components.Count > 0)
             {
                 Item component = components.Dequeue();
-                if (viewer.items.Count(x => x = component) > itemsHeld.Count(x => x = component))
+                if (viewer.items.Count(x => x == component) > itemsHeld.Count(x => x == component))
                 {
                     itemsHeld.Add(component);
                     continue;
@@ -580,6 +580,7 @@ public class Shop : MonoBehaviour
         }
         if(args.Count == 2 && int.TryParse(args[0], out int amt) && amt > 0)
         {
+            amt = Mathf.Clamp(amt, 0, 100);
             string m2 = "";
             for(int i = 1; i <= amt; i++)
             {
@@ -613,6 +614,10 @@ public class Shop : MonoBehaviour
                 if (BuyItem(GameManager.Instance.viewers[user], itemName, out outMessage))
                 {
                     message += outMessage;
+                }
+                else if(args.Count == 1)
+                {
+                    return new CommandError(false, outMessage);
                 }
                 else
                 {
@@ -650,10 +655,11 @@ public class Shop : MonoBehaviour
         }
         if (args.Count == 2 && int.TryParse(args[0], out int amt) && amt > 0)
         {
+            amt = Mathf.Clamp(amt, 0, 100);
             for (int i = 1; i <= amt; i++)
             {
                 string m2 = "";
-                if (SellItem(GameManager.Instance.viewers[user], args[0], ref gold, ref turnInvalidated, out outMessage))
+                if (SellItem(GameManager.Instance.viewers[user], args[1], ref gold, ref turnInvalidated, out outMessage))
                 {
                     m2 = $"{i} {outMessage}";
                 }

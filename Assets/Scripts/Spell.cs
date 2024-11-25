@@ -19,7 +19,8 @@ public class Spell
     public Action spellAction;
     public Effect effect;
     public int targets = 1;
-    public int lifetime = 125;
+    public int lifetime = 0;
+    public float multiplier = 1;
 
     public Spell(Rune effect, List<Rune> effectModifiers)
     {
@@ -28,22 +29,40 @@ public class Spell
         this.effectModifiers.RemoveAt(0);
     }
 
+    public void AddGenericSpellEffect(float value, EffectModifierCalculationType calcType)
+    {
+        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.Damage | EffectTag.DamageDealt, value, calcType, 1, effect);
+        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.Healing | EffectTag.DamageDealt, value, calcType, 1, effect);
+        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.Knockback, value, calcType, 1, effect);
+        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.MovementSpeed, value, calcType, 1, effect);
+    }
+
+    public void AddAoESize(float value, EffectModifierCalculationType calcType)
+    {
+        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.AoE, value, calcType, 1, effect);
+    }
+
     public void GenerateSpell(Entity spellPrefab, Action spellAction, Spell chainCast)
     {
         entity = GameObject.Instantiate(spellPrefab);
         entity.gameObject.SetActive(false);
         this.spellAction = GameObject.Instantiate(spellAction);
-        entity.Stat<Stat_Actions>().AddRepeatAction(this.spellAction);
-        PE_ExpireEntity expire = new PE_ExpireEntity();
-        expire.tickDuration = lifetime;
-        expire.Create(entity);
-
+        entity.Stat<Stat_Actions>().AddAction(this.spellAction);
 
         GenerateSpellEffect();
         GenerateTargeting();
         ApplySpellModifiers();
-        castSpell.entity = entity;
 
+        // Spellcast 
+        castSpell.entity = entity;
+        effect.effectMultiplier *= multiplier;
+
+        // Spell Duration
+        PE_ExpireEntity expire = new PE_ExpireEntity();
+        expire.tickDuration = lifetime + 1;
+        expire.Create(entity);
+
+        // Spell Triggers
         if (chainCast != null)
         {
             TriggeredEffect nextSpellcastTrigger = new TriggeredEffect();
@@ -71,7 +90,7 @@ public class Spell
     {
         if (shapeModifiers.Count == 0) shapeModifiers.Add(effectRune);
         shapeModifiers[0].TargetingFormula(this, null);
-        TargetingFormula(shapeModifiers[0], 1);
+        TargetingFormula(shapeModifiers[0], 1).FinalizeTargetingFormula(this);
     }
 
     private void ApplySpellModifiers()
@@ -82,11 +101,11 @@ public class Spell
         }
     }
 
-    private void TargetingFormula(Rune previousRune, int index)
+    private Rune TargetingFormula(Rune previousRune, int index)
     {
         // (Water + Earth = Earth) + Fire = Fire -> projectiles = 5, each spell triggers AoE circle on hit (0 damage hit)
         // Water.GenerateAoE(Earth) => Earth, 5 spells in list | Earth.GenerateAoE(Fire) => AoE, Applies Trigger to all spells
-        if (shapeModifiers.Count == index) return;
-        TargetingFormula(previousRune.TargetingFormula(this, shapeModifiers[index]), ++index);
+        if (shapeModifiers.Count == index) return previousRune;
+        return TargetingFormula(previousRune.TargetingFormula(this, shapeModifiers[index]), ++index);
     }
 }

@@ -43,7 +43,8 @@ public class Stat_Life : GenericStat<Stat_Life>
             return;
         }
 
-        Stat_EffectModifiers.EffectModifier calculation = damage.Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CreateCalculation(null, damage, EffectTag.DamageDealt);
+        // Make a damage calculation
+        Stat_EffectModifiers.EffectModifier calculation = damage.Owner.Stat<Stat_EffectModifiers>().CreateCalculation(null, damage, EffectTag.DamageDealt);
         damage.Target.Stat<Stat_EffectModifiers>().CreateCalculation(calculation, damage, EffectTag.DamageTaken);
         float totalDamage = calculation.CalculateModifier(damage);
 

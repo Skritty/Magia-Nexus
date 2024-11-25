@@ -49,7 +49,7 @@ public abstract class Phase_Combat : Phase
             }
             for (int i = 0; i < spawn.owner.actions.Count; i++)
             {
-                entity.Stat<Stat_Actions>().AddAction(spawn.owner.actions[i], i);
+                entity.Stat<Stat_Actions>().SetAction(spawn.owner.actions[i], i);
             }
         }
     }

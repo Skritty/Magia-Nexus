@@ -65,7 +65,7 @@ MonoBehaviour:
           serializedPairs: []
         targetSelector:
           rid: 2626413410273722939
-        homingRateDegreesPerSecond: 75
+        homingRateDegreesPerSecond: 35
     - rid: 2626413410273722939
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -122,6 +122,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         modifierType: 0
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
     - rid: 9031231822436499457
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}

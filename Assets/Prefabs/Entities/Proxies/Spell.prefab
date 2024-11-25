@@ -252,15 +252,17 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         playerCharacter: 0
+        scaleWithPlayerCharacterModifiers: 1
         characterNamePlate: {fileID: 0}
         playerEntity: {fileID: 0}
         player:
           viewerID: 0
           viewerName: 
-          newPlayer: 1
           points: 0
           roundPoints: 0
+          killGainMultiplier: 0
           currency: 0
+          loanAmount: 0
           targetType:
             rid: 9031231661127237640
           items: []
@@ -273,6 +275,7 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
+        vfx: {fileID: 0}
     - rid: 9031231661127237641
       type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
       data:
@@ -296,3 +299,4 @@ MonoBehaviour:
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
+        vfx: {fileID: 0}

@@ -12,6 +12,7 @@ public class Move : Effect
 
     public override void Activate()
     {
+        Owner.Stat<Stat_Movement>().movementSelector?.Create(this);
         Owner.Trigger<Trigger_MovementDirectionCalc>(Owner, this);
         if (rotate)
         {
@@ -19,11 +20,11 @@ public class Move : Effect
         }
 
         Owner.transform.position +=
-            Owner.Stat<Stat_Movement>().facingDir
-            * Owner.Stat<Stat_Movement>().baseMovementSpeed
-            * Target.Stat<Stat_Movement>().dirMovementSpeedMulti
-            * GetMultiplier(EffectTag.MovementSpeed) 
-            * Time.fixedDeltaTime;
+            GetMultiplier(EffectTag.MovementSpeed) 
+            * Mathf.Clamp(Owner.Stat<Stat_Movement>().baseMovementSpeed, 0, float.MaxValue) 
+            * Mathf.Clamp(Target.Stat<Stat_Movement>().dirMovementSpeedMulti, 0, float.MaxValue) 
+            * Time.fixedDeltaTime 
+            * Owner.Stat<Stat_Movement>().facingDir;
         Owner.transform.position = Vector3.ClampMagnitude(Owner.transform.position, 15f);// TODO: Change this to pathing
     }
 }

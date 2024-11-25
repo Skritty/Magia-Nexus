@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 {
+    [Serializable]
     public class EffectModifier
     {
         public EffectModifierCalculationType type;
@@ -311,16 +312,24 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
             // Is leaf
             if (effect != null && effect.Owner)
             {
-                if (magnitude >= 0)
+                if (magnitude > 0)
                 {
-                    if(!contributors.TryAdd(effect.Owner, totalMagnitude))
+                    if (float.IsNaN(totalMagnitude))
+                    {
+                        Debug.LogWarning($"NAN Contribution Warning! Owner: {effect.Owner}, Effect: {effect.Source}, Magnitude: {magnitude}");
+                    }
+                    else if (!contributors.TryAdd(effect.Owner, totalMagnitude))
                     {
                         contributors[effect.Owner] += totalMagnitude;
                     }
                 }
                 else //if(effect.Owner.Stat<Stat_Team>().team != contributingEffect.Owner.Stat<Stat_Team>().team)
                 {
-                    if (!contributors.TryAdd(effect.Owner, -mitigatedMagnitude))
+                    if (float.IsNaN(totalMagnitude))
+                    {
+                        Debug.LogWarning($"NAN Contribution Warning! Owner: {effect.Owner}, Effect: {effect.Source}, Magnitude: {magnitude}");
+                    }
+                    else if (!contributors.TryAdd(effect.Owner, -mitigatedMagnitude))
                     {
                         contributors[effect.Owner] -= mitigatedMagnitude;
                     }
@@ -413,7 +422,7 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 
     //[effect multi] Apply effect multi to outgoing contribution (it has no attribution)
 
-    [ShowInInspector, ReadOnly, FoldoutGroup("Effect Modifiers")]
+    [SerializeReference, ReadOnly, FoldoutGroup("Effect Modifiers")]
     public List<EffectModifier> effectModifiers = new List<EffectModifier>();
     private Dictionary<EffectTag, float> precalculatedModifiers = new Dictionary<EffectTag, float>();
     public void AddModifier(EffectTag tags, float magnitude, EffectModifierCalculationType type, float contributionMultiplier, Effect effect)
@@ -480,6 +489,19 @@ public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
         }
 
         foreach (EffectModifier modifier in effectModifiers)
+        {
+            AddModifier(modifier);
+        }
+
+        if(Owner.Stat<Stat_PlayerOwner>().scaleWithPlayerCharacterModifiers && !Owner.Stat<Stat_PlayerOwner>().playerCharacter)
+        {
+            foreach (EffectModifier modifier in Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().effectModifiers)
+            {
+                AddModifier(modifier);
+            }
+        }
+
+        void AddModifier(EffectModifier modifier)
         {
             switch (modifier.type)
             {

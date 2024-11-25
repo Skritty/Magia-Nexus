@@ -8,6 +8,8 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
     [FoldoutGroup("Player Owned")]
     public bool playerCharacter;
     [FoldoutGroup("Player Owned")]
+    public bool scaleWithPlayerCharacterModifiers;
+    [FoldoutGroup("Player Owned")]
     public TMPro.TextMeshProUGUI characterNamePlate;
     [FoldoutGroup("Player Owned")]
     public Entity playerEntity;

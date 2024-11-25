@@ -15,7 +15,7 @@ MonoBehaviour:
   hidden: 0
   itemAliases:
   - Crystal
-  itemDescription: 'On Rune Activated: Heal for 3 life'
+  itemDescription: +5% spell effect
   cost: 20
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0, g: 0, b: 0, a: 0}
@@ -23,58 +23,38 @@ MonoBehaviour:
   grantedActions: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 9031231643882095576
+  - rid: 2626413886055383289
   references:
     version: 2
     RefIds:
-    - rid: 9031231643882095576
-      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
+    - rid: 2626413886055383289
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 0
-            value: 1
+          - key: 147456
+            value: 0.05
+          - key: 8404992
+            value: 0.05
+          - key: 4210688
+            value: 0.05
+          - key: 151560
+            value: 0.05
         targetSelector:
-          rid: 9031231643882095577
+          rid: 2626413886055383290
         tick: 0
         tickDuration: -1
-        maxStacks: 10
-        stacks: 1
+        maxStacks: 1
+        stacks: 10
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        triggerOrder: 0
-        trigger:
-          rid: 9031231643882095582
-        effect:
-          rid: 9031231643882095580
-    - rid: 9031231643882095577
+        modifierType: 2
+        contributionMultiplier: 1
+        scaleWithEffectMulti: 0
+    - rid: 2626413886055383290
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
-    - rid: 9031231643882095580
-      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 4360
-            value: -0.03
-        targetSelector:
-          rid: 9031231643882095581
-        ignoreFrames: 0
-        skipFlatDamageReduction: 1
-        preventTriggers: 1
-        ownerEffects: []
-        targetEffects: []
-        temporaryTriggeredEffects: []
-    - rid: 9031231643882095581
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-    - rid: 9031231643882095582
-      type: {class: Trigger_OnRuneUsed, ns: , asm: Assembly-CSharp}
-      data: 
