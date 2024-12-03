@@ -1,106 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rune_Earth : Rune
 {
-    public DamageInstance damageEffect;
+    [Header("Magic Effects")]
     [SerializeReference]
-    public PersistentEffect AoEBuff;
+    public PersistentEffect buff;
     [SerializeReference]
-    public Targeting targeting;
-    public Action orbitHoming;
-    public Action trackingHoming;
+    public Effect debuff;
+    [SerializeReference]
+    public PersistentEffect magicEffectModifier;
 
-    public override void SpellModifier(Spell spell)
+    [Header("Spell Shape")]
+    [SerializeReference]
+    public Targeting shape;
+
+    public override void MagicEffect(Spell spell)
     {
-        AoEBuff.Create(spell.entity);
+        spell.effect.onHitEffects.Add(debuff);
     }
 
-    public override Rune EffectFormula(Spell spell, Rune combiningRune)
+    public override void MagicEffectModifier(Spell spell)
     {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
-        {
-            case nameof(Rune_Fire):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Water):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Wind):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Earth):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Order):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Chaos):
-                {
-
-                    return this;
-                }
-            default:
-                {
-                    spell.effect = damageEffect.Clone();
-                    return this;
-                }
-        }
+        spell.effect.onHitEffects.Add(magicEffectModifier);
     }
 
-    public override Rune TargetingFormula(Spell spell, Rune combiningRune)
+    public override void Shape(Spell spell)
     {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
+        spell.shape = SpellShape.Projectile;
+        spell.castSpell.projectileFanAngle = 30f;
+        spell.SetToProjectile(shape, 6f);
+    }
+
+    public override void ShapeModifier(Spell spell)
+    {
+        switch (spell.shape)
         {
-            case nameof(Rune_Fire):
+            case SpellShape.Circle:
                 {
-
-                    return this;
+                    spell.lifetime += GameManager.Instance.ticksPerTurn;
+                    break;
                 }
-            case nameof(Rune_Water):
+            case SpellShape.Cone:
                 {
-
-                    return this;
+                    (spell.effect.targetSelector as Targeting_Radial).angle += 15f;
+                    break;
                 }
-            case nameof(Rune_Wind):
+            case SpellShape.Line:
                 {
-
-                    return this;
+                    break;
                 }
-            case nameof(Rune_Earth):
+            case SpellShape.Projectile:
                 {
-
-                    return this;
+                    spell.castSpell.numberOfProjectiles += 2;
+                    break;
                 }
-            case nameof(Rune_Order):
+            case SpellShape.Direct:
                 {
-
-                    return this;
+                    break;
                 }
-            case nameof(Rune_Chaos):
+            case SpellShape.Totem:
                 {
-
-                    return this;
+                    break;
                 }
-            default:
+            case SpellShape.Minion:
                 {
-                    spell.effect.targetSelector = targeting;
-                    spell.castSpell.entityType = CreateEntity.EntityType.Projectile;
-                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed = 10f;
-                    return this;
+                    break;
+                }
+            case SpellShape.Conjuration:
+                {
+                    break;
                 }
         }
     }

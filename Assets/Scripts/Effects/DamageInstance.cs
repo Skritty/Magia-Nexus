@@ -18,6 +18,8 @@ public class DamageInstance : Effect
     public List<Effect> ownerEffects = new();
     [SerializeReference, FoldoutGroup("@GetType()")]
     public List<Effect> targetEffects = new();
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public List<Effect> onHitEffects = new();
     [SerializeReference, FoldoutGroup("@GetType()"), InfoBox("These are in effect until the end of damage calculation")]
     public List<TriggeredEffect> temporaryTriggeredEffects = new();
 
@@ -38,6 +40,10 @@ public class DamageInstance : Effect
         }
         if (!preventTriggers)
         {
+            foreach (Effect effect in onHitEffects)
+            {
+                effect.Create(this);
+            }
             Owner.Stat<Stat_PlayerOwner>().Proxy(x => x.Trigger<Trigger_OnHit>(this, this));
             Target.Trigger<Trigger_WhenHit>(this, this);
         }
@@ -53,7 +59,7 @@ public class DamageInstance : Effect
         }
     }
 
-    public DamageInstance Clone()
+    public new DamageInstance Clone()
     {
         DamageInstance clone = (DamageInstance)base.Clone();
         clone.ownerEffects = ownerEffects;

@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
     public Targeting defaultTargeting;
     public SerializedDictionary<string, List<Item>> startingClasses;
     public SerializedDictionary<string, Viewer> viewers = new SerializedDictionary<string, Viewer>();
+    public SerializedDictionary<string, Viewer> inactiveViewers = new SerializedDictionary<string, Viewer>();
     public static Viewer[] Viewers => Instance.viewers.Select(x => x.Value).ToArray();
 
     private void OnEnable()
@@ -66,10 +67,20 @@ public class GameManager : Singleton<GameManager>
 
         if (viewers.ContainsKey(user))
         {
+            inactiveViewers.Add(user, viewers[user]);
             viewers.Remove(user);
         }
 
-        Viewer viewer = new Viewer();
+        Viewer viewer;
+        if (inactiveViewers.ContainsKey(user))
+        {
+            viewer = inactiveViewers[user];
+            viewer.gold = viewer.totalGold;
+            viewer.items.Clear();
+            inactiveViewers.Remove(user);
+        }
+        else viewer = new Viewer();
+
         viewer.viewerName = user;
         viewer.items.AddRange(startingClasses[args[0]]);
         viewer.targetType = defaultTargeting;
@@ -83,8 +94,10 @@ public class GameManager : Singleton<GameManager>
     {
         if (viewers.ContainsKey(user))
         {
+            inactiveViewers.Add(user, viewers[user]);
             viewers.Remove(user);
         }
+        
         TwitchClient.Instance.SendChatMessage($"@{user} left the game");
         return new CommandError(true, "");
     }
@@ -179,7 +192,7 @@ public class GameManager : Singleton<GameManager>
     public CommandError Command_CurrentGold(string user, List<string> args)
     {
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
-        string message = $"@{user} You have {GameManager.Instance.viewers[user].currency} gold";
+        string message = $"@{user} You have {GameManager.Instance.viewers[user].gold} gold";
         TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
     }
@@ -187,7 +200,7 @@ public class GameManager : Singleton<GameManager>
     public CommandError Command_CurrentPoints(string user, List<string> args)
     {
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
-        string message = $"@{user} You have {GameManager.Instance.viewers[user].points} points";
+        string message = $"@{user} You have {GameManager.Instance.viewers[user].points} points. You gained {GameManager.Instance.viewers[user].roundPoints} last round.";
         TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
     }

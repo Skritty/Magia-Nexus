@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Flags]
@@ -14,21 +15,22 @@ public enum TargetFilter
 
 public enum TargetSorting
 {
-    None = 1,
+    Unsorted = 1,
     Lowest = 2,
-    Highest = 4,
-    Random = 8
+    Highest = 4
 }
 
 [Serializable]
 public abstract class Targeting
 {
-    protected Entity owner;
+    protected Entity Owner;
     public string name, description;
+    public bool lockTarget;
+    public Entity primaryTarget;
     public abstract List<Entity> GetTargets(Effect source, Entity owner);
     public abstract List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner);
     public virtual void OnDrawGizmos(Transform owner) { }
-    public virtual T Clone<T>() where T : Effect
+    public virtual T Clone<T>() where T : Targeting
     {
         return (T)MemberwiseClone();
     }
@@ -38,10 +40,11 @@ public abstract class Targeting
 public abstract class MultiTargeting : Targeting
 {
     public TargetFilter entitiesAffected = TargetFilter.Enemies;
-    public TargetSorting sortingMethod = TargetSorting.None;
+    public TargetSorting sortingMethod = TargetSorting.Unsorted;
     //public Vector2 targetingRange;
     public int numberOfTargets = -1;
     public VFX vfx;
+    protected List<Entity> targets;
 
     public override List<Entity> GetTargets(Effect source, Entity owner)
     {
@@ -50,8 +53,12 @@ public abstract class MultiTargeting : Targeting
             Debug.LogWarning("Owner of Targeting is null!");
             return new List<Entity>();
         }
-        this.owner = owner;
-        List<Entity> targets = new List<Entity>();
+        if(lockTarget && !(primaryTarget == null || !primaryTarget.gameObject.activeSelf))
+        {
+            return targets;
+        }
+        this.Owner = owner;
+        targets = new List<Entity>();
         TargetFilter targetType;
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>())
         {
@@ -86,12 +93,15 @@ public abstract class MultiTargeting : Targeting
             targets.Add(entity);
         }
 
-        if(sortingMethod != TargetSorting.None)
+        if(sortingMethod != TargetSorting.Unsorted)
             targets.Sort(SortTargets);
 
         int actualNumberOfTargets = numberOfTargets + owner.Stat<Stat_Targeting>().numberOfTargets;
         if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
             targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
+
+        if(targets.Count > 0)
+            primaryTarget = targets[0];
         return targets;
     }
     public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
@@ -101,7 +111,7 @@ public abstract class MultiTargeting : Targeting
     protected virtual bool IsValidTarget(Entity target) => true;
     protected virtual int SortTargets(Entity e1, Entity e2) 
     {  
-        if(sortingMethod == TargetSorting.Random) return UnityEngine.Random.Range(-1, 2);
+        if(sortingMethod == TargetSorting.Unsorted) return UnityEngine.Random.Range(-1, 2);
         return 0; 
     }
 }

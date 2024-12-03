@@ -7,8 +7,8 @@ public class Targeting_Distance : MultiTargeting
     protected override int SortTargets(Entity e1, Entity e2)
     {
         int comparison = 0;
-        float e1dist = Vector3.Distance(owner.transform.position, e1.transform.position);
-        float e2dist = Vector3.Distance(owner.transform.position, e2.transform.position);
+        float e1dist = Vector3.Distance(Owner.transform.position, e1.transform.position);
+        float e2dist = Vector3.Distance(Owner.transform.position, e2.transform.position);
         float e1Enmity = e1.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
         float e2Enmity = e2.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
         switch (sortingMethod)
@@ -25,9 +25,11 @@ public class Targeting_Distance : MultiTargeting
                     else comparison = 1;
                     break;
                 }
-            case TargetSorting.Random:
+            case TargetSorting.Unsorted:
                 {
-                    comparison = Random.Range(-1, 2);
+                    if (e1Enmity == e2Enmity) comparison = Random.Range(-1, 2);
+                    else if (e1Enmity > e2Enmity) comparison = -1;
+                    else comparison = 1;
                     break;
                 }
         }

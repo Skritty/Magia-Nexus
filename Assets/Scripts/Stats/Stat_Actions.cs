@@ -21,7 +21,6 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     [FoldoutGroup("Actions")]
     public List<Action> actions = new List<Action>();
 
-    [ShowInInspector]
     public int ticksPerPhase => (int)(GameManager.Instance.timePerTurn / actionsPerTurn * (1 / Time.fixedDeltaTime));
     private int phase;
     private Action currentAction;

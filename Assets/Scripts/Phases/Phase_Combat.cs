@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
 using UnityEngine;
 
 public abstract class Phase_Combat : Phase
@@ -38,6 +39,7 @@ public abstract class Phase_Combat : Phase
             spawn.owner.killGainMultiplier = killPointGain;
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawn.position, Quaternion.identity);
             entity.Stat<Stat_PlayerOwner>().SetPlayer(spawn.owner, entity);
+            spawn.owner.roundPoints = 0;
             entity.Stat<Stat_Team>().team = spawn.team;
             entity.Stat<Stat_Actions>().startingTickDelay = (int)(GameManager.Instance.timePerTurn * 50);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
@@ -71,7 +73,8 @@ public abstract class Phase_Combat : Phase
                 if(spawn.team == winningTeam)
                 {
                     spawn.owner.points += winPointGain;
-                    spawn.owner.currency += winPointGain;
+                    spawn.owner.gold += winPointGain;
+                    spawn.owner.totalGold += winPointGain;
                 }
             }
             GameManager.Instance.NextPhase();

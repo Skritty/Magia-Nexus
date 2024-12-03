@@ -19,7 +19,7 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
     {
         if (Target.Stat<Stat_Movement>().movementTarget == null)
         {
-            Target.Stat<Stat_Movement>().facingDir = Vector3.zero;
+            Target.Stat<Stat_Movement>().dirMovementSpeedMulti = 0;
         }
         else
         {
@@ -27,7 +27,7 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
             dirFromTarget = dirFromTarget.normalized * distanceFromTarget - dirFromTarget;
             if(dirFromTarget.magnitude <= threshold)
             {
-                Target.Stat<Stat_Movement>().facingDir = Vector3.zero;
+                Target.Stat<Stat_Movement>().dirMovementSpeedMulti = 0;
             }
             else
             {

@@ -17,12 +17,12 @@ public class Targeting_Line : MultiTargeting
     {
         if (length == 0 || width == 0) return false;
 
-        Vector3 dirToEntity = target.transform.position - owner.transform.position;
-        Vector3 dirToTarget = owner.Stat<Stat_Movement>().facingDir;
+        Vector3 dirToEntity = target.transform.position - Owner.transform.position;
+        Vector3 dirToTarget = Owner.Stat<Stat_Movement>().facingDir;
         Vector3 projectedDir = Vector3.Project(dirToEntity, dirToTarget);
         if (Vector3.Dot(dirToEntity, dirToTarget) < 0) return false;
-        if (projectedDir.magnitude > length * owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoE)) return false;
-        if ((dirToEntity - projectedDir).magnitude > width * owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoE)) return false;
+        if (projectedDir.magnitude > length * Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoE)) return false;
+        if ((dirToEntity - projectedDir).magnitude > width * Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoE)) return false;
         return true;
     }
 

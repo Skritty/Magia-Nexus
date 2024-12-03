@@ -39,7 +39,15 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
                 // (is the duration infinite or the tick is the same?)
                 if (!(effect.perPlayer && e.Owner != effect.Owner) && (effect.tickDuration < 0 || e.refreshDuration))
                 {
-                    int stacksAdded = Mathf.Clamp(effect.stacks, 0, e.maxStacks - e.stacks);
+                    int stacksAdded = 0;
+                    if (e.maxStacks < 0)
+                    {
+                        stacksAdded = effect.stacks;
+                    }
+                    else
+                    {
+                        stacksAdded = Mathf.Clamp(effect.stacks, 0, e.maxStacks - e.stacks);
+                    }
                     e.stacks += stacksAdded;
                     e.DoForAllStacks(() => e.OnGained(), stacksAdded);
                     return;

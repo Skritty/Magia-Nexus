@@ -4,98 +4,75 @@ using UnityEngine;
 
 public class Rune_Chaos : Rune
 {
+    [Header("Magic Effects")]
+    [SerializeReference]
+    public PersistentEffect buff;
     [SerializeReference]
     public PersistentEffect debuff;
+
+    [Header("Spell Shape")]
     [SerializeReference]
-    public PersistentEffect effectMultiBuff;
+    public Targeting shape;
 
-    public override void SpellModifier(Spell spell)
+    public override void MagicEffect(Spell spell)
     {
-        effectMultiBuff.Create(spell.entity);
+        spell.effect.onHitEffects.Add(debuff);
     }
 
-    public override Rune EffectFormula(Spell spell, Rune combiningRune)
+    public override void MagicEffectModifier(Spell spell)
     {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
-        {
-            case nameof(Rune_Fire):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Water):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Wind):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Earth):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Order):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Chaos):
-                {
-
-                    return this;
-                }
-            default:
-                {
-                    spell.effect = debuff.Clone();
-                    return this;
-                }
-        }
+        spell.lifetime += GameManager.Instance.ticksPerTurn / 2;
     }
 
-    public override Rune TargetingFormula(Spell spell, Rune combiningRune)
+    public override void Shape(Spell spell)
     {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
+        spell.shape = SpellShape.Direct;
+        spell.effect.targetSelector = shape;
+    }
+
+    public override void ShapeModifier(Spell spell)
+    {
+        switch (spell.shape)
         {
-            case nameof(Rune_Fire):
+            case SpellShape.Circle:
                 {
-
-                    return this;
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 2;
+                    spell.entity.Stat<Stat_Movement>().movementSelector = new Movement_DistanceFromTarget();
+                    //spell.SetHitRate(damageTicksPerTurn);
+                    break;
                 }
-            case nameof(Rune_Water):
+            case SpellShape.Cone:
                 {
-
-                    return this;
+                    break;
                 }
-            case nameof(Rune_Wind):
+            case SpellShape.Line:
                 {
-
-                    return this;
+                    spell.castTargets += 1;
+                    break;
                 }
-            case nameof(Rune_Earth):
+            case SpellShape.Projectile:
                 {
-
-                    return this;
+                    Movement_HomeToTarget homing = new Movement_HomeToTarget();
+                    homing.homingRateDegreesPerSecond += 30f;
+                    spell.entity.Stat<Stat_Movement>().movementSelector = homing;
+                    break;
                 }
-            case nameof(Rune_Order):
+            case SpellShape.Direct:
                 {
-
-                    return this;
+                    // TODO
+                    break;
                 }
-            case nameof(Rune_Chaos):
+            case SpellShape.Totem:
                 {
-
-                    return this;
+                    break;
                 }
-            default:
+            case SpellShape.Minion:
                 {
-                    spell.effect.targetSelector = spell.owner.Stat<Stat_Targeting>().targetingType;
-                    return this;
+                    break;
+                }
+            case SpellShape.Conjuration:
+                {
+                    break;
                 }
         }
     }

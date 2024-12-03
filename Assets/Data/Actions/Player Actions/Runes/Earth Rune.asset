@@ -26,6 +26,97 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 5670261797178049009
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 262144
+            value: 0.8
+        targetSelector:
+          rid: 5670261797178049010
+        tick: 0
+        tickDuration: 125
+        maxStacks: -1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 0
+        contributeToAssists: 0
+        modifierType: 3
+        contributionMultiplier: 1
+        scaleWithEffectMulti: 0
+        multiplyByTicks: 0
+    - rid: 5670261797178049010
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+    - rid: 5670261797178049011
+      type: {class: PE_Stun, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 5
+        targetSelector:
+          rid: 5670261797178049012
+        tick: 0
+        tickDuration: 15
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+    - rid: 5670261797178049012
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+    - rid: 5670261797178049013
+      type: {class: PE_LifeBuff, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
+        targetSelector:
+          rid: 5670261797178049014
+        tick: 0
+        tickDuration: 125
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        maxLifeChange: 500
+        currentLifeChange: 500
+    - rid: 5670261797178049014
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+    - rid: 5670261797178049015
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+        vfx: {fileID: 0}
+        radius: 0.5
+        angle: 180
     - rid: 9031231598746927113
       type: {class: Rune_Earth, ns: , asm: Assembly-CSharp}
       data:
@@ -36,71 +127,21 @@ MonoBehaviour:
             value: 1
         targetSelector:
           rid: 9031231598746927114
+        baseDamage: 0.5
         damageTags: 2
         opposite: {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
-        damageEffect:
-          effectMultiplier: 1
-          effectTags:
-            serializedPairs:
-            - key: 0
-              value: 1
-          targetSelector:
-            rid: 9031231598746927127
-          ignoreFrames: 10
-          skipFlatDamageReduction: 1
-          preventTriggers: 0
-          ownerEffects: []
-          targetEffects: []
-          temporaryTriggeredEffects: []
-        AoEBuff:
-          rid: 9031231777024770058
-        targeting:
-          rid: 9031231598746927130
-        orbitHoming: {fileID: 0}
-        trackingHoming: {fileID: 0}
+        buff:
+          rid: 5670261797178049009
+        debuff:
+          rid: 5670261797178049011
+        magicEffectModifier:
+          rid: 5670261797178049013
+        shape:
+          rid: 5670261797178049015
     - rid: 9031231598746927114
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
-    - rid: 9031231598746927127
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-    - rid: 9031231598746927130
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        vfx: {fileID: 0}
-        radius: 0.5
-        angle: 180
-    - rid: 9031231777024770058
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 2
-        targetSelector:
-          rid: 9031231777024770059
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        modifierType: 0
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 0
-    - rid: 9031231777024770059
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}

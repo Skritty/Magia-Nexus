@@ -7,7 +7,11 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 {
     [SerializeReference, FoldoutGroup("Magic")]
     public List<Rune> runes = new List<Rune>(); // spellcasting queue
+    [SerializeReference, FoldoutGroup("Magic")]
+    public int spellPhase;
 }
+
+public enum SpellShape { Circle, Cone, Line, Projectile, Direct, Totem, Minion, Barrier, Conjuration }
 
 //--------------
 //--------  ----
@@ -73,7 +77,7 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 
 // Fire + Water = AoE circle that slowly moves forward while growing larger
 // Fire + Wind = Bigger AoE circle that gradually moves forward
-// Fire + Earth = Projectile AoE circle on target on hit
+// Fire + Earth = Projectile that explodes on pierce (effect 1: projectile damage, effect 2: explosion)
 // Fire + Order = Bigger AoE around you
 // Fire + Chaos = AoE circle that tracks target
 
@@ -82,7 +86,7 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // Water + Order = 
 // Water + Chaos = Targets all entities that are targeting you
 
-// Wind + Earth = Projectiles have a trail that lingers
+// Wind + Earth = Beam can now chain, +chains
 // Wind + Order = AoE line linked between you and an ally
 // Wind + Chaos = AoE line linked between you and an enemy
 
@@ -132,3 +136,40 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 // --Chaos (Buffs/Debuffs)--
 // Fire/Wind/Chaos: Damage Buff/Debuff (Buff added damage types, in tiers based on the number of each rune)
 // Earth/Water/Order: Defensive Buff/Debuff (Buff added defensive damage types, in tiers based on the number of each rune)
+
+// NEW MAGIC FORMULA IDEA -----------------------------------------------------------------
+
+// Fire - Damage | Effect: Damage Type | Creates Spell Shape
+// Fire Fire Earth Earth
+// 1. (Fire, Spell) -> Damage & Damage Type
+// 2. (second rune) -> start shape formula
+// 2. Fire -> Set shape to fire & do fire shape again (1st rune matches)
+// 2. Earth -> Set shape projectile
+
+// Earth - 
+// Earth Invoke
+// 1. (Earth) + None -> Dummy Totem
+
+// Earth Earth Fire Fire
+// 1. (Earth) + Earth -> Spell Totem
+// 2. (second rune) -> New Spell Calc
+// 2.1 (Fire, Spell) -> Damage & Damage Type
+// 2.2 Fire -> Shape Calc
+
+// Earth Order Fire Fire
+// 1. (Earth) + Order -> Minion
+// 2.
+
+// Order Chaos
+
+// Normal spell (Fire Fire Fire Fire Invoke): Delayed explosion happens twice at double damage
+// Totem spell (Earth Earth Fire Fire Invoke): Totem that casts delayed explosion at 1x damage
+// Minion spell (Earth Order Fire Fire Invoke): Minion that chases enemies and attacks for
+
+// Normal spell: untargetable, less ways to scale
+// Totem spell: has life, more ways to scale (ie. extra totems placed)
+
+// Totems and minions override the shape formula
+// Totems (Earth Earth) double next shape and effect rune
+// Minions (Earth Order): First rune is AI type, second is attack type,
+// third onward is effect (determined by the minion rune, ie. more minions summoned, faster attacks, more damage, more AoE, etc)

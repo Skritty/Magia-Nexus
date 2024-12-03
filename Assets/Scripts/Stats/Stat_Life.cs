@@ -38,7 +38,7 @@ public class Stat_Life : GenericStat<Stat_Life>
 
     public void TakeDamage(DamageInstance damage)
     {
-        if (invulnerable)
+        if (invulnerable || damage.effectMultiplier == 0)
         {
             return;
         }
@@ -49,8 +49,8 @@ public class Stat_Life : GenericStat<Stat_Life>
         float totalDamage = calculation.CalculateModifier(damage);
 
         // Handle Life
-        //if (totalDamage > 0)
-        //    Owner.Stat<Stat_PlayerOwner>().ApplyContribution(damage.Owner, totalDamage * TankContributionMultiplier);
+        if (totalDamage > 0)
+            Owner.Stat<Stat_PlayerOwner>().ApplyContribution(damage.Owner, totalDamage / 100f * TankContributionMultiplier);
         //Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
         currentLife = Mathf.Clamp(currentLife - totalDamage, 0, maxLife);
         

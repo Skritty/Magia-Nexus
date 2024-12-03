@@ -7,6 +7,7 @@ public class SetMovementTarget : Effect
     public MovementTarget movementTarget = MovementTarget.Target;
     public override void Activate()
     {
+        Owner.Stat<Stat_Movement>().facingDir = Target.transform.position - Owner.transform.position;
         switch (movementTarget)
         {
             case MovementTarget.Owner:

@@ -8,6 +8,8 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
 {
     [FoldoutGroup("Projectile")]
     public int piercesRemaining;
+    [FoldoutGroup("Projectile")]
+    public int splitsRemaining;
 
     protected override void Initialize()
     {
@@ -24,6 +26,13 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
     private void OnHit(Trigger trigger)
     {
         DamageInstance damage = trigger.Data<DamageInstance>();
+        if(--splitsRemaining >= 0)
+        {
+            CreateEntity split = new CreateEntity();
+            split.ignoreAdditionalProjectiles = true;
+            split.entity = Owner;
+            split.Create(Owner); // TODO: Split from target (pseudo-owner?)
+        }
         if (--piercesRemaining < 0)
         {
             Owner.Trigger<Trigger_Expire>(damage.Owner);

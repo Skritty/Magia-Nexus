@@ -24,7 +24,10 @@ public class Move : Effect
             * Mathf.Clamp(Owner.Stat<Stat_Movement>().baseMovementSpeed, 0, float.MaxValue) 
             * Mathf.Clamp(Target.Stat<Stat_Movement>().dirMovementSpeedMulti, 0, float.MaxValue) 
             * Time.fixedDeltaTime 
-            * Owner.Stat<Stat_Movement>().facingDir;
-        Owner.transform.position = Vector3.ClampMagnitude(Owner.transform.position, 15f);// TODO: Change this to pathing
+            * Owner.Stat<Stat_Movement>().facingDir.normalized;
+        if (obeyMapEdge)
+        {
+            Owner.transform.position = Vector3.ClampMagnitude(Owner.transform.position, 15f);// TODO: Change this to pathing
+        }
     }
 }

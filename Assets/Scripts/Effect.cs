@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,12 +35,14 @@ public abstract class Effect
         get => _owner;
         set => _owner = value;
     }
+    [ShowInInspector]
     private Entity _owner;
 
     /// <summary>
     /// Entity that is recieving the effect
     /// </summary>
     public Entity Target => _target;
+    [ShowInInspector]
     private Entity _target;
 
     /// <summary>
@@ -49,6 +52,8 @@ public abstract class Effect
     public float effectMultiplier = 1;
     [FoldoutGroup("@GetType()")]
     public SerializedDictionary<EffectTag, float> effectTags = new SerializedDictionary<EffectTag, float>() { {EffectTag.None, 1f} };
+    //[FoldoutGroup("@GetType()")]
+    //public List<EffectTagContainer> effectTags2 = new List<EffectTagContainer> { new EffectTagContainer(EffectTag.None, 1f) };
     
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
@@ -159,5 +164,18 @@ public abstract class Effect
             UID += (int)tag.Key + (int)tag.Value;
         }
         return UID;
+    }
+}
+
+[Serializable]
+public struct EffectTagContainer
+{
+    public EffectTag tag;
+    public float value;
+
+    public EffectTagContainer(EffectTag tag, float value)
+    {
+        this.tag = tag;
+        this.value = value;
     }
 }

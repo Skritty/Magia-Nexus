@@ -281,8 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cde3e08713c78247ba3cfc6826f15ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumPoolSize: 20
-  poolID: 25216
+  poolID: 23960
   OnGet:
     m_PersistentCalls:
       m_Calls: []
@@ -292,3 +291,4 @@ MonoBehaviour:
   tickDuration: 25
   display: {fileID: 893064143886156425}
   floatDistance: 0.8
+  randomSpawnRange: {x: 0.5, y: 0.6}

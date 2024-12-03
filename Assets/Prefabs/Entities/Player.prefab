@@ -314,6 +314,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 2626413593285099745
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
@@ -336,11 +338,14 @@ MonoBehaviour:
         modifierType: 3
         contributionMultiplier: 0
         scaleWithEffectMulti: 0
+        multiplyByTicks: 0
     - rid: 2626413593285099746
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
     - rid: 3492845359303229445
       type: {class: Stat_Life, ns: , asm: Assembly-CSharp}
       data:
@@ -358,7 +363,6 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        tick: 0
         stunned: 0
         actionsPerTurn: 5
         startingTickDelay: 0
@@ -380,6 +384,8 @@ MonoBehaviour:
         mergeBehavior: 0
         movementTarget: {fileID: 0}
         baseMovementSpeed: 1
+        movementSelector:
+          rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
     - rid: 9031231465990389774
@@ -397,6 +403,7 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
+        spellPhase: 0
     - rid: 9031231661127237636
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
@@ -404,25 +411,29 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         playerCharacter: 1
+        scaleWithPlayerCharacterModifiers: 0
         characterNamePlate: {fileID: 233806103433016068}
         playerEntity: {fileID: 0}
         player:
           viewerID: 0
           viewerName: 
-          points: 0
-          roundPoints: 0
-          killGainMultiplier: 0
-          currency: 0
-          loanAmount: 0
           targetType:
             rid: 9031231661127237637
           items: []
           actions: []
+          character: {fileID: 0}
+          points: 0
+          roundPoints: 0
+          killGainMultiplier: 0
+          gold: 0
+          totalGold: 0
     - rid: 9031231661127237637
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
@@ -433,6 +444,7 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
+        effectModifiers: []
     - rid: 9031231668284555680
       type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
       data:
@@ -447,6 +459,8 @@ MonoBehaviour:
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
@@ -485,6 +499,8 @@ MonoBehaviour:
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
     - rid: 9031231727694250690
       type: {class: Trigger_OnDie, ns: , asm: Assembly-CSharp}
       data: 
@@ -505,6 +521,8 @@ MonoBehaviour:
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0

@@ -555,7 +555,7 @@ public enum EffectTag
     // Divine
     Magical       = (1 << 10) + 1 + 8, // Cannot be blocked
     Chaos         = (1 << 11) + 1 + 8, // More damage per debuff on target
-    Healing       = (1 << 12) + 8, // More healing per buff on target
+    Order         = (1 << 12) + 8, // More healing per buff on target
     // Sources
     Attack        = 1 << 13,
     Spell         = 1 << 14,

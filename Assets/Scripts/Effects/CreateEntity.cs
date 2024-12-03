@@ -20,8 +20,6 @@ public class CreateEntity : Effect
         Shotgun = 4,
     }
 
-    
-
     [FoldoutGroup("@GetType()")]
     public EntityType entityType = EntityType.Basic;
     [FoldoutGroup("@GetType()")]
@@ -30,6 +28,10 @@ public class CreateEntity : Effect
     public bool spawnOnTarget;
     [FoldoutGroup("@GetType()")]
     public MovementTarget movementTarget = MovementTarget.Target;
+    [FoldoutGroup("Projectile Behavior")]
+    public int numberOfProjectiles = 1;
+    [FoldoutGroup("Projectile Behavior")]
+    public bool ignoreAdditionalProjectiles;
     [FoldoutGroup("Projectile Behavior")]
     public ProjectileFanType projectileFanType = ProjectileFanType.Sequence;
     [FoldoutGroup("Projectile Behavior")]
@@ -46,16 +48,17 @@ public class CreateEntity : Effect
         {
             case EntityType.Basic:
                 {
-                    Create();
+                    Create(0);
                     break;
                 }
             case EntityType.Projectile:
                 {
-                    int numberOfProjectiles = (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectile | EffectTag.Targets);
-                    for (int i = 0; i < numberOfProjectiles; i++)
+                    int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectile | EffectTag.Targets) - 1);
+                    for (int i = 0; i < projectileCount; i++)
                     {
-                        Entity spawnedEntity = Create();
-                        if(numberOfProjectiles > 1)
+                        Entity spawnedEntity = Create(i);
+                        projectileFanAngle = Mathf.Clamp(projectileFanAngle, 0f, 180f);
+                        if (projectileCount > 1)
                             switch (projectileFanType)
                             {
                                 case ProjectileFanType.EvenlySpaced:
@@ -63,7 +66,7 @@ public class CreateEntity : Effect
                                         spawnedEntity.Stat<Stat_Movement>().facingDir =
                                             Quaternion.Euler(0, 0,
                                             Mathf.Lerp(-projectileFanAngle, projectileFanAngle,
-                                            i * 1f / (numberOfProjectiles - 1)))
+                                            i * 1f / (projectileCount - 1)))
                                             * spawnedEntity.Stat<Stat_Movement>().facingDir;
                                         break;
                                     }
@@ -78,7 +81,7 @@ public class CreateEntity : Effect
                                     }
                                 case ProjectileFanType.Sequence:
                                     {
-                                        int tickDelay = (int)(1f * Owner.Stat<Stat_Actions>().ticksPerPhase / numberOfProjectiles);
+                                        int tickDelay = (int)(1f * Owner.Stat<Stat_Actions>().ticksPerPhase / projectileCount);
                                         for (int tick = 0; tick < tickDelay; tick++)
                                         {
                                             yield return new WaitForFixedUpdate();
@@ -94,11 +97,11 @@ public class CreateEntity : Effect
         }
     }
 
-    private Entity Create()
+    private Entity Create(int id)
     {
         Entity spawnedEntity = GameObject.Instantiate(entity, spawnOnTarget ? Target.transform.position : Owner.transform.position, Quaternion.identity);
         spawnedEntity.gameObject.SetActive(true);
-
+        spawnedEntity.gameObject.name = ""+id;
         spawnedEntity.Stat<Stat_PlayerOwner>().SetPlayer(Owner.Stat<Stat_PlayerOwner>());
         spawnedEntity.Stat<Stat_Team>().team = Owner.Stat<Stat_Team>().team;
         switch (movementTarget)

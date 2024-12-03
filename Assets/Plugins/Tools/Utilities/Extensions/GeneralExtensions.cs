@@ -105,6 +105,14 @@ namespace Skritty.Tools.Utilities
             return tex;
         }
 
+        public static void RenameKey<TKey, TValue>(this IDictionary<TKey, TValue> dic,
+                                      TKey fromKey, TKey toKey)
+        {
+            TValue value = dic[fromKey];
+            dic.Remove(fromKey);
+            dic[toKey] = value;
+        }
+
         public static void DoFunctionToTree(this Transform root, System.Action<Transform> function)
         {
             function.Invoke(root);

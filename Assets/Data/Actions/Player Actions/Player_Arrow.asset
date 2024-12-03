@@ -38,6 +38,9 @@ MonoBehaviour:
         entityType: 2
         entity: {fileID: 6345354840142092050, guid: d5ac2c4bb3ee1ff429d0da7e0753d3c2, type: 3}
         spawnOnTarget: 0
+        movementTarget: 2
+        numberOfProjectiles: 1
+        ignoreAdditionalProjectiles: 0
         projectileFanType: 1
         projectileFanAngle: 30
     - rid: 9031231527144652831
@@ -45,3 +48,5 @@ MonoBehaviour:
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}

@@ -15,8 +15,8 @@ MonoBehaviour:
   nextPhase: {fileID: 11400000, guid: ea11b1d70332a7b408d1ab4856af24df, type: 2}
   tickDuration: 15000
   sceneToLoad: Combat
-  winPointGain: 10
-  killPointGain: 0
+  winPointGain: 4
+  killPointGain: 1
   teamCount: 2
   teamDistFromCenter: 4
   adjacentSpawns: 3

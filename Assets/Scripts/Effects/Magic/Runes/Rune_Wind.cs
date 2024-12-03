@@ -1,110 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rune_Wind : Rune
 {
+    [Header("Magic Effects")]
     [SerializeReference]
-    public Targeting targeting;
+    public PersistentEffect buff;
     [SerializeReference]
-    public PersistentEffect movementSpeedDebuff;
+    public PersistentEffect debuff;
     [SerializeReference]
-    public PersistentEffect movementSpeedBuff;
+    public Effect magicEffectModifier;
+
+    [Header("Spell Shape")]
     [SerializeReference]
-    public PersistentEffect invisibility;
-    public override void SpellModifier(Spell spell)
+    public Targeting shape;
+
+    public override void MagicEffect(Spell spell)
     {
-        spell.targets++;
+        spell.effect.onHitEffects.Add(debuff);
     }
 
-    public override Rune EffectFormula(Spell spell, Rune combiningRune)
+    public override void MagicEffectModifier(Spell spell)
     {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
+        //spell.effect.onHitEffects.Add(magicEffectModifier);
+    }
+
+    public override void Shape(Spell spell)
+    {
+        spell.shape = SpellShape.Line;
+        spell.effect.targetSelector = shape;
+    }
+
+    public override void ShapeModifier(Spell spell)
+    {
+        switch (spell.shape)
         {
-            case nameof(Rune_Fire):
+            case SpellShape.Circle:
                 {
-
-                    return this;
+                    spell.castSpell.spawnOnTarget = false;
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 2;
+                    spell.actionsPerTurn += 1;
+                    break;
                 }
-            case nameof(Rune_Water):
+            case SpellShape.Cone:
                 {
-
-                    return this;
+                    (spell.effect.targetSelector as Targeting_Radial).radius += 1;
+                    break;
                 }
-            case nameof(Rune_Wind):
+            case SpellShape.Line:
                 {
-
-                    return this;
+                    spell.entity.Stat<Stat_Projectile>().splitsRemaining += 1;
+                    spell.aoeTargetsModifier -= 1;
+                    break;
                 }
-            case nameof(Rune_Earth):
+            case SpellShape.Projectile:
                 {
-
-                    return this;
+                    spell.entity.Stat<Stat_Projectile>().splitsRemaining += 1;
+                    spell.entity.Stat<Stat_Projectile>().piercesRemaining -= 1;
+                    break;
                 }
-            case nameof(Rune_Order):
+            case SpellShape.Direct:
                 {
-
-                    return this;
+                    break;
                 }
-            case nameof(Rune_Chaos):
+            case SpellShape.Totem:
                 {
-
-                    return this;
+                    break;
                 }
-            default:
+            case SpellShape.Minion:
                 {
-                    spell.effect = movementSpeedDebuff.Clone();
-                    //new TriggeredEffect(new Trigger_OnSpellEffectApplied(), movementSpeedBuff).Create(spell, owner);
-                    return this;
+                    break;
                 }
-        }
-    }
-
-    public override void FinalizeEffectFormula(Spell spell)
-    {
-
-    }
-
-    public override Rune TargetingFormula(Spell spell, Rune combiningRune)
-    {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
-        {
-            case nameof(Rune_Fire):
+            case SpellShape.Conjuration:
                 {
-
-                    return this;
-                }
-            case nameof(Rune_Water):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Wind):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Earth):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Order):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Chaos):
-                {
-
-                    return this;
-                }
-            default:
-                {
-                    spell.effect.targetSelector = targeting;
-                    return this;
+                    break;
                 }
         }
     }

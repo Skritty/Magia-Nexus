@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
@@ -21,6 +22,7 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
     public void SetPlayer(Viewer player, Entity playerCharacter)
     {
         this.player = player;
+        player.character = Owner;
         playerEntity = playerCharacter;
         if (playerCharacter)
         {
@@ -58,6 +60,8 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
 
     public void DistributeRewards()
     {
+        player.killedBy.Clear();
+        player.killedBy.AddRange(assists);
         float totalContribution = 0;
         foreach(KeyValuePair<Viewer, float> assist in assists)
         {
@@ -66,7 +70,7 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
 
         foreach (KeyValuePair<Viewer, float> assist in assists)
         {
-            float points = assist.Value / totalContribution;
+            float points = assist.Key.killGainMultiplier * assist.Value / totalContribution;
             if (assist.Value / totalContribution == 0 || assist.Value / totalContribution == float.NaN) Debug.Log(totalContribution);
             assist.Key.points += points;
             assist.Key.roundPoints += points;

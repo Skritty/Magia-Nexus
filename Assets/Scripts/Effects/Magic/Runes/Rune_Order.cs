@@ -1,102 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rune_Order : Rune
 {
+    [Header("Magic Effects")]
     [SerializeReference]
-    public Targeting targeting;
+    public PersistentEffect buff;
     [SerializeReference]
-    public PersistentEffect defensiveBuff;
+    public PersistentEffect debuff;
     [SerializeReference]
-    public PersistentEffect AoEBuff;
-    public override void SpellModifier(Spell spell)
+    public Effect magicEffectModifier;
+
+    [Header("Spell Shape")]
+    [SerializeReference]
+    public Targeting shape;
+
+    public override void MagicEffect(Spell spell)
     {
-        AoEBuff.Create(spell.entity);
+        spell.effect.onHitEffects.Add(debuff);
     }
 
-    public override Rune EffectFormula(Spell spell, Rune combiningRune)
+    public override void MagicEffectModifier(Spell spell)
     {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
-        {
-            case nameof(Rune_Fire):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Water):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Wind):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Earth):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Order):
-                {
-
-                    return this;
-                }
-            case nameof(Rune_Chaos):
-                {
-
-                    return this;
-                }
-            default:
-                {
-                    spell.effect = defensiveBuff.Clone();
-                    return this;
-                }
-        }
+        // TODO
     }
 
-    public override Rune TargetingFormula(Spell spell, Rune combiningRune)
+    public override void Shape(Spell spell)
     {
-        string name = combiningRune == null ? "" : combiningRune.GetType().Name;
-        switch (name)
+        spell.shape = SpellShape.Circle;
+        spell.effect.targetSelector = shape;
+    }
+
+    public override void ShapeModifier(Spell spell)
+    {
+        switch (spell.shape)
         {
-            case nameof(Rune_Fire):
+            case SpellShape.Circle:
                 {
-
-                    return this;
+                    spell.castSpell.movementTarget = MovementTarget.Owner;
+                    spell.castSpell.spawnOnTarget = false;
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 10;
+                    spell.entity.Stat<Stat_Movement>().movementSelector = new Movement_DistanceFromTarget();
+                    break;
                 }
-            case nameof(Rune_Water):
+            case SpellShape.Cone:
                 {
-
-                    return this;
+                    break;
                 }
-            case nameof(Rune_Wind):
+            case SpellShape.Line:
                 {
-
-                    return this;
+                    break;
                 }
-            case nameof(Rune_Earth):
+            case SpellShape.Projectile:
                 {
-
-                    return this;
+                    spell.lifetime += GameManager.Instance.ticksPerTurn * 2;
+                    spell.castSpell.projectileFanAngle = 180f;
+                    spell.castSpell.movementTarget = MovementTarget.Owner;
+                    Movement_Orbit orbit = new Movement_Orbit();
+                    orbit.orbitDistance = 1.75f;
+                    spell.entity.Stat<Stat_Movement>().movementSelector = orbit;
+                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed = 4;
+                    break;
                 }
-            case nameof(Rune_Order):
+            case SpellShape.Direct:
                 {
-
-                    return this;
+                    break;
                 }
-            case nameof(Rune_Chaos):
+            case SpellShape.Totem:
                 {
-
-                    return this;
+                    break;
                 }
-            default:
+            case SpellShape.Minion:
                 {
-                    spell.effect.targetSelector = targeting;
-                    return this;
+                    break;
+                }
+            case SpellShape.Conjuration:
+                {
+                    break;
                 }
         }
     }

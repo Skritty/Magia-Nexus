@@ -33,7 +33,7 @@ public class Shop : MonoBehaviour
         TwitchClient.Instance.AddCommand("craft", Command_CraftItem);
         
         TwitchClient.Instance.AddCommand("turn", Command_CreateTurn);
-        TwitchClient.Instance.AddCommand("targeting", Command_SetTargeting);
+        TwitchClient.Instance.AddCommand("target", Command_SetTargeting);
     }
 
     private void OnDisable()
@@ -45,7 +45,7 @@ public class Shop : MonoBehaviour
         TwitchClient.Instance.RemoveCommand("craft", Command_CraftItem);
         
         TwitchClient.Instance.RemoveCommand("turn", Command_CreateTurn);
-        TwitchClient.Instance.RemoveCommand("targeting", Command_SetTargeting);
+        TwitchClient.Instance.RemoveCommand("target", Command_SetTargeting);
     }
 
     private void Start()
@@ -175,7 +175,7 @@ public class Shop : MonoBehaviour
             return false;
         }
         // Buy item if enough gold
-        if(viewer.currency < item.cost)
+        if(viewer.gold < item.cost)
         {
             message = $"You don't have enough gold to purchase {toPurchase}!";
             return false;
@@ -205,20 +205,20 @@ public class Shop : MonoBehaviour
                 }
             }
 
-            if(totalGoldCost > viewer.currency)
+            if(totalGoldCost > viewer.gold)
             {
-                message = $"You only have {viewer.currency}g out of {totalGoldCost}g to buy a {item.ItemName}";
+                message = $"You only have {viewer.gold}g out of {totalGoldCost}g to buy a {item.ItemName}";
                 return false;
             }
 
             foreach(Item component in itemsHeld) viewer.items.Remove(component);
-            viewer.currency -= totalGoldCost;
+            viewer.gold -= totalGoldCost;
             viewer.items.Add(item);
             message = $"{item.ItemName}, ";
         }
         else
         {
-            viewer.currency -= item.cost;
+            viewer.gold -= item.cost;
             viewer.items.Add(item);
             message = $"{item.ItemName}, ";
         }
@@ -261,7 +261,7 @@ public class Shop : MonoBehaviour
             }
         }
 
-        viewer.currency += totalGoldCost;
+        viewer.gold += totalGoldCost;
 
         gold += totalGoldCost;
         message = $"{item.ItemName}, ";
@@ -551,7 +551,7 @@ public class Shop : MonoBehaviour
         return true;
     }
 
-    public bool SetTargeting(Viewer viewer, string targetingType, out string message)
+    public bool SetTargeting(Viewer viewer, string targetingType, bool targetLock, out string message)
     {
         Targeting targeting = GetTargetingFromNameOrID(targetingType);
         if(targeting == null)
@@ -561,8 +561,9 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            message = targeting.name;
-            viewer.targetType = targeting;
+            message = $"{targeting.name} is {(targetLock ? "locked" : "unlocked")}";
+            viewer.targetType = targeting.Clone<Targeting>();
+            viewer.targetType.lockTarget = targetLock;
             return true;
         }
     }
@@ -636,7 +637,7 @@ public class Shop : MonoBehaviour
         }
         
         message = message.Remove(message.Length - 2, 2);
-        message += $"! You now have {GameManager.Instance.viewers[user].currency}g";
+        message += $"! You now have {GameManager.Instance.viewers[user].gold}g";
         TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
     }
@@ -656,9 +657,9 @@ public class Shop : MonoBehaviour
         if (args.Count == 2 && int.TryParse(args[0], out int amt) && amt > 0)
         {
             amt = Mathf.Clamp(amt, 0, 100);
+            string m2 = "";
             for (int i = 1; i <= amt; i++)
             {
-                string m2 = "";
                 if (SellItem(GameManager.Instance.viewers[user], args[1], ref gold, ref turnInvalidated, out outMessage))
                 {
                     m2 = $"{i} {outMessage}";
@@ -667,8 +668,8 @@ public class Shop : MonoBehaviour
                 {
                     return new CommandError(false, outMessage);
                 }
-                message += m2;
             }
+            message += m2;
         }
         else
         {
@@ -757,7 +758,12 @@ public class Shop : MonoBehaviour
         string message = $"@{user} Your targeting behavior is now: ";
         string outMessage;
 
-        if(SetTargeting(GameManager.Instance.viewers[user], args[0], out outMessage))
+        bool targetLock = false;
+        if (args.Count > 1 && args[1].ToLower() == "lock")
+        {
+            targetLock = true;
+        }
+        if(SetTargeting(GameManager.Instance.viewers[user], args[0], targetLock, out outMessage))
         {
             message += outMessage;
         }

@@ -25,8 +25,8 @@ public class Phase_Shop : Phase
     {
         foreach (Viewer viewer in GameManager.Viewers)
         {
-            viewer.currency += baseGoldGain + (int)viewer.roundPoints;
-            viewer.roundPoints = 0;
+            viewer.gold += baseGoldGain + (int)viewer.roundPoints;
+            viewer.totalGold += baseGoldGain + (int)viewer.roundPoints;
         }
     }
 
@@ -35,7 +35,10 @@ public class Phase_Shop : Phase
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(true, "");
 
         Viewer viewer = GameManager.Instance.viewers[user];
-        viewer.currency += baseGoldGain * roundsPast;
+
+        if(viewer.gold != 0) return new CommandError(true, "");
+
+        viewer.gold += baseGoldGain * roundsPast;
 
         return new CommandError(true, "");
     }

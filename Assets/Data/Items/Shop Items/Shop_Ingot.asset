@@ -50,6 +50,7 @@ MonoBehaviour:
         modifierType: 2
         contributionMultiplier: 1
         scaleWithEffectMulti: 0
+        multiplyByTicks: 0
     - rid: 2626413725625876546
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
