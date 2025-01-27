@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 [Flags]
 public enum TargetFilter
@@ -27,6 +29,9 @@ public abstract class Targeting
     public string name, description;
     public bool lockTarget;
     public Entity primaryTarget;
+    public bool conditionalOnTrigger; // If the owner of the triggering effect is targetable, pick self
+    [SerializeReference]
+    public Targeting conditionalTarget;
     public abstract List<Entity> GetTargets(Effect source, Entity owner);
     public abstract List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner);
     public virtual void OnDrawGizmos(Transform owner) { }
@@ -43,8 +48,13 @@ public abstract class MultiTargeting : Targeting
     public TargetSorting sortingMethod = TargetSorting.Unsorted;
     //public Vector2 targetingRange;
     public int numberOfTargets = -1;
+    public Vector3 offset;
     public VFX vfx;
     protected List<Entity> targets;
+    protected Vector3  GetCenter(Entity owner)
+    {
+        return owner.transform.position + Quaternion.FromToRotation(Vector3.up, owner.Stat<Stat_Movement>().facingDir) * offset;
+    }
 
     public override List<Entity> GetTargets(Effect source, Entity owner)
     {
@@ -96,9 +106,12 @@ public abstract class MultiTargeting : Targeting
         if(sortingMethod != TargetSorting.Unsorted)
             targets.Sort(SortTargets);
 
-        int actualNumberOfTargets = numberOfTargets + owner.Stat<Stat_Targeting>().numberOfTargets;
-        if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
-            targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
+        if(numberOfTargets >= 0)
+        {
+            int actualNumberOfTargets = numberOfTargets + owner.Stat<Stat_Targeting>().additionalTargets;
+            if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
+                targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
+        }
 
         if(targets.Count > 0)
             primaryTarget = targets[0];
@@ -106,7 +119,12 @@ public abstract class MultiTargeting : Targeting
     }
     public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
     {
-        return GetTargets(source, owner);
+        GetTargets(source, owner);
+        if (conditionalOnTrigger && trigger.Data<Effect>() != null && targets.Contains(trigger.Data<Effect>().Owner))
+        {
+            targets = conditionalTarget.GetTargets(source, owner);
+        }
+        return targets;
     }
     protected virtual bool IsValidTarget(Entity target) => true;
     protected virtual int SortTargets(Entity e1, Entity e2) 

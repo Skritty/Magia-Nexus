@@ -10,21 +10,21 @@ public class Rune_Earth : Rune
     public PersistentEffect buff;
     [SerializeReference]
     public Effect debuff;
-    [SerializeReference]
-    public PersistentEffect magicEffectModifier;
 
     [Header("Spell Shape")]
     [SerializeReference]
     public Targeting shape;
 
-    public override void MagicEffect(Spell spell)
+    public override void MagicEffect(DamageInstance damage)
     {
-        spell.effect.onHitEffects.Add(debuff);
+        damage.onHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(Spell spell)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        spell.effect.onHitEffects.Add(magicEffectModifier);
+        PE_RuneCrystal crystal = new PE_RuneCrystal();
+        crystal.rune = damage.runes[currentRuneIndex - 1]; // TODO: add stacks instead of new crystal
+        damage.onHitEffects.Add(crystal);
     }
 
     public override void Shape(Spell spell)
@@ -34,18 +34,17 @@ public class Rune_Earth : Rune
         spell.SetToProjectile(shape, 6f);
     }
 
-    public override void ShapeModifier(Spell spell)
+    public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
         switch (spell.shape)
         {
             case SpellShape.Circle:
                 {
-                    spell.lifetime += GameManager.Instance.ticksPerTurn;
+                    (spell.effect.targetSelector as Targeting_Radial).radius += 1;
                     break;
                 }
-            case SpellShape.Cone:
+            case SpellShape.Conjuration:
                 {
-                    (spell.effect.targetSelector as Targeting_Radial).angle += 15f;
                     break;
                 }
             case SpellShape.Line:
@@ -57,19 +56,11 @@ public class Rune_Earth : Rune
                     spell.castSpell.numberOfProjectiles += 2;
                     break;
                 }
-            case SpellShape.Direct:
+            case SpellShape.Summon:
                 {
                     break;
                 }
-            case SpellShape.Totem:
-                {
-                    break;
-                }
-            case SpellShape.Minion:
-                {
-                    break;
-                }
-            case SpellShape.Conjuration:
+            case SpellShape.Curse:
                 {
                     break;
                 }

@@ -8,7 +8,7 @@ public class Spell
     public Entity Owner;
     // For creating the spell entity
     public CreateEntity castSpell = new CreateEntity();
-    public Entity entity;
+    public Entity entity; // Blueprint entity to be cloned TODO: change this to be the clone as well
     public List<Rune> runes = new List<Rune>();
     public SpellShape shape;
 
@@ -21,6 +21,8 @@ public class Spell
     public bool destroyAfterPierces;
     public int actionsPerTurn = 1;
     public float multiplier = 0;
+    public bool channeled;
+    public bool castingOnChannel;
 
     public Spell(Entity owner, List<Rune> runes)
     {
@@ -73,17 +75,15 @@ public class Spell
     {
         entity = GameObject.Instantiate(spellPrefab);
         entity.gameObject.SetActive(false);
-        this.spellAction = new Action();
+        spellAction = new Action();
         castSpell.projectileFanType = CreateEntity.ProjectileFanType.EvenlySpaced;
-        CalculateDamageType();
 
-        GenerateMagicEffect();
         GenerateShape();
 
         // Actions
         for(int i = 0; i < actionsPerTurn; i++)
         {
-            entity.Stat<Stat_Actions>().AddAction(this.spellAction);
+            entity.Stat<Stat_Actions>().AddAction(spellAction);
         }
 
         // Spellcast 
@@ -91,16 +91,31 @@ public class Spell
         castSpell.entity = entity;
         effect.effectMultiplier *= multiplier;
 
+        // Channeling
+        if (channeled)
+        {
+            PE_GrantChanneledAction channeledActionPE = new PE_GrantChanneledAction();
+            Action channel = new Action();
+            channel.effects.Add(new ChannelSpells());
+            channeledActionPE.channeledAction = channel;
+            channeledActionPE.Create(null, Owner, Owner);
+            
+            entity.Subscribe<Trigger_OnSpellMaxStage>(FinishChanneling);
+        }
+
         // Spell Duration
-        if (destroyAfterPierces)
+        /*if (destroyAfterPierces)
         {
             TriggeredEffect expireTrigger = new TriggeredEffect(new Trigger_Expire(), new Expire());
             expireTrigger.triggerOrder = 99;
             expireTrigger.Create(entity);
+        }*/
+        if(lifetime >= 0)
+        {
+            PE_ExpireEntity expire = new PE_ExpireEntity();
+            expire.tickDuration = lifetime + 1;
+            expire.Create(entity);
         }
-        PE_ExpireEntity expire = new PE_ExpireEntity();
-        expire.tickDuration = lifetime + 1;
-        expire.Create(entity);
 
         // Spell Triggers
         /*if (chainCast != null)
@@ -112,15 +127,11 @@ public class Spell
         }*/
     }
 
-    private void GenerateMagicEffect()
+    private void FinishChanneling(Trigger trigger)
     {
-        for(int i = 0; i < runes.Count; i++)
-        {
-            if(i == Owner.Stat<Stat_Magic>().spellPhase)
-                runes[i].MagicEffect(this);
-            else
-                runes[i].MagicEffectModifier(this);
-        }
+        spellAction.OnStart(entity);
+        Owner.Stat<Stat_PersistentEffects>().RemoveEffect<PE_GrantChanneledAction>(-1);
+        entity.Trigger<Trigger_Expire>();
     }
 
     private void GenerateShape()
@@ -130,73 +141,7 @@ public class Spell
             if(i == 0)
                 runes[i].Shape(this);
             else
-                runes[i].ShapeModifier(this);
-        }
-    }
-
-    private void AddToDamage(EffectTag tag)
-    {
-        EffectTag existingTag = EffectTag.None;
-        foreach (KeyValuePair<EffectTag, float> t in effect.effectTags)
-        {
-            existingTag = t.Key;
-        }
-        effect.effectTags.Remove(existingTag);
-        effect.effectTags.Add(existingTag | tag, 1);
-    }
-
-    public void CalculateDamageType()
-    {
-        Tally<EffectTag> damageTypeTally = new Tally<EffectTag>();
-        foreach (Rune effectRune in runes)
-        {
-            multiplier += effectRune.baseDamage;
-            damageTypeTally.Add(effectRune.damageTags);
-        }
-        List<EffectTag> damageType = damageTypeTally.GetHighest(out _);
-        if (damageType.Count >= 3)
-        {
-            AddToDamage(EffectTag.Magical | EffectTag.Spell);
-        }
-        else if (damageType.Count == 2)
-        {
-            EffectTag tag = damageType[0] | damageType[1];
-            switch (tag)
-            {
-                case EffectTag.Chaos | EffectTag.Order:
-                    {
-                        AddToDamage(EffectTag.Damage | EffectTag.Spell);
-                        break;
-                    }
-                case EffectTag.Physical | EffectTag.Cold:
-                    {
-                        AddToDamage(EffectTag.Bludgeoning | EffectTag.Spell);
-                        break;
-                    }
-                case EffectTag.Physical | EffectTag.Lightning:
-                    {
-                        AddToDamage(EffectTag.Slashing | EffectTag.Spell);
-                        break;
-                    }
-                case EffectTag.Cold | EffectTag.Lightning:
-                    {
-                        AddToDamage(EffectTag.Piercing | EffectTag.Spell);
-                        break;
-                    }
-                default:
-                    {
-                        //damage /= damageType.Count;
-                        foreach (EffectTag t in damageType)
-                        {
-                            AddToDamage(t | EffectTag.Spell);
-                        }
-                        break;
-                    }
-            }
-        }
-        else
-        {
-            AddToDamage(damageType[0] | EffectTag.Spell);
+                runes[i].ShapeModifier(this, i);
         }
     }
 }

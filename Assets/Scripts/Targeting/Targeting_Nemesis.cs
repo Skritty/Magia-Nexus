@@ -28,7 +28,7 @@ public class Targeting_Nemesis : MultiTargeting
         if (sortingMethod != TargetSorting.Unsorted)
             targets.Sort(SortTargets);
 
-        int actualNumberOfTargets = numberOfTargets + owner.Stat<Stat_Targeting>().numberOfTargets;
+        int actualNumberOfTargets = numberOfTargets + owner.Stat<Stat_Targeting>().additionalTargets;
         if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
             targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
 

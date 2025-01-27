@@ -18,6 +18,10 @@ public class TriggeredEffect : PersistentEffect
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Trigger trigger;
     [SerializeReference, FoldoutGroup("@GetType()")]
+    public TriggerTest trigger2;
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public List<TriggerTask> tasks;
+    [SerializeReference, FoldoutGroup("@GetType()")]
     public Effect effect;
     
     public override void OnGained()
@@ -35,10 +39,9 @@ public class TriggeredEffect : PersistentEffect
 
     protected void OnTrigger(Trigger trigger)
     {
-        if(effect == null)
+        foreach(TriggerTask task in tasks)
         {
-            Debug.LogWarning($"{Owner}'s {this.GetType()} from {Source} has no assigned effect");
-            return;
+
         }
         effect.Create(Owner, trigger, trigger.TriggeringEffect);
     }

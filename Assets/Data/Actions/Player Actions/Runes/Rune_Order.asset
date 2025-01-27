@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Water Rune
+  m_Name: Rune_Order
   m_EditorClassIdentifier: 
   actionAliases:
-  - Water
-  - skritt3Water
+  - Order
+  - skritt3Order
   actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -22,96 +22,42 @@ MonoBehaviour:
   maxUses: 0
   timing: 4
   effects:
-  - rid: 9031231598746927115
+  - rid: 9031231598746927119
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 5670261797178049033
+    - rid: 5670261797178049026
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 8388608
-            value: 0.85
+          - key: 262144
+            value: -0.1
         targetSelector:
-          rid: 5670261797178049034
+          rid: 5670261797178049027
         tick: 0
-        tickDuration: 51
+        tickDuration: 125
         maxStacks: -1
         stacks: 1
         perPlayer: 0
         refreshDuration: 0
         contributeToAssists: 0
-        modifierType: 3
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 1
-        multiplyByTicks: 0
-    - rid: 5670261797178049034
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}
-    - rid: 5670261797178049035
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        vfx: {fileID: 0}
-        radius: 1
-        angle: 45
-    - rid: 5670261797178049036
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 524288
-            value: 0.01
-        targetSelector:
-          rid: 5670261797178049037
-        tick: 0
-        tickDuration: -1
-        maxStacks: 10
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 0
-        contributeToAssists: 0
-        modifierType: 2
+        modifierType: 0
         contributionMultiplier: 1
         scaleWithEffectMulti: 0
-        multiplyByTicks: 1
-    - rid: 5670261797178049037
+        multiplyByTicks: 0
+    - rid: 5670261797178049027
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
         lockTarget: 0
         primaryTarget: {fileID: 0}
-    - rid: 5670261797178049038
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        vfx: {fileID: 0}
-        radius: 1000
-        angle: 45
-    - rid: 9031231598746927115
-      type: {class: Rune_Water, ns: , asm: Assembly-CSharp}
+    - rid: 5670261797178049028
+      type: {class: PE_Charm, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         effectTags:
@@ -119,21 +65,56 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 9031231598746927116
+          rid: 5670261797178049029
+        tick: 0
+        tickDuration: 26
+        maxStacks: -1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 0
+        contributeToAssists: 0
+    - rid: 5670261797178049029
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+    - rid: 5670261797178049030
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        name: 
+        description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+        vfx: {fileID: 0}
+        radius: 1.5
+        angle: 180
+    - rid: 9031231598746927119
+      type: {class: Rune_Order, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
+        targetSelector:
+          rid: 9031231598746927120
         baseDamage: 0.5
-        damageTags: 517
-        opposite: {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
+        damageTags: 4104
+        opposite: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
         buff:
-          rid: -2
+          rid: 5670261797178049026
         debuff:
-          rid: 5670261797178049033
+          rid: 5670261797178049028
+        magicEffectModifier:
+          rid: -2
         shape:
-          rid: 5670261797178049035
-        expandingAoEBuff:
-          rid: 5670261797178049036
-        multicastConeTargeting:
-          rid: 5670261797178049038
-    - rid: 9031231598746927116
+          rid: 5670261797178049030
+    - rid: 9031231598746927120
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 

@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PersistentEffectGate : Effect
+public class PersistentEffectGate : FlipFlopPersistentEffect
 {
-    [SerializeReference, InfoBox("Ensure that this is a REFERENCE TO ANOTHER PERSISTENT EFFECT")]
-    public PersistentEffect referenceEffect;
     public float requiredAmount;
     public int stacksAddedOnSuccess;
     public int stacksAddedOnFailure;
@@ -17,14 +15,14 @@ public class PersistentEffectGate : Effect
     public List<Effect> effectsOnFailure = new List<Effect>();
     public override void Activate()
     {
-        List<PersistentEffect> effects = Owner.Stat<Stat_PersistentEffects>().GetEffectsViaReference(referenceEffect);
+        List<PersistentEffect> effects = Owner.Stat<Stat_PersistentEffects>().GetEffectsViaReference(persistentEffect);
         if (effects.Count > 0)
         {
             foreach(Effect effect in effectsOnSuccess)
             {
                 effect.Create(Owner);
             }
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(referenceEffect, stacksAddedOnSuccess, Owner);
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, stacksAddedOnSuccess, Owner);
         }
         else
         {
@@ -32,7 +30,7 @@ public class PersistentEffectGate : Effect
             {
                 effect.Create(Owner);
             }
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(referenceEffect, stacksAddedOnFailure, Owner);
+            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, stacksAddedOnFailure, Owner);
         }
     }
 }

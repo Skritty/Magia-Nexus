@@ -35,22 +35,24 @@ public abstract class Effect
         get => _owner;
         set => _owner = value;
     }
-    [ShowInInspector]
     private Entity _owner;
 
     /// <summary>
     /// Entity that is recieving the effect
     /// </summary>
     public Entity Target => _target;
-    [ShowInInspector]
     private Entity _target;
+
+    protected virtual bool UsedInCalculations => false;
 
     /// <summary>
     /// Multiplies the output of the effect, multiplied through chains of effects
     /// </summary>
-    [FoldoutGroup("@GetType()")]
+    [FoldoutGroup("@GetType()"), ShowIf("@UsedInCalculations")]
     public float effectMultiplier = 1;
-    [FoldoutGroup("@GetType()")]
+    [FoldoutGroup("@GetType()"), ShowIf("@UsedInCalculations")]
+    public bool inheritEffectTagsOnTrigger; // Overrides effectTags if triggered by another effect with that effect's effectTags
+    [FoldoutGroup("@GetType()"), ShowIf("@UsedInCalculations")]
     public SerializedDictionary<EffectTag, float> effectTags = new SerializedDictionary<EffectTag, float>() { {EffectTag.None, 1f} };
     //[FoldoutGroup("@GetType()")]
     //public List<EffectTagContainer> effectTags2 = new List<EffectTagContainer> { new EffectTagContainer(EffectTag.None, 1f) };
@@ -110,7 +112,15 @@ public abstract class Effect
             e._owner = owner;
             e._target = target;
             if(triggeringEffect != null)
+            {
                 e.effectMultiplier *= triggeringEffect.effectMultiplier;
+                if (inheritEffectTagsOnTrigger)
+                {
+                    e.effectTags.Clear();
+                    e.effectTags.AddRange(triggeringEffect.effectTags);
+                }
+            }
+                
             e.DoEffect();
         }
     }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Fire Rune
+  m_Name: Rune_Fire
   m_EditorClassIdentifier: 
   actionAliases:
   - Fire
@@ -45,6 +45,7 @@ MonoBehaviour:
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 0.2
+        inheritEffectTagsOnTrigger: 1
         effectTags:
           serializedPairs: []
         targetSelector:
@@ -73,6 +74,7 @@ MonoBehaviour:
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 262144
@@ -86,6 +88,7 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 0
         contributeToAssists: 0
+        alignment: 0
         modifierType: 2
         contributionMultiplier: 1
         scaleWithEffectMulti: 1
@@ -101,11 +104,13 @@ MonoBehaviour:
       type: {class: Rune_Fire, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs: []
         targetSelector:
           rid: 9031231527144652817
-        baseDamage: 0.5
+        element: 0
+        effectMultiplierIncrease: 0
         damageTags: 133
         opposite: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
         buff:

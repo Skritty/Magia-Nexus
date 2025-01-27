@@ -8,10 +8,30 @@ public class Stat_Magic : GenericStat<Stat_Magic>
     [SerializeReference, FoldoutGroup("Magic")]
     public List<Rune> runes = new List<Rune>(); // spellcasting queue
     [SerializeReference, FoldoutGroup("Magic")]
-    public int spellPhase;
+    public List<Entity> ownedSpells = new List<Entity>(); // spellcasting queue
+    [FoldoutGroup("Magic")]
+    public int maxStages;
+    [FoldoutGroup("Magic")]
+    private int _stage;
+    public int Stage
+    {
+        get => _stage;
+        set
+        {
+            _stage = value;
+            if(_stage == maxStages)
+            {
+                Owner.Trigger<Trigger_OnSpellMaxStage>(Owner);
+            }
+            else
+            {
+                Owner.Trigger<Trigger_OnSpellStageIncrement>(Owner);
+            }
+        }
+    }
 }
 
-public enum SpellShape { Circle, Cone, Line, Projectile, Direct, Totem, Minion, Barrier, Conjuration }
+public enum SpellShape { Circle, Conjuration, Line, Projectile, Summon, Curse }
 
 //--------------
 //--------  ----

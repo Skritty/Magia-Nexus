@@ -14,34 +14,37 @@ public class Rune_Chaos : Rune
     [SerializeReference]
     public Targeting shape;
 
-    public override void MagicEffect(Spell spell)
+    public override void MagicEffect(DamageInstance damage)
     {
-        spell.effect.onHitEffects.Add(debuff);
+        damage.onHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(Spell spell)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        spell.lifetime += GameManager.Instance.ticksPerTurn / 2;
+        // TODO
     }
 
     public override void Shape(Spell spell)
     {
-        spell.shape = SpellShape.Direct;
+        spell.shape = SpellShape.Curse;
         spell.effect.targetSelector = shape;
     }
 
-    public override void ShapeModifier(Spell spell)
+    public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
         switch (spell.shape)
         {
             case SpellShape.Circle:
                 {
-                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 2;
-                    spell.entity.Stat<Stat_Movement>().movementSelector = new Movement_DistanceFromTarget();
-                    //spell.SetHitRate(damageTicksPerTurn);
+                    if (!spell.castingOnChannel)
+                    {
+                        spell.castingOnChannel = true;
+                        spell.entity.Subscribe<Trigger_OnSpellStageIncrement>(_ => spell.spellAction.OnStart(spell.entity));
+                    }
+                    spell.entity.Stat<Stat_Magic>().maxStages++;
                     break;
                 }
-            case SpellShape.Cone:
+            case SpellShape.Conjuration:
                 {
                     break;
                 }
@@ -52,25 +55,19 @@ public class Rune_Chaos : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    Movement_HomeToTarget homing = new Movement_HomeToTarget();
-                    homing.homingRateDegreesPerSecond += 30f;
-                    spell.entity.Stat<Stat_Movement>().movementSelector = homing;
+                    if(!(spell.entity.Stat<Stat_Movement>().movementSelector is Movement_HomeToTarget))
+                    {
+                        spell.entity.Stat<Stat_Movement>().movementSelector = new Movement_HomeToTarget();
+                    }
+                    (spell.entity.Stat<Stat_Movement>().movementSelector as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
+                    
                     break;
                 }
-            case SpellShape.Direct:
-                {
-                    // TODO
-                    break;
-                }
-            case SpellShape.Totem:
+            case SpellShape.Summon:
                 {
                     break;
                 }
-            case SpellShape.Minion:
-                {
-                    break;
-                }
-            case SpellShape.Conjuration:
+            case SpellShape.Curse:
                 {
                     break;
                 }

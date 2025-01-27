@@ -17,14 +17,14 @@ public class Rune_Wind : Rune
     [SerializeReference]
     public Targeting shape;
 
-    public override void MagicEffect(Spell spell)
+    public override void MagicEffect(DamageInstance damage)
     {
-        spell.effect.onHitEffects.Add(debuff);
+        damage.onHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(Spell spell)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        //spell.effect.onHitEffects.Add(magicEffectModifier);
+        damage.onHitEffects.Add(magicEffectModifier);
     }
 
     public override void Shape(Spell spell)
@@ -33,20 +33,17 @@ public class Rune_Wind : Rune
         spell.effect.targetSelector = shape;
     }
 
-    public override void ShapeModifier(Spell spell)
+    public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
         switch (spell.shape)
         {
             case SpellShape.Circle:
                 {
-                    spell.castSpell.spawnOnTarget = false;
-                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 2;
-                    spell.actionsPerTurn += 1;
+                    spell.Owner.Subscribe<Trigger_OnSpellCast>(_ => spell.entity.Stat<Stat_Magic>().Stage++);
                     break;
                 }
-            case SpellShape.Cone:
+            case SpellShape.Conjuration:
                 {
-                    (spell.effect.targetSelector as Targeting_Radial).radius += 1;
                     break;
                 }
             case SpellShape.Line:
@@ -61,19 +58,11 @@ public class Rune_Wind : Rune
                     spell.entity.Stat<Stat_Projectile>().piercesRemaining -= 1;
                     break;
                 }
-            case SpellShape.Direct:
+            case SpellShape.Summon:
                 {
                     break;
                 }
-            case SpellShape.Totem:
-                {
-                    break;
-                }
-            case SpellShape.Minion:
-                {
-                    break;
-                }
-            case SpellShape.Conjuration:
+            case SpellShape.Curse:
                 {
                     break;
                 }

@@ -320,6 +320,7 @@ MonoBehaviour:
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 131073
@@ -335,6 +336,7 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
+        alignment: 0
         modifierType: 3
         contributionMultiplier: 0
         scaleWithEffectMulti: 0
@@ -363,12 +365,15 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
+        tick: -1
         stunned: 0
         actionsPerTurn: 5
         startingTickDelay: 0
         repeatActions:
         - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
         actions: []
+        actionsOverride: []
+        channeledAction: {fileID: 0}
     - rid: 3492845359303229454
       type: {class: Stat_Team, ns: , asm: Assembly-CSharp}
       data:
@@ -403,7 +408,8 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        spellPhase: 0
+        ownedSpells: []
+        maxStages: 0
     - rid: 9031231661127237636
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
@@ -453,7 +459,7 @@ MonoBehaviour:
         mergeBehavior: 0
         targetingType:
           rid: 9031231668284555681
-        numberOfTargets: 1
+        additionalTargets: 0
     - rid: 9031231668284555681
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
@@ -476,6 +482,7 @@ MonoBehaviour:
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 0
@@ -489,6 +496,7 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
+        alignment: 0
         triggerOrder: 99
         trigger:
           rid: 9031231727694250690
@@ -508,6 +516,7 @@ MonoBehaviour:
       type: {class: Expire, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 0

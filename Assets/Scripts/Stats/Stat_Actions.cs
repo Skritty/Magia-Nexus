@@ -8,8 +8,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
 {
 
     [FoldoutGroup("Actions")]
-    [ShowInInspector, Sirenix.OdinInspector.ReadOnly]
-    private int tick = -1;
+    public int tick = -1;
     [FoldoutGroup("Actions")]
     public bool stunned;
     [FoldoutGroup("Actions")]
@@ -20,6 +19,10 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     public List<Action> repeatActions = new List<Action>(); // Happen before each action (Only do OnStart)
     [FoldoutGroup("Actions")]
     public List<Action> actions = new List<Action>();
+    [FoldoutGroup("Actions")]
+    public List<Action> actionsOverride = new List<Action>();
+    [FoldoutGroup("Actions")]
+    public Action channeledAction;
 
     public int ticksPerPhase => (int)(GameManager.Instance.timePerTurn / actionsPerTurn * (1 / Time.fixedDeltaTime));
     private int phase;
@@ -82,6 +85,24 @@ public class Stat_Actions : GenericStat<Stat_Actions>
         CheckActionList();
     }
 
+    public void OverrideActions(SerializedDictionary<Action, Action> overrides, bool clear = false)
+    {
+        for(int i = 0; i < actions.Count; i++)
+        {
+            if (overrides.ContainsKey(actions[i]))
+            {
+                if (clear)
+                {
+                    actionsOverride[i] = null;
+                }
+                else
+                {
+                    actionsOverride[i] = overrides[actions[i]];
+                }
+            }
+        }
+    }
+
     private void CheckActionList()
     {
         if (actions.Count != actionsPerTurn)
@@ -104,13 +125,29 @@ public class Stat_Actions : GenericStat<Stat_Actions>
 
     private void FetchNextAction()
     {
-        if (actions.Count == 0 || tick < startingTickDelay) return;
+        if (actions.Count == 0 || tick < startingTickDelay - Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Initiative)) return;
         if (tick % ticksPerPhase == 0)
         {
-            phase++;
-            if (phase - 1 == actions.Count) phase = 1;
-            currentAction?.OnEnd(Owner);
-            currentAction = actions[phase - 1];
+            if (channeledAction)
+            {
+                currentAction?.OnEnd(Owner);
+                currentAction = channeledAction;
+            }
+            else
+            {
+                phase++;
+                if (phase - 1 == actions.Count) phase = 1;
+                currentAction?.OnEnd(Owner);
+                if(actionsOverride[phase - 1])
+                {
+                    currentAction = actionsOverride[phase - 1];
+                }
+                else
+                {
+                    currentAction = actions[phase - 1];
+                }
+            }
+            
             foreach (Action a in repeatActions)
             {
                 if(tick != 0)

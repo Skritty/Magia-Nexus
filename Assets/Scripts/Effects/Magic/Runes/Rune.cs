@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class Rune : Effect
 {
-    public float baseDamage;
+    public RuneElement element;
+    public float effectMultiplierIncrease;
     public EffectTag damageTags;
     public Action opposite;
 
@@ -13,8 +14,15 @@ public abstract class Rune : Effect
         Owner.Stat<Stat_Magic>().runes.Add(this);
         Owner.Trigger<Trigger_OnRuneUsed>(this, this);
     }
-    public abstract void MagicEffect(Spell spell);
-    public abstract void MagicEffectModifier(Spell spell);
+    // Magic Effect On Hit
+    public abstract void MagicEffect(DamageInstance damage);
+    public abstract void MagicEffectModifier(DamageInstance damage, int currentRuneIndex);
+    // Spell Shape
     public abstract void Shape(Spell spell);
-    public abstract void ShapeModifier(Spell spell);
+    public abstract void ShapeModifier(Spell spell, int currentRuneIndex);
+}
+
+public enum RuneElement
+{
+    Fire, Water, Earth, Air, Order, Chaos
 }

@@ -10,21 +10,21 @@ public class Rune_Order : Rune
     public PersistentEffect buff;
     [SerializeReference]
     public PersistentEffect debuff;
-    [SerializeReference]
-    public Effect magicEffectModifier;
 
     [Header("Spell Shape")]
     [SerializeReference]
     public Targeting shape;
 
-    public override void MagicEffect(Spell spell)
+    public override void MagicEffect(DamageInstance damage)
     {
-        spell.effect.onHitEffects.Add(debuff);
+        damage.onHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(Spell spell)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        // TODO
+        RemovePersistantEffect removeEffect = new RemovePersistantEffect();
+        removeEffect.alignmentRemoved = damage.Owner.Stat<Stat_Team>().team == damage.Target.Stat<Stat_Team>().team ? PersistentEffect.Alignment.Debuff : PersistentEffect.Alignment.Buff;
+        damage.onHitEffects.Add(removeEffect);
     }
 
     public override void Shape(Spell spell)
@@ -33,19 +33,16 @@ public class Rune_Order : Rune
         spell.effect.targetSelector = shape;
     }
 
-    public override void ShapeModifier(Spell spell)
+    public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
         switch (spell.shape)
         {
             case SpellShape.Circle:
                 {
-                    spell.castSpell.movementTarget = MovementTarget.Owner;
-                    spell.castSpell.spawnOnTarget = false;
-                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 10;
-                    spell.entity.Stat<Stat_Movement>().movementSelector = new Movement_DistanceFromTarget();
+                    spell.entity.Stat<Stat_Magic>().maxStages += 2;
                     break;
                 }
-            case SpellShape.Cone:
+            case SpellShape.Conjuration:
                 {
                     break;
                 }
@@ -64,19 +61,11 @@ public class Rune_Order : Rune
                     spell.entity.Stat<Stat_Movement>().baseMovementSpeed = 4;
                     break;
                 }
-            case SpellShape.Direct:
+            case SpellShape.Summon:
                 {
                     break;
                 }
-            case SpellShape.Totem:
-                {
-                    break;
-                }
-            case SpellShape.Minion:
-                {
-                    break;
-                }
-            case SpellShape.Conjuration:
+            case SpellShape.Curse:
                 {
                     break;
                 }

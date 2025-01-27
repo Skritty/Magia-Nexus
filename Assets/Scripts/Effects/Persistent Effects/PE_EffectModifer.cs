@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class PE_EffectModifer : PersistentEffect
 {
+    protected override bool UsedInCalculations => true;
+
     [InfoBox("Formatting\nFlat: 0.2 = (+0.2 flat) | Increased: 0.2 = (20% increased) | More: 1.2 = (20% more)")]
     [FoldoutGroup("@GetType()")]
     public EffectModifierCalculationType modifierType;

@@ -19,7 +19,10 @@ MonoBehaviour:
 
     10% less damage taken
 
-    +50% enmity'
+    +50% enmity
+
+    Grants
+    [Turtle]'
   cost: 0
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.57232696, g: 0.57232696, b: 0.57232696, a: 1}
@@ -32,10 +35,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 3963143039375638956
       type: {class: PE_LifeBuff, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 0
@@ -49,6 +55,7 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
+        alignment: 0
         maxLifeChange: 50
         currentLifeChange: 50
     - rid: 3963143039375638957
@@ -56,10 +63,16 @@ MonoBehaviour:
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+        conditionalOnTrigger: 0
+        conditionalTarget:
+          rid: -2
     - rid: 3963143039375638958
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 33554432
@@ -75,10 +88,18 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        modifierType: 1
+        alignment: 0
+        modifierType: 2
+        contributionMultiplier: 1
         scaleWithEffectMulti: 0
+        multiplyByTicks: 0
     - rid: 3963143039375638959
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+        conditionalOnTrigger: 0
+        conditionalTarget:
+          rid: -2

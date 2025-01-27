@@ -572,6 +572,7 @@ public enum EffectTag
     MovementSpeed = 1 << 23,
     Initiative    = 1 << 24,
     Enmity        = 1 << 25,
+    SpellPhase    = 1 << 26,
 
     Global        = int.MaxValue
 }

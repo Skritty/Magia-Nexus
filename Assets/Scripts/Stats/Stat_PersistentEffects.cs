@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
@@ -66,11 +67,24 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
     public List<PersistentEffect> GetEffectsViaReference(PersistentEffect reference, Entity owner = null)
     {
         List<PersistentEffect> effects = new List<PersistentEffect>();
-        foreach (PersistentEffect e in persistentEffects.ToArray())
+        foreach (PersistentEffect e in persistentEffects)
         {
             if (reference.GetUID() == e.Source.GetUID() && (owner == null || owner == e.Owner))
             {
                 effects.Add(e);
+            }
+        }
+        return effects;
+    }
+
+    public List<T> GetEffects<T>() where T : PersistentEffect
+    {
+        List<T> effects = new List<T>();
+        foreach (PersistentEffect e in persistentEffects)
+        {
+            if (e is T)
+            {
+                effects.Add(e as T);
             }
         }
         return effects;
@@ -99,6 +113,25 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         {
             reference.Create(owner);
         }
+    }
+
+    public PersistentEffect RemoveRandomEffect(PersistentEffect.Alignment alignment, int stacks)
+    {
+        List<PersistentEffect> shuffle = persistentEffects.ToList();
+        shuffle.Sort((x, y) =>
+         {
+             if (alignment != x.alignment) return 1;
+             return Random.Range(-1, 2);
+         });
+        AddOrRemoveSimilarEffect(shuffle[0], stacks);
+        return shuffle[0];
+    }
+
+    public T RemoveEffect<T>(int stacks) where T : PersistentEffect
+    {
+        T e = persistentEffects.Find(x => x.GetType() is T) as T;
+        AddOrRemoveSimilarEffect(e, stacks);
+        return e;
     }
 
     public override void Tick()

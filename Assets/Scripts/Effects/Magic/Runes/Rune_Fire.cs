@@ -4,32 +4,35 @@ using UnityEngine;
 using System.Linq;
 using TwitchLib.Api.Helix.Models.Common;
 using Unity.VisualScripting;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Rune_Fire : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public PersistentEffect buff;
+    public TriggeredEffect buff;
     [SerializeReference]
     public PersistentEffect debuff;
     [SerializeReference]
     public DamageInstance magicEffectModifier;
 
     [Header("Spell Shape")]
+    public int maxStages;
+    public float multiplierPerStage;
+    public float circleModMultiplierPerStage;
     [SerializeReference]
     public Targeting shape;
 
-    public override void MagicEffect(Spell spell)
+    public override void MagicEffect(DamageInstance damage)
     {
-        spell.effect.onHitEffects.Add(debuff);
+        damage.onHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(Spell spell)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
         DamageInstance explosion = magicEffectModifier.Clone();
-        explosion.effectTags.AddRange(spell.effect.effectTags);
-        spell.effect.onHitEffects.Add(explosion);
-        // TODO: Add delay
+        damage.onHitEffects.Add(explosion);
+        // TODO: Add delay, add debuffs/other effects?
     }
 
     public override void Shape(Spell spell)
@@ -37,23 +40,25 @@ public class Rune_Fire : Rune
         spell.shape = SpellShape.Circle;
         spell.effect.targetSelector = shape;
         spell.castSpell.spawnOnTarget = true;
-        spell.spellAction.timing = ActionEventTiming.OnEnd;
-        spell.lifetime = GameManager.Instance.ticksPerTurn;
-        //(spell.effect as DamageInstance).ignoreFrames = GameManager.Instance.ticksPerTurn;
+        spell.lifetime = -1;
+        spell.channeled = true;
+        spell.entity.Stat<Stat_Magic>().maxStages = maxStages;
+        spell.entity.Subscribe<Trigger_OnSpellStageIncrement>(_ => spell.multiplier += multiplierPerStage); // TODO: Use the entity proper
+        spell.entity.Subscribe<Trigger_OnSpellMaxStage>(_ => spell.multiplier += multiplierPerStage);
     }
 
-    public override void ShapeModifier(Spell spell)
+    public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
         switch (spell.shape)
         {
             case SpellShape.Circle:
                 {
-                    spell.actionsPerTurn += 1;
+                    spell.entity.Subscribe<Trigger_OnSpellStageIncrement>(_ => spell.multiplier += circleModMultiplierPerStage);
+                    spell.entity.Subscribe<Trigger_OnSpellMaxStage>(_ => spell.multiplier += circleModMultiplierPerStage);
                     break;
                 }
-            case SpellShape.Cone:
+            case SpellShape.Conjuration:
                 {
-                    
                     break;
                 }
             case SpellShape.Line:
@@ -66,21 +71,13 @@ public class Rune_Fire : Rune
                     spell.entity.Stat<Stat_Projectile>().piercesRemaining += 2;
                     break;
                 }
-            case SpellShape.Direct:
+            case SpellShape.Summon:
+                {
+                    break;
+                }
+            case SpellShape.Curse:
                 {
                     spell.castTargets += 1;
-                    break;
-                }
-            case SpellShape.Totem:
-                {
-                    break;
-                }
-            case SpellShape.Minion:
-                {
-                    break;
-                }
-            case SpellShape.Conjuration:
-                {
                     break;
                 }
         }

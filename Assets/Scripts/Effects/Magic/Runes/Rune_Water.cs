@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Skritty.Tools.Saving;
 using UnityEngine;
 
@@ -12,42 +13,56 @@ public class Rune_Water : Rune
     public Effect debuff;
 
     [Header("Spell Shape")]
+    public int defaultConjurationTickDuration;
     [SerializeReference]
-    public Targeting shape;
+    public PE_OverrideActions actionOverride;
+    [SerializeReference]
+    public TriggeredEffect grantRunesToAttacks;
+    [SerializeReference]
+    public TriggeredEffect grantRunesToProjectiles;
     [SerializeReference]
     public PE_EffectModifer expandingAoEBuff;
     [SerializeReference]
     public Targeting multicastConeTargeting;
 
-    public override void MagicEffect(Spell spell)
+    public override void MagicEffect(DamageInstance damage)
     {
-        spell.effect.onHitEffects.Add(debuff);
+        damage.onHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(Spell spell)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        // TODO
+        damage.GenerateMagicEffect(damage.runes.Where(x => x.element != RuneElement.Water).ToList());
     }
 
     public override void Shape(Spell spell)
     {
-        spell.shape = SpellShape.Cone;
-        spell.effect.targetSelector = shape;
+        spell.spellAction.effects.Add(actionOverride);
+        List<Rune> magicEffectRunes = new List<Rune>();
+        magicEffectRunes.AddRange(spell.runes);
+        magicEffectRunes.RemoveAt(0);
+        spell.entity.Stat<Stat_Magic>().runes = magicEffectRunes;
+
+        // TODO: destroy magic effect rune reference spell after action uses
     }
 
-    public override void ShapeModifier(Spell spell)
+    public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
         switch (spell.shape)
         {
             case SpellShape.Circle:
                 {
-                    spell.AddAoESize(-1f, EffectModifierCalculationType.Additive);
-                    expandingAoEBuff.Create(spell.entity);
+                    if((spell.effect.targetSelector as Targeting_Radial).angle == 180)
+                    {
+                        (spell.effect.targetSelector as Targeting_Radial).angle = 30f;
+                        (spell.effect.targetSelector as Targeting_Radial).radius 
+                            = (spell.effect.targetSelector as Targeting_Radial).radius * 2;
+                    }
                     spell.castSpell.spawnOnTarget = false;
-                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed += 2;
+                    (spell.effect.targetSelector as Targeting_Radial).angle += 15f;
                     break;
                 }
-            case SpellShape.Cone:
+            case SpellShape.Conjuration:
                 {
                     break;
                 }
@@ -60,24 +75,16 @@ public class Rune_Water : Rune
             case SpellShape.Projectile:
                 {
                     spell.castSpell.numberOfProjectiles += 4;
-                    spell.multiplier = 1f / spell.castSpell.numberOfProjectiles;
+                    //spell.multiplier = 1f / spell.castSpell.numberOfProjectiles;
                     spell.castSpell.projectileFanType = CreateEntity.ProjectileFanType.Shotgun;
                     spell.castSpell.projectileFanAngle += 30f;
                     break;
                 }
-            case SpellShape.Direct:
+            case SpellShape.Summon:
                 {
                     break;
                 }
-            case SpellShape.Totem:
-                {
-                    break;
-                }
-            case SpellShape.Minion:
-                {
-                    break;
-                }
-            case SpellShape.Conjuration:
+            case SpellShape.Curse:
                 {
                     break;
                 }

@@ -35,6 +35,7 @@ MonoBehaviour:
       type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 1
@@ -48,6 +49,7 @@ MonoBehaviour:
         perPlayer: 1
         refreshDuration: 1
         contributeToAssists: 0
+        alignment: 0
         triggerOrder: 0
         trigger:
           rid: 9031231527144652846
@@ -58,6 +60,8 @@ MonoBehaviour:
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
     - rid: 9031231527144652846
       type: {class: Trigger_OnDamageDealt, ns: , asm: Assembly-CSharp}
       data: 
@@ -65,6 +69,7 @@ MonoBehaviour:
       type: {class: PE_DamageOverTime, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 0
@@ -78,8 +83,10 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 1
+        alignment: 2
         damage:
           effectMultiplier: 1
+          inheritEffectTagsOnTrigger: 0
           effectTags:
             serializedPairs:
             - key: 32901
@@ -91,15 +98,20 @@ MonoBehaviour:
           preventTriggers: 1
           ownerEffects: []
           targetEffects: []
+          onHitEffects: []
           temporaryTriggeredEffects: []
     - rid: 9031231527144652850
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
     - rid: 9031231777024770348
       type: {class: Targeting_TriggeredDamage, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
         selector: 1

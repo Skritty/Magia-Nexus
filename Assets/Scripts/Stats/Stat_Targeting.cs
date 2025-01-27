@@ -8,5 +8,5 @@ public class Stat_Targeting : GenericStat<Stat_Targeting>
     [FoldoutGroup("Targeting"), SerializeReference]
     public Targeting targetingType = new Targeting_Distance();
     [FoldoutGroup("Targeting")]
-    public int numberOfTargets = 1;
+    public int additionalTargets = 0;
 }

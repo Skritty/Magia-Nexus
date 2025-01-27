@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Rune_Extend : Rune
 {
-    public override void MagicEffect(Spell spell)
+    public override void MagicEffect(DamageInstance damage)
     {
         // Spell phase +1
     }
 
-    public override void MagicEffectModifier(Spell spell)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
         return;
     }
@@ -19,7 +19,7 @@ public class Rune_Extend : Rune
         // Shape?
     }
 
-    public override void ShapeModifier(Spell spell)
+    public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
         //new Spell();
     }

@@ -30,6 +30,7 @@ MonoBehaviour:
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 143872
@@ -43,14 +44,18 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 0
         contributeToAssists: 0
+        alignment: 1
         modifierType: 2
         contributionMultiplier: 1
         scaleWithEffectMulti: 0
+        multiplyByTicks: 0
     - rid: 9031231777024770072
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
         entitiesAffected: 7
         sortingMethod: 1
         numberOfTargets: -1

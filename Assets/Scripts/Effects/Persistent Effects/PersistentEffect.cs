@@ -22,6 +22,9 @@ public abstract class PersistentEffect: Effect
     public bool refreshDuration = true;
     [FoldoutGroup("PersistentEffect", -9)]
     public bool contributeToAssists = false;
+    public enum Alignment { Neutral, Buff, Debuff }
+    [FoldoutGroup("PersistentEffect", -9)]
+    public Alignment alignment;
 
     public void DoForAllStacks(System.Action method, int overrideAmount = -1)
     {

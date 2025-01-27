@@ -33,7 +33,7 @@ MonoBehaviour:
         effectMultiplier: 1
         effectTags:
           serializedPairs:
-          - key: 0
+          - key: 16777216
             value: 1
         targetSelector:
           rid: 3963142589493018898
@@ -50,3 +50,5 @@ MonoBehaviour:
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}

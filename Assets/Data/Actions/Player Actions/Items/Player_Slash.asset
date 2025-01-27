@@ -25,10 +25,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 9031231598746927104
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1.6
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 8227
@@ -40,15 +43,22 @@ MonoBehaviour:
         preventTriggers: 0
         ownerEffects: []
         targetEffects: []
+        onHitEffects: []
         temporaryTriggeredEffects: []
     - rid: 9031231598746927106
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
         name: 
         description: 
+        lockTarget: 0
+        primaryTarget: {fileID: 0}
+        conditionalOnTrigger: 0
+        conditionalTarget:
+          rid: -2
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
         radius: 2
         angle: 45
