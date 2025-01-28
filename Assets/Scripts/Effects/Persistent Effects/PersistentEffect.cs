@@ -36,7 +36,7 @@ public abstract class PersistentEffect: Effect
 
     public override void DoEffect()
     {
-        Owner.Trigger<Trigger_OnActivateEffect>(this, this);
+        new Trigger_OnActivateEffect(this);
         Activate();
     }
 

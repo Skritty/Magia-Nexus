@@ -15,7 +15,7 @@ public abstract class Effect
     /// Ability that applied this effect (to prevent duplicates)
     /// </summary>
     private int _sourceID;
-    [FoldoutGroup("@GetType()"), ShowInInspector, ReadOnly]
+    [FoldoutGroup("@GetType()")]//, ShowInInspector, ReadOnly]
     private int SourceID
     {
         get
@@ -88,7 +88,7 @@ public abstract class Effect
     /// <summary>
     /// Activates a clone of the effect to targets returned by the targetSelector
     /// </summary>
-    public void Create(Entity owner)
+    public void Create(Entity owner, float multiplier = 1)
     {
         foreach (Entity target in targetSelector.GetTargets(this, owner))
         {
@@ -96,6 +96,7 @@ public abstract class Effect
             e._source = this;
             e._owner = owner;
             e._target = target;
+            e.effectMultiplier *= multiplier;
             e.DoEffect();
         }
     }
@@ -103,8 +104,12 @@ public abstract class Effect
     /// <summary>
     /// Activates a clone of the effect to targets returned by the targetSelector, which is given the trigger
     /// </summary>
-    public void Create(Entity owner, Trigger trigger, Effect triggeringEffect)
+    public void Create(Entity owner, Trigger trigger)
     {
+        Effect triggeringEffect = null;
+        if (trigger is Trigger_Effect)
+            triggeringEffect = (trigger as Trigger_Effect).effect;
+
         foreach (Entity target in targetSelector.GetTargets(this, trigger, owner))
         {
             Effect e = Clone();
@@ -120,7 +125,7 @@ public abstract class Effect
                     e.effectTags.AddRange(triggeringEffect.effectTags);
                 }
             }
-                
+
             e.DoEffect();
         }
     }
@@ -128,12 +133,13 @@ public abstract class Effect
     /// <summary>
     /// Activates a clone of the effect with manually input source, owner, and target
     /// </summary>
-    public void Create(Effect source, Entity owner, Entity target)
+    public void Create(Effect source, Entity owner, Entity target, float multiplier = 1)
     {
         Effect e = Clone();
         e._source = source;
         e._owner = owner;
         e._target = target;
+        e.effectMultiplier *= multiplier;
         e.DoEffect();
     }
 
@@ -160,7 +166,7 @@ public abstract class Effect
     
     public virtual void DoEffect()
     {
-        Owner.Trigger<Trigger_OnActivateEffect>(this, this);
+        new Trigger_OnActivateEffect(this);
         Activate();
     }
 

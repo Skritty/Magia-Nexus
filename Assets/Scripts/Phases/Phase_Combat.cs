@@ -24,6 +24,7 @@ public abstract class Phase_Combat : Phase
     public int killPointGain;
     private Dictionary<int, int> remainingPlayers = new Dictionary<int, int>();
     public List<EntitySpawns> spawns;
+    private System.Action cleanup;
 
     public override void OnEnter()
     {
@@ -44,7 +45,7 @@ public abstract class Phase_Combat : Phase
             entity.Stat<Stat_Actions>().startingTickDelay = (int)(GameManager.Instance.timePerTurn * 50);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
             entity.Stat<Stat_Targeting>().targetingType = spawn.owner.targetType;
-            entity.Subscribe<Trigger_OnDie>(TrackKill);
+            cleanup += Trigger_OnDie.Subscribe(TrackKill);
             foreach (Item item in spawn.owner.items)
             {
                 item.OnGained(entity);
@@ -56,11 +57,10 @@ public abstract class Phase_Combat : Phase
         }
     }
 
-    private void TrackKill(Trigger trigger)
+    private void TrackKill(Trigger_OnDie trigger)
     {
-        Entity dead = trigger.Data<DamageInstance>().Target;
+        Entity dead = trigger.effect.Target;
         int team = dead.Stat<Stat_Team>().team;
-        dead.Unsubscribe<Trigger_OnDie>(TrackKill);
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);
         
@@ -77,6 +77,7 @@ public abstract class Phase_Combat : Phase
                     spawn.owner.totalGold += winPointGain;
                 }
             }
+            cleanup?.Invoke();
             GameManager.Instance.NextPhase();
         }
     }

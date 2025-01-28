@@ -90,7 +90,7 @@ public class CreateEntity : Effect
                                     }
                             }
                         spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);
-                        Owner.Stat<Stat_PlayerOwner>().Proxy(x => x.Trigger<Trigger_ProjectileCreated>(spawnedEntity, this));
+                        new Trigger_ProjectileCreated(spawnedEntity);
                     }
                     break;
                 }

@@ -17,9 +17,9 @@ public class Rune_Water : Rune
     [SerializeReference]
     public PE_OverrideActions actionOverride;
     [SerializeReference]
-    public TriggeredEffect grantRunesToAttacks;
+    public PE_Trigger grantRunesToAttacks;
     [SerializeReference]
-    public TriggeredEffect grantRunesToProjectiles;
+    public PE_Trigger grantRunesToProjectiles;
     [SerializeReference]
     public PE_EffectModifer expandingAoEBuff;
     [SerializeReference]

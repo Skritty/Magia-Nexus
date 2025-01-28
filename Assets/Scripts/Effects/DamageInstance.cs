@@ -26,12 +26,12 @@ public class DamageInstance : Effect
     [SerializeReference, FoldoutGroup("@GetType()")]
     public List<Effect> onHitEffects = new();
     [SerializeReference, FoldoutGroup("@GetType()"), InfoBox("These are in effect until the end of damage calculation")]
-    public List<TriggeredEffect> temporaryTriggeredEffects = new();
+    public List<PE_Trigger> temporaryTriggeredEffects = new();
 
     public override void Activate()
     {
         if (Target.Stat<Stat_Life>().maxLife <= 0) return;
-        foreach (TriggeredEffect effect in temporaryTriggeredEffects)
+        foreach (PE_Trigger effect in temporaryTriggeredEffects)
         {
             Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
         }
@@ -55,8 +55,8 @@ public class DamageInstance : Effect
                 Target.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
             }
             GenerateMagicEffect(runes);
-            Owner.Stat<Stat_PlayerOwner>().Proxy(x => x.Trigger<Trigger_OnHit>(this, this));
-            Target.Trigger<Trigger_WhenHit>(this, this);
+            new Trigger_OnHit(this);
+            new Trigger_WhenHit(this);
         }
 
         Target.Stat<Stat_Life>().TakeDamage(this);
@@ -64,7 +64,7 @@ public class DamageInstance : Effect
         if (ignoreFrames > 0)
             new PE_IgnoreEntity(ignoreFrames).Create(this);
 
-        foreach (TriggeredEffect effect in temporaryTriggeredEffects)
+        foreach (PE_Trigger effect in temporaryTriggeredEffects)
         {
             Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, -effect.stacks, Owner);
         }

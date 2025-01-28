@@ -19,6 +19,7 @@ MonoBehaviour:
   hidden: 0
   maxUses: 0
   timing: 5
+  effectMultiplier: 1
   effects:
   - rid: 7867064581498077196
   - rid: 7867064581498077198
@@ -62,7 +63,7 @@ MonoBehaviour:
         targetSelector:
           rid: 7867064581498077199
         persistentEffect:
-          rid: 7867064581498077202
+          rid: 7867064604153348148
     - rid: 7867064581498077199
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -106,8 +107,8 @@ MonoBehaviour:
         conditionalOnTrigger: 0
         conditionalTarget:
           rid: -2
-    - rid: 7867064581498077202
-      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
+    - rid: 7867064604153348148
+      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         inheritEffectTagsOnTrigger: 0
@@ -116,7 +117,7 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 7867064581498077203
+          rid: 7867064604153348149
         tick: 0
         tickDuration: -1
         maxStacks: 1
@@ -127,12 +128,11 @@ MonoBehaviour:
         alignment: 0
         triggerOrder: 0
         trigger:
-          rid: 7867064581498077204
-        trigger2:
-          rid: -2
-        effect:
-          rid: 7867064581498077205
-    - rid: 7867064581498077203
+          rid: 7867064604153348150
+        tasks:
+        - rid: 7867064604153348152
+        - rid: 7867064604153348151
+    - rid: 7867064604153348149
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
@@ -142,10 +142,18 @@ MonoBehaviour:
         conditionalOnTrigger: 0
         conditionalTarget:
           rid: -2
-    - rid: 7867064581498077204
-      type: {class: Trigger_OnDamageRecieved, ns: , asm: Assembly-CSharp}
+    - rid: 7867064604153348150
+      type: {class: Trigger_WhenHit, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 7867064581498077205
+    - rid: 7867064604153348151
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+      data:
+        effect:
+          rid: 7867064604153348153
+    - rid: 7867064604153348152
+      type: {class: Task_Filter_EffectTarget, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7867064604153348153
       type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
@@ -155,7 +163,7 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 7867064581498077211
+          rid: 7867064604153348155
         entityType: 1
         entity: {fileID: 6345354840142092050, guid: e1252b3082e22da46b0b2f14b2e1f925, type: 3}
         spawnOnTarget: 0
@@ -164,7 +172,7 @@ MonoBehaviour:
         ignoreAdditionalProjectiles: 0
         projectileFanType: 1
         projectileFanAngle: 180
-    - rid: 7867064581498077211
+    - rid: 7867064604153348155
       type: {class: Targeting_TriggeredDamage, ns: , asm: Assembly-CSharp}
       data:
         name: 
@@ -174,4 +182,4 @@ MonoBehaviour:
         conditionalOnTrigger: 0
         conditionalTarget:
           rid: -2
-        selector: 0
+        selector: 1

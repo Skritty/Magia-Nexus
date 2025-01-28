@@ -12,7 +12,7 @@ public abstract class Rune : Effect
     public override void Activate()
     {
         Owner.Stat<Stat_Magic>().runes.Add(this);
-        Owner.Trigger<Trigger_OnRuneUsed>(this, this);
+        new Trigger_OnRuneUsed(this);
     }
     // Magic Effect On Hit
     public abstract void MagicEffect(DamageInstance damage);

@@ -7,6 +7,7 @@ using Skritty.Tools.Utilities;
 
 public class Entity : MonoBehaviour
 {
+    public System.Action cleanup;
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
     private List<BaseStat> baseStats = new List<BaseStat>();
     public T Stat<T>() where T : BaseStat => IBoundInstances<Entity, T>.GetInstance(this);
@@ -44,6 +45,8 @@ public class Entity : MonoBehaviour
             stat.OnDestroy();
             stat.RemoveInstance(this);
         }
+
+        cleanup?.Invoke();
     }
 
     private void OnValidate()

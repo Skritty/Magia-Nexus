@@ -108,18 +108,22 @@ public class Stat_Actions : GenericStat<Stat_Actions>
         if (actions.Count != actionsPerTurn)
         {
             List<Action> newList = new List<Action>();
+            List<Action> newOverrideList = new List<Action>();
             for (int i = 0; i < actionsPerTurn; i++)
             {
                 if (actions.Count > i)
                 {
                     newList.Add(actions[i]);
+                    newOverrideList.Add(actionsOverride[i]);
                 }
                 else
                 {
                     newList.Add(null);
+                    newOverrideList.Add(null);
                 }
             }
             actions = newList;
+            actionsOverride = newOverrideList;
         }
     }
 
@@ -155,7 +159,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
                 a?.OnStart(Owner);
             }
             currentAction?.OnStart(Owner);
-            Owner.Trigger<Trigger_OnActionStart>(currentAction);
+            new Trigger_OnActionStart(currentAction);
         }
     }
 

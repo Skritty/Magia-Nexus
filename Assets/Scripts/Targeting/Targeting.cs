@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -22,16 +23,16 @@ public enum TargetSorting
     Highest = 4
 }
 
+public enum EffectTargetingSelector { Owner, Target }
+
 [Serializable]
 public abstract class Targeting
 {
     protected Entity Owner;
-    public string name, description;
+    [ShowInInspector]
+    protected Entity primaryTarget;
     public bool lockTarget;
-    public Entity primaryTarget;
-    public bool conditionalOnTrigger; // If the owner of the triggering effect is targetable, pick self
-    [SerializeReference]
-    public Targeting conditionalTarget;
+    
     public abstract List<Entity> GetTargets(Effect source, Entity owner);
     public abstract List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner);
     public virtual void OnDrawGizmos(Transform owner) { }
@@ -60,7 +61,7 @@ public abstract class MultiTargeting : Targeting
     {
         if(owner == null)
         {
-            Debug.LogWarning("Owner of Targeting is null!");
+            Debug.LogWarning($"Owner of Targeting is null for {source.Owner}->{source.Target}!");
             return new List<Entity>();
         }
         if(lockTarget && !(primaryTarget == null || !primaryTarget.gameObject.activeSelf))
@@ -120,10 +121,10 @@ public abstract class MultiTargeting : Targeting
     public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
     {
         GetTargets(source, owner);
-        if (conditionalOnTrigger && trigger.Data<Effect>() != null && targets.Contains(trigger.Data<Effect>().Owner))
+        /*if (conditionalOnTrigger && trigger.effect != null && targets.Contains(trigger.effect.Owner))
         {
             targets = conditionalTarget.GetTargets(source, owner);
-        }
+        }*/
         return targets;
     }
     protected virtual bool IsValidTarget(Entity target) => true;

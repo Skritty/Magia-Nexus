@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EffectTargetingSelector { Owner, Target }
-public class Targeting_TriggeredDamage : Targeting
+public class Targeting_TriggeredEffect : Targeting
 {
     public EffectTargetingSelector selector = EffectTargetingSelector.Target;
     public override List<Entity> GetTargets(Effect source, Entity owner)
@@ -13,14 +12,16 @@ public class Targeting_TriggeredDamage : Targeting
 
     public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
     {
+        Trigger_Effect damageTrigger = trigger as Trigger_Effect;
+        if(damageTrigger == null) return new List<Entity>();
         Entity target;
         if (selector == EffectTargetingSelector.Owner)
         {
-            target = trigger.Data<DamageInstance>().Owner;
+            target = damageTrigger.effect.Owner;
         }
         else
         {
-            target = trigger.Data<DamageInstance>().Target;
+            target = damageTrigger.effect.Target;
         }
         
         return GetTargets(source, target == null ? owner : target);

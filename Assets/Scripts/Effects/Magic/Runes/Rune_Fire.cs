@@ -10,7 +10,7 @@ public class Rune_Fire : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public TriggeredEffect buff;
+    public PE_Trigger buff;
     [SerializeReference]
     public PersistentEffect debuff;
     [SerializeReference]
@@ -43,8 +43,17 @@ public class Rune_Fire : Rune
         spell.lifetime = -1;
         spell.channeled = true;
         spell.entity.Stat<Stat_Magic>().maxStages = maxStages;
-        spell.entity.Subscribe<Trigger_OnSpellStageIncrement>(_ => spell.multiplier += multiplierPerStage); // TODO: Use the entity proper
-        spell.entity.Subscribe<Trigger_OnSpellMaxStage>(_ => spell.multiplier += multiplierPerStage);
+        spell.cleanup += Trigger_OnSpellStageIncrement.Subscribe(x => SpellMultiPerStage(spell, x.entity, multiplierPerStage));
+        spell.cleanup += Trigger_OnSpellMaxStage.Subscribe(x => SpellMultiPerStage(spell, x.entity, multiplierPerStage));
+    }
+
+    private void SpellMultiPerStage(Spell spell, Entity entity, float multi)
+    {
+        if (spell != entity.Stat<Stat_Magic>().originSpell) return;
+        foreach(Action action in entity.Stat<Stat_Actions>().actions)
+        {
+            action.effectMultiplier = 1 + entity.Stat<Stat_Magic>().Stage * multi;
+        }
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -53,8 +62,8 @@ public class Rune_Fire : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.entity.Subscribe<Trigger_OnSpellStageIncrement>(_ => spell.multiplier += circleModMultiplierPerStage);
-                    spell.entity.Subscribe<Trigger_OnSpellMaxStage>(_ => spell.multiplier += circleModMultiplierPerStage);
+                    spell.cleanup += Trigger_OnSpellStageIncrement.Subscribe(x => SpellMultiPerStage(spell, x.entity, circleModMultiplierPerStage));
+                    spell.cleanup += Trigger_OnSpellMaxStage.Subscribe(x => SpellMultiPerStage(spell, x.entity, circleModMultiplierPerStage));
                     break;
                 }
             case SpellShape.Conjuration:

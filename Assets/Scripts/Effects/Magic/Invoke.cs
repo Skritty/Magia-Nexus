@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using TwitchLib.Api.Helix;
 using UnityEngine;
 
 public class Invoke : Effect
 {
+    [FoldoutGroup("@GetType()")]
     public Entity spellPrefab;
 
     public override void Activate()

@@ -1,10 +1,7 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using TwitchLib.Api.Helix.Models.Charity;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 {

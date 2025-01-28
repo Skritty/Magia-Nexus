@@ -27,13 +27,12 @@ public class Stat_Life : GenericStat<Stat_Life>
     protected override void Initialize()
     {
         base.Initialize();
-        Owner.Subscribe<Trigger_OnDie>((x) => Debug.Log($"{x.Data<DamageInstance>().Target} DIED"));
+        Owner.cleanup += Trigger_OnDie.Subscribe((x) => Debug.Log($"{x.damage.Target} DIED"));
     }
 
     public override void OnDestroy()
     {
         base.OnDestroy();
-        Owner.Unsubscribe<Trigger_OnDie>((x) => Debug.Log($"{x.Data<DamageInstance>().Target} DIED"));
     }
 
     public void TakeDamage(DamageInstance damage)
@@ -59,14 +58,14 @@ public class Stat_Life : GenericStat<Stat_Life>
             damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, true)
             ?.ApplyPopupInfo(Mathf.Round(totalDamage).ToString("0"), new Color(.9f, .2f, .2f));
 
-            Owner.Trigger<Trigger_OnDamageRecieved>(damage, damage);
-            damage.Owner.Stat<Stat_PlayerOwner>().Proxy(x => x.Trigger<Trigger_OnDamageDealt>(damage, damage));
+            new Trigger_OnDamageRecieved(damage);
+            new Trigger_OnDamageDealt(damage);
         }
 
         if (currentLife <= 0)
         {
             Owner.Stat<Stat_PlayerOwner>().DistributeRewards();
-            Owner.Trigger<Trigger_OnDie>(damage, damage);
+            new Trigger_OnDie(damage);
         }
 
         healthBar.localScale = new Vector3(currentLife / maxLife, 1, 1);

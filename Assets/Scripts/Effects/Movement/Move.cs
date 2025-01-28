@@ -13,7 +13,8 @@ public class Move : Effect
     public override void Activate()
     {
         Owner.Stat<Stat_Movement>().movementSelector?.Create(this);
-        Owner.Trigger<Trigger_MovementDirectionCalc>(Owner, this);
+        new Trigger_MovementDirectionCalc(this);
+
         if (rotate)
         {
             Owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);

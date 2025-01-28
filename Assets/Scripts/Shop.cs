@@ -11,7 +11,13 @@ public class Shop : MonoBehaviour
 {
     public List<Item> shopItems = new List<Item>();
     [SerializeReference]
-    public List<Targeting> basicTargeting = new List<Targeting>();
+    public List<TargetingShopItem> basicTargeting = new List<TargetingShopItem>();
+    public class TargetingShopItem
+    {
+        public Targeting targeting;
+        public string name;
+        public string description;
+    }
     
     public DisplayItem itemDisplayPrefab, actionDisplayPrefab, shopItemDisplayPrefab, basicTargetingDisplayPrefab;
     public GameObject placeholder;
@@ -22,7 +28,7 @@ public class Shop : MonoBehaviour
 
     private List<Item> ownedItems = new List<Item>();
     private List<Action> ownedActions = new List<Action>();
-    private List<Targeting> ownedTargeting = new List<Targeting>();
+    private List<TargetingShopItem> ownedTargeting = new List<TargetingShopItem>();
 
     private void OnEnable()
     {
@@ -75,7 +81,7 @@ public class Shop : MonoBehaviour
         }
 
         // Basic Targeting
-        foreach (Targeting targeting in basicTargeting)
+        foreach (TargetingShopItem targeting in basicTargeting)
         {
             DisplayItem display = Instantiate(basicTargetingDisplayPrefab, basicTargetingLayout);
             display.title.text = targeting.name;
@@ -131,7 +137,7 @@ public class Shop : MonoBehaviour
             displayAction.background.color = item.damageTypeColor;
         }
 
-        foreach (Targeting targeting in item.grantedTargeting)
+        foreach (TargetingShopItem targeting in item.grantedTargeting)
         {
             DisplayItem displayAction = Instantiate(actionDisplayPrefab, display.transform);
             displayAction.GetComponent<RectTransform>().anchoredPosition =
@@ -323,7 +329,7 @@ public class Shop : MonoBehaviour
                     ownedActions.Add(action);
                 }
             }
-            foreach (Targeting targeting in craft.grantedTargeting)
+            foreach (TargetingShopItem targeting in craft.grantedTargeting)
             {
                 if (!ownedTargeting.Contains(targeting))
                 {
@@ -390,7 +396,7 @@ public class Shop : MonoBehaviour
                             ownedActions.Add(action);
                         }
                     }
-                    foreach (Targeting targeting in craft.grantedTargeting)
+                    foreach (TargetingShopItem targeting in craft.grantedTargeting)
                     {
                         if (!ownedTargeting.Contains(targeting))
                         {
@@ -436,7 +442,7 @@ public class Shop : MonoBehaviour
         }
     }
 
-    private Targeting GetTargetingFromNameOrID(string input)
+    private TargetingShopItem GetTargetingFromNameOrID(string input)
     {
         int id;
         if (int.TryParse(input.Remove(0, 1), out id))
@@ -485,7 +491,7 @@ public class Shop : MonoBehaviour
     {
         foreach (Item item in ownedItems)
         {
-            foreach (Targeting targeting in item.grantedTargeting)
+            foreach (TargetingShopItem targeting in item.grantedTargeting)
             {
                 if (!ownedTargeting.Contains(targeting))
                 {
@@ -553,7 +559,7 @@ public class Shop : MonoBehaviour
 
     public bool SetTargeting(Viewer viewer, string targetingType, bool targetLock, out string message)
     {
-        Targeting targeting = GetTargetingFromNameOrID(targetingType);
+        TargetingShopItem targeting = GetTargetingFromNameOrID(targetingType);
         if(targeting == null)
         {
             message = $"Targeting type does not exist!";
@@ -562,7 +568,7 @@ public class Shop : MonoBehaviour
         else
         {
             message = $"{targeting.name} is {(targetLock ? "locked" : "unlocked")}";
-            viewer.targetType = targeting.Clone<Targeting>();
+            viewer.targetType = targeting.targeting.Clone<Targeting>();
             viewer.targetType.lockTarget = targetLock;
             return true;
         }
@@ -793,7 +799,7 @@ public class Shop : MonoBehaviour
                 ownedActions.Add(action);
             }
 
-            foreach (Targeting targeting in item.grantedTargeting)
+            foreach (TargetingShopItem targeting in item.grantedTargeting)
             {
                 if (ownedTargeting.Contains(targeting)) continue;
                 ownedTargeting.Add(targeting);

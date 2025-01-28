@@ -127,6 +127,60 @@ MonoBehaviour:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
+    - rid: 7867064604153348209
+      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
+        effectTags:
+          serializedPairs: []
+        targetSelector:
+          rid: 7867064604153348210
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 0
+        triggerOrder: 0
+        trigger:
+          rid: 7867064604153348211
+        tasks:
+        - rid: 7867064604153348212
+        - rid: 7867064604153348213
+    - rid: 7867064604153348210
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 7867064604153348211
+      type: {class: Trigger_Expire, ns: , asm: Assembly-CSharp}
+      data:
+        entity: {fileID: 0}
+    - rid: 7867064604153348212
+      type: {class: Task_Filter_EntityOwner, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7867064604153348213
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+      data:
+        effect:
+          rid: 7867064604153348214
+    - rid: 7867064604153348214
+      type: {class: Expire, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
+        effectTags:
+          serializedPairs: []
+        targetSelector:
+          rid: 7867064604153348215
+        disable: 0
+        delay: 0
+    - rid: 7867064604153348215
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
     - rid: 9031231372545491043
       type: {class: Stat_Projectile, ns: , asm: Assembly-CSharp}
       data:
@@ -143,7 +197,7 @@ MonoBehaviour:
         mergeBehavior: 0
         persistentEffects:
         - rid: 9031231465990389775
-        - rid: 9031231465990389781
+        - rid: 7867064604153348209
     - rid: 9031231465990389775
       type: {class: PE_ExpireEntity, ns: , asm: Assembly-CSharp}
       data:
@@ -163,47 +217,10 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
-    - rid: 9031231465990389781
-      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
-        targetSelector:
-          rid: 9031231527144652834
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        triggerOrder: 99
-        trigger:
-          rid: 9031231465990389782
-        effect:
-          rid: 9031231661127237651
-    - rid: 9031231465990389782
-      type: {class: Trigger_Expire, ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 9031231527144652832
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}
-    - rid: 9031231527144652834
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}
     - rid: 9031231661127237644
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
@@ -230,13 +247,11 @@ MonoBehaviour:
     - rid: 9031231661127237645
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: 0
+        offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
     - rid: 9031231661127237646
       type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
@@ -245,26 +260,6 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         effectModifiers: []
-    - rid: 9031231661127237651
-      type: {class: Expire, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
-        targetSelector:
-          rid: 9031231661127237652
-        disable: 0
-        delay: 0
-    - rid: 9031231661127237652
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}
     - rid: 9031231668284555340
       type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
       data:
@@ -277,13 +272,11 @@ MonoBehaviour:
     - rid: 9031231668284555341
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
     - rid: 9031231668284555760
       type: {class: Stat_Targetable, ns: , asm: Assembly-CSharp}

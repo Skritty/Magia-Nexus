@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+/*using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,9 +18,9 @@ public class TriggeredEffect : PersistentEffect
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Trigger trigger;
     [SerializeReference, FoldoutGroup("@GetType()")]
-    public TriggerTest trigger2;
+    public Trigger trigger2;
     [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<TriggerTask> tasks;
+    public List<TriggerTask> tasks = new List<TriggerTask>();
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Effect effect;
     
@@ -57,4 +57,4 @@ public class TriggeredEffect : PersistentEffect
 
 // Attack (2 damage) -> triggers ignite (max 1 stack) of 1dps
 // With effect multiplier chain: 1 attack + ignite (2dps) => 4 damage
-// Without effect multiplier chain: 1 attack + ignite (1dps) => 3 damage
+// Without effect multiplier chain: 1 attack + ignite (1dps) => 3 damage*/

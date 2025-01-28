@@ -24,14 +24,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
   actionCountModifier: 0
   itemEffects:
-  - rid: 9031231646177165315
+  - rid: 7867064604153348097
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 9031231646177165315
-      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
+    - rid: 7867064604153348097
+      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         inheritEffectTagsOnTrigger: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 9031231646177165316
+          rid: 7867064604153348098
         tick: 0
         tickDuration: -1
         maxStacks: 1
@@ -51,10 +51,11 @@ MonoBehaviour:
         alignment: 0
         triggerOrder: 0
         trigger:
-          rid: 9031231646177165317
-        effect:
-          rid: 9031231646177165318
-    - rid: 9031231646177165316
+          rid: 7867064604153348114
+        tasks:
+        - rid: 7867064604153348141
+        - rid: 7867064604153348107
+    - rid: 7867064604153348098
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         name: 
@@ -64,28 +65,29 @@ MonoBehaviour:
         conditionalOnTrigger: 0
         conditionalTarget:
           rid: -2
-    - rid: 9031231646177165317
-      type: {class: Trigger_OnActionStart, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 9031231646177165318
+    - rid: 7867064604153348107
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+      data:
+        effect:
+          rid: 7867064604153348108
+    - rid: 7867064604153348108
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 0.6
         inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
-          - key: 8739
+          - key: 8227
             value: 1
         targetSelector:
-          rid: 9031231646177165319
+          rid: 7867064604153348110
         ignoreFrames: 0
         skipFlatDamageReduction: 0
         preventTriggers: 0
         ownerEffects: []
         targetEffects: []
         onHitEffects: []
-        temporaryTriggeredEffects: []
-    - rid: 9031231646177165319
+    - rid: 7867064604153348110
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
         name: 
@@ -97,8 +99,15 @@ MonoBehaviour:
           rid: -2
         entitiesAffected: 8
         sortingMethod: 1
-        numberOfTargets: 0
+        numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
         radius: 2
-        angle: 30
+        angle: 60
+    - rid: 7867064604153348114
+      type: {class: Trigger_OnActionStart, ns: , asm: Assembly-CSharp}
+      data:
+        action: {fileID: 0}
+    - rid: 7867064604153348141
+      type: {class: Task_Filter_EffectOwner, ns: , asm: Assembly-CSharp}
+      data: 

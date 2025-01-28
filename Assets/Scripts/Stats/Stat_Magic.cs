@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Stat_Magic : GenericStat<Stat_Magic>
 {
+    public Spell originSpell;
     [SerializeReference, FoldoutGroup("Magic")]
     public List<Rune> runes = new List<Rune>(); // spellcasting queue
     [SerializeReference, FoldoutGroup("Magic")]
@@ -21,11 +22,11 @@ public class Stat_Magic : GenericStat<Stat_Magic>
             _stage = value;
             if(_stage == maxStages)
             {
-                Owner.Trigger<Trigger_OnSpellMaxStage>(Owner);
+                new Trigger_OnSpellMaxStage(Owner);
             }
             else
             {
-                Owner.Trigger<Trigger_OnSpellStageIncrement>(Owner);
+                new Trigger_OnSpellStageIncrement(Owner);
             }
         }
     }

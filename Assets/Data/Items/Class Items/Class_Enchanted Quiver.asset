@@ -25,21 +25,22 @@ MonoBehaviour:
   grantedActions: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 9031231481910394880
+  - rid: 7867064604153348171
   - rid: 9031231822436499456
   references:
     version: 2
     RefIds:
-    - rid: 2626413410273722936
-      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
+    - rid: 7867064604153348171
+      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 0
             value: 1
         targetSelector:
-          rid: 2626413410273722937
+          rid: 7867064604153348172
         tick: 0
         tickDuration: -1
         maxStacks: 1
@@ -47,67 +48,90 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
+        alignment: 0
         triggerOrder: 0
         trigger:
-          rid: 2626413410273722940
-        effect:
-          rid: 2626413410273722938
-    - rid: 2626413410273722937
+          rid: 7867064604153348173
+        tasks:
+        - rid: 7867064604153348174
+        - rid: 7867064604153348178
+    - rid: 7867064604153348172
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
-    - rid: 2626413410273722938
+        lockTarget: 0
+    - rid: 7867064604153348173
+      type: {class: Trigger_ProjectileCreated, ns: , asm: Assembly-CSharp}
+      data:
+        entity: {fileID: 0}
+    - rid: 7867064604153348174
+      type: {class: Task_Filter_EntityOwner, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7867064604153348178
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+      data:
+        effect:
+          rid: 7867064604153348181
+    - rid: 7867064604153348181
+      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
+        effectTags:
+          serializedPairs:
+          - key: 0
+            value: 1
+        targetSelector:
+          rid: 7867064604153348187
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 0
+        triggerOrder: 0
+        trigger:
+          rid: 7867064604153348188
+        tasks:
+        - rid: 7867064604153348190
+        - rid: 7867064604153348189
+    - rid: 7867064604153348187
+      type: {class: Targeting_TriggeredEntity, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 7867064604153348188
+      type: {class: Trigger_MovementDirectionCalc, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7867064604153348189
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+      data:
+        effect:
+          rid: 7867064604153348191
+    - rid: 7867064604153348190
+      type: {class: Task_Filter_EffectTarget, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7867064604153348191
       type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        effectTags:
-          serializedPairs: []
-        targetSelector:
-          rid: 2626413410273722939
-        homingRateDegreesPerSecond: 35
-    - rid: 2626413410273722939
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-    - rid: 2626413410273722940
-      type: {class: Trigger_MovementDirectionCalc, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 9031231481910394880
-      type: {class: TriggeredEffect, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 0
             value: 1
         targetSelector:
-          rid: 9031231527144652808
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        triggerOrder: 0
-        trigger:
-          rid: 9031231481910394881
-        effect:
-          rid: 2626413410273722936
-    - rid: 9031231481910394881
-      type: {class: Trigger_ProjectileCreated, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 9031231527144652808
+          rid: 7867064604153348192
+        homingRateDegreesPerSecond: 65
+    - rid: 7867064604153348192
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
     - rid: 9031231822436499456
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 1114112
@@ -121,11 +145,12 @@ MonoBehaviour:
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
+        alignment: 0
         modifierType: 0
         contributionMultiplier: 1
         scaleWithEffectMulti: 0
+        multiplyByTicks: 0
     - rid: 9031231822436499457
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0

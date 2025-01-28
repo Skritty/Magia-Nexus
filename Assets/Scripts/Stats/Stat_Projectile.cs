@@ -14,18 +14,16 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
     protected override void Initialize()
     {
         base.Initialize();
-        Owner.Subscribe<Trigger_OnHit>(OnHit);
+        Trigger_OnHit.Subscribe(OnHit);
     }
 
     public override void OnDestroy()
     {
         base.OnDestroy();
-        Owner.Unsubscribe<Trigger_OnHit>(OnHit);
     }
 
-    private void OnHit(Trigger trigger)
+    private void OnHit(Trigger_OnHit trigger)
     {
-        DamageInstance damage = trigger.Data<DamageInstance>();
         if(--splitsRemaining >= 0)
         {
             CreateEntity split = new CreateEntity();
@@ -35,11 +33,11 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
         }
         if (--piercesRemaining < 0)
         {
-            Owner.Trigger<Trigger_Expire>(damage.Owner);
+            new Trigger_Expire(trigger.damage.Owner);
         }
         else
         {
-            Owner.Stat<Stat_PlayerOwner>().Proxy(x => x.Trigger<Trigger_OnProjectilePierce>(damage, damage));
+            new Trigger_OnProjectilePierce(trigger.damage);
         }
     }
 }

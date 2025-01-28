@@ -39,7 +39,7 @@ public class Rune_Chaos : Rune
                     if (!spell.castingOnChannel)
                     {
                         spell.castingOnChannel = true;
-                        spell.entity.Subscribe<Trigger_OnSpellStageIncrement>(_ => spell.spellAction.OnStart(spell.entity));
+                        spell.cleanup = Trigger_OnSpellStageIncrement.Subscribe(x => CastOnStageGained(spell, x.entity), 5);
                     }
                     spell.entity.Stat<Stat_Magic>().maxStages++;
                     break;
@@ -72,5 +72,11 @@ public class Rune_Chaos : Rune
                     break;
                 }
         }
+    }
+
+    private void CastOnStageGained(Spell spell, Entity entity)
+    {
+        if (spell != entity.Stat<Stat_Magic>().originSpell) return;
+        spell.spellAction.OnStart(spell.entity);
     }
 }

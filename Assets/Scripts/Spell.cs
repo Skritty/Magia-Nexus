@@ -23,6 +23,7 @@ public class Spell
     public float multiplier = 0;
     public bool channeled;
     public bool castingOnChannel;
+    public System.Action cleanup;
 
     public Spell(Entity owner, List<Rune> runes)
     {
@@ -75,6 +76,7 @@ public class Spell
     {
         entity = GameObject.Instantiate(spellPrefab);
         entity.gameObject.SetActive(false);
+        entity.Stat<Stat_Magic>().originSpell = this;
         spellAction = new Action();
         castSpell.projectileFanType = CreateEntity.ProjectileFanType.EvenlySpaced;
 
@@ -99,8 +101,8 @@ public class Spell
             channel.effects.Add(new ChannelSpells());
             channeledActionPE.channeledAction = channel;
             channeledActionPE.Create(null, Owner, Owner);
-            
-            entity.Subscribe<Trigger_OnSpellMaxStage>(FinishChanneling);
+
+            Trigger_OnSpellMaxStage.Subscribe(FinishChanneling);
         }
 
         // Spell Duration
@@ -127,11 +129,12 @@ public class Spell
         }*/
     }
 
-    private void FinishChanneling(Trigger trigger)
+    // TODO: Make spell contain stats about the active spell entities
+    private void FinishChanneling(Trigger_Entity trigger)
     {
-        spellAction.OnStart(entity);
+        spellAction.OnStart(trigger.entity);
         Owner.Stat<Stat_PersistentEffects>().RemoveEffect<PE_GrantChanneledAction>(-1);
-        entity.Trigger<Trigger_Expire>();
+        new Trigger_Expire(trigger.entity);
     }
 
     private void GenerateShape()

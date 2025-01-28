@@ -32,6 +32,7 @@ public class Action : ScriptableObject
     public bool hidden;
     public int maxUses;
     public ActionEventTiming timing = ActionEventTiming.OnStart;
+    public float effectMultiplier = 1;
     [SerializeReference]
     public List<Effect> effects = new List<Effect>();
     public virtual void OnStart(Entity owner) 
@@ -40,7 +41,7 @@ public class Action : ScriptableObject
         {
             foreach(Effect effect in effects)
             {
-                effect.Create(owner);
+                effect.Create(owner, effectMultiplier);
             }
         }
     }
@@ -50,7 +51,7 @@ public class Action : ScriptableObject
         {
             foreach (Effect effect in effects)
             {
-                effect.Create(owner);
+                effect.Create(owner, effectMultiplier);
             }
         }
     }
@@ -60,7 +61,7 @@ public class Action : ScriptableObject
         {
             foreach (Effect effect in effects)
             {
-                effect.Create(owner);
+                effect.Create(owner, effectMultiplier);
             }
         }
     }

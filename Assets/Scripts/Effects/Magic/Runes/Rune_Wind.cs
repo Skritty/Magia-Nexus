@@ -39,7 +39,7 @@ public class Rune_Wind : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.Owner.Subscribe<Trigger_OnSpellCast>(_ => spell.entity.Stat<Stat_Magic>().Stage++);
+                    Trigger_OnSpellCast.Subscribe(x => StageIncrease(spell, x.entity));
                     break;
                 }
             case SpellShape.Conjuration:
@@ -67,5 +67,11 @@ public class Rune_Wind : Rune
                     break;
                 }
         }
+    }
+
+    private void StageIncrease(Spell spell, Entity entity)
+    {
+        if (spell != entity.Stat<Stat_Magic>().originSpell) return;
+        spell.entity.Stat<Stat_Magic>().Stage++;
     }
 }
