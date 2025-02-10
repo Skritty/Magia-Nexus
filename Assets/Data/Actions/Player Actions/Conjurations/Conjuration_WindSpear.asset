@@ -19,13 +19,12 @@ MonoBehaviour:
   hidden: 0
   maxUses: 0
   timing: 1
+  effectMultiplier: 1
   effects:
   - rid: 7867064581498077217
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 7867064581498077217
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
@@ -38,22 +37,15 @@ MonoBehaviour:
         targetSelector:
           rid: 7867064581498077219
         ignoreFrames: 0
-        skipFlatDamageReduction: 0
-        preventTriggers: 0
+        skipFlatDamageReduction: 1
+        preventTriggers: 1
         ownerEffects: []
         targetEffects: []
         onHitEffects: []
-        temporaryTriggeredEffects: []
     - rid: 7867064581498077219
       type: {class: Targeting_Line, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}
-        conditionalOnTrigger: 0
-        conditionalTarget:
-          rid: -2
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1

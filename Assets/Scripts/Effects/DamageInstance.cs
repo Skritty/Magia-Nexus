@@ -8,12 +8,10 @@ using UnityEngine;
 [Serializable]
 public class DamageInstance : Effect
 {
-    protected override bool UsedInCalculations => true;
-
+    [FoldoutGroup("@GetType()")]
+    public List<EffectModifier> damageModifiers = new List<EffectModifier>();
     [FoldoutGroup("@GetType()")]
     public List<Rune> runes = new List<Rune>(); 
-    [FoldoutGroup("@GetType()")]
-    public int ignoreFrames;
     [FoldoutGroup("@GetType()")]
     public bool skipFlatDamageReduction;
     [FoldoutGroup("@GetType()")]
@@ -55,18 +53,23 @@ public class DamageInstance : Effect
                 Target.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
             }
             GenerateMagicEffect(runes);
-            new Trigger_OnHit(this);
-            new Trigger_WhenHit(this);
+            new Trigger_Hit(this, this, Owner, Target);
         }
 
+        CalculateDamageType();
         Target.Stat<Stat_Life>().TakeDamage(this);
-
-        if (ignoreFrames > 0)
-            new PE_IgnoreEntity(ignoreFrames).Create(this);
 
         foreach (PE_Trigger effect in temporaryTriggeredEffects)
         {
             Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, -effect.stacks, Owner);
+        }
+    }
+
+    public void AddModifiers(EffectModifier calculation)
+    {
+        foreach(EffectModifier modifier in damageModifiers)
+        {
+            calculation.AddModifier(modifier);
         }
     }
 
@@ -81,60 +84,57 @@ public class DamageInstance : Effect
         }
     }
 
-    private void AddToDamage(EffectTag tag)
+    private void AddToDamage(float damage, DamageType tag)
     {
-        effectTags.TryAdd(tag, 0);
-        foreach (KeyValuePair<EffectTag, float> t in effectTags)
-        {
-            effectTags[t.Key] = 1f / effectTags.Count;
-        }
+        damageModifiers.Add(new EffectModifier(tag, EffectTag.None, damage, EffectModifierCalculationType.Flat, 1, null));
+        // TODO: contributing effect
     }
 
     public void CalculateDamageType()
     {
-        float increase = 1;
-        Tally<EffectTag> damageTypeTally = new Tally<EffectTag>();
+        if (runes.Count == 0) return;
+        float addedFlatDamage = 1;
+        Tally<DamageType> damageTypeTally = new Tally<DamageType>();
         foreach (Rune effectRune in runes)
         {
-            increase += effectRune.effectMultiplierIncrease;
-            damageTypeTally.Add(effectRune.damageTags);
+            addedFlatDamage += effectRune.magicEffectFlatDamage;
+            damageTypeTally.Add(effectRune.damageType);
         }
-        effectMultiplier *= increase;
-        List<EffectTag> damageType = damageTypeTally.GetHighest(out _);
-        if (damageType.Count >= 3)
+        List<DamageType> damageTypes = damageTypeTally.GetHighest(out _);
+        if (damageTypes.Count >= 3)
         {
-            AddToDamage(EffectTag.Magical | EffectTag.Spell);
+            AddToDamage(addedFlatDamage, DamageType.Magical | DamageType.Spell);
         }
-        else if (damageType.Count == 2)
+        else if (damageTypes.Count == 2)
         {
-            EffectTag tag = damageType[0] | damageType[1];
+            DamageType tag = damageTypes[0] | damageTypes[1];
             switch (tag)
             {
-                case EffectTag.Chaos | EffectTag.Order:
+                case DamageType.Chaos | DamageType.Order:
                     {
-                        AddToDamage(EffectTag.Damage | EffectTag.Spell);
+                        AddToDamage(addedFlatDamage, DamageType.Damage | DamageType.Spell);
                         break;
                     }
-                case EffectTag.Physical | EffectTag.Cold:
+                case DamageType.Physical | DamageType.Cold:
                     {
-                        AddToDamage(EffectTag.Bludgeoning | EffectTag.Spell);
+                        AddToDamage(addedFlatDamage, DamageType.Bludgeoning | DamageType.Spell);
                         break;
                     }
-                case EffectTag.Physical | EffectTag.Lightning:
+                case DamageType.Physical | DamageType.Lightning:
                     {
-                        AddToDamage(EffectTag.Slashing | EffectTag.Spell);
+                        AddToDamage(addedFlatDamage, DamageType.Slashing | DamageType.Spell);
                         break;
                     }
-                case EffectTag.Cold | EffectTag.Lightning:
+                case DamageType.Cold | DamageType.Lightning:
                     {
-                        AddToDamage(EffectTag.Piercing | EffectTag.Spell);
+                        AddToDamage(addedFlatDamage, DamageType.Piercing | DamageType.Spell);
                         break;
                     }
                 default:
                     {
-                        foreach (EffectTag t in damageType)
+                        foreach (DamageType t in damageTypes)
                         {
-                            AddToDamage(t | EffectTag.Spell);
+                            AddToDamage(addedFlatDamage / damageTypes.Count, t | DamageType.Spell);
                         }
                         break;
                     }
@@ -142,7 +142,7 @@ public class DamageInstance : Effect
         }
         else
         {
-            AddToDamage(damageType[0] | EffectTag.Spell);
+            AddToDamage(addedFlatDamage, damageTypes[0] | DamageType.Spell);
         }
     }
 

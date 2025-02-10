@@ -29,7 +29,8 @@ public class Rune_Order : Rune
 
     public override void Shape(Spell spell)
     {
-        spell.shape = SpellShape.Circle;
+        spell.shape = SpellShape.Summon;
+        spell.lifetime = -1;
         spell.effect.targetSelector = shape;
     }
 
@@ -39,7 +40,7 @@ public class Rune_Order : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.entity.Stat<Stat_Magic>().maxStages += 2;
+                    spell.blueprintEntity.Stat<Stat_Magic>().maxStages += 2;
                     break;
                 }
             case SpellShape.Conjuration:
@@ -57,8 +58,8 @@ public class Rune_Order : Rune
                     spell.castSpell.movementTarget = MovementTarget.Owner;
                     Movement_Orbit orbit = new Movement_Orbit();
                     orbit.orbitDistance = 1.75f;
-                    spell.entity.Stat<Stat_Movement>().movementSelector = orbit;
-                    spell.entity.Stat<Stat_Movement>().baseMovementSpeed = 4;
+                    spell.blueprintEntity.Stat<Stat_Movement>().movementSelector = orbit;
+                    spell.blueprintEntity.Stat<Stat_Movement>().baseMovementSpeed = 4;
                     break;
                 }
             case SpellShape.Summon:

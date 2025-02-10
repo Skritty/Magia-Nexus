@@ -34,12 +34,6 @@ public abstract class PersistentEffect: Effect
         }
     }
 
-    public override void DoEffect()
-    {
-        new Trigger_OnActivateEffect(this);
-        Activate();
-    }
-
     public override void Activate()
     {
         //Owner = Owner.Stat<Stat_PlayerOwner>().playerEntity;
@@ -56,7 +50,7 @@ public abstract class PersistentEffect: Effect
         Owner.Stat<Stat_PlayerOwner>().ApplyContribution(Target, effectMultiplier * tick);
     }
 
-    public PersistentEffect Clone()
+    public new PersistentEffect Clone()
     {
         return (PersistentEffect)MemberwiseClone();
     }

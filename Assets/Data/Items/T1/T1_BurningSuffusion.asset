@@ -19,7 +19,7 @@ MonoBehaviour:
   itemDescription: 'On hit: ignite (40 fire/0.5s) (4 stacks max)'
   cost: 0
   itemImage: {fileID: 0}
-  damageTypeColor: {r: 0.91194963, g: 0.3429839, b: 0.2896443, a: 1}
+  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   craftingRecipe:
   - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
   - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
@@ -27,19 +27,17 @@ MonoBehaviour:
   grantedActions: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 7867064604153348130
+  - rid: 1130977517639303266
   references:
     version: 2
     RefIds:
-    - rid: 7867064604153348130
+    - rid: 1130977517639303266
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348131
+          rid: 1130977517639303267
         tick: 0
         tickDuration: -1
         maxStacks: 1
@@ -50,63 +48,63 @@ MonoBehaviour:
         alignment: 0
         triggerOrder: 0
         trigger:
-          rid: 7867064604153348132
+          rid: 1130977675299520565
         tasks:
-        - rid: 7867064604153348133
-        - rid: 7867064604153348135
-    - rid: 7867064604153348131
+        - rid: 1130977517639303269
+        - rid: 1130977517639303273
+    - rid: 1130977517639303267
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 7867064604153348132
-      type: {class: Trigger_OnDamageDealt, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 7867064604153348133
-      type: {class: Task_Filter_EffectOwner, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 7867064604153348135
+    - rid: 1130977517639303269
+      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1
+    - rid: 1130977517639303273
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
+        incompatableTriggerBehavior: 1
         effect:
-          rid: 7867064604153348136
-    - rid: 7867064604153348136
+          rid: 1130977517639303274
+    - rid: 1130977517639303274
       type: {class: PE_DamageOverTime, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348185
+          rid: 1130977517639303275
         tick: 0
         tickDuration: 25
         maxStacks: 4
         stacks: 1
-        perPlayer: 0
+        perPlayer: 1
         refreshDuration: 0
         contributeToAssists: 0
         alignment: 2
         damage:
-          effectMultiplier: 0.02
-          inheritEffectTagsOnTrigger: 0
-          effectTags:
-            serializedPairs:
-            - key: 16517
-              value: 1
-          targetSelector:
-            rid: 7867064604153348140
+          effectMultiplier: 0.04
           ignoreFrames: 0
+          targetSelector:
+            rid: 1130977517639303276
+          damageModifiers:
+          - calculationType: 0
+            damageType: 49285
+            effectTag: 0
+            magnitude: 40
           skipFlatDamageReduction: 1
           preventTriggers: 1
           ownerEffects: []
           targetEffects: []
           onHitEffects: []
-    - rid: 7867064604153348140
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 7867064604153348185
+    - rid: 1130977517639303275
       type: {class: Targeting_TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
         selector: 1
+    - rid: 1130977517639303276
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 1130977675299520565
+      type: {class: Trigger_Hit, ns: , asm: Assembly-CSharp}
+      data: 

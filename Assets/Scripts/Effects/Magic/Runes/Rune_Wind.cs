@@ -39,7 +39,7 @@ public class Rune_Wind : Rune
         {
             case SpellShape.Circle:
                 {
-                    Trigger_OnSpellCast.Subscribe(x => StageIncrease(spell, x.entity));
+                    Trigger_SpellCast.Subscribe(StageIncrease, spell);
                     break;
                 }
             case SpellShape.Conjuration:
@@ -48,14 +48,14 @@ public class Rune_Wind : Rune
                 }
             case SpellShape.Line:
                 {
-                    spell.entity.Stat<Stat_Projectile>().splitsRemaining += 1;
+                    spell.blueprintEntity.Stat<Stat_Projectile>().splitsRemaining += 1;
                     spell.aoeTargetsModifier -= 1;
                     break;
                 }
             case SpellShape.Projectile:
                 {
-                    spell.entity.Stat<Stat_Projectile>().splitsRemaining += 1;
-                    spell.entity.Stat<Stat_Projectile>().piercesRemaining -= 1;
+                    spell.blueprintEntity.Stat<Stat_Projectile>().splitsRemaining += 1;
+                    spell.blueprintEntity.Stat<Stat_Projectile>().piercesRemaining -= 1;
                     break;
                 }
             case SpellShape.Summon:
@@ -69,9 +69,8 @@ public class Rune_Wind : Rune
         }
     }
 
-    private void StageIncrease(Spell spell, Entity entity)
+    private void StageIncrease(Trigger_SpellCast trigger)
     {
-        if (spell != entity.Stat<Stat_Magic>().originSpell) return;
-        spell.entity.Stat<Stat_Magic>().Stage++;
+        trigger.Spell.blueprintEntity.Stat<Stat_Magic>().Stage++;
     }
 }

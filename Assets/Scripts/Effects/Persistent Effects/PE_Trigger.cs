@@ -17,9 +17,10 @@ public class PE_Trigger : PersistentEffect
     {
         if(trigger == null)
         {
-            Debug.LogError($"NO TRIGGER SELECTED | {Owner} -> {Target}: {GetUID()}");
+            Debug.LogError($"NO TRIGGER SELECTED | {Owner.name} -> {Target.name}: {GetUID()}");
+            return;
         }
-        unsubscribe = trigger.Subscribe(OnTrigger);
+        unsubscribe = trigger.Subscribe(OnTrigger, triggerOrder);
     }
 
     public override void OnLost()
@@ -31,7 +32,7 @@ public class PE_Trigger : PersistentEffect
     {
         foreach (TriggerTask task in tasks)
         {
-            if (!task.TriggerRecieved(trigger, Owner)) break;
+            if (!task.DoTask(trigger, Target)) break;
         }
     }
 }

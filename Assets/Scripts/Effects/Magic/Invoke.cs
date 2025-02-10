@@ -26,6 +26,6 @@ public class Invoke : Effect
         {
             yield return new WaitForFixedUpdate();
         }
-        GameObject.Destroy(spell.entity.gameObject);
+        GameObject.Destroy(spell.blueprintEntity.gameObject);
     }
 }

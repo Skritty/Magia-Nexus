@@ -37,11 +37,13 @@ public class Rune_Water : Rune
 
     public override void Shape(Spell spell)
     {
+        spell.shape = SpellShape.Conjuration;
         spell.spellAction.effects.Add(actionOverride);
+        spell.lifetime = 125;
         List<Rune> magicEffectRunes = new List<Rune>();
         magicEffectRunes.AddRange(spell.runes);
         magicEffectRunes.RemoveAt(0);
-        spell.entity.Stat<Stat_Magic>().runes = magicEffectRunes;
+        spell.blueprintEntity.Stat<Stat_Magic>().runes = magicEffectRunes;
 
         // TODO: destroy magic effect rune reference spell after action uses
     }

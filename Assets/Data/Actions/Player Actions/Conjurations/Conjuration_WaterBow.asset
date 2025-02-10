@@ -19,11 +19,16 @@ MonoBehaviour:
   hidden: 0
   maxUses: 0
   timing: 1
+  effectMultiplier: 1
   effects:
   - rid: 7867064581498077186
   references:
     version: 2
     RefIds:
+    - rid: 1130977517639303807
+      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
     - rid: 7867064581498077186
       type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
       data:
@@ -34,7 +39,7 @@ MonoBehaviour:
           - key: 0
             value: 1
         targetSelector:
-          rid: 7867064581498077187
+          rid: 1130977517639303807
         entityType: 2
         entity: {fileID: 6345354840142092050, guid: e2616271fa6858844a535f56de5b31f3, type: 3}
         spawnOnTarget: 0
@@ -43,10 +48,3 @@ MonoBehaviour:
         ignoreAdditionalProjectiles: 0
         projectileFanType: 2
         projectileFanAngle: 45
-    - rid: 7867064581498077187
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}

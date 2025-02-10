@@ -27,7 +27,7 @@ public class Stat_Life : GenericStat<Stat_Life>
     protected override void Initialize()
     {
         base.Initialize();
-        Owner.cleanup += Trigger_OnDie.Subscribe((x) => Debug.Log($"{x.damage.Target} DIED"));
+        Owner.cleanup += Trigger_Die.Subscribe((x) => Debug.Log($"{x.Damage.Target} DIED"), Owner);
     }
 
     public override void OnDestroy()
@@ -42,9 +42,11 @@ public class Stat_Life : GenericStat<Stat_Life>
             return;
         }
 
-        // Make a damage calculation
-        Stat_EffectModifiers.EffectModifier calculation = damage.Owner.Stat<Stat_EffectModifiers>().CreateCalculation(null, damage, EffectTag.DamageDealt);
-        damage.Target.Stat<Stat_EffectModifiers>().CreateCalculation(calculation, damage, EffectTag.DamageTaken);
+        // Make a damage calculation damage.Owner.Stat<Stat_EffectModifiers>()
+        EffectModifier calculation = EffectModifier.CreateCalculation(damage);
+        damage.AddModifiers(calculation);
+        damage.Owner.Stat<Stat_EffectModifiers>().AddModifiersToCalculation(calculation, EffectTag.DamageDealt);
+        damage.Target.Stat<Stat_EffectModifiers>().AddModifiersToCalculation(calculation, EffectTag.DamageTaken);
         float totalDamage = calculation.CalculateModifier(damage);
 
         // Handle Life
@@ -58,14 +60,13 @@ public class Stat_Life : GenericStat<Stat_Life>
             damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, true)
             ?.ApplyPopupInfo(Mathf.Round(totalDamage).ToString("0"), new Color(.9f, .2f, .2f));
 
-            new Trigger_OnDamageRecieved(damage);
-            new Trigger_OnDamageDealt(damage);
+            new Trigger_Damage(damage, damage, damage.Owner, damage.Target);
         }
 
         if (currentLife <= 0)
         {
             Owner.Stat<Stat_PlayerOwner>().DistributeRewards();
-            new Trigger_OnDie(damage);
+            new Trigger_Die(damage, damage, Owner);
         }
 
         healthBar.localScale = new Vector3(currentLife / maxLife, 1, 1);

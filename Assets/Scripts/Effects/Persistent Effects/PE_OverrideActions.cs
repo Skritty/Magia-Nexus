@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class PE_OverrideActions : PersistentEffect
 {
+    [FoldoutGroup("@GetType()")]
     public SerializedDictionary<Action, Action> actionOverrides;
     public override void OnGained()
     {
-        Owner.Stat<Stat_Actions>().OverrideActions(actionOverrides);
+        Target.Stat<Stat_Actions>().OverrideActions(actionOverrides);
     }
 
     public override void OnLost()
     {
-        Owner.Stat<Stat_Actions>().OverrideActions(actionOverrides, true);
+        Target.Stat<Stat_Actions>().OverrideActions(actionOverrides, true);
     }
 }

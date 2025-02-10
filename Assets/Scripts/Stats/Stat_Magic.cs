@@ -20,13 +20,10 @@ public class Stat_Magic : GenericStat<Stat_Magic>
         set
         {
             _stage = value;
-            if(_stage == maxStages)
+            new Trigger_SpellStageIncrement(Owner, originSpell, Owner, originSpell);
+            if (_stage == maxStages)
             {
-                new Trigger_OnSpellMaxStage(Owner);
-            }
-            else
-            {
-                new Trigger_OnSpellStageIncrement(Owner);
+                new Trigger_SpellMaxStage(Owner, originSpell, Owner, originSpell);
             }
         }
     }

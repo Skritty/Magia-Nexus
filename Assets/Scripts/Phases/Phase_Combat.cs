@@ -45,7 +45,7 @@ public abstract class Phase_Combat : Phase
             entity.Stat<Stat_Actions>().startingTickDelay = (int)(GameManager.Instance.timePerTurn * 50);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
             entity.Stat<Stat_Targeting>().targetingType = spawn.owner.targetType;
-            cleanup += Trigger_OnDie.Subscribe(TrackKill);
+            cleanup += Trigger_Die.Subscribe(TrackKill, entity);
             foreach (Item item in spawn.owner.items)
             {
                 item.OnGained(entity);
@@ -57,9 +57,9 @@ public abstract class Phase_Combat : Phase
         }
     }
 
-    private void TrackKill(Trigger_OnDie trigger)
+    private void TrackKill(Trigger_Die trigger)
     {
-        Entity dead = trigger.effect.Target;
+        Entity dead = trigger.Effect.Target;
         int team = dead.Stat<Stat_Team>().team;
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);

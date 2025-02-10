@@ -11,8 +11,8 @@ public class Targeting_TriggeredEntity : Targeting
 
     public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
     {
-        Trigger_Entity entityTrigger = trigger as Trigger_Entity;
-        if (entityTrigger == null) return new List<Entity>();
-        return new List<Entity>() { entityTrigger.entity };
+        if(trigger.Is(out ITriggerData_OwnerEntity data))
+            return new List<Entity>() { data.Owner };
+        return new List<Entity>();
     }
 }

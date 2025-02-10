@@ -16,7 +16,7 @@ public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
     public Entity playerEntity;
     [FoldoutGroup("Player Owned")]
     public Viewer player;
-    [ShowInInspector, ReadOnly]
+    [FoldoutGroup("Player Owned"), ShowInInspector, ReadOnly]
     public Dictionary<Viewer, float> assists = new Dictionary<Viewer, float>();
 
     public void SetPlayer(Viewer player, Entity playerCharacter)

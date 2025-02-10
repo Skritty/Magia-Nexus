@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PE_GrantChanneledAction : PersistentEffect
 {
-    public Action channeledAction;
+    public Action channeledActions;
 
     public override void OnGained()
     {
-        Target.Stat<Stat_Actions>().channeledAction = channeledAction;
+        Target.Stat<Stat_Actions>().channeledAction = channeledActions;
     }
 
     public override void OnLost()

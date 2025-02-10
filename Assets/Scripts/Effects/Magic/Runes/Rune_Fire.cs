@@ -1,10 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using TwitchLib.Api.Helix.Models.Common;
-using Unity.VisualScripting;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Rune_Fire : Rune
 {
@@ -20,6 +15,7 @@ public class Rune_Fire : Rune
     public int maxStages;
     public float multiplierPerStage;
     public float circleModMultiplierPerStage;
+    public float multiplierPerConjureUse;
     [SerializeReference]
     public Targeting shape;
 
@@ -42,18 +38,38 @@ public class Rune_Fire : Rune
         spell.castSpell.spawnOnTarget = true;
         spell.lifetime = -1;
         spell.channeled = true;
-        spell.entity.Stat<Stat_Magic>().maxStages = maxStages;
-        spell.cleanup += Trigger_OnSpellStageIncrement.Subscribe(x => SpellMultiPerStage(spell, x.entity, multiplierPerStage));
-        spell.cleanup += Trigger_OnSpellMaxStage.Subscribe(x => SpellMultiPerStage(spell, x.entity, multiplierPerStage));
+        spell.blueprintEntity.Stat<Stat_Magic>().maxStages = maxStages;
+        spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageFire, spell);
     }
 
-    private void SpellMultiPerStage(Spell spell, Entity entity, float multi)
+    private void SpellMultiPerStageFire(Trigger_SpellStageIncrement trigger)
     {
-        if (spell != entity.Stat<Stat_Magic>().originSpell) return;
-        foreach(Action action in entity.Stat<Stat_Actions>().actions)
+        foreach(Action action in trigger.Owner.Stat<Stat_Actions>().actions)
         {
-            action.effectMultiplier = 1 + entity.Stat<Stat_Magic>().Stage * multi;
+            action.effectMultiplier = 1 + trigger.Owner.Stat<Stat_Magic>().Stage * multiplierPerStage;
         }
+    }
+
+    private void SpellMultiPerStageCircle(Trigger_SpellStageIncrement trigger)
+    {
+        foreach (Action action in trigger.Owner.Stat<Stat_Actions>().actions)
+        {
+            action.effectMultiplier = 1 + trigger.Owner.Stat<Stat_Magic>().Stage * circleModMultiplierPerStage;
+        }
+    }
+
+    private void ConjureMultiPerUse(Spell spell, Effect e, float multi)
+    {
+        if (e.Owner == spell.Owner) return;
+        /*foreach(KeyValuePair<EffectTag, float> tag in e.effectTags)
+        {
+            if (tag.Key.HasFlag(EffectTag.Attack | EffectTag.Spell))
+            {
+                e.effectMultiplier += multi;
+                return;
+            }
+        }*/
+        // TODO
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -62,12 +78,12 @@ public class Rune_Fire : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.cleanup += Trigger_OnSpellStageIncrement.Subscribe(x => SpellMultiPerStage(spell, x.entity, circleModMultiplierPerStage));
-                    spell.cleanup += Trigger_OnSpellMaxStage.Subscribe(x => SpellMultiPerStage(spell, x.entity, circleModMultiplierPerStage));
+                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageCircle, spell);
                     break;
                 }
             case SpellShape.Conjuration:
                 {
+                    //spell.cleanup += Trigger_OnActivateEffect.Subscribe(x => ConjureMultiPerUse(spell, x.Effect, multiplierPerConjureUse));
                     break;
                 }
             case SpellShape.Line:
@@ -77,7 +93,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    spell.entity.Stat<Stat_Projectile>().piercesRemaining += 2;
+                    spell.blueprintEntity.Stat<Stat_Projectile>().piercesRemaining += 2;
                     break;
                 }
             case SpellShape.Summon:

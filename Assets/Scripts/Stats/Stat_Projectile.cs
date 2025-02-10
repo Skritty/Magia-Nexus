@@ -6,15 +6,32 @@ using UnityEngine;
 
 public class Stat_Projectile : GenericStat<Stat_Projectile>
 {
+    [FoldoutGroup("Projectile"), SerializeReference]
+    public Effect effect;
+    [FoldoutGroup("Projectile"), SerializeReference]
+    public Targeting aoe;
+    [FoldoutGroup("Projectile"), SerializeReference, HideReferenceObjectPicker]
+    public Move movement;
     [FoldoutGroup("Projectile")]
     public int piercesRemaining;
     [FoldoutGroup("Projectile")]
     public int splitsRemaining;
+    [FoldoutGroup("Projectile")]
+    public Targeting_Exclude splitTargeting;
 
     protected override void Initialize()
     {
         base.Initialize();
-        Trigger_OnHit.Subscribe(OnHit);
+    }
+
+    public override void Tick()
+    {
+        movement.Create(Owner);
+        if (effect == null) return;
+        foreach (Entity entity in aoe.GetTargets(effect, Owner))
+        {
+            OnHit(entity);
+        }
     }
 
     public override void OnDestroy()
@@ -22,22 +39,27 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
         base.OnDestroy();
     }
 
-    private void OnHit(Trigger_OnHit trigger)
+    private void OnHit(Entity entity)
     {
-        if(--splitsRemaining >= 0)
+        effect.Create(effect, Owner, entity);
+        if (--splitsRemaining >= 0)
         {
-            CreateEntity split = new CreateEntity();
+            CreateEntity split = new CreateEntity(); // TODO: make effect have a static create
+            Targeting_Exclude exclude = splitTargeting.Clone<Targeting_Exclude>();
+            exclude.ignoredEntities.Add(entity);
+            split.targetSelector = exclude;
             split.ignoreAdditionalProjectiles = true;
             split.entity = Owner;
-            split.Create(Owner); // TODO: Split from target (pseudo-owner?)
+            split.Create(Owner.Stat<Stat_PlayerOwner>().playerEntity);
         }
         if (--piercesRemaining < 0)
         {
-            new Trigger_Expire(trigger.damage.Owner);
+            new Trigger_Expire(Owner);
         }
         else
         {
-            new Trigger_OnProjectilePierce(trigger.damage);
+            new Trigger_ProjectilePierce(effect, effect, Owner);
         }
+
     }
 }

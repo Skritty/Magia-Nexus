@@ -26,6 +26,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
 
     public int ticksPerPhase => (int)(GameManager.Instance.timePerTurn / actionsPerTurn * (1 / Time.fixedDeltaTime));
     private int phase;
+    [ShowInInspector]
     private Action currentAction;
 
     public override void Tick()
@@ -44,6 +45,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     public void AddAction(Action action)
     {
         actions.Add(action);
+        actionsOverride.Add(null);
         actionsPerTurn = actions.Count;
     }
 
@@ -159,7 +161,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
                 a?.OnStart(Owner);
             }
             currentAction?.OnStart(Owner);
-            new Trigger_OnActionStart(currentAction);
+            new Trigger_ActionStart(Owner, currentAction, Owner, currentAction);
         }
     }
 

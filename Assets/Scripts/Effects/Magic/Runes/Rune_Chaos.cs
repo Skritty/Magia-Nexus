@@ -39,9 +39,9 @@ public class Rune_Chaos : Rune
                     if (!spell.castingOnChannel)
                     {
                         spell.castingOnChannel = true;
-                        spell.cleanup = Trigger_OnSpellStageIncrement.Subscribe(x => CastOnStageGained(spell, x.entity), 5);
+                        spell.cleanup = Trigger_SpellStageIncrement.Subscribe(CastOnStageGained, spell, 5);
                     }
-                    spell.entity.Stat<Stat_Magic>().maxStages++;
+                    spell.blueprintEntity.Stat<Stat_Magic>().maxStages++;
                     break;
                 }
             case SpellShape.Conjuration:
@@ -55,11 +55,11 @@ public class Rune_Chaos : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    if(!(spell.entity.Stat<Stat_Movement>().movementSelector is Movement_HomeToTarget))
+                    if(!(spell.blueprintEntity.Stat<Stat_Movement>().movementSelector is Movement_HomeToTarget))
                     {
-                        spell.entity.Stat<Stat_Movement>().movementSelector = new Movement_HomeToTarget();
+                        spell.blueprintEntity.Stat<Stat_Movement>().movementSelector = new Movement_HomeToTarget();
                     }
-                    (spell.entity.Stat<Stat_Movement>().movementSelector as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
+                    (spell.blueprintEntity.Stat<Stat_Movement>().movementSelector as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
                     
                     break;
                 }
@@ -74,9 +74,8 @@ public class Rune_Chaos : Rune
         }
     }
 
-    private void CastOnStageGained(Spell spell, Entity entity)
+    private void CastOnStageGained(Trigger_SpellStageIncrement trigger)
     {
-        if (spell != entity.Stat<Stat_Magic>().originSpell) return;
-        spell.spellAction.OnStart(spell.entity);
+        trigger.Spell.spellAction.OnStart(trigger.Spell.blueprintEntity);
     }
 }

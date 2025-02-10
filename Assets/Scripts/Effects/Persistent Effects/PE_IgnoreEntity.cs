@@ -5,11 +5,17 @@ using UnityEngine;
 public class PE_IgnoreEntity : PersistentEffect
 {
     public PE_IgnoreEntity() { }
-    public PE_IgnoreEntity(int tick)
+    public PE_IgnoreEntity(Effect inherit, int tick)
     {
+        _source = inherit.Source;
+        _owner = inherit.Owner;
+        _target = inherit.Target;
+        effectMultiplier *= inherit.effectMultiplier;
         tickDuration = tick;
         refreshDuration = false;
-        maxStacks = 99;
+        perPlayer = true;
+        maxStacks = 999;
+        DoEffect();
     }
 
     public override void OnGained()

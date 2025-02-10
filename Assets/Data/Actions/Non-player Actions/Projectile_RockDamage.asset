@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Projectile_RockDamage
   m_EditorClassIdentifier: 
-  actionName: 
+  actionAliases: []
   actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
   timing: 2
+  effectMultiplier: 1
   effects:
   - rid: 9031231527144652837
   references:
@@ -27,17 +28,19 @@ MonoBehaviour:
     - rid: 3963142721972731907
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
         entitiesAffected: 8
         sortingMethod: 1
-        numberOfTargets: 0
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
         radius: 0.3
         angle: 180
     - rid: 3963142723388571649
       type: {class: PE_Stun, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 0
@@ -47,17 +50,20 @@ MonoBehaviour:
         tick: 0
         tickDuration: 15
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
+        alignment: 0
     - rid: 3963142723388571650
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
     - rid: 9031231527144652837
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 0.5
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 73747
@@ -70,4 +76,4 @@ MonoBehaviour:
         ownerEffects: []
         targetEffects:
         - rid: 3963142723388571649
-        temporaryTriggeredEffects: []
+        onHitEffects: []

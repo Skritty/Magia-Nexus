@@ -19,6 +19,7 @@ MonoBehaviour:
   hidden: 0
   maxUses: 0
   timing: 2
+  effectMultiplier: 1
   effects:
   - rid: 9031231527144652837
   references:
@@ -41,17 +42,14 @@ MonoBehaviour:
         ownerEffects: []
         targetEffects: []
         onHitEffects: []
-        temporaryTriggeredEffects: []
     - rid: 9031231527144652840
       type: {class: Targeting_Line, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}
         entitiesAffected: 8
         sortingMethod: 1
-        numberOfTargets: 0
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
         length: 1
         width: 0.4

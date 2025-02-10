@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class SetMovementTarget : Effect
 {
+    [FoldoutGroup("@GetType()")]
     public MovementTarget movementTarget = MovementTarget.Target;
     public override void Activate()
     {

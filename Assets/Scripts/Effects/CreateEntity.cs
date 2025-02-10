@@ -34,7 +34,7 @@ public class CreateEntity : Effect
     public bool ignoreAdditionalProjectiles;
     [FoldoutGroup("Projectile Behavior")]
     public ProjectileFanType projectileFanType = ProjectileFanType.Sequence;
-    [FoldoutGroup("Projectile Behavior")]
+    [FoldoutGroup("Projectile Behavior"), Range(0f, 180f)]
     public float projectileFanAngle = 45;
 
     public override void Activate()
@@ -48,12 +48,12 @@ public class CreateEntity : Effect
         {
             case EntityType.Basic:
                 {
-                    Create(0);
+                    Create(0).Stat<Stat_Actions>().Tick();
                     break;
                 }
             case EntityType.Projectile:
                 {
-                    int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectile | EffectTag.Targets) - 1);
+                    int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectiles) - 1);
                     for (int i = 0; i < projectileCount; i++)
                     {
                         Entity spawnedEntity = Create(i);
@@ -91,6 +91,7 @@ public class CreateEntity : Effect
                             }
                         spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);
                         new Trigger_ProjectileCreated(spawnedEntity);
+                        spawnedEntity.Stat<Stat_Actions>().Tick();
                     }
                     break;
                 }

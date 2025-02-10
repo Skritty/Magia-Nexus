@@ -13,7 +13,7 @@ public class Move : Effect
     public override void Activate()
     {
         Owner.Stat<Stat_Movement>().movementSelector?.Create(this);
-        new Trigger_MovementDirectionCalc(this);
+        new Trigger_MovementDirectionCalc(this, Target);
 
         if (rotate)
         {

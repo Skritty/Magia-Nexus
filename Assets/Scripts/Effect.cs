@@ -14,9 +14,9 @@ public abstract class Effect
     /// <summary>
     /// Ability that applied this effect (to prevent duplicates)
     /// </summary>
-    private int _sourceID;
+    protected int _sourceID;
     [FoldoutGroup("@GetType()")]//, ShowInInspector, ReadOnly]
-    private int SourceID
+    protected int SourceID
     {
         get
         {
@@ -25,7 +25,7 @@ public abstract class Effect
         }
     }
     public Effect Source => _source;
-    private Effect _source;
+    protected Effect _source;
 
     /// <summary>
     /// Entity that applied the effect
@@ -35,40 +35,25 @@ public abstract class Effect
         get => _owner;
         set => _owner = value;
     }
-    private Entity _owner;
+    protected Entity _owner;
 
     /// <summary>
     /// Entity that is recieving the effect
     /// </summary>
     public Entity Target => _target;
-    private Entity _target;
-
-    protected virtual bool UsedInCalculations => false;
+    protected Entity _target;
 
     /// <summary>
     /// Multiplies the output of the effect, multiplied through chains of effects
     /// </summary>
-    [FoldoutGroup("@GetType()"), ShowIf("@UsedInCalculations")]
+    [FoldoutGroup("@GetType()")]
     public float effectMultiplier = 1;
-    [FoldoutGroup("@GetType()"), ShowIf("@UsedInCalculations")]
-    public bool inheritEffectTagsOnTrigger; // Overrides effectTags if triggered by another effect with that effect's effectTags
-    [FoldoutGroup("@GetType()"), ShowIf("@UsedInCalculations")]
-    public SerializedDictionary<EffectTag, float> effectTags = new SerializedDictionary<EffectTag, float>() { {EffectTag.None, 1f} };
-    //[FoldoutGroup("@GetType()")]
-    //public List<EffectTagContainer> effectTags2 = new List<EffectTagContainer> { new EffectTagContainer(EffectTag.None, 1f) };
-    
+
+    [FoldoutGroup("@GetType()")]
+    public int ignoreFrames;
+
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
-
-    public float GetMultiplier()
-    {
-        float multiplier = 0;// TODO: split up multipliers? might be too complicated
-        foreach (KeyValuePair<EffectTag, float> tag in effectTags)
-        {
-            multiplier += Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CalculateModifier(tag.Key);
-        }
-        return multiplier;
-    }
 
     public float GetMultiplier(EffectTag tags)
     {
@@ -106,24 +91,15 @@ public abstract class Effect
     /// </summary>
     public void Create(Entity owner, Trigger trigger)
     {
-        Effect triggeringEffect = null;
-        if (trigger is Trigger_Effect)
-            triggeringEffect = (trigger as Trigger_Effect).effect;
-
         foreach (Entity target in targetSelector.GetTargets(this, trigger, owner))
         {
             Effect e = Clone();
             e._source = this;
             e._owner = owner;
             e._target = target;
-            if(triggeringEffect != null)
+            if (trigger.Is(out ITriggerData_Effect data))
             {
-                e.effectMultiplier *= triggeringEffect.effectMultiplier;
-                if (inheritEffectTagsOnTrigger)
-                {
-                    e.effectTags.Clear();
-                    e.effectTags.AddRange(triggeringEffect.effectTags);
-                }
+                e.effectMultiplier *= data.Effect.effectMultiplier;
             }
 
             e.DoEffect();
@@ -159,15 +135,14 @@ public abstract class Effect
     protected Effect Clone()
     {
         Effect effect = (Effect)MemberwiseClone();
-        effect.effectTags = new();
-        effect.effectTags.AddRange(effectTags);
         return effect;
     }
     
     public virtual void DoEffect()
     {
-        new Trigger_OnActivateEffect(this);
         Activate();
+        if (ignoreFrames > 0)
+            new PE_IgnoreEntity(this, ignoreFrames);
     }
 
     public abstract void Activate();
@@ -175,10 +150,7 @@ public abstract class Effect
     public int GetUID()
     {
         int UID = (int)effectMultiplier + GetType().GetHashCode();
-        foreach (KeyValuePair<EffectTag, float> tag in effectTags)
-        {
-            UID += (int)tag.Key + (int)tag.Value;
-        }
+        // TODO: Make more unique
         return UID;
     }
 }

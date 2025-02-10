@@ -12,18 +12,19 @@ public class Targeting_TriggeredEffect : Targeting
 
     public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
     {
-        Trigger_Effect damageTrigger = trigger as Trigger_Effect;
-        if(damageTrigger == null) return new List<Entity>();
-        Entity target;
-        if (selector == EffectTargetingSelector.Owner)
+        if (trigger.Is(out ITriggerData_Effect data))
         {
-            target = damageTrigger.effect.Owner;
+            Entity target;
+            if (selector == EffectTargetingSelector.Owner)
+            {
+                target = data.Effect.Owner;
+            }
+            else
+            {
+                target = data.Effect.Target;
+            }
+            return GetTargets(source, target == null ? owner : target);
         }
-        else
-        {
-            target = damageTrigger.effect.Target;
-        }
-        
-        return GetTargets(source, target == null ? owner : target);
+        return new List<Entity>();
     }
 }

@@ -92,6 +92,10 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 1130977519447835461
+      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1
     - rid: 2953181870642692187
       type: {class: Stat_Team, ns: , asm: Assembly-CSharp}
       data:
@@ -148,7 +152,7 @@ MonoBehaviour:
         trigger:
           rid: 7867064604153348211
         tasks:
-        - rid: 7867064604153348212
+        - rid: 1130977519447835461
         - rid: 7867064604153348213
     - rid: 7867064604153348210
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
@@ -156,14 +160,11 @@ MonoBehaviour:
         lockTarget: 0
     - rid: 7867064604153348211
       type: {class: Trigger_Expire, ns: , asm: Assembly-CSharp}
-      data:
-        entity: {fileID: 0}
-    - rid: 7867064604153348212
-      type: {class: Task_Filter_EntityOwner, ns: , asm: Assembly-CSharp}
       data: 
     - rid: 7867064604153348213
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
+        incompatableTriggerBehavior: 1
         effect:
           rid: 7867064604153348214
     - rid: 7867064604153348214
@@ -259,7 +260,6 @@ MonoBehaviour:
         Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
-        effectModifiers: []
     - rid: 9031231668284555340
       type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
       data:

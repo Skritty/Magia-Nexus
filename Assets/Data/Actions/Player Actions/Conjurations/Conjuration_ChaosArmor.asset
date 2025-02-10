@@ -21,103 +21,30 @@ MonoBehaviour:
   timing: 5
   effectMultiplier: 1
   effects:
-  - rid: 7867064581498077196
-  - rid: 7867064581498077198
+  - rid: 1130977519447834633
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 7867064581498077196
+    - rid: 1130977519447834633
       type: {class: FlipFlopPersistentEffect, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
-          rid: 7867064581498077197
+          rid: 1130977519447834634
         persistentEffect:
-          rid: 7867064581498077200
-    - rid: 7867064581498077197
+          rid: 1130977519447834635
+    - rid: 1130977519447834634
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}
-        conditionalOnTrigger: 0
-        conditionalTarget:
-          rid: -2
-    - rid: 7867064581498077198
-      type: {class: FlipFlopPersistentEffect, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
-        targetSelector:
-          rid: 7867064581498077199
-        persistentEffect:
-          rid: 7867064604153348148
-    - rid: 7867064581498077199
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}
-        conditionalOnTrigger: 0
-        conditionalTarget:
-          rid: -2
-    - rid: 7867064581498077200
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 262145
-            value: 0.8
-        targetSelector:
-          rid: 7867064581498077201
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        modifierType: 3
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 0
-        multiplyByTicks: 0
-    - rid: 7867064581498077201
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}
-        conditionalOnTrigger: 0
-        conditionalTarget:
-          rid: -2
-    - rid: 7867064604153348148
+    - rid: 1130977519447834635
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348149
+          rid: 1130977519447834636
         tick: 0
         tickDuration: -1
         maxStacks: 1
@@ -126,60 +53,46 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
-        triggerOrder: 0
+        triggerOrder: -5
         trigger:
-          rid: 7867064604153348150
+          rid: 1130977675299520579
         tasks:
-        - rid: 7867064604153348152
-        - rid: 7867064604153348151
-    - rid: 7867064604153348149
+        - rid: 1130977519447834873
+        - rid: 1130977519447834639
+    - rid: 1130977519447834636
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}
-        conditionalOnTrigger: 0
-        conditionalTarget:
-          rid: -2
-    - rid: 7867064604153348150
-      type: {class: Trigger_WhenHit, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 7867064604153348151
+    - rid: 1130977519447834639
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
+        incompatableTriggerBehavior: 1
         effect:
-          rid: 7867064604153348153
-    - rid: 7867064604153348152
-      type: {class: Task_Filter_EffectTarget, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 7867064604153348153
+          rid: 1130977519447834643
+    - rid: 1130977519447834643
       type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348155
-        entityType: 1
+          rid: 1130977519447834646
+        entityType: 2
         entity: {fileID: 6345354840142092050, guid: e1252b3082e22da46b0b2f14b2e1f925, type: 3}
         spawnOnTarget: 0
         movementTarget: 2
-        numberOfProjectiles: 6
+        numberOfProjectiles: 5
         ignoreAdditionalProjectiles: 0
         projectileFanType: 1
-        projectileFanAngle: 180
-    - rid: 7867064604153348155
-      type: {class: Targeting_TriggeredDamage, ns: , asm: Assembly-CSharp}
+        projectileFanAngle: 144
+    - rid: 1130977519447834646
+      type: {class: Targeting_TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}
-        conditionalOnTrigger: 0
-        conditionalTarget:
-          rid: -2
-        selector: 1
+        selector: 0
+    - rid: 1130977519447834873
+      type: {class: Task_Filter_Target, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1
+    - rid: 1130977675299520579
+      type: {class: Trigger_Hit, ns: , asm: Assembly-CSharp}
+      data: 

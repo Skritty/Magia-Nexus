@@ -18,20 +18,21 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 1
+  timing: 5
   effectMultiplier: 1
   effects:
   - rid: 7867064604153348156
   references:
     version: 2
     RefIds:
+    - rid: 1130977675299520566
+      type: {class: Trigger_Hit, ns: , asm: Assembly-CSharp}
+      data: 
     - rid: 7867064604153348156
       type: {class: FlipFlopPersistentEffect, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
           rid: 7867064604153348157
         persistentEffect:
@@ -44,9 +45,7 @@ MonoBehaviour:
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
           rid: 7867064604153348159
         tick: 0
@@ -59,34 +58,25 @@ MonoBehaviour:
         alignment: 0
         triggerOrder: -5
         trigger:
-          rid: 7867064604153348378
+          rid: 1130977675299520566
         tasks:
-        - rid: 7867064604153348160
         - rid: 7867064604153348167
         - rid: 7867064604153348161
     - rid: 7867064604153348159
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 7867064604153348160
-      type: {class: Task_Filter_EffectTarget, ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 7867064604153348161
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
+        incompatableTriggerBehavior: 1
         effect:
           rid: 7867064604153348162
     - rid: 7867064604153348162
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 270337
-            value: 0.5
-          - key: 278529
-            value: 0.2
+        ignoreFrames: 0
         targetSelector:
           rid: 7867064604153348163
         tick: 0
@@ -97,10 +87,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
-        modifierType: 3
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 0
-        multiplyByTicks: 0
+        effectModifiers: []
     - rid: 7867064604153348163
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -108,7 +95,8 @@ MonoBehaviour:
     - rid: 7867064604153348167
       type: {class: Task_Filter_Targetable, ns: , asm: Assembly-CSharp}
       data:
-        selector: 0
+        incompatableTriggerBehavior: 1
+        selector: 1
         targeting:
           rid: 7867064604153348168
     - rid: 7867064604153348168
@@ -122,6 +110,3 @@ MonoBehaviour:
         vfx: {fileID: 0}
         radius: 9999
         angle: 110
-    - rid: 7867064604153348378
-      type: {class: Trigger_WhenHit, ns: , asm: Assembly-CSharp}
-      data: 

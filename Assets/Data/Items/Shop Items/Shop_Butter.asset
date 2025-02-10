@@ -23,32 +23,31 @@ MonoBehaviour:
   grantedActions: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 3963142589493018897
+  - rid: 1130977675299520545
   references:
     version: 2
     RefIds:
-    - rid: 3963142589493018897
-      type: {class: PE_StartingDelay, ns: , asm: Assembly-CSharp}
+    - rid: 1130977675299520545
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 16777216
-            value: 1
+        ignoreFrames: 0
         targetSelector:
-          rid: 3963142589493018898
+          rid: 1130977675299520546
         tick: 0
         tickDuration: -1
-        maxStacks: 125
+        maxStacks: 1
         stacks: 1
         perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
-        tickDelay: -1
-    - rid: 3963142589493018898
+        alignment: 0
+        effectModifiers:
+        - calculationType: 0
+          damageType: 0
+          effectTag: 9
+          magnitude: 1
+    - rid: 1130977675299520546
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
         lockTarget: 0
-        primaryTarget: {fileID: 0}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AutosizeCamera : MonoBehaviour
 {
-    public Camera camera;
+    public new Camera camera;
     public float buffer;
     public float positionLerpSpeed = 0.5f;
     public float sizeLerpSpeed = 0.5f;

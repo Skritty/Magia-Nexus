@@ -18,27 +18,26 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 1
+  timing: 7
+  effectMultiplier: 1
   effects:
   - rid: 9031231668284555265
   references:
     version: 2
     RefIds:
+    - rid: 1130977517639303423
+      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
     - rid: 9031231668284555265
       type: {class: SetMovementTarget, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
+        inheritEffectTagsOnTrigger: 0
         effectTags:
           serializedPairs:
           - key: 0
             value: 1
         targetSelector:
-          rid: 9031231668284555267
+          rid: 1130977517639303423
         movementTarget: 2
-    - rid: 9031231668284555267
-      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
-        lockTarget: 0
-        primaryTarget: {fileID: 0}

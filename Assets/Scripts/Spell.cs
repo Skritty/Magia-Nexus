@@ -2,19 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Spell
 {
-    public Entity Owner;
+    public Entity Owner; // The entity that cast the spell
+    public List<Rune> runes = new List<Rune>(); // Rune formula
+    public Effect effect; // The effect of the spell (generated)
+    public List<Entity> origins = new List<Entity>(); // Entities that use the spell effect
+    public System.Action cleanup; // Clean up any trigger subscriptions when the spell is finished
+
     // For creating the spell entity
     public CreateEntity castSpell = new CreateEntity();
-    public Entity entity; // Blueprint entity to be cloned TODO: change this to be the clone as well
-    public List<Rune> runes = new List<Rune>();
+    public Entity blueprintEntity;
+    
     public SpellShape shape;
 
     // What the spell entity does
     public Action spellAction;
-    public DamageInstance effect = new DamageInstance();
+    
     public int castTargets = 1;
     public int aoeTargetsModifier = 0;
     public int lifetime = 0;
@@ -23,40 +29,12 @@ public class Spell
     public float multiplier = 0;
     public bool channeled;
     public bool castingOnChannel;
-    public System.Action cleanup;
+    
 
     public Spell(Entity owner, List<Rune> runes)
     {
         this.Owner = owner;
         this.runes.AddRange(runes);
-    }
-
-    public void AddGenericSpellEffect(float value, EffectModifierCalculationType calcType)
-    {
-        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.Damage | EffectTag.DamageDealt, value, calcType, 1, effect);
-        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.Order | EffectTag.DamageDealt, value, calcType, 1, effect);
-        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.Knockback, value, calcType, 1, effect);
-        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.MovementSpeed, value, calcType, 1, effect);
-    }
-
-    public void AddAoESize(float value, EffectModifierCalculationType calcType)
-    {
-        entity.Stat<Stat_EffectModifiers>().AddModifier(EffectTag.AoE, value, calcType, 1, effect);
-    }
-
-    public void SetHitRate(int damageTicksPerTurn)
-    {
-        (effect as DamageInstance).ignoreFrames = GameManager.Instance.ticksPerTurn / damageTicksPerTurn;
-        multiplier /= damageTicksPerTurn;
-        spellAction.timing = ActionEventTiming.OnTick;
-    }
-
-    public void SetToDoT()
-    {
-        (effect as DamageInstance).preventTriggers = true;
-        (effect as DamageInstance).skipFlatDamageReduction = true;
-        multiplier /= GameManager.Instance.ticksPerTurn;
-        spellAction.timing = ActionEventTiming.OnTick;
     }
 
     public void SetToProjectile(Targeting targeting, float baseMovementSpeed)
@@ -67,16 +45,16 @@ public class Spell
         effect.ignoreFrames = 50;
         spellAction.timing = ActionEventTiming.OnTick;
         castSpell.entityType = CreateEntity.EntityType.Projectile;
-        entity.Stat<Stat_Movement>().baseMovementSpeed = baseMovementSpeed;
-        entity.Stat<Stat_Projectile>().piercesRemaining = 1;
-        entity.transform.localScale = Vector3.one * 0.5f;
+        blueprintEntity.Stat<Stat_Movement>().baseMovementSpeed = baseMovementSpeed;
+        blueprintEntity.Stat<Stat_Projectile>().piercesRemaining = 1;
+        blueprintEntity.transform.localScale = Vector3.one * 0.5f;
     }
 
     public void GenerateSpell(Entity spellPrefab, Spell chainCast)
     {
-        entity = GameObject.Instantiate(spellPrefab);
-        entity.gameObject.SetActive(false);
-        entity.Stat<Stat_Magic>().originSpell = this;
+        blueprintEntity = GameObject.Instantiate(spellPrefab);
+        blueprintEntity.gameObject.SetActive(false);
+        blueprintEntity.Stat<Stat_Magic>().originSpell = this;
         spellAction = new Action();
         castSpell.projectileFanType = CreateEntity.ProjectileFanType.EvenlySpaced;
 
@@ -85,12 +63,12 @@ public class Spell
         // Actions
         for(int i = 0; i < actionsPerTurn; i++)
         {
-            entity.Stat<Stat_Actions>().AddAction(spellAction);
+            blueprintEntity.Stat<Stat_Actions>().AddAction(spellAction);
         }
 
         // Spellcast 
         spellAction.effects.Add(effect);
-        castSpell.entity = entity;
+        castSpell.entity = blueprintEntity;
         effect.effectMultiplier *= multiplier;
 
         // Channeling
@@ -99,24 +77,18 @@ public class Spell
             PE_GrantChanneledAction channeledActionPE = new PE_GrantChanneledAction();
             Action channel = new Action();
             channel.effects.Add(new ChannelSpells());
-            channeledActionPE.channeledAction = channel;
+            channeledActionPE.channeledActions = channel;
             channeledActionPE.Create(null, Owner, Owner);
 
-            Trigger_OnSpellMaxStage.Subscribe(FinishChanneling);
+            Trigger_SpellMaxStage.Subscribe(FinishChanneling, this);
         }
 
         // Spell Duration
-        /*if (destroyAfterPierces)
-        {
-            TriggeredEffect expireTrigger = new TriggeredEffect(new Trigger_Expire(), new Expire());
-            expireTrigger.triggerOrder = 99;
-            expireTrigger.Create(entity);
-        }*/
         if(lifetime >= 0)
         {
             PE_ExpireEntity expire = new PE_ExpireEntity();
-            expire.tickDuration = lifetime + 1;
-            expire.Create(entity);
+            expire.tickDuration = lifetime - 1;
+            expire.Create(blueprintEntity);
         }
 
         // Spell Triggers
@@ -130,11 +102,11 @@ public class Spell
     }
 
     // TODO: Make spell contain stats about the active spell entities
-    private void FinishChanneling(Trigger_Entity trigger)
+    private void FinishChanneling(Trigger_SpellMaxStage trigger)
     {
-        spellAction.OnStart(trigger.entity);
+        spellAction.OnStart(trigger.Owner);
         Owner.Stat<Stat_PersistentEffects>().RemoveEffect<PE_GrantChanneledAction>(-1);
-        new Trigger_Expire(trigger.entity);
+        new Trigger_Expire(trigger.Owner);
     }
 
     private void GenerateShape()
@@ -146,5 +118,10 @@ public class Spell
             else
                 runes[i].ShapeModifier(this, i);
         }
+    }
+
+    public void StopSpell()
+    {
+        cleanup?.Invoke();
     }
 }

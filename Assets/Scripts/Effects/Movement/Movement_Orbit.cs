@@ -17,7 +17,7 @@ public class Movement_Orbit : MovementDirectionSelector
 
     private void SetMoveDir()
     {
-        float orbitDist = orbitDistance * Target.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoE);
+        float orbitDist = orbitDistance * Target.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize);
         Vector3 dirToTarget = Vector3.zero;
         bool zero = false;
         if (Target.Stat<Stat_Movement>().movementTarget != null)

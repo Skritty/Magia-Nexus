@@ -5,14 +5,14 @@ using UnityEngine;
 public abstract class Rune : Effect
 {
     public RuneElement element;
-    public float effectMultiplierIncrease;
-    public EffectTag damageTags;
+    public float magicEffectFlatDamage;
+    public DamageType damageType;
     public Action opposite;
 
     public override void Activate()
     {
         Owner.Stat<Stat_Magic>().runes.Add(this);
-        new Trigger_OnRuneUsed(this);
+        new Trigger_RuneUsed(this, this, Target);
     }
     // Magic Effect On Hit
     public abstract void MagicEffect(DamageInstance damage);
