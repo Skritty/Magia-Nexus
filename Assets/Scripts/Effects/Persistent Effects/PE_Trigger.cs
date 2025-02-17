@@ -20,7 +20,7 @@ public class PE_Trigger : PersistentEffect
             Debug.LogError($"NO TRIGGER SELECTED | {Owner.name} -> {Target.name}: {GetUID()}");
             return;
         }
-        unsubscribe = trigger.Subscribe(OnTrigger, triggerOrder);
+        unsubscribe = trigger.Subscribe(OnTrigger, null, triggerOrder);
     }
 
     public override void OnLost()

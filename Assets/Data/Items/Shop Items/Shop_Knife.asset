@@ -43,7 +43,7 @@ MonoBehaviour:
         contributeToAssists: 0
         alignment: 0
         effectModifiers:
-        - calculationType: 3
+        - calculationType: 0
           damageType: 2
           effectTag: 2
           magnitude: 10

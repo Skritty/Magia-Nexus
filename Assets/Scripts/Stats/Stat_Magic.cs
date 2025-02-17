@@ -9,24 +9,9 @@ public class Stat_Magic : GenericStat<Stat_Magic>
     [SerializeReference, FoldoutGroup("Magic")]
     public List<Rune> runes = new List<Rune>(); // spellcasting queue
     [SerializeReference, FoldoutGroup("Magic")]
-    public List<Entity> ownedSpells = new List<Entity>(); // spellcasting queue
-    [FoldoutGroup("Magic")]
-    public int maxStages;
-    [FoldoutGroup("Magic")]
-    private int _stage;
-    public int Stage
-    {
-        get => _stage;
-        set
-        {
-            _stage = value;
-            new Trigger_SpellStageIncrement(Owner, originSpell, Owner, originSpell);
-            if (_stage == maxStages)
-            {
-                new Trigger_SpellMaxStage(Owner, originSpell, Owner, originSpell);
-            }
-        }
-    }
+    public List<Spell> ownedSpells = new List<Spell>();
+    public bool useRunesToEnchantAttacks;
+    public bool consumeRunesOnEnchant = true;
 }
 
 public enum SpellShape { Circle, Conjuration, Line, Projectile, Summon, Curse }

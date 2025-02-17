@@ -9,6 +9,18 @@ public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCa
         Invoke(bindingObjects);
     }
 }
+public class Trigger_PreHit : Trigger<Trigger_PreHit>, ITriggerData_DamageInstance
+{
+    private DamageInstance _damageInstance;
+    public DamageInstance Damage => _damageInstance;
+    public Effect Effect => _damageInstance;
+    public Trigger_PreHit() { }
+    public Trigger_PreHit(DamageInstance damageInstance, params object[] bindingObjects)
+    {
+        _damageInstance = damageInstance;
+        Invoke(bindingObjects);
+    }
+}
 public class Trigger_Hit : Trigger<Trigger_Hit>, ITriggerData_DamageInstance
 {
     private DamageInstance _damageInstance;
@@ -39,7 +51,7 @@ public class Trigger_Die : Trigger<Trigger_Die>, ITriggerData_OwnerEntity, ITrig
     public DamageInstance Damage => _damageInstance;
     public Effect Effect => _damageInstance;
     private Entity _owner;
-    public Entity Owner => _owner;
+    public Entity Entity => _owner;
 
     public Trigger_Die() { }
     public Trigger_Die(DamageInstance damageInstance, params object[] bindingObjects)
@@ -80,6 +92,32 @@ public class Trigger_ProjectilePierce : Trigger<Trigger_ProjectilePierce>, ITrig
     public Effect Effect => _effect;
     public Trigger_ProjectilePierce() { }
     public Trigger_ProjectilePierce(Effect effect, params object[] bindingObjects)
+    {
+        _effect = effect;
+        Invoke(bindingObjects);
+    }
+}
+
+public class Trigger_PersistentEffectGained : Trigger<Trigger_PersistentEffectGained>, ITriggerData_Effect, ITriggerData_PersistentEffect
+{
+    private Effect _effect;
+    public Effect Effect => _effect;
+    public PersistentEffect PersistentEffect => _effect as PersistentEffect;
+    public Trigger_PersistentEffectGained() { }
+    public Trigger_PersistentEffectGained(Effect effect, params object[] bindingObjects)
+    {
+        _effect = effect;
+        Invoke(bindingObjects);
+    }
+}
+
+public class Trigger_PersistentEffectLost : Trigger<Trigger_PersistentEffectLost>, ITriggerData_Effect, ITriggerData_PersistentEffect
+{
+    private Effect _effect;
+    public Effect Effect => _effect;
+    public PersistentEffect PersistentEffect => _effect as PersistentEffect;
+    public Trigger_PersistentEffectLost() { }
+    public Trigger_PersistentEffectLost(Effect effect, params object[] bindingObjects)
     {
         _effect = effect;
         Invoke(bindingObjects);

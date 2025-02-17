@@ -29,16 +29,17 @@ public enum EffectTargetingSelector { Owner, Target }
 public abstract class Targeting
 {
     protected Entity Owner;
+    protected Entity proxy;
     [ShowInInspector]
     protected Entity primaryTarget;
     public bool lockTarget;
     
-    public abstract List<Entity> GetTargets(Effect source, Entity owner);
+    public abstract List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null);
     public abstract List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner);
     public virtual void OnDrawGizmos(Transform owner) { }
-    public virtual T Clone<T>() where T : Targeting
+    public virtual Targeting Clone()
     {
-        return (T)MemberwiseClone();
+        return (Targeting)MemberwiseClone();
     }
 }
 
@@ -52,12 +53,20 @@ public abstract class MultiTargeting : Targeting
     public Vector3 offset;
     public VFX vfx;
     protected List<Entity> targets;
-    protected Vector3  GetCenter(Entity owner)
+    protected Vector3 GetCenter()
     {
-        return owner.transform.position + Quaternion.FromToRotation(Vector3.up, owner.Stat<Stat_Movement>().facingDir) * offset;
+        if(proxy != null)
+        {
+            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir) * offset; // Direction still determined by owner
+        }
+        else
+        {
+            return Owner.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir) * offset;
+        }
+        
     }
 
-    public override List<Entity> GetTargets(Effect source, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
     {
         if(owner == null)
         {
@@ -69,6 +78,7 @@ public abstract class MultiTargeting : Targeting
             return targets;
         }
         this.Owner = owner;
+        this.proxy = proxy;
         targets = new List<Entity>();
         TargetFilter targetType;
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>())

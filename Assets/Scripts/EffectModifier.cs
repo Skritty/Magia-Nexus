@@ -16,7 +16,7 @@ public enum EffectModifierCalculationType
 [Serializable]
 public class EffectModifier
 {
-    public EffectModifierCalculationType calculationType = EffectModifierCalculationType.Flat;
+    public EffectModifierCalculationType calculationType;
     public DamageType damageType;
     public EffectTag effectTag;
     public float magnitude;
@@ -59,16 +59,21 @@ public class EffectModifier
         }
     }
 
+    public EffectModifier() { }
+
     /// <summary>
     /// Create a new root EffectModifier
     /// </summary>
-    public EffectModifier()
+    public EffectModifier(bool root = false)
     {
-        SetAllMagnitudes(1, 1);
-        calculationType = EffectModifierCalculationType.Multiplicative;
-        EffectModifier subcalculations = new EffectModifier(EffectModifierCalculationType.Flat);
-        //subcalculations.type = EffectModifierCalculationType.Additive;
-        submodifiers.Add(subcalculations);
+        if (root)
+        {
+            SetAllMagnitudes(1, 1);
+            calculationType = EffectModifierCalculationType.Multiplicative;
+            EffectModifier subcalculations = new EffectModifier(EffectModifierCalculationType.Flat);
+            //subcalculations.type = EffectModifierCalculationType.Additive;
+            submodifiers.Add(subcalculations);
+        }
     }
 
     protected EffectModifier(EffectModifierCalculationType type)
@@ -135,7 +140,7 @@ public class EffectModifier
 
     public static EffectModifier CreateCalculation(Effect contributingEffect, bool noEffectDefaultFlat = true, DamageType defaultFlat = DamageType.None)
     {
-        EffectModifier rootCalculation = new EffectModifier();
+        EffectModifier rootCalculation = new EffectModifier(true);
         if (contributingEffect == null)
         {
             rootCalculation.AddSubcalculation(defaultFlat);
@@ -197,7 +202,6 @@ public class EffectModifier
         foreach (EffectModifier modifier in submodifiers)
         {
             modifier.Solve();
-
             switch (calculationType)
             {
                 case EffectModifierCalculationType.Flat:
@@ -299,7 +303,8 @@ public class EffectModifier
             {
                 if (float.IsNaN(totalMagnitude))
                 {
-                    Debug.LogWarning($"NAN Contribution Warning! Owner: {effect.Owner}, Effect: {effect.Source}, Magnitude: {magnitude}");
+                    // TODO: this keeps happening
+                    //Debug.LogWarning($"NAN Contribution Warning! Owner: {effect.Owner}, Effect: {effect.Source}, Magnitude: {magnitude}, TotalMagnitude: {totalMagnitude}");
                 }
                 else if (!contributors.TryAdd(effect.Owner, totalMagnitude))
                 {
@@ -310,7 +315,7 @@ public class EffectModifier
             {
                 if (float.IsNaN(totalMagnitude))
                 {
-                    Debug.LogWarning($"NAN Contribution Warning! Owner: {effect.Owner}, Effect: {effect.Source}, Magnitude: {magnitude}");
+                    //Debug.LogWarning($"NAN Contribution Warning! Owner: {effect.Owner}, Effect: {effect.Source}, Magnitude: {magnitude}");
                 }
                 else if (!contributors.TryAdd(effect.Owner, -mitigatedMagnitude))
                 {

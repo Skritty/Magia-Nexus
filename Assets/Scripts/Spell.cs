@@ -2,34 +2,38 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Spell
 {
     public Entity Owner; // The entity that cast the spell
     public List<Rune> runes = new List<Rune>(); // Rune formula
     public Effect effect; // The effect of the spell (generated)
-    public List<Entity> origins = new List<Entity>(); // Entities that use the spell effect
+    public List<Entity> proxies = new List<Entity>(); // Entities that use the spell effect
     public System.Action cleanup; // Clean up any trigger subscriptions when the spell is finished
+    public int maxStages;
+    private int _stage;
+    public int Stage
+    {
+        get => _stage;
+        set
+        {
+            _stage = value;
+            new Trigger_SpellStageIncrement(Owner, this, Owner, this);
+            if (_stage == maxStages)
+            {
+                new Trigger_SpellMaxStage(Owner, this, Owner, this);
+            }
+        }
+    }
 
-    // For creating the spell entity
-    public CreateEntity castSpell = new CreateEntity();
-    public Entity blueprintEntity;
-    
+    // Spell Generating Info
+    public Effect spellcast;
     public SpellShape shape;
-
-    // What the spell entity does
-    public Action spellAction;
-    
-    public int castTargets = 1;
-    public int aoeTargetsModifier = 0;
-    public int lifetime = 0;
-    public bool destroyAfterPierces;
-    public int actionsPerTurn = 1;
-    public float multiplier = 0;
     public bool channeled;
-    public bool castingOnChannel;
-    
+    public bool ignoreMaxStageCast;
+    public int chainsRemaining;
+    public int additionalCastTargets;
+    public int proxyLifetime;
 
     public Spell(Entity owner, List<Rune> runes)
     {
@@ -37,76 +41,95 @@ public class Spell
         this.runes.AddRange(runes);
     }
 
-    public void SetToProjectile(Targeting targeting, float baseMovementSpeed)
+    public void SetToProjectile(CreateEntity createProxies)
     {
-        destroyAfterPierces = true;
-        lifetime = 200;
-        effect.targetSelector = targeting;
         effect.ignoreFrames = 50;
-        spellAction.timing = ActionEventTiming.OnTick;
-        castSpell.entityType = CreateEntity.EntityType.Projectile;
-        blueprintEntity.Stat<Stat_Movement>().baseMovementSpeed = baseMovementSpeed;
-        blueprintEntity.Stat<Stat_Projectile>().piercesRemaining = 1;
-        blueprintEntity.transform.localScale = Vector3.one * 0.5f;
+        cleanup += Trigger_ProjectileCreated.Subscribe(SetUpProjectile, createProxies);
     }
 
-    public void GenerateSpell(Entity spellPrefab, Spell chainCast)
+    private void SetUpProjectile(Trigger_ProjectileCreated trigger)
     {
-        blueprintEntity = GameObject.Instantiate(spellPrefab);
-        blueprintEntity.gameObject.SetActive(false);
-        blueprintEntity.Stat<Stat_Magic>().originSpell = this;
-        spellAction = new Action();
-        castSpell.projectileFanType = CreateEntity.ProjectileFanType.EvenlySpaced;
-
-        GenerateShape();
-
-        // Actions
-        for(int i = 0; i < actionsPerTurn; i++)
-        {
-            blueprintEntity.Stat<Stat_Actions>().AddAction(spellAction);
-        }
-
-        // Spellcast 
-        spellAction.effects.Add(effect);
-        castSpell.entity = blueprintEntity;
-        effect.effectMultiplier *= multiplier;
-
-        // Channeling
-        if (channeled)
-        {
-            PE_GrantChanneledAction channeledActionPE = new PE_GrantChanneledAction();
-            Action channel = new Action();
-            channel.effects.Add(new ChannelSpells());
-            channeledActionPE.channeledActions = channel;
-            channeledActionPE.Create(null, Owner, Owner);
-
-            Trigger_SpellMaxStage.Subscribe(FinishChanneling, this);
-        }
-
-        // Spell Duration
-        if(lifetime >= 0)
-        {
-            PE_ExpireEntity expire = new PE_ExpireEntity();
-            expire.tickDuration = lifetime - 1;
-            expire.Create(blueprintEntity);
-        }
-
-        // Spell Triggers
-        /*if (chainCast != null)
-        {
-            TriggeredEffect nextSpellcastTrigger = new TriggeredEffect();
-            nextSpellcastTrigger.effect = chainCast.castSpell;
-            nextSpellcastTrigger.trigger = nextSpellTrigger;
-            entity.Stat<Stat_PersistentEffects>().ApplyEffect(nextSpellcastTrigger);
-        }*/
+        trigger.Entity.Stat<Stat_Magic>().runes.AddRange(runes);
+        trigger.Entity.Stat<Stat_Magic>().useRunesToEnchantAttacks = true;
+        trigger.Entity.Stat<Stat_Magic>().consumeRunesOnEnchant = false;
     }
 
-    // TODO: Make spell contain stats about the active spell entities
+    public void GenerateSpell(Effect spellcast, Spell chainCast)
+    {
+        this.spellcast = spellcast;
+        GenerateShape();
+        cleanup += Trigger_Hit.Subscribe((x) => new Trigger_SpellEffectApplied(x.Effect, Owner, this, effect, Owner, this), effect);
+        (effect.targetSelector as MultiTargeting).numberOfTargets += Mathf.Clamp(additionalCastTargets, 1, int.MaxValue);
+        if (!channeled) CastFromProxies();
+    }
+
+    public void AddChaining(int additionalBranches)
+    {
+        if(chainsRemaining == 0)
+        {
+            cleanup += Trigger_Hit.Subscribe(ChainCast);
+        }
+        chainsRemaining += additionalBranches;
+    }
+
+    private void ChainCast(Trigger_Hit trigger)
+    {
+        if (--chainsRemaining >= 0)
+        {
+            CastSpell(trigger.Effect.Target);
+        }
+    }
+
+    public void AddRunesToDamageInstance(DamageInstance damage)
+    {
+        damage.runes.AddRange(runes);
+    }
+
+    public void SetCastOnStageGained()
+    {
+        ignoreMaxStageCast = true;
+        cleanup += Trigger_SpellStageIncrement.Subscribe(x => CastFromProxies(), this, 5);
+    }
+
+    public void SetChannelSpell(int maxStages)
+    {
+        this.maxStages = maxStages;
+        channeled = true;
+        Owner.Stat<Stat_Actions>().channelInstead = true;
+        cleanup += Trigger_Channel.Subscribe(ChannelSpells, Owner);
+        cleanup += Trigger_SpellMaxStage.Subscribe(FinishChanneling, this);
+    }
+
+    private void ChannelSpells(Trigger_Channel trigger)
+    {
+        foreach (Spell spell in trigger.Entity.Stat<Stat_Magic>().ownedSpells)
+        {
+            if(!spell.channeled)
+            spell.Stage++;
+        }
+    }
+
     private void FinishChanneling(Trigger_SpellMaxStage trigger)
     {
-        spellAction.OnStart(trigger.Owner);
-        Owner.Stat<Stat_PersistentEffects>().RemoveEffect<PE_GrantChanneledAction>(-1);
-        new Trigger_Expire(trigger.Owner);
+        trigger.Spell.Owner.Stat<Stat_Actions>().channelInstead = false;
+        if (ignoreMaxStageCast) return;
+        CastFromProxies();
+    }
+
+    public void CastFromProxies()
+    {
+        foreach (Entity proxy in proxies)
+        {
+            CastSpell(proxy);
+        }
+    }
+
+    public void CastSpell(Entity proxy)
+    {
+        for (int targets = 0; targets < additionalCastTargets + Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.CastTargets); targets++)
+        {
+            effect.Create(Owner, proxy);
+        }
     }
 
     private void GenerateShape()

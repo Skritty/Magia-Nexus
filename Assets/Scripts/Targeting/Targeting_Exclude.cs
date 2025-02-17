@@ -7,7 +7,7 @@ public class Targeting_Exclude : Targeting
     [SerializeReference]
     public Targeting targeting;
     public List<Entity> ignoredEntities;
-    public override List<Entity> GetTargets(Effect source, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
     {
         List<Entity> targets = targeting.GetTargets(source, owner);
         targets.RemoveAll(x => ignoredEntities.Contains(x));

@@ -17,7 +17,7 @@ public class Targeting_Line : MultiTargeting
     {
         if (length == 0 || width == 0) return false;
 
-        Vector3 dirToEntity = target.transform.position - GetCenter(Owner);
+        Vector3 dirToEntity = target.transform.position - GetCenter();
         Vector3 dirToTarget = Owner.Stat<Stat_Movement>().facingDir;
         Vector3 projectedDir = Vector3.Project(dirToEntity, dirToTarget);
         if (Vector3.Dot(dirToEntity, dirToTarget) < 0) return false;

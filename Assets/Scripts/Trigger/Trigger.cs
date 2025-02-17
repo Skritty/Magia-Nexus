@@ -17,7 +17,7 @@ public abstract class Trigger : ITriggerData
         return data != null;
     }
     public abstract void Invoke(params object[] bindingObjects);
-    public abstract System.Action Subscribe(Action<Trigger> method, int order = 0);
+    public abstract System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0);
 }
 
 public abstract class Trigger<T> : Trigger where T : Trigger
@@ -35,7 +35,7 @@ public abstract class Trigger<T> : Trigger where T : Trigger
         }
     }
 
-    public override System.Action Subscribe(Action<Trigger> method, int order = 0) => Subscribe(method, order);
+    public override System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0) => Subscribe(method, bindingObject, order);
 
     /// <summary>
     /// Subscribes a method to this Trigger. Be sure to set conditionals and use the unsubscribe method that is returned.
@@ -116,14 +116,14 @@ public class Trigger_OnSomethingHappens : Trigger<Trigger_OnSomethingHappens>
 
 public class Trigger_Immediate : Trigger<Trigger_Immediate>
 {
-    public override System.Action Subscribe(Action<Trigger> method, int order = 0)
+    public override System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0)
     {
         return () => {};
     }
 }
 public class Trigger_OnRemove : Trigger<Trigger_OnRemove>
 {
-    public override System.Action Subscribe(Action<Trigger> method, int order = 0)
+    public override System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0)
     {
         return () => method.Invoke(this);
     }

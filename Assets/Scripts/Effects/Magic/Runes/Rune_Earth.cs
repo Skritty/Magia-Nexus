@@ -13,7 +13,7 @@ public class Rune_Earth : Rune
 
     [Header("Spell Shape")]
     [SerializeReference]
-    public Targeting shape;
+    public CreateEntity createProjectiles;
 
     public override void MagicEffect(DamageInstance damage)
     {
@@ -30,8 +30,9 @@ public class Rune_Earth : Rune
     public override void Shape(Spell spell)
     {
         spell.shape = SpellShape.Projectile;
-        spell.castSpell.projectileFanAngle = 30f;
-        spell.SetToProjectile(shape, 6f);
+        spell.effect = createProjectiles.Clone();
+        spell.SetToProjectile(createProjectiles);
+        (spell.effect as CreateEntity).projectileFanAngle = 30f;
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -53,7 +54,7 @@ public class Rune_Earth : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    spell.castSpell.numberOfProjectiles += 2;
+                    (spell.effect as CreateEntity).numberOfProjectiles += 2;
                     break;
                 }
             case SpellShape.Summon:

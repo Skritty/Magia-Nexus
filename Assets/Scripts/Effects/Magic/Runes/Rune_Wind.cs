@@ -14,8 +14,7 @@ public class Rune_Wind : Rune
     public Effect magicEffectModifier;
 
     [Header("Spell Shape")]
-    [SerializeReference]
-    public Targeting shape;
+    public DamageInstance lineEffect;
 
     public override void MagicEffect(DamageInstance damage)
     {
@@ -30,7 +29,9 @@ public class Rune_Wind : Rune
     public override void Shape(Spell spell)
     {
         spell.shape = SpellShape.Line;
-        spell.effect.targetSelector = shape;
+        spell.effect = lineEffect.Clone();
+        spell.AddRunesToDamageInstance(spell.effect as DamageInstance);
+        spell.proxies.Add(spell.Owner);
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -48,14 +49,14 @@ public class Rune_Wind : Rune
                 }
             case SpellShape.Line:
                 {
-                    spell.blueprintEntity.Stat<Stat_Projectile>().splitsRemaining += 1;
-                    spell.aoeTargetsModifier -= 1;
+                    spell.AddChaining(1);
+                    spell.additionalCastTargets -= 1;
                     break;
                 }
             case SpellShape.Projectile:
                 {
-                    spell.blueprintEntity.Stat<Stat_Projectile>().splitsRemaining += 1;
-                    spell.blueprintEntity.Stat<Stat_Projectile>().piercesRemaining -= 1;
+                    //spell.proxyBlueprint.Stat<Stat_Projectile>().splitsRemaining += 1;
+                    //spell.proxyBlueprint.Stat<Stat_Projectile>().piercesRemaining -= 1;
                     break;
                 }
             case SpellShape.Summon:
@@ -71,6 +72,6 @@ public class Rune_Wind : Rune
 
     private void StageIncrease(Trigger_SpellCast trigger)
     {
-        trigger.Spell.blueprintEntity.Stat<Stat_Magic>().Stage++;
+        //trigger.Spell.proxyBlueprint.Stat<Stat_Magic>().Stage++;
     }
 }

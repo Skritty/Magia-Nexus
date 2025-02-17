@@ -316,13 +316,43 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1130977541448269887
-      type: {class: Trigger_OnDie, ns: , asm: Assembly-CSharp}
+    - rid: 1130977698592063696
+      type: {class: Trigger_Die, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 1130977541448270228
+    - rid: 1130977699628843585
       type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+    - rid: 1130977699628843586
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 1130977700642291803
+      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 1130977700642291804
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 0
+        triggerOrder: 0
+        trigger:
+          rid: 1130977700642291807
+        tasks: []
+    - rid: 1130977700642291804
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 1130977700642291807
+      type: {class: Trigger_Die, ns: , asm: Assembly-CSharp}
+      data: 
     - rid: 3492845359303229445
       type: {class: Stat_Life, ns: , asm: Assembly-CSharp}
       data:
@@ -371,8 +401,8 @@ MonoBehaviour:
     - rid: 7867064604153348194
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 7867064604153348195
         tick: 0
@@ -385,9 +415,9 @@ MonoBehaviour:
         alignment: 0
         triggerOrder: 9999
         trigger:
-          rid: 1130977541448269887
+          rid: 1130977698592063696
         tasks:
-        - rid: 1130977541448270228
+        - rid: 1130977699628843585
         - rid: 7867064604153348199
     - rid: 7867064604153348195
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
@@ -402,16 +432,12 @@ MonoBehaviour:
     - rid: 7867064604153348200
       type: {class: Expire, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
+        ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348201
+          rid: 1130977699628843586
         disable: 1
         delay: 0
-    - rid: 7867064604153348201
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
     - rid: 9031231465990389774
       type: {class: Stat_PersistentEffects, ns: , asm: Assembly-CSharp}
       data:
@@ -420,6 +446,7 @@ MonoBehaviour:
         mergeBehavior: 0
         persistentEffects:
         - rid: 7867064604153348194
+        - rid: 1130977700642291803
     - rid: 9031231527144652886
       type: {class: Stat_Magic, ns: , asm: Assembly-CSharp}
       data:

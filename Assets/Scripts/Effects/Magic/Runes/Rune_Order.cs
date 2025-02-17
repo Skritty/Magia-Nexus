@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Rune_Order : Rune
@@ -13,7 +12,11 @@ public class Rune_Order : Rune
 
     [Header("Spell Shape")]
     [SerializeReference]
-    public Targeting shape;
+    public CreateEntity createSummons;
+    public Dictionary<RuneElement, Action> summonRunes = new();
+    public Action invoke;
+    [SerializeReference]
+    public PE_OverrideActions meleeOverride;
 
     public override void MagicEffect(DamageInstance damage)
     {
@@ -30,8 +33,27 @@ public class Rune_Order : Rune
     public override void Shape(Spell spell)
     {
         spell.shape = SpellShape.Summon;
-        spell.lifetime = -1;
-        spell.effect.targetSelector = shape;
+        spell.effect = createSummons.Clone();
+        spell.cleanup += Trigger_SummonCreated.Subscribe(x => SetupSummon(spell, x.Entity), spell.effect);
+    }
+
+    private void SetupSummon(Spell spell, Entity entity)
+    {
+        for(int i = 1; i < spell.runes.Count; i++)
+        {
+            entity.Stat<Stat_Actions>().AddAction(summonRunes[spell.runes[i].element]);
+        }
+        switch (spell.runes[spell.runes.Count - 1].element)
+        {
+            case RuneElement.Fire:
+            case RuneElement.Earth:
+            case RuneElement.Order:
+                {
+                    meleeOverride.Create(meleeOverride);
+                    break;
+                }
+        }
+        Trigger_TurnComplete.Subscribe(x => invoke.OnStart(x.Entity));
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -40,7 +62,7 @@ public class Rune_Order : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.blueprintEntity.Stat<Stat_Magic>().maxStages += 2;
+                    //spell.proxyBlueprint.Stat<Stat_Magic>().maxStages += 2;
                     break;
                 }
             case SpellShape.Conjuration:
@@ -53,13 +75,13 @@ public class Rune_Order : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    spell.lifetime += GameManager.Instance.ticksPerTurn * 2;
+                    /*spell.lifetime += GameManager.Instance.ticksPerTurn * 2;
                     spell.castSpell.projectileFanAngle = 180f;
                     spell.castSpell.movementTarget = MovementTarget.Owner;
                     Movement_Orbit orbit = new Movement_Orbit();
                     orbit.orbitDistance = 1.75f;
-                    spell.blueprintEntity.Stat<Stat_Movement>().movementSelector = orbit;
-                    spell.blueprintEntity.Stat<Stat_Movement>().baseMovementSpeed = 4;
+                    spell.proxyBlueprint.Stat<Stat_Movement>().movementSelector = orbit;
+                    spell.proxyBlueprint.Stat<Stat_Movement>().baseMovementSpeed = 4;*/
                     break;
                 }
             case SpellShape.Summon:
@@ -68,6 +90,7 @@ public class Rune_Order : Rune
                 }
             case SpellShape.Curse:
                 {
+                    spell.additionalCastTargets++;
                     break;
                 }
         }

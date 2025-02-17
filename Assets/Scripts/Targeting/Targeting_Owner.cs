@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Targeting_Owner : Targeting
 {
-    public override List<Entity> GetTargets(Effect source, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
     {
         return new List<Entity>() { owner.Stat<Stat_PlayerOwner>().playerEntity };
     }

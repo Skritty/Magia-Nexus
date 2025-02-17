@@ -62,6 +62,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
         effect.tick = 0;
         persistentEffects.Add(effect);
         effect.DoForAllStacks(() => effect.OnGained());
+        new Trigger_PersistentEffectGained(effect, effect.Owner, effect.Target, effect.Source);
     }
 
     public List<PersistentEffect> GetEffectsViaReference(PersistentEffect reference, Entity owner = null)
@@ -104,7 +105,11 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
                 {
                     e.DoForAllStacks(() => e.OnLost(), Mathf.Clamp(-stacks, 0, e.stacks));
                     e.stacks += stacks;
-                    if (e.stacks <= 0) persistentEffects.Remove(e);
+                    if (e.stacks <= 0)
+                    {
+                        persistentEffects.Remove(e);
+                        new Trigger_PersistentEffectLost(e, e.Owner, e.Target, e.Source);
+                    }
                 }
                 return;
             }
@@ -147,6 +152,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
                     effect.ApplyContribution();
                 });
                 persistentEffects.Remove(effect);
+                new Trigger_PersistentEffectLost(effect, effect.Owner, effect.Target, effect.Source);
                 continue;
             }
             effect.DoForAllStacks(() => effect.OnTick());

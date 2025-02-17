@@ -22,7 +22,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     [FoldoutGroup("Actions")]
     public List<Action> actionsOverride = new List<Action>();
     [FoldoutGroup("Actions")]
-    public Action channeledAction;
+    public bool channelInstead;
 
     public int ticksPerPhase => (int)(GameManager.Instance.timePerTurn / actionsPerTurn * (1 / Time.fixedDeltaTime));
     private int phase;
@@ -134,16 +134,15 @@ public class Stat_Actions : GenericStat<Stat_Actions>
         if (actions.Count == 0 || tick < startingTickDelay - Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Initiative)) return;
         if (tick % ticksPerPhase == 0)
         {
-            if (channeledAction)
+            currentAction?.OnEnd(Owner);
+            if (channelInstead)
             {
-                currentAction?.OnEnd(Owner);
-                currentAction = channeledAction;
+                new Trigger_Channel(Owner, Owner);
             }
             else
             {
                 phase++;
                 if (phase - 1 == actions.Count) phase = 1;
-                currentAction?.OnEnd(Owner);
                 if(actionsOverride[phase - 1])
                 {
                     currentAction = actionsOverride[phase - 1];

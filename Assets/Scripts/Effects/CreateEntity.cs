@@ -7,12 +7,7 @@ using UnityEngine;
 
 public class CreateEntity : Effect
 {
-    public enum EntityType
-    {
-        Basic = 1,
-        Projectile = 2
-    }
-
+    public enum EntityType { Basic, Projectile, Summon }
     public enum ProjectileFanType
     {
         EvenlySpaced = 1,
@@ -28,6 +23,7 @@ public class CreateEntity : Effect
     public bool spawnOnTarget;
     [FoldoutGroup("@GetType()")]
     public MovementTarget movementTarget = MovementTarget.Target;
+
     [FoldoutGroup("Projectile Behavior")]
     public int numberOfProjectiles = 1;
     [FoldoutGroup("Projectile Behavior")]
@@ -36,6 +32,13 @@ public class CreateEntity : Effect
     public ProjectileFanType projectileFanType = ProjectileFanType.Sequence;
     [FoldoutGroup("Projectile Behavior"), Range(0f, 180f)]
     public float projectileFanAngle = 45;
+
+    [FoldoutGroup("Summon Behavior")]
+    public int numberOfSummons = 1;
+    [FoldoutGroup("Summon Behavior")]
+    public int overcapSummons = 0;
+    [FoldoutGroup("Summon Behavior")]
+    public bool ignoreAdditionalSummons;
 
     public override void Activate()
     {
@@ -90,7 +93,22 @@ public class CreateEntity : Effect
                                     }
                             }
                         spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);
-                        new Trigger_ProjectileCreated(spawnedEntity);
+                        new Trigger_ProjectileCreated(spawnedEntity, spawnedEntity, entity, this, Source);
+                        spawnedEntity.Stat<Stat_Actions>().Tick();
+                    }
+                    break;
+                }
+            case EntityType.Summon:
+                {
+                    int summonCount = numberOfSummons + (ignoreAdditionalSummons ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Summons) - 1);
+                    int maxSummons = overcapSummons + (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.MaxSummons) - 1;
+                    for (int i = 0; i < summonCount; i++)
+                    {
+                        if (Owner.Stat<Stat_Team>().summons.Count >= maxSummons) break;
+                        Entity spawnedEntity = Create(i);
+                        // TODO: summon position
+                        Owner.Stat<Stat_Team>().summons.Add(spawnedEntity);
+                        new Trigger_SummonCreated(spawnedEntity, spawnedEntity, entity, this, Source);
                         spawnedEntity.Stat<Stat_Actions>().Tick();
                     }
                     break;

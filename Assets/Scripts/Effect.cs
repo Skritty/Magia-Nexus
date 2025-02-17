@@ -87,9 +87,25 @@ public abstract class Effect
     }
 
     /// <summary>
+    /// Activates a clone of the effect to targets returned by the targetSelector
+    /// </summary>
+    public void Create(Entity owner, Entity proxy, float multiplier = 1)
+    {
+        foreach (Entity target in targetSelector.GetTargets(this, owner, proxy))
+        {
+            Effect e = Clone();
+            e._source = this;
+            e._owner = owner;
+            e._target = target;
+            e.effectMultiplier *= multiplier;
+            e.DoEffect();
+        }
+    }
+
+    /// <summary>
     /// Activates a clone of the effect to targets returned by the targetSelector, which is given the trigger
     /// </summary>
-    public void Create(Entity owner, Trigger trigger)
+    public void Create(Entity owner, Trigger trigger, Entity proxy = null)
     {
         foreach (Entity target in targetSelector.GetTargets(this, trigger, owner))
         {
@@ -132,26 +148,25 @@ public abstract class Effect
         e.DoEffect();
     }
 
-    protected Effect Clone()
+    public virtual Effect Clone()
     {
-        Effect effect = (Effect)MemberwiseClone();
-        return effect;
+        Effect clone = (Effect)MemberwiseClone();
+        clone.targetSelector = clone.targetSelector.Clone();
+        return clone;
     }
     
     public virtual void DoEffect()
     {
-        Activate();
         if (ignoreFrames > 0)
-            new PE_IgnoreEntity(this, ignoreFrames);
+            new PE_IgnoreEntity(Source, ignoreFrames);
+        Activate();
     }
 
     public abstract void Activate();
 
     public int GetUID()
     {
-        int UID = (int)effectMultiplier + GetType().GetHashCode();
-        // TODO: Make more unique
-        return UID;
+        return GetHashCode();
     }
 }
 

@@ -81,21 +81,98 @@ MonoBehaviour:
   - rid: 9031231661127237644
   - rid: 2953181870642692187
   - rid: 9031231372545491043
-  - rid: 3492845359303229448
   - rid: 9031231668284555760
   - rid: 9031231668284555340
   - rid: 3492845359303229456
-  - rid: 9031231661127237646
+  - rid: 1130977543044989209
   - rid: 9031231465990389760
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1130977519447835462
+    - rid: 1130977520802070545
       type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+    - rid: 1130977543044989204
+      type: {class: Move, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 1130977543044989205
+        rotate: 1
+        obeyMapEdge: 0
+    - rid: 1130977543044989205
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 1130977543044989206
+      type: {class: Targeting_Line, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        length: 1
+        width: 0.4
+    - rid: 1130977543044989209
+      type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
+      data:
+        Owner: {fileID: 6345354840142092050}
+        baseStat: 0
+        mergeBehavior: 0
+    - rid: 1130977607953940834
+      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 0.5
+        ignoreFrames: 50
+        targetSelector:
+          rid: 1130977607953940835
+        damageModifiers:
+        - calculationType: 0
+          damageType: 73795
+          effectTag: 0
+          magnitude: 100
+        skipFlatDamageReduction: 0
+        preventTriggers: 0
+        ownerEffects: []
+        targetEffects: []
+        onHitEffects:
+        - rid: 1130977698592063638
+    - rid: 1130977607953940835
+      type: {class: Targeting_Line, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        length: 1
+        width: 0.4
+    - rid: 1130977698592063638
+      type: {class: PE_Stun, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 1130977698592063639
+        tick: 0
+        tickDuration: 15
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 0
+    - rid: 1130977698592063639
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
     - rid: 2953181870642692187
       type: {class: Stat_Team, ns: , asm: Assembly-CSharp}
       data:
@@ -103,22 +180,6 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         team: 0
-    - rid: 3492845359303229448
-      type: {class: Stat_Actions, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 6345354840142092050}
-        baseStat: 0
-        mergeBehavior: 0
-        tick: 0
-        stunned: 0
-        actionsPerTurn: 5
-        startingTickDelay: 0
-        repeatActions:
-        - {fileID: 11400000, guid: 7e902dac0c6bbbc44b16169f10c0f367, type: 2}
-        - {fileID: 11400000, guid: 74b77c58d3f604a409a57b692fdc4836, type: 2}
-        actions: []
-        actionsOverride: []
-        channeledAction: {fileID: 0}
     - rid: 3492845359303229456
       type: {class: Stat_Movement, ns: , asm: Assembly-CSharp}
       data:
@@ -131,15 +192,13 @@ MonoBehaviour:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
-    - rid: 7867064604153348216
+    - rid: 7867064604153348202
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348217
+          rid: 7867064604153348203
         tick: 0
         tickDuration: -1
         maxStacks: 1
@@ -150,35 +209,33 @@ MonoBehaviour:
         alignment: 0
         triggerOrder: 0
         trigger:
-          rid: 7867064604153348218
+          rid: 7867064604153348204
         tasks:
-        - rid: 1130977519447835462
-        - rid: 7867064604153348220
-    - rid: 7867064604153348217
+        - rid: 1130977520802070545
+        - rid: 7867064604153348206
+    - rid: 7867064604153348203
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 7867064604153348218
+    - rid: 7867064604153348204
       type: {class: Trigger_Expire, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 7867064604153348220
+    - rid: 7867064604153348206
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
         effect:
-          rid: 7867064604153348221
-    - rid: 7867064604153348221
+          rid: 7867064604153348207
+    - rid: 7867064604153348207
       type: {class: Expire, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348222
+          rid: 7867064604153348208
         disable: 0
         delay: 0
-    - rid: 7867064604153348222
+    - rid: 7867064604153348208
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
@@ -188,6 +245,12 @@ MonoBehaviour:
         Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
+        effect:
+          rid: 1130977607953940834
+        aoe:
+          rid: 1130977543044989206
+        movement:
+          rid: 1130977543044989204
         piercesRemaining: 0
         splitsRemaining: 0
     - rid: 9031231465990389760
@@ -198,16 +261,12 @@ MonoBehaviour:
         mergeBehavior: 0
         persistentEffects:
         - rid: 9031231465990389775
-        - rid: 7867064604153348216
+        - rid: 7867064604153348202
     - rid: 9031231465990389775
       type: {class: PE_ExpireEntity, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 9031231527144652832
         tick: 0
@@ -254,12 +313,6 @@ MonoBehaviour:
         numberOfTargets: 0
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-    - rid: 9031231661127237646
-      type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 6345354840142092050}
-        baseStat: 0
-        mergeBehavior: 0
     - rid: 9031231668284555340
       type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
       data:
@@ -314,7 +367,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.2, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2757121773063231396}

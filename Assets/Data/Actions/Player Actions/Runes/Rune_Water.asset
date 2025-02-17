@@ -29,62 +29,6 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1130977517353304066
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
-        targetSelector:
-          rid: 1130977517353304067
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        triggerOrder: 0
-        trigger:
-          rid: -2
-        tasks: []
-    - rid: 1130977517353304067
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 1130977517353304068
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
-        targetSelector:
-          rid: 1130977517353304069
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        triggerOrder: 0
-        trigger:
-          rid: -2
-        tasks: []
-    - rid: 1130977517353304069
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
     - rid: 1130977517639303622
       type: {class: Targeting_Owner, ns: , asm: Assembly-CSharp}
       data:
@@ -92,13 +36,8 @@ MonoBehaviour:
     - rid: 5670261797178049033
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 8388608
-            value: 0.85
+        ignoreFrames: 0
         targetSelector:
           rid: 5670261797178049034
         tick: 0
@@ -109,39 +48,12 @@ MonoBehaviour:
         refreshDuration: 0
         contributeToAssists: 0
         alignment: 0
-        modifierType: 3
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 1
-        multiplyByTicks: 0
+        effectModifiers:
+        - calculationType: 3
+          damageType: 0
+          effectTag: 9
+          magnitude: 0.9
     - rid: 5670261797178049034
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 5670261797178049036
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 524288
-            value: 0.01
-        targetSelector:
-          rid: 5670261797178049037
-        tick: 0
-        tickDuration: -1
-        maxStacks: 10
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 0
-        contributeToAssists: 0
-        alignment: 0
-        modifierType: 2
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 0
-        multiplyByTicks: 1
-    - rid: 5670261797178049037
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
@@ -159,13 +71,8 @@ MonoBehaviour:
     - rid: 7867064581498077184
       type: {class: PE_OverrideActions, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 1
         targetSelector:
           rid: 1130977517639303622
         tick: 0
@@ -197,32 +104,20 @@ MonoBehaviour:
     - rid: 9031231598746927115
       type: {class: Rune_Water, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927116
         element: 0
-        effectMultiplierIncrease: 0
-        damageTags: 517
+        magicEffectFlatDamage: 90
+        damageType: 0
         opposite: {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
         buff:
           rid: -2
         debuff:
           rid: 5670261797178049033
-        defaultConjurationTickDuration: 0
         actionOverride:
           rid: 7867064581498077184
-        grantRunesToAttacks:
-          rid: 1130977517353304068
-        grantRunesToProjectiles:
-          rid: 1130977517353304066
-        expandingAoEBuff:
-          rid: 5670261797178049036
         multicastConeTargeting:
           rid: 5670261797178049038
     - rid: 9031231598746927116

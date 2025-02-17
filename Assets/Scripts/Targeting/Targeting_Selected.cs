@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Targeting_Selected : Targeting
 {
-    public override List<Entity> GetTargets(Effect source, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
     {
         return owner.Stat<Stat_Targeting>().targetingType.GetTargets(source, owner);
     }

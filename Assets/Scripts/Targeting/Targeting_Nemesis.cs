@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Sirenix.Utilities;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Targeting_Nemesis : MultiTargeting
 {
-    public override List<Entity> GetTargets(Effect source, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
     {
         lockTarget = true;
         if (lockTarget && !(primaryTarget == null || !primaryTarget.gameObject.activeSelf))

@@ -41,12 +41,15 @@ public enum EffectTag
     AoESize,
     Projectiles,
     Targets,
+    CastTargets,
     Removeable,
     Knockback,
     MovementSpeed,
     Initiative,
     Enmity,
     SpellPhase,
+    Summons,
+    MaxSummons
 }
 
 // Calc (DamageDealt)

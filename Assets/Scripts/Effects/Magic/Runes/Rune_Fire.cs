@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Rune_Fire : Rune
@@ -12,12 +13,25 @@ public class Rune_Fire : Rune
     public DamageInstance magicEffectModifier;
 
     [Header("Spell Shape")]
+    [FoldoutGroup("Circle")]
+    public DamageInstance circleEffect;
+    [FoldoutGroup("Circle")]
+    public Entity circleProxy;
+    [FoldoutGroup("Circle")]
     public int maxStages;
+    [FoldoutGroup("Circle")]
     public float multiplierPerStage;
+    [FoldoutGroup("Circle")]
     public float circleModMultiplierPerStage;
+
+    [FoldoutGroup("Conjuration")]
     public float multiplierPerConjureUse;
-    [SerializeReference]
-    public Targeting shape;
+
+    [FoldoutGroup("Line")]
+    public float lineMulti;
+
+    [FoldoutGroup("Curse")]
+    public DamageInstance curseExplosion;
 
     public override void MagicEffect(DamageInstance damage)
     {
@@ -33,43 +47,21 @@ public class Rune_Fire : Rune
 
     public override void Shape(Spell spell)
     {
+        // Create effect
         spell.shape = SpellShape.Circle;
-        spell.effect.targetSelector = shape;
-        spell.castSpell.spawnOnTarget = true;
-        spell.lifetime = -1;
-        spell.channeled = true;
-        spell.blueprintEntity.Stat<Stat_Magic>().maxStages = maxStages;
+        spell.effect = circleEffect.Clone();
+        spell.AddRunesToDamageInstance(spell.effect as DamageInstance);
+        spell.SetChannelSpell(maxStages);
         spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageFire, spell);
+
+        // Create circle Proxy
+        Entity proxy = GameObject.Instantiate(circleProxy, spell.spellcast.Target.transform.position, Quaternion.identity);
+        spell.proxies.Add(proxy);
     }
 
     private void SpellMultiPerStageFire(Trigger_SpellStageIncrement trigger)
     {
-        foreach(Action action in trigger.Owner.Stat<Stat_Actions>().actions)
-        {
-            action.effectMultiplier = 1 + trigger.Owner.Stat<Stat_Magic>().Stage * multiplierPerStage;
-        }
-    }
-
-    private void SpellMultiPerStageCircle(Trigger_SpellStageIncrement trigger)
-    {
-        foreach (Action action in trigger.Owner.Stat<Stat_Actions>().actions)
-        {
-            action.effectMultiplier = 1 + trigger.Owner.Stat<Stat_Magic>().Stage * circleModMultiplierPerStage;
-        }
-    }
-
-    private void ConjureMultiPerUse(Spell spell, Effect e, float multi)
-    {
-        if (e.Owner == spell.Owner) return;
-        /*foreach(KeyValuePair<EffectTag, float> tag in e.effectTags)
-        {
-            if (tag.Key.HasFlag(EffectTag.Attack | EffectTag.Spell))
-            {
-                e.effectMultiplier += multi;
-                return;
-            }
-        }*/
-        // TODO
+        trigger.Spell.effect.effectMultiplier = 1 + trigger.Spell.Stage * multiplierPerStage;
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -88,12 +80,13 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Line:
                 {
-                    spell.aoeTargetsModifier += 1;
+                    spell.effect.effectMultiplier += lineMulti;
+                    (spell.effect.targetSelector as Targeting_Line).width /= 2;
                     break;
                 }
             case SpellShape.Projectile:
                 {
-                    spell.blueprintEntity.Stat<Stat_Projectile>().piercesRemaining += 2;
+                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(x => x.Entity.Stat<Stat_Projectile>().piercesRemaining += 2, spell.effect);
                     break;
                 }
             case SpellShape.Summon:
@@ -102,9 +95,35 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Curse:
                 {
-                    spell.castTargets += 1;
+                    spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => CurseExplode(spell, x.PersistentEffect.Target), (spell.effect as DamageInstance).onHitEffects[0]);
                     break;
                 }
         }
+    }
+
+    private void SpellMultiPerStageCircle(Trigger_SpellStageIncrement trigger)
+    {
+        trigger.Spell.effect.effectMultiplier = 1 + trigger.Spell.Stage * circleModMultiplierPerStage;
+    }
+
+    private void ConjureMultiPerUse(Spell spell, Effect e, float multi)
+    {
+        if (e.Owner == spell.Owner) return;
+        /*foreach(KeyValuePair<EffectTag, float> tag in e.effectTags)
+        {
+            if (tag.Key.HasFlag(EffectTag.Attack | EffectTag.Spell))
+            {
+                e.effectMultiplier += multi;
+                return;
+            }
+        }*/
+        // TODO
+    }
+
+    private void CurseExplode(Spell spell, Entity proxy)
+    {
+        DamageInstance explosion = curseExplosion.Clone();
+        spell.AddRunesToDamageInstance(explosion);
+        explosion.Create(spell.Owner, proxy);
     }
 }

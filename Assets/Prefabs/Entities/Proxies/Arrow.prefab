@@ -98,13 +98,8 @@ MonoBehaviour:
     - rid: 1130977543044989204
       type: {class: Move, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 1130977543044989205
         rotate: 1
@@ -133,15 +128,15 @@ MonoBehaviour:
     - rid: 1130977607953940834
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 50
         effectMultiplier: 0.8
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 73795
-            value: 1
+        ignoreFrames: 50
         targetSelector:
           rid: 1130977607953940835
+        damageModifiers:
+        - calculationType: 0
+          damageType: 73795
+          effectTag: 0
+          magnitude: 100
         skipFlatDamageReduction: 0
         preventTriggers: 0
         ownerEffects: []
@@ -180,11 +175,8 @@ MonoBehaviour:
     - rid: 7867064604153348202
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
           rid: 7867064604153348203
         tick: 0
@@ -217,11 +209,8 @@ MonoBehaviour:
     - rid: 7867064604153348207
       type: {class: Expire, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
           rid: 7867064604153348208
         disable: 0
@@ -256,13 +245,8 @@ MonoBehaviour:
     - rid: 9031231465990389775
       type: {class: PE_ExpireEntity, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 9031231527144652832
         tick: 0

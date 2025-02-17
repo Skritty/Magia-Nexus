@@ -159,6 +159,31 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
   - {fileID: 11400000, guid: cf7cd7de6af40a84381d78a138533f34, type: 2}
   - {fileID: 11400000, guid: 42151dd423a1e7a4faf15834e1c911a5, type: 2}
+  basicTargeting:
+  - targeting:
+      rid: 1130977701200659427
+    name: Closest
+    description: 
+  - targeting:
+      rid: 1130977701200659428
+    name: Farthest
+    description: 
+  - targeting:
+      rid: 1130977701200659429
+    name: Lowest Life
+    description: 
+  - targeting:
+      rid: 1130977701200659430
+    name: Highest Life
+    description: 
+  - targeting:
+      rid: 1130977701200659431
+    name: Lowest Life %
+    description: 
+  - targeting:
+      rid: 1130977701200659432
+    name: Highest Life %
+    description: 
   itemDisplayPrefab: {fileID: 5681345479888109855, guid: 3430ac1655aac2746bfcc6c988d45d75, type: 3}
   actionDisplayPrefab: {fileID: 5681345479888109855, guid: d6745f87e5682c245a760c6a030ef9ae, type: 3}
   shopItemDisplayPrefab: {fileID: 5681345479888109855, guid: 41c874952e4c55a4a9dd28ba06cdb67d, type: 3}
@@ -176,6 +201,63 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 314c4d451d802d1428da0c3fb677d269, type: 2}
   - {fileID: 11400000, guid: 205e9f846b89c854d9c35116b223c3f9, type: 2}
   - {fileID: 11400000, guid: c10d8095f866578499b2f0f901b6548f, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 1130977701200659427
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+    - rid: 1130977701200659428
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+    - rid: 1130977701200659429
+      type: {class: Targeting_Life, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+    - rid: 1130977701200659430
+      type: {class: Targeting_Life, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+    - rid: 1130977701200659431
+      type: {class: Targeting_LifePercent, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 2
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+    - rid: 1130977701200659432
+      type: {class: Targeting_LifePercent, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
 --- !u!1 &3798764917201986294
 GameObject:
   m_ObjectHideFlags: 0

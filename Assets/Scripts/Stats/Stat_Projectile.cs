@@ -45,12 +45,12 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
         if (--splitsRemaining >= 0)
         {
             CreateEntity split = new CreateEntity(); // TODO: make effect have a static create
-            Targeting_Exclude exclude = splitTargeting.Clone<Targeting_Exclude>();
-            exclude.ignoredEntities.Add(entity);
-            split.targetSelector = exclude;
+            /*Targeting_Exclude exclude = splitTargeting.Clone<Targeting_Exclude>();
+            exclude.ignoredEntities.Add(entity);*/
+            /*split.targetSelector = exclude;
             split.ignoreAdditionalProjectiles = true;
             split.entity = Owner;
-            split.Create(Owner.Stat<Stat_PlayerOwner>().playerEntity);
+            split.Create(Owner.Stat<Stat_PlayerOwner>().playerEntity);*/
         }
         if (--piercesRemaining < 0)
         {
@@ -60,6 +60,5 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
         {
             new Trigger_ProjectilePierce(effect, effect, Owner);
         }
-
     }
 }

@@ -30,7 +30,7 @@ public class Task_Filter_PlayerOwned : TriggerTask
     public override bool DoTask(Trigger trigger, Entity Owner)
     {
         if (trigger.Is(out ITriggerData_OwnerEntity data))
-            return data.Owner.Stat<Stat_PlayerOwner>().playerEntity == Owner;
+            return data.Entity.Stat<Stat_PlayerOwner>().playerEntity == Owner;
         return incompatableTriggerBehavior;
     }
 }
@@ -41,7 +41,7 @@ public class Task_Filter_PlayerProxy : TriggerTask
     public override bool DoTask(Trigger trigger, Entity Owner)
     {
         if (trigger.Is(out ITriggerData_OwnerEntity data))
-            return data.Owner.Stat<Stat_PlayerOwner>().playerEntity == Owner.Stat<Stat_PlayerOwner>().playerEntity;
+            return data.Entity.Stat<Stat_PlayerOwner>().playerEntity == Owner.Stat<Stat_PlayerOwner>().playerEntity;
         return incompatableTriggerBehavior;
     }
 }
@@ -52,7 +52,7 @@ public class Task_Filter_Owner : TriggerTask
     public override bool DoTask(Trigger trigger, Entity Owner)
     {
         if (trigger.Is(out ITriggerData_OwnerEntity data2))
-            return data2.Owner == Owner;
+            return data2.Entity == Owner;
         else if (trigger.Is(out ITriggerData_Effect data))
             return data.Effect.Owner == Owner;
         return incompatableTriggerBehavior;
@@ -101,11 +101,17 @@ public class Task_Filter_Targetable : TriggerTask
     }
 }
 
-[LabelText("Task: Targetable")]
+[LabelText("Task: Add Runes to Damage Instance")]
 public class Task_ModifyDamageInstanceRunes : TriggerTask
 {
+    [SerializeReference]
+    public List<Rune> runes;
     public override bool DoTask(Trigger trigger, Entity Owner)
     {
+        if (trigger.Is(out ITriggerData_DamageInstance data))
+        {
+            data.Damage.runes.AddRange(runes);
+        }
         return incompatableTriggerBehavior;
     }
 }

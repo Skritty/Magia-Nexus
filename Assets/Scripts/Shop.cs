@@ -10,10 +10,11 @@ using TMPro;
 public class Shop : MonoBehaviour
 {
     public List<Item> shopItems = new List<Item>();
-    [SerializeReference]
     public List<TargetingShopItem> basicTargeting = new List<TargetingShopItem>();
+    [Serializable]
     public class TargetingShopItem
     {
+        [SerializeReference]
         public Targeting targeting;
         public string name;
         public string description;
@@ -568,7 +569,7 @@ public class Shop : MonoBehaviour
         else
         {
             message = $"{targeting.name} is {(targetLock ? "locked" : "unlocked")}";
-            viewer.targetType = targeting.targeting.Clone<Targeting>();
+            viewer.targetType = targeting.targeting.Clone();
             viewer.targetType.lockTarget = targetLock;
             return true;
         }

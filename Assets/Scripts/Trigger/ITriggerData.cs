@@ -1,12 +1,17 @@
 public interface ITriggerData { }
 public interface ITriggerData_OwnerEntity : ITriggerData
 {
-    public Entity Owner { get; }
+    public Entity Entity { get; }
 }
 
 public interface ITriggerData_Effect : ITriggerData
 {
     public Effect Effect { get; }
+}
+
+public interface ITriggerData_PersistentEffect : ITriggerData
+{
+    public PersistentEffect PersistentEffect { get; }
 }
 
 public interface ITriggerData_DamageInstance : ITriggerData_Effect

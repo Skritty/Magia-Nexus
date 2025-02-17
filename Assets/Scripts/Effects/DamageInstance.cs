@@ -35,6 +35,15 @@ public class DamageInstance : Effect
         }
         if (!preventTriggers)
         {
+            new Trigger_PreHit(this, this, Owner, Target, Source);
+            if (Owner.Stat<Stat_Magic>().useRunesToEnchantAttacks)
+            {
+                runes.AddRange(Owner.Stat<Stat_Magic>().runes);
+                if (Owner.Stat<Stat_Magic>().consumeRunesOnEnchant)
+                {
+                    Owner.Stat<Stat_Magic>().runes.Clear();
+                }
+            }
             foreach (Effect effect in targetEffects)
             {
                 effect.Create(Source, Owner, Target);
@@ -53,7 +62,7 @@ public class DamageInstance : Effect
                 Target.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
             }
             GenerateMagicEffect(runes);
-            new Trigger_Hit(this, this, Owner, Target);
+            new Trigger_Hit(this, this, Owner, Target, Source);
         }
 
         CalculateDamageType();

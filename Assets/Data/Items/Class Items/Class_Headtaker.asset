@@ -22,6 +22,7 @@ MonoBehaviour:
   craftingRecipe: []
   grantedActions:
   - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+  grantedTargeting: []
   actionCountModifier: 0
   itemEffects:
   - rid: 7867064604153348097
