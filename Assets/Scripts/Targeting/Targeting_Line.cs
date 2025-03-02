@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Targeting_Line : MultiTargeting
 {
@@ -12,13 +11,15 @@ public class Targeting_Line : MultiTargeting
         this.width = width;
     }
     public float length, width;
+    public bool faceFirstTarget;
+    private Vector3 dirToTarget;
 
-    protected override bool IsValidTarget(Entity target)
+    protected override bool IsValidTarget(Entity target, bool firstTarget)
     {
         if (length == 0 || width == 0) return false;
 
         Vector3 dirToEntity = target.transform.position - GetCenter();
-        Vector3 dirToTarget = Owner.Stat<Stat_Movement>().facingDir;
+        dirToTarget = firstTarget && faceFirstTarget ? dirToEntity : Owner.Stat<Stat_Movement>().facingDir;
         Vector3 projectedDir = Vector3.Project(dirToEntity, dirToTarget);
         if (Vector3.Dot(dirToEntity, dirToTarget) < 0) return false;
         if (projectedDir.magnitude > length * Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;

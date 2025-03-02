@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public class CreateEntity : Effect
 {
     public enum EntityType { Basic, Projectile, Summon }
@@ -108,6 +109,7 @@ public class CreateEntity : Effect
                         Entity spawnedEntity = Create(i);
                         // TODO: summon position
                         Owner.Stat<Stat_Team>().summons.Add(spawnedEntity);
+                        Trigger_Expire.Subscribe(x => Owner.Stat<Stat_Team>().summons.Remove(spawnedEntity), spawnedEntity);
                         new Trigger_SummonCreated(spawnedEntity, spawnedEntity, entity, this, Source);
                         spawnedEntity.Stat<Stat_Actions>().Tick();
                     }

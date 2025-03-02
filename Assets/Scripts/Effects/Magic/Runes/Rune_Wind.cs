@@ -32,6 +32,7 @@ public class Rune_Wind : Rune
         spell.effect = lineEffect.Clone();
         spell.AddRunesToDamageInstance(spell.effect as DamageInstance);
         spell.proxies.Add(spell.Owner);
+        spell.cleanup += Trigger_SpellCast.Subscribe(x => spell.StopSpell(), spell);
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -40,7 +41,7 @@ public class Rune_Wind : Rune
         {
             case SpellShape.Circle:
                 {
-                    Trigger_SpellCast.Subscribe(StageIncrease, spell);
+                    spell.cleanup += Trigger_SpellCast.Subscribe(StageIncrease, spell);
                     break;
                 }
             case SpellShape.Conjuration:

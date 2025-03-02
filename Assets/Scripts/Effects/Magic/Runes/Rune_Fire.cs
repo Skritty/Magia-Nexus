@@ -40,7 +40,7 @@ public class Rune_Fire : Rune
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        DamageInstance explosion = magicEffectModifier.Clone();
+        DamageInstance explosion = (DamageInstance)magicEffectModifier.Clone();
         damage.onHitEffects.Add(explosion);
         // TODO: Add delay, add debuffs/other effects?
     }
@@ -53,10 +53,12 @@ public class Rune_Fire : Rune
         spell.AddRunesToDamageInstance(spell.effect as DamageInstance);
         spell.SetChannelSpell(maxStages);
         spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageFire, spell);
+        
 
         // Create circle Proxy
         Entity proxy = GameObject.Instantiate(circleProxy, spell.spellcast.Target.transform.position, Quaternion.identity);
         spell.proxies.Add(proxy);
+        spell.cleanup += Trigger_Hit.Subscribe(x => GameObject.Destroy(proxy), spell.effect);
     }
 
     private void SpellMultiPerStageFire(Trigger_SpellStageIncrement trigger)
@@ -122,7 +124,7 @@ public class Rune_Fire : Rune
 
     private void CurseExplode(Spell spell, Entity proxy)
     {
-        DamageInstance explosion = curseExplosion.Clone();
+        DamageInstance explosion = (DamageInstance)curseExplosion.Clone();
         spell.AddRunesToDamageInstance(explosion);
         explosion.Create(spell.Owner, proxy);
     }

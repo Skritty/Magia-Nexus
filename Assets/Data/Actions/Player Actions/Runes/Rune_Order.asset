@@ -27,8 +27,14 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 1130977855612125195
+      type: {class: Targeting_Owner, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 1130977855612125273
+      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
     - rid: 5670261797178049026
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
@@ -75,7 +81,7 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927120
-        element: 0
+        element: 4
         magicEffectFlatDamage: 80
         damageType: 0
         opposite: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
@@ -84,10 +90,66 @@ MonoBehaviour:
         debuff:
           rid: 5670261797178049028
         createSummons:
-          rid: -2
-        invoke: {fileID: 0}
+          effectMultiplier: 1
+          ignoreFrames: 0
+          targetSelector:
+            rid: 1130977855612125273
+          entityType: 2
+          entity: {fileID: 4300648619749440453, guid: 6823ab021936da44494409dcd9c78b69, type: 3}
+          spawnOnTarget: 0
+          movementTarget: 2
+          numberOfProjectiles: 1
+          ignoreAdditionalProjectiles: 0
+          projectileFanType: 2
+          projectileFanAngle: 45
+          numberOfSummons: 1
+          overcapSummons: 5
+          ignoreAdditionalSummons: 0
+        summonRunes:
+          serializedPairs:
+          - key: 0
+            value: {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
+          - key: 1
+            value: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
+          - key: 2
+            value: {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
+          - key: 3
+            value: {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
+          - key: 4
+            value: {fileID: 11400000}
+          - key: 5
+            value: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
+        invoke: {fileID: 11400000, guid: 7ea5c5f86f30d3d45a4da9fd515b8c69, type: 2}
+        move: {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
         meleeOverride:
-          rid: -2
+          effectMultiplier: 1
+          ignoreFrames: 1
+          targetSelector:
+            rid: 1130977855612125195
+          tick: 0
+          tickDuration: 125
+          maxStacks: 1
+          stacks: 1
+          perPlayer: 0
+          refreshDuration: 1
+          contributeToAssists: 0
+          alignment: 0
+          actionOverrides:
+            serializedPairs:
+            - key: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
+              value: {fileID: 11400000, guid: 152e3378f6ba1c34698729b0dcfedeab, type: 2}
+            - key: {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
+              value: {fileID: 11400000, guid: a5f177928e39f574a99a888b4afb9fe7, type: 2}
+            - key: {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
+              value: {fileID: 11400000, guid: 464694fedf4a8c449905ca4976582d19, type: 2}
+            - key: {fileID: 11400000}
+              value: {fileID: 11400000, guid: aa349393aed6cbb4abf6118589ef4d40, type: 2}
+            - key: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
+              value: {fileID: 11400000, guid: 4085eceb44d1f5a4693f2477e1e37db0, type: 2}
+            - key: {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
+              value: {fileID: 11400000, guid: 54585265d60cb5f4c84d241b9301a97a, type: 2}
+            - key: {fileID: 11400000, guid: 7ea5c5f86f30d3d45a4da9fd515b8c69, type: 2}
+              value: {fileID: 11400000, guid: 02a30b81a8636c74183f37bef10b1e88, type: 2}
     - rid: 9031231598746927120
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

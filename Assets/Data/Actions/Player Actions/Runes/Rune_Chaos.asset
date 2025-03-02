@@ -27,12 +27,28 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1130977835028054075
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
     - rid: 1130977835028054076
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 1130977860065427582
+      type: {class: PE_PreventExpire, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 1130977860065427583
+        tick: 0
+        tickDuration: 15
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 2
+        affectedAlignment: 2
+    - rid: 1130977860065427583
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
     - rid: 5670261797178049006
@@ -62,7 +78,7 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927123
-        element: 0
+        element: 5
         magicEffectFlatDamage: 100
         damageType: 0
         opposite: {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
@@ -77,28 +93,15 @@ MonoBehaviour:
             rid: 1130977835028054076
           damageModifiers:
           - calculationType: 3
-            damageType: 1
+            damageType: 2147483647
             effectTag: 2
             magnitude: 0
           skipFlatDamageReduction: 0
           preventTriggers: 0
           ownerEffects: []
           targetEffects: []
-          onHitEffects: []
-        curseEffect:
-          effectMultiplier: 1
-          ignoreFrames: 0
-          targetSelector:
-            rid: 1130977835028054075
-          tick: 0
-          tickDuration: 15
-          maxStacks: 1
-          stacks: 1
-          perPlayer: 0
-          refreshDuration: 1
-          contributeToAssists: 0
-          alignment: 2
-          affectedAlignment: 2
+          onHitEffects:
+          - rid: 1130977860065427582
         baseChanneledCurseEffect: 1
     - rid: 9031231598746927123
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
@@ -119,7 +122,11 @@ MonoBehaviour:
         refreshDuration: 0
         contributeToAssists: 0
         alignment: 0
-        effectModifiers: []
+        effectModifiers:
+        - calculationType: 2
+          damageType: 0
+          effectTag: 11
+          magnitude: 0.2
     - rid: 9031231777024770055
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

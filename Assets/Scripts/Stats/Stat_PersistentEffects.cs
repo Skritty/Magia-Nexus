@@ -99,7 +99,7 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
             {
                 if(stacks > 0)
                 {
-                    reference.Create(owner);
+                    reference.Create(e.Source, e.Owner, e.Target);
                 }
                 else if(stacks < 0)
                 {
@@ -122,10 +122,10 @@ public class Stat_PersistentEffects : GenericStat<Stat_PersistentEffects>
 
     public PersistentEffect RemoveRandomEffect(PersistentEffect.Alignment alignment, int stacks)
     {
-        List<PersistentEffect> shuffle = persistentEffects.ToList();
+        List<PersistentEffect> shuffle = persistentEffects.Where(x => x.alignment == alignment).ToList();
+        if (shuffle.Count == 0) return null;
         shuffle.Sort((x, y) =>
          {
-             if (alignment != x.alignment) return 1;
              return Random.Range(-1, 2);
          });
         AddOrRemoveSimilarEffect(shuffle[0], stacks);

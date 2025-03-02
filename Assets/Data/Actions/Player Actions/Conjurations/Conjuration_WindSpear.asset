@@ -29,16 +29,16 @@ MonoBehaviour:
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1.5
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 549125
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 7867064581498077219
-        ignoreFrames: 0
-        skipFlatDamageReduction: 1
-        preventTriggers: 1
+        damageModifiers:
+        - calculationType: 0
+          damageType: 155909
+          effectTag: 2
+          magnitude: 100
+        skipFlatDamageReduction: 0
+        preventTriggers: 0
         ownerEffects: []
         targetEffects: []
         onHitEffects: []
@@ -53,3 +53,4 @@ MonoBehaviour:
         vfx: {fileID: 0}
         length: 4
         width: 0.5
+        faceFirstTarget: 1

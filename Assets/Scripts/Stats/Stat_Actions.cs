@@ -142,7 +142,11 @@ public class Stat_Actions : GenericStat<Stat_Actions>
             else
             {
                 phase++;
-                if (phase - 1 == actions.Count) phase = 1;
+                if (phase - 1 == actions.Count)
+                {
+                    phase = 1;
+                    new Trigger_TurnComplete(Owner, Owner);
+                }
                 if(actionsOverride[phase - 1])
                 {
                     currentAction = actionsOverride[phase - 1];

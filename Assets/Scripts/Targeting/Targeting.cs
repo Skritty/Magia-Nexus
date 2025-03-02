@@ -81,6 +81,7 @@ public abstract class MultiTargeting : Targeting
         this.proxy = proxy;
         targets = new List<Entity>();
         TargetFilter targetType;
+        bool firstTarget = true;
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>())
         {
             // Can it be targeted?
@@ -104,7 +105,8 @@ public abstract class MultiTargeting : Targeting
                 targetType = TargetFilter.Allies;
             }
             if (!entitiesAffected.HasFlag(targetType)) continue;
-            if (!IsValidTarget(entity)) continue;
+            if (!IsValidTarget(entity, firstTarget)) continue;
+            if (firstTarget) firstTarget = false;
 
             // Is it within the targeting range?
             //float distance = Vector3.Distance(entity.transform.position, owner.transform.position);
@@ -137,7 +139,7 @@ public abstract class MultiTargeting : Targeting
         }*/
         return targets;
     }
-    protected virtual bool IsValidTarget(Entity target) => true;
+    protected virtual bool IsValidTarget(Entity target, bool firstTarget) => true;
     protected virtual int SortTargets(Entity e1, Entity e2) 
     {  
         if(sortingMethod == TargetSorting.Unsorted) return UnityEngine.Random.Range(-1, 2);

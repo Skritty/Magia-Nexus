@@ -33,18 +33,17 @@ MonoBehaviour:
       type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 1130977517639303807
-        entityType: 2
-        entity: {fileID: 6345354840142092050, guid: e2616271fa6858844a535f56de5b31f3, type: 3}
+        entityType: 1
+        entity: {fileID: 6345354840142092050, guid: 37041b86674f7cc43894f99981954b11, type: 3}
         spawnOnTarget: 0
         movementTarget: 2
         numberOfProjectiles: 1
         ignoreAdditionalProjectiles: 0
         projectileFanType: 2
         projectileFanAngle: 45
+        numberOfSummons: 1
+        overcapSummons: 0
+        ignoreAdditionalSummons: 0

@@ -94,7 +94,7 @@ MonoBehaviour:
         - calculationType: 2
           damageType: 1
           effectTag: 1
-          magnitude: 2
+          magnitude: 0.05
     - rid: 5670261797178049025
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -134,7 +134,7 @@ MonoBehaviour:
         multiplierPerConjureUse: 0.5
         lineMulti: 1
         curseExplosion:
-          effectMultiplier: 0.5
+          effectMultiplier: 0.2
           ignoreFrames: 0
           targetSelector:
             rid: 1130977835028054067

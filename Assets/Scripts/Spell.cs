@@ -59,8 +59,11 @@ public class Spell
         this.spellcast = spellcast;
         GenerateShape();
         cleanup += Trigger_Hit.Subscribe((x) => new Trigger_SpellEffectApplied(x.Effect, Owner, this, effect, Owner, this), effect);
-        (effect.targetSelector as MultiTargeting).numberOfTargets += Mathf.Clamp(additionalCastTargets, 1, int.MaxValue);
-        if (!channeled) CastFromProxies();
+        Owner.Stat<Stat_Magic>().ownedSpells.Add(this);
+        if (!channeled)
+        {
+            CastFromProxies();
+        }
     }
 
     public void AddChaining(int additionalBranches)
@@ -96,24 +99,23 @@ public class Spell
         this.maxStages = maxStages;
         channeled = true;
         Owner.Stat<Stat_Actions>().channelInstead = true;
-        cleanup += Trigger_Channel.Subscribe(ChannelSpells, Owner);
+        cleanup += Trigger_Channel.Subscribe(ChannelSpell, Owner);
         cleanup += Trigger_SpellMaxStage.Subscribe(FinishChanneling, this);
     }
 
-    private void ChannelSpells(Trigger_Channel trigger)
+    private void ChannelSpell(Trigger_Channel trigger)
     {
-        foreach (Spell spell in trigger.Entity.Stat<Stat_Magic>().ownedSpells)
-        {
-            if(!spell.channeled)
-            spell.Stage++;
-        }
+        Stage++;
     }
 
     private void FinishChanneling(Trigger_SpellMaxStage trigger)
     {
         trigger.Spell.Owner.Stat<Stat_Actions>().channelInstead = false;
-        if (ignoreMaxStageCast) return;
-        CastFromProxies();
+        if (!ignoreMaxStageCast)
+        {
+            CastFromProxies();
+        }
+        StopSpell();
     }
 
     public void CastFromProxies()
@@ -122,6 +124,7 @@ public class Spell
         {
             CastSpell(proxy);
         }
+        new Trigger_SpellCast(Owner, this, Owner, this);
     }
 
     public void CastSpell(Entity proxy)
@@ -146,5 +149,6 @@ public class Spell
     public void StopSpell()
     {
         cleanup?.Invoke();
+        Owner.Stat<Stat_Magic>().ownedSpells.Remove(this);
     }
 }

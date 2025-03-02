@@ -26,7 +26,6 @@ namespace Skritty.Tools.Utilities
         private List<Rigidbody> generatedRigidBodies;
         private List<Collider> generatedColliders;
 
-        [MenuItem("Devhouse/Prop Placement Tool")]
         private static void OpenWindow()
         {
             GetWindow<PropPlacementTool>().Show();

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [Flags]
 public enum ActionEventTiming
@@ -39,30 +40,28 @@ public class Action : ScriptableObject
     {
         if (timing.HasFlag(ActionEventTiming.OnStart))
         {
-            foreach(Effect effect in effects)
-            {
-                effect.Create(owner, effectMultiplier);
-            }
+            DoEffects(owner);
         }
     }
     public virtual void Tick(Entity owner)
     {
         if (timing.HasFlag(ActionEventTiming.OnTick))
         {
-            foreach (Effect effect in effects)
-            {
-                effect.Create(owner, effectMultiplier);
-            }
+            DoEffects(owner);
         }
     }
     public virtual void OnEnd(Entity owner)
     {
         if (timing.HasFlag(ActionEventTiming.OnEnd))
         {
-            foreach (Effect effect in effects)
-            {
-                effect.Create(owner, effectMultiplier);
-            }
+            DoEffects(owner);
+        }
+    }
+    public void DoEffects(Entity owner)
+    {
+        foreach (Effect effect in effects)
+        {
+            effect.Create(owner, effectMultiplier);
         }
     }
 }

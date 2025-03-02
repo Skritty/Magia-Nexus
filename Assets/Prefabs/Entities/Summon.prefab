@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 5444420482956494905}
   - component: {fileID: 4300648619749440453}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Summon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,8 +361,8 @@ MonoBehaviour:
         mergeBehavior: 0
         healthBar: {fileID: 9101917831146373091}
         damagePopup: {fileID: 1206888003998408235, guid: bbe9e86b035842c49b2eae50fa2df8ef, type: 3}
-        maxLife: 10000
-        currentLife: 10000
+        maxLife: 2000
+        currentLife: 2000
         invulnerable: 0
     - rid: 3492845359303229448
       type: {class: Stat_Actions, ns: , asm: Assembly-CSharp}
@@ -439,7 +439,7 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 1130977699628843586
-        disable: 1
+        disable: 0
         delay: 0
     - rid: 9031231465990389774
       type: {class: Stat_PersistentEffects, ns: , asm: Assembly-CSharp}
@@ -456,15 +456,15 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        useRunesToEnchantAttacks: 0
-        consumeRunesOnEnchant: 1
+        useRunesToEnchantAttacks: 1
+        consumeRunesOnEnchant: 0
     - rid: 9031231661127237636
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        playerCharacter: 1
+        playerCharacter: 0
         scaleWithPlayerCharacterModifiers: 0
         characterNamePlate: {fileID: 233806103433016068}
         playerEntity: {fileID: 0}
@@ -550,7 +550,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5444420482956494905}
@@ -643,7 +643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4290412714594791309
 RectTransform:
   m_ObjectHideFlags: 0

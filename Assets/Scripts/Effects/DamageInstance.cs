@@ -29,12 +29,12 @@ public class DamageInstance : Effect
     public override void Activate()
     {
         if (Target.Stat<Stat_Life>().maxLife <= 0) return;
-        foreach (PE_Trigger effect in temporaryTriggeredEffects)
-        {
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
-        }
         if (!preventTriggers)
         {
+            foreach (PE_Trigger effect in temporaryTriggeredEffects)
+            {
+                Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
+            }
             new Trigger_PreHit(this, this, Owner, Target, Source);
             if (Owner.Stat<Stat_Magic>().useRunesToEnchantAttacks)
             {
@@ -61,7 +61,7 @@ public class DamageInstance : Effect
                 runes.Add(crystal.rune);
                 Target.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
             }
-            GenerateMagicEffect(runes);
+            GenerateMagicEffect();
             new Trigger_Hit(this, this, Owner, Target, Source);
         }
 
@@ -82,14 +82,17 @@ public class DamageInstance : Effect
         }
     }
 
-    public void GenerateMagicEffect(List<Rune> runes)
+    private void GenerateMagicEffect()
     {
-        for (int i = 0; i < runes.Count; i++)
+        if (runes.Count == 0) return;
+        int spellPhase = (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase) - 1;
+        spellPhase %= runes.Count;
+        for (int i = spellPhase; i < runes.Count + spellPhase; i++)
         {
-            if (i == Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase) % runes.Count)
+            if (i == spellPhase)
                 runes[i].MagicEffect(this);
             else
-                runes[i].MagicEffectModifier(this, i);// TODO pass in rune list here
+                runes[i % runes.Count].MagicEffectModifier(this, i);// TODO pass in rune list here
         }
     }
 
@@ -155,12 +158,15 @@ public class DamageInstance : Effect
         }
     }
 
-    public new DamageInstance Clone()
+    public override Effect Clone()
     {
         DamageInstance clone = (DamageInstance)base.Clone();
-        clone.ownerEffects = ownerEffects;
-        clone.targetEffects = targetEffects;
-        clone.temporaryTriggeredEffects = temporaryTriggeredEffects;
+        clone.damageModifiers = new List<EffectModifier>(damageModifiers);
+        clone.runes = new List<Rune>(runes);
+        clone.ownerEffects = new List<Effect>(ownerEffects);
+        clone.targetEffects = new List<Effect>(targetEffects);
+        clone.onHitEffects = new List<Effect>(onHitEffects);
+        clone.temporaryTriggeredEffects = new List<PE_Trigger>(temporaryTriggeredEffects);
         return clone;
     }
 }

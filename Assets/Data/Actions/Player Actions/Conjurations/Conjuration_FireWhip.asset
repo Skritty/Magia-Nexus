@@ -28,11 +28,15 @@ MonoBehaviour:
     - rid: 7867064581498077207
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
         effectMultiplier: 2
+        ignoreFrames: 0
         targetSelector:
           rid: 7867064581498077213
-        damageModifiers: []
+        damageModifiers:
+        - calculationType: 0
+          damageType: 155781
+          effectTag: 2
+          magnitude: 100
         skipFlatDamageReduction: 0
         preventTriggers: 0
         ownerEffects: []

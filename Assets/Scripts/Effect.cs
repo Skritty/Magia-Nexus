@@ -158,7 +158,7 @@ public abstract class Effect
     public virtual void DoEffect()
     {
         if (ignoreFrames > 0)
-            new PE_IgnoreEntity(Source, ignoreFrames);
+            new PE_IgnoreEntity(this, ignoreFrames);
         Activate();
     }
 

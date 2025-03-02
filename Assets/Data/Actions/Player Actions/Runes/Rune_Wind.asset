@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionAliases:
   - Wind
-  - skritt3Wind
+  - skritt3Air
   actionDescription: 
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -42,6 +42,7 @@ MonoBehaviour:
         vfx: {fileID: 0}
         length: 10
         width: 0.8
+        faceFirstTarget: 1
     - rid: 5670261797178049039
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
@@ -95,7 +96,7 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927118
-        element: 0
+        element: 3
         magicEffectFlatDamage: 110
         damageType: 0
         opposite: {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}

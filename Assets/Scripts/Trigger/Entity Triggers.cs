@@ -53,9 +53,10 @@ public class Trigger_SpellCast : Trigger<Trigger_SpellCast>, ITriggerData_OwnerE
     public Spell Spell => _spell;
 
     public Trigger_SpellCast() { }
-    public Trigger_SpellCast(Entity entity, params object[] bindingObjects)
+    public Trigger_SpellCast(Entity entity, Spell spell, params object[] bindingObjects)
     {
         _owner = entity;
+        _spell = spell;
         Invoke(bindingObjects);
     }
 }

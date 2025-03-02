@@ -33,6 +33,16 @@ public class Rune_Earth : Rune
         spell.effect = createProjectiles.Clone();
         spell.SetToProjectile(createProjectiles);
         (spell.effect as CreateEntity).projectileFanAngle = 30f;
+        spell.proxies.Add(spell.Owner);
+        spell.maxStages = 1;
+        spell.cleanup += Trigger_ProjectileCreated.Subscribe(
+            x => spell.cleanup += Trigger_Expire.Subscribe(y => ProjectileDeath(spell, y.Entity)));
+        spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.Spell.StopSpell(), spell);
+    }
+
+    private void ProjectileDeath(Spell spell, Entity entity)
+    {
+        spell.Stage++;
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -55,6 +65,7 @@ public class Rune_Earth : Rune
             case SpellShape.Projectile:
                 {
                     (spell.effect as CreateEntity).numberOfProjectiles += 2;
+                    spell.maxStages += 2;
                     break;
                 }
             case SpellShape.Summon:

@@ -76,7 +76,7 @@ MonoBehaviour:
         targetSelector:
           rid: 1130977517639303622
         tick: 0
-        tickDuration: 125
+        tickDuration: 126
         maxStacks: 1
         stacks: 1
         perPlayer: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927116
-        element: 0
+        element: 1
         magicEffectFlatDamage: 90
         damageType: 0
         opposite: {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}

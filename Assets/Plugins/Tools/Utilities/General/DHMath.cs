@@ -1,11 +1,9 @@
-//Created by: Julian Noel
 using System.Linq;
 using UnityEngine;
 
 namespace Skritty.Tools.Utilities
 {
     /// <summary>
-    /// Devhouse in-house math library
     /// </summary>
     public static class DHMath
     {

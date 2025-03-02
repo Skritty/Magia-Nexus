@@ -16,7 +16,7 @@ public class Targeting_Radial : MultiTargeting
     [Range(0, 180)]
     public float angle = 180;
 
-    protected override bool IsValidTarget(Entity target)
+    protected override bool IsValidTarget(Entity target, bool firstTarget)
     {
         Vector3 dirToEntity = target.transform.position - GetCenter();
         if (dirToEntity.magnitude > radius * Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;

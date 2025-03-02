@@ -49,9 +49,4 @@ public abstract class PersistentEffect: Effect
         if (!contributeToAssists || tick <= 0) return;
         Owner.Stat<Stat_PlayerOwner>().ApplyContribution(Target, effectMultiplier * tick);
     }
-
-    public new PersistentEffect Clone()
-    {
-        return (PersistentEffect)MemberwiseClone();
-    }
 }

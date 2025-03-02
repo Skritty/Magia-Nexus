@@ -15,8 +15,6 @@ public class Rune_Chaos : Rune
     [FoldoutGroup("Curse")]
     public DamageInstance curseHit;
     [FoldoutGroup("Curse")]
-    public PE_PreventExpire curseEffect;
-    [FoldoutGroup("Curse")]
     public float baseChanneledCurseEffect;
 
     public override void MagicEffect(DamageInstance damage)
@@ -52,8 +50,8 @@ public class Rune_Chaos : Rune
         spell.shape = SpellShape.Curse;
         spell.effect = curseHit.Clone();
         spell.AddRunesToDamageInstance(spell.effect as DamageInstance);
-        (spell.effect as DamageInstance).onHitEffects.Add(curseEffect.Clone());
         spell.proxies.Add(spell.Owner);
+        spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => spell.StopSpell(), (spell.effect as DamageInstance).onHitEffects[0]);
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)

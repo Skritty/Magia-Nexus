@@ -35,7 +35,7 @@ MonoBehaviour:
         targetSelector:
           rid: 1130977835028054070
         entityType: 1
-        entity: {fileID: 4300648619749440453, guid: eda19e800227b374497ba7712d53e57e, type: 3}
+        entity: {fileID: 6345354840142092050, guid: 755c57cf1f6d0cc4ebd4abec0330714f, type: 3}
         spawnOnTarget: 0
         movementTarget: 2
         numberOfProjectiles: 1
@@ -99,7 +99,7 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927114
-        element: 0
+        element: 2
         magicEffectFlatDamage: 100
         damageType: 0
         opposite: {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}

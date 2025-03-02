@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Rune_Order : Rune
 {
@@ -11,11 +12,10 @@ public class Rune_Order : Rune
     public PersistentEffect debuff;
 
     [Header("Spell Shape")]
-    [SerializeReference]
     public CreateEntity createSummons;
-    public Dictionary<RuneElement, Action> summonRunes = new();
+    public SerializedDictionary<RuneElement, Action> summonRunes = new();
     public Action invoke;
-    [SerializeReference]
+    public Action move;
     public PE_OverrideActions meleeOverride;
 
     public override void MagicEffect(DamageInstance damage)
@@ -25,9 +25,9 @@ public class Rune_Order : Rune
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        RemovePersistantEffect removeEffect = new RemovePersistantEffect();
+        /*RemovePersistantEffect removeEffect = new RemovePersistantEffect();
         removeEffect.alignmentRemoved = damage.Owner.Stat<Stat_Team>().team == damage.Target.Stat<Stat_Team>().team ? PersistentEffect.Alignment.Debuff : PersistentEffect.Alignment.Buff;
-        damage.onHitEffects.Add(removeEffect);
+        damage.onHitEffects.Add(removeEffect);*/
     }
 
     public override void Shape(Spell spell)
@@ -35,11 +35,15 @@ public class Rune_Order : Rune
         spell.shape = SpellShape.Summon;
         spell.effect = createSummons.Clone();
         spell.cleanup += Trigger_SummonCreated.Subscribe(x => SetupSummon(spell, x.Entity), spell.effect);
+        spell.proxies.Add(spell.Owner);
+        spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.Spell.StopSpell(), spell);
+        spell.maxStages = 1;
     }
 
     private void SetupSummon(Spell spell, Entity entity)
     {
-        for(int i = 1; i < spell.runes.Count; i++)
+        entity.Stat<Stat_Actions>().AddAction(move);
+        for (int i = 1; i < spell.runes.Count; i++)
         {
             entity.Stat<Stat_Actions>().AddAction(summonRunes[spell.runes[i].element]);
         }
@@ -49,11 +53,26 @@ public class Rune_Order : Rune
             case RuneElement.Earth:
             case RuneElement.Order:
                 {
-                    meleeOverride.Create(meleeOverride);
+                    meleeOverride.Create(meleeOverride, Owner, entity);
+                    for (int i = 1; i < spell.runes.Count; i++)
+                    {
+                        entity.Stat<Stat_Magic>().runes.Add(spell.runes[i]);
+                    }
                     break;
                 }
         }
-        Trigger_TurnComplete.Subscribe(x => invoke.OnStart(x.Entity));
+        Trigger_TurnComplete.Subscribe(Invoke, entity);
+        spell.cleanup += Trigger_Expire.Subscribe(y => SummonDeath(spell, y.Entity));
+    }
+
+    private void SummonDeath(Spell spell, Entity entity)
+    {
+        spell.Stage++;
+    }
+
+    private void Invoke(Trigger_TurnComplete trigger)
+    {
+        invoke.DoEffects(trigger.Entity);
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
