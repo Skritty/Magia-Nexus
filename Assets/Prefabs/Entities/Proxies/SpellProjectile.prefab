@@ -80,6 +80,7 @@ MonoBehaviour:
   baseStats:
   - rid: 9031231661127237644
   - rid: 2953181870642692187
+  - rid: 7133257673659121675
   - rid: 9031231372545491043
   - rid: 9031231668284555760
   - rid: 9031231668284555340
@@ -173,6 +174,14 @@ MonoBehaviour:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
+    - rid: 7133257673659121675
+      type: {class: Stat_Magic, ns: , asm: Assembly-CSharp}
+      data:
+        Owner: {fileID: 6345354840142092050}
+        baseStat: 0
+        mergeBehavior: 0
+        useRunesToEnchantAttacks: 0
+        consumeRunesOnEnchant: 1
     - rid: 7867064604153348202
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:

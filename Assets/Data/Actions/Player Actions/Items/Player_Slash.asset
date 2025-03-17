@@ -19,7 +19,52 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 1
+  initialAnimationState: 2
+  activateAnimationState: 3
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.59
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0.6
   effectMultiplier: 1
   effects:
   - rid: 9031231598746927104
@@ -49,8 +94,8 @@ MonoBehaviour:
         lockTarget: 0
         entitiesAffected: 8
         sortingMethod: 1
-        numberOfTargets: 1
+        numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
+        vfx: {fileID: 6737957494741180686, guid: e940b76180137114598924cb29170e97, type: 3}
         radius: 2
         angle: 45

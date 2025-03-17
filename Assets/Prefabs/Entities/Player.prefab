@@ -303,6 +303,7 @@ MonoBehaviour:
   baseStats:
   - rid: 9031231661127237636
   - rid: 3492845359303229454
+  - rid: 7133257989892341792
   - rid: 3492845359303229445
   - rid: 3492845359303229448
   - rid: 3492845359303229458
@@ -401,6 +402,17 @@ MonoBehaviour:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
+    - rid: 7133257989892341792
+      type: {class: Stat_AnimationStates, ns: , asm: Assembly-CSharp}
+      data:
+        Owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        mergeBehavior: 0
+        controller: {fileID: 3663811516769054534}
+        spriteAnimations:
+          serializedPairs:
+          - key: 1
+            value: {fileID: 0}
     - rid: 7867064604153348194
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
@@ -464,6 +476,7 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
+        proxyOwner: {fileID: 0}
         playerCharacter: 1
         scaleWithPlayerCharacterModifiers: 0
         characterNamePlate: {fileID: 233806103433016068}
@@ -533,6 +546,8 @@ GameObject:
   - component: {fileID: 7531742837703302904}
   - component: {fileID: 5875872937032074693}
   - component: {fileID: 3206242795324888508}
+  - component: {fileID: 3663811516769054534}
+  - component: {fileID: 948158255463526017}
   m_Layer: 0
   m_Name: Player Model
   m_TagString: Untagged
@@ -626,6 +641,42 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &3663811516769054534
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044390600065127432}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 08d2bf87fee246d4db229bc2bf413a0d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!111 &948158255463526017
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044390600065127432}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8169663364642632237
 GameObject:
   m_ObjectHideFlags: 0

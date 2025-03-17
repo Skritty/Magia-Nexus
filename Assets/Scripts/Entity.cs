@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using TMPro;
-using Skritty.Tools.Utilities;
 
 public class Entity : MonoBehaviour
 {

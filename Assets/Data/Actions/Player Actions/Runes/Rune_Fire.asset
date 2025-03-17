@@ -130,11 +130,11 @@ MonoBehaviour:
         circleProxy: {fileID: 4300648619749440453, guid: 1b5a9dd3aeef568429994bd7f63261b9, type: 3}
         maxStages: 2
         multiplierPerStage: 1
-        circleModMultiplierPerStage: 0.5
+        circleModMultiplierPerStage: 0.25
         multiplierPerConjureUse: 0.5
         lineMulti: 1
         curseExplosion:
-          effectMultiplier: 0.2
+          effectMultiplier: 0.6
           ignoreFrames: 0
           targetSelector:
             rid: 1130977835028054067

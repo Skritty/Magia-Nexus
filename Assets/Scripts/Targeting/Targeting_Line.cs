@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TwitchLib.Api.Helix;
 using UnityEngine;
 
 public class Targeting_Line : MultiTargeting
@@ -25,6 +26,14 @@ public class Targeting_Line : MultiTargeting
         if (projectedDir.magnitude > length * Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;
         if ((dirToEntity - projectedDir).magnitude > width * Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;
         return true;
+    }
+
+    protected override void DoFX(Effect source, List<Entity> targets)
+    {
+        if (vfx is not VFX_Line) return;
+        VFX_Line line = vfx.PlayVFX<VFX_Line>((proxy != null ? proxy : Owner).transform, offset, Vector3.up, true);
+        line.ApplyLine(length, width);
+        line.ApplyDamage(source as DamageInstance);
     }
 
     public override void OnDrawGizmos(Transform source)

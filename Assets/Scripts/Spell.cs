@@ -41,10 +41,10 @@ public class Spell
         this.runes.AddRange(runes);
     }
 
-    public void SetToProjectile(CreateEntity createProxies)
+    public void SetToProjectile()
     {
         effect.ignoreFrames = 50;
-        cleanup += Trigger_ProjectileCreated.Subscribe(SetUpProjectile, createProxies);
+        cleanup += Trigger_ProjectileCreated.Subscribe(SetUpProjectile, effect);
     }
 
     private void SetUpProjectile(Trigger_ProjectileCreated trigger)
@@ -129,7 +129,9 @@ public class Spell
 
     public void CastSpell(Entity proxy)
     {
-        for (int targets = 0; targets < additionalCastTargets + Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.CastTargets); targets++)
+        int targets = additionalCastTargets + (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.CastTargets);
+        targets = Mathf.Clamp(targets, 0, int.MaxValue);
+        for (int t = 0; t < targets; t++)
         {
             effect.Create(Owner, proxy);
         }
@@ -148,6 +150,7 @@ public class Spell
 
     public void StopSpell()
     {
+        new Trigger_SpellFinished(Owner, this, Owner, this);
         cleanup?.Invoke();
         Owner.Stat<Stat_Magic>().ownedSpells.Remove(this);
     }

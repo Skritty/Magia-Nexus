@@ -6,6 +6,6 @@ public static class Secrets
 {
     public static string client_id = "j53u10m7wf4u4qkpqead8yd5cwic6l";
     public static string client_secret = "u9bvqkdwst3at7ja86gmsbrkj0ocfz";
-    public static string bot_access_token = "mt7fytabbwn6nm3p493r9vkuv2h1vp";
-    public static string bot_refresh_token = "rw79xeqd7rdcis44q4ik61f8caesc9l56f7slqjpm8t2rld8vh";
+    public static string bot_access_token = "d95ugumkuqfzjj2vsfjmikr2xq3miz";
+    public static string bot_refresh_token = "k0u5tkkhvf7pza8cuwdepo9pio7v328frhilrsbv5b2r8111fo";
 }

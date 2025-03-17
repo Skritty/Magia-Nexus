@@ -6,16 +6,28 @@ using UnityEngine;
 public class VFX : PooledObject
 {
     public int tickDuration;
+    public ParticleSystem particles;
     private Transform attachedTo;
+    private Vector3 offset;
+    private Coroutine effect;
     public T PlayVFX<T>(Transform owner, Vector3 offset, Vector3 facing, bool attachToOwner) where T : VFX
     {
+        this.offset = offset;
         VFX vfx = RequestObject<VFX>();
         vfx.transform.position = owner.position + offset;
         vfx.transform.rotation = Quaternion.FromToRotation(Vector3.up, facing);
         if (attachToOwner) vfx.attachedTo = owner;
         vfx.gameObject.SetActive(true);
-        vfx.StartCoroutine(vfx.Effect());
+        if (effect != null) vfx.StopCoroutine(effect);
+        effect = vfx.StartCoroutine(vfx.Effect());
         return (T)vfx;
+    }
+
+    public void StopVFX()
+    {
+        StopCoroutine(effect);
+        OnEnd();
+        ReleaseObject();
     }
 
     private IEnumerator Effect()
@@ -23,6 +35,10 @@ public class VFX : PooledObject
         OnStart();
         for (int i = 0; i < tickDuration; i++)
         {
+            if(attachedTo != null)
+            {
+                transform.position = attachedTo.position + offset;
+            }
             OnTick();
             yield return new WaitForFixedUpdate();
         }

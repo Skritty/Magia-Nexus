@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 [Flags]
 public enum TargetFilter
@@ -127,7 +124,11 @@ public abstract class MultiTargeting : Targeting
         }
 
         if(targets.Count > 0)
+        {
+            DoFX(source, targets);
             primaryTarget = targets[0];
+        }
+            
         return targets;
     }
     public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
@@ -138,6 +139,14 @@ public abstract class MultiTargeting : Targeting
             targets = conditionalTarget.GetTargets(source, owner);
         }*/
         return targets;
+    }
+    protected virtual void DoFX(Effect source, List<Entity> targets)
+    {
+        foreach(Entity target in targets)
+        {
+            VFX_Damage damage = vfx.PlayVFX<VFX_Damage>(target.transform, offset, Vector3.up, true);
+            damage.ApplyDamage(source as DamageInstance);
+        }
     }
     protected virtual bool IsValidTarget(Entity target, bool firstTarget) => true;
     protected virtual int SortTargets(Entity e1, Entity e2) 

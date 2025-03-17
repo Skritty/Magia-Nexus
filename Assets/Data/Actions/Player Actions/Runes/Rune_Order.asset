@@ -104,6 +104,8 @@ MonoBehaviour:
           projectileFanAngle: 45
           numberOfSummons: 1
           overcapSummons: 5
+          damageMultiplier: 1
+          lifeMultiplier: 1
           ignoreAdditionalSummons: 0
         summonRunes:
           serializedPairs:
@@ -127,7 +129,7 @@ MonoBehaviour:
           targetSelector:
             rid: 1130977855612125195
           tick: 0
-          tickDuration: 125
+          tickDuration: -1
           maxStacks: 1
           stacks: 1
           perPlayer: 0
@@ -150,6 +152,8 @@ MonoBehaviour:
               value: {fileID: 11400000, guid: 54585265d60cb5f4c84d241b9301a97a, type: 2}
             - key: {fileID: 11400000, guid: 7ea5c5f86f30d3d45a4da9fd515b8c69, type: 2}
               value: {fileID: 11400000, guid: 02a30b81a8636c74183f37bef10b1e88, type: 2}
+        lifeMultiplier: 0.5
+        damageMultiplier: 0.5
     - rid: 9031231598746927120
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

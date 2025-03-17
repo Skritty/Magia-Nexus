@@ -27,6 +27,7 @@ MonoBehaviour:
   grantedActions:
   - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
   - {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
+  grantedTargeting: []
   actionCountModifier: 0
   itemEffects:
   - rid: 3963142952671773266
@@ -51,7 +52,7 @@ MonoBehaviour:
         effectModifiers:
         - calculationType: 2
           damageType: 0
-          effectTag: 8
+          effectTag: 9
           magnitude: 0.1
     - rid: 3963142952671773267
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}

@@ -86,6 +86,7 @@ MonoBehaviour:
           rid: 5670261797178049006
         debuff:
           rid: 9031231777024770054
+        multiplierPerStage: 1
         curseHit:
           effectMultiplier: 3
           ignoreFrames: 1

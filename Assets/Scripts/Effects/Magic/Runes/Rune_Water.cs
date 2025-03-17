@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Sirenix.OdinInspector;
-using Skritty.Tools.Saving;
 using UnityEngine;
 
 public class Rune_Water : Rune
@@ -59,11 +54,12 @@ public class Rune_Water : Rune
                 {
                     if((spell.effect.targetSelector as Targeting_Radial).angle == 180)
                     {
+                        GameObject.Destroy(spell.proxies[0]);
+                        spell.proxies.Add(spell.Owner);
                         (spell.effect.targetSelector as Targeting_Radial).angle = 30f;
                         (spell.effect.targetSelector as Targeting_Radial).radius 
                             = (spell.effect.targetSelector as Targeting_Radial).radius * 2;
                     }
-                    //spell.castSpell.spawnOnTarget = false;
                     (spell.effect.targetSelector as Targeting_Radial).angle += 15f;
                     break;
                 }

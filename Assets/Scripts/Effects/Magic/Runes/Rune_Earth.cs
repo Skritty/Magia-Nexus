@@ -31,7 +31,7 @@ public class Rune_Earth : Rune
     {
         spell.shape = SpellShape.Projectile;
         spell.effect = createProjectiles.Clone();
-        spell.SetToProjectile(createProjectiles);
+        spell.SetToProjectile();
         (spell.effect as CreateEntity).projectileFanAngle = 30f;
         spell.proxies.Add(spell.Owner);
         spell.maxStages = 1;

@@ -29,6 +29,14 @@ public class Targeting_Radial : MultiTargeting
         return true;
     }
 
+    protected override void DoFX(Effect source, List<Entity> targets)
+    {
+        if (vfx is not VFX_AoE) return;
+        VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : Owner).transform, offset, Vector3.up, true);
+        aoe.ApplyAoE(radius, angle);
+        aoe.ApplyDamage(source as DamageInstance);
+    }
+
     public override void OnDrawGizmos(Transform source)
     {
         if (source == null) return;

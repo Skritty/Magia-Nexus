@@ -173,8 +173,8 @@ public class Stat_Actions : GenericStat<Stat_Actions>
         if (stunned) return;
         foreach (Action a in repeatActions)
         {
-            a?.Tick(Owner);
+            a?.Tick(Owner, ticksPerPhase, tick);
         }
-        currentAction?.Tick(Owner);
+        currentAction?.Tick(Owner, ticksPerPhase, tick);
     }
 }

@@ -85,7 +85,8 @@ public class DamageInstance : Effect
     private void GenerateMagicEffect()
     {
         if (runes.Count == 0) return;
-        int spellPhase = (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase) - 1;
+        int spellPhase = 0;
+        Owner.Stat<Stat_PlayerOwner>().Proxy(x => spellPhase += (int)x.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase) - 1);
         spellPhase %= runes.Count;
         for (int i = spellPhase; i < runes.Count + spellPhase; i++)
         {

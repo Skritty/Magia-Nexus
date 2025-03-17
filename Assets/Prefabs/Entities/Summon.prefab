@@ -361,8 +361,8 @@ MonoBehaviour:
         mergeBehavior: 0
         healthBar: {fileID: 9101917831146373091}
         damagePopup: {fileID: 1206888003998408235, guid: bbe9e86b035842c49b2eae50fa2df8ef, type: 3}
-        maxLife: 2000
-        currentLife: 2000
+        maxLife: 4000
+        currentLife: 4000
         invulnerable: 0
     - rid: 3492845359303229448
       type: {class: Stat_Actions, ns: , asm: Assembly-CSharp}
@@ -464,6 +464,7 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
+        proxyOwner: {fileID: 0}
         playerCharacter: 0
         scaleWithPlayerCharacterModifiers: 0
         characterNamePlate: {fileID: 233806103433016068}

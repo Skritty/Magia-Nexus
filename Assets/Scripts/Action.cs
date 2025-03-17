@@ -2,15 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
-
-[Flags]
-public enum ActionEventTiming
-{
-    OnStart = 1,
-    OnTick = 2,
-    OnEnd = 4
-}
 
 [Serializable, CreateAssetMenu(menuName = "Action")]
 public class Action : ScriptableObject
@@ -32,30 +23,32 @@ public class Action : ScriptableObject
     public Color damageTypeColor = Color.white;
     public bool hidden;
     public int maxUses;
-    public ActionEventTiming timing = ActionEventTiming.OnStart;
+    public AnimationState initialAnimationState;
+    public AnimationState activateAnimationState;
+    public AnimationCurve movementSpeedOverDuration;
+    public bool onTick;
+    [Range(0,1)]
+    public float timing = 0;
     public float effectMultiplier = 1;
     [SerializeReference]
     public List<Effect> effects = new List<Effect>();
     public virtual void OnStart(Entity owner) 
     {
-        if (timing.HasFlag(ActionEventTiming.OnStart))
-        {
-            DoEffects(owner);
-        }
+        owner.Stat<Stat_AnimationStates>().AnimationState = initialAnimationState;
+        // TODO: return to this animation state after stunned
     }
-    public virtual void Tick(Entity owner)
+    public virtual void Tick(Entity owner, int tickLength, int tick)
     {
-        if (timing.HasFlag(ActionEventTiming.OnTick))
+        owner.Stat<Stat_Movement>().dirMovementSpeedMulti = movementSpeedOverDuration.Evaluate((tick % tickLength) * 1f / tickLength);
+        if (onTick || tick % tickLength == (int)(tickLength * timing))
         {
+            owner.Stat<Stat_AnimationStates>().AnimationState = activateAnimationState;
             DoEffects(owner);
         }
     }
     public virtual void OnEnd(Entity owner)
     {
-        if (timing.HasFlag(ActionEventTiming.OnEnd))
-        {
-            DoEffects(owner);
-        }
+        owner.Stat<Stat_AnimationStates>().AnimationState = AnimationState.Move;
     }
     public void DoEffects(Entity owner)
     {

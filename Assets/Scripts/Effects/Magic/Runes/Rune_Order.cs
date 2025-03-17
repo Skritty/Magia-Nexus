@@ -17,6 +17,8 @@ public class Rune_Order : Rune
     public Action invoke;
     public Action move;
     public PE_OverrideActions meleeOverride;
+    public float lifeMultiplier;
+    public float damageMultiplier;
 
     public override void MagicEffect(DamageInstance damage)
     {
@@ -34,6 +36,18 @@ public class Rune_Order : Rune
     {
         spell.shape = SpellShape.Summon;
         spell.effect = createSummons.Clone();
+        Entity owner = spell.Owner;
+        float lMult = lifeMultiplier;
+        float dMult = damageMultiplier;
+        if(owner.Stat<Stat_PlayerOwner>().player != null)
+            while (!owner.Stat<Stat_PlayerOwner>().playerCharacter)
+            {
+                lMult *= lifeMultiplier;
+                dMult *= damageMultiplier;
+                owner = owner.Stat<Stat_PlayerOwner>().proxyOwner;
+            }
+        (spell.effect as CreateEntity).lifeMultiplier = lMult;
+        (spell.effect as CreateEntity).damageMultiplier = dMult;
         spell.cleanup += Trigger_SummonCreated.Subscribe(x => SetupSummon(spell, x.Entity), spell.effect);
         spell.proxies.Add(spell.Owner);
         spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.Spell.StopSpell(), spell);
@@ -62,11 +76,12 @@ public class Rune_Order : Rune
                 }
         }
         Trigger_TurnComplete.Subscribe(Invoke, entity);
-        spell.cleanup += Trigger_Expire.Subscribe(y => SummonDeath(spell, y.Entity));
+        spell.cleanup += Trigger_Die.Subscribe(y => SummonDeath(spell, entity), entity);
     }
 
     private void SummonDeath(Spell spell, Entity entity)
     {
+        spell.Owner.Stat<Stat_Team>().summons.Remove(entity);
         spell.Stage++;
     }
 
@@ -81,7 +96,7 @@ public class Rune_Order : Rune
         {
             case SpellShape.Circle:
                 {
-                    //spell.proxyBlueprint.Stat<Stat_Magic>().maxStages += 2;
+                    spell.maxStages += 2;
                     break;
                 }
             case SpellShape.Conjuration:
@@ -90,6 +105,7 @@ public class Rune_Order : Rune
                 }
             case SpellShape.Line:
                 {
+                    (spell.effect.targetSelector as Targeting_Line).numberOfTargets += 2;
                     break;
                 }
             case SpellShape.Projectile:

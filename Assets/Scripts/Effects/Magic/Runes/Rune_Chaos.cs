@@ -12,6 +12,8 @@ public class Rune_Chaos : Rune
     public PersistentEffect debuff;
 
     [Header("Spell Shape")]
+    [FoldoutGroup("Circle")]
+    public float multiplierPerStage;
     [FoldoutGroup("Curse")]
     public DamageInstance curseHit;
     [FoldoutGroup("Curse")]
@@ -60,8 +62,8 @@ public class Rune_Chaos : Rune
         {
             case SpellShape.Circle:
                 {
+                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageFire, spell);
                     spell.SetCastOnStageGained();
-                    spell.maxStages++;
                     break;
                 }
             case SpellShape.Conjuration:
@@ -70,7 +72,7 @@ public class Rune_Chaos : Rune
                 }
             case SpellShape.Line:
                 {
-                    (spell.effect.targetSelector as Targeting_Line).numberOfTargets += 1;
+                    spell.additionalCastTargets += 1;
                     break;
                 }
             case SpellShape.Projectile:
@@ -94,6 +96,11 @@ public class Rune_Chaos : Rune
                     break;
                 }
         }
+    }
+
+    private void SpellMultiPerStageFire(Trigger_SpellStageIncrement trigger)
+    {
+        trigger.Spell.effect.effectMultiplier -= multiplierPerStage;
     }
 
     private void AddHomingToProjectile(Trigger_ProjectileCreated trigger)

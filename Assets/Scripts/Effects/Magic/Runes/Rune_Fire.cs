@@ -58,12 +58,12 @@ public class Rune_Fire : Rune
         // Create circle Proxy
         Entity proxy = GameObject.Instantiate(circleProxy, spell.spellcast.Target.transform.position, Quaternion.identity);
         spell.proxies.Add(proxy);
-        spell.cleanup += Trigger_Hit.Subscribe(x => GameObject.Destroy(proxy), spell.effect);
+        spell.cleanup += Trigger_SpellFinished.Subscribe(x => GameObject.Destroy(proxy.gameObject), spell);
     }
 
     private void SpellMultiPerStageFire(Trigger_SpellStageIncrement trigger)
     {
-        trigger.Spell.effect.effectMultiplier = 1 + trigger.Spell.Stage * multiplierPerStage;
+        trigger.Spell.effect.effectMultiplier += multiplierPerStage;
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -97,7 +97,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Curse:
                 {
-                    spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => CurseExplode(spell, x.PersistentEffect.Target), (spell.effect as DamageInstance).onHitEffects[0]);
+                    spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => CurseExplode(spell, x.PersistentEffect.Target), spell.effect);
                     break;
                 }
         }
@@ -105,7 +105,7 @@ public class Rune_Fire : Rune
 
     private void SpellMultiPerStageCircle(Trigger_SpellStageIncrement trigger)
     {
-        trigger.Spell.effect.effectMultiplier = 1 + trigger.Spell.Stage * circleModMultiplierPerStage;
+        trigger.Spell.effect.effectMultiplier += circleModMultiplierPerStage;
     }
 
     private void ConjureMultiPerUse(Spell spell, Effect e, float multi)

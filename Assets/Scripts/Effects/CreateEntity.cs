@@ -39,6 +39,10 @@ public class CreateEntity : Effect
     [FoldoutGroup("Summon Behavior")]
     public int overcapSummons = 0;
     [FoldoutGroup("Summon Behavior")]
+    public float damageMultiplier = 1;
+    [FoldoutGroup("Summon Behavior")]
+    public float lifeMultiplier = 1;
+    [FoldoutGroup("Summon Behavior")]
     public bool ignoreAdditionalSummons;
 
     public override void Activate()
@@ -107,6 +111,9 @@ public class CreateEntity : Effect
                     {
                         if (Owner.Stat<Stat_Team>().summons.Count >= maxSummons) break;
                         Entity spawnedEntity = Create(i);
+                        spawnedEntity.Stat<Stat_Life>().maxLife *= lifeMultiplier;
+                        spawnedEntity.Stat<Stat_Life>().currentLife *= lifeMultiplier;
+                        spawnedEntity.Stat<Stat_EffectModifiers>().AddModifier(DamageType.None, EffectTag.DamageDealt, damageMultiplier, EffectModifierCalculationType.Multiplicative, 0, null);
                         // TODO: summon position
                         Owner.Stat<Stat_Team>().summons.Add(spawnedEntity);
                         Trigger_Expire.Subscribe(x => Owner.Stat<Stat_Team>().summons.Remove(spawnedEntity), spawnedEntity);
@@ -124,6 +131,7 @@ public class CreateEntity : Effect
         spawnedEntity.gameObject.SetActive(true);
         spawnedEntity.gameObject.name = ""+id;
         spawnedEntity.Stat<Stat_PlayerOwner>().SetPlayer(Owner.Stat<Stat_PlayerOwner>());
+        spawnedEntity.Stat<Stat_PlayerOwner>().proxyOwner = Owner;
         spawnedEntity.Stat<Stat_Team>().team = Owner.Stat<Stat_Team>().team;
         switch (movementTarget)
         {

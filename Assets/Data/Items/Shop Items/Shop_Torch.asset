@@ -21,6 +21,7 @@ MonoBehaviour:
   damageTypeColor: {r: 0.9559748, g: 0.7058059, b: 0.1653414, a: 0}
   craftingRecipe: []
   grantedActions: []
+  grantedTargeting: []
   actionCountModifier: 0
   itemEffects:
   - rid: 7867064604153348117

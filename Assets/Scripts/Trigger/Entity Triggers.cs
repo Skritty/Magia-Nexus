@@ -105,3 +105,18 @@ public class Trigger_SpellEffectApplied : Trigger<Trigger_SpellEffectApplied>, I
         Invoke(bindingObjects);
     }
 }
+
+public class Trigger_SpellFinished : Trigger<Trigger_SpellFinished>, ITriggerData_OwnerEntity, ITriggerData_Spell
+{
+    private Entity _owner;
+    public Entity Entity => _owner;
+    private Spell _spell;
+    public Spell Spell => _spell;
+    public Trigger_SpellFinished() { }
+    public Trigger_SpellFinished(Entity entity, Spell spell, params object[] bindingObjects)
+    {
+        _owner = entity;
+        _spell = spell;
+        Invoke(bindingObjects);
+    }
+}

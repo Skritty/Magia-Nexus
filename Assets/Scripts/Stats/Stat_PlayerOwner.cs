@@ -7,6 +7,8 @@ using UnityEngine;
 public class Stat_PlayerOwner : GenericStat<Stat_PlayerOwner>
 {
     [FoldoutGroup("Player Owned")]
+    public Entity proxyOwner;
+    [FoldoutGroup("Player Owned")]
     public bool playerCharacter;
     [FoldoutGroup("Player Owned")]
     public bool scaleWithPlayerCharacterModifiers;

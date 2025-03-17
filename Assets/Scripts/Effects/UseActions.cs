@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class UseActions : Effect
 {
@@ -11,9 +12,10 @@ public class UseActions : Effect
     {
         foreach(Action action in actions)
         {
-            action.OnStart(Owner);
-            action.Tick(Owner);
-            action.OnEnd(Owner);
+            foreach (Effect effect in action.effects)
+            {
+                effect.Create(Owner, effectMultiplier);
+            }
         }
     }
 }
