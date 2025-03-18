@@ -18,7 +18,16 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 2
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
   effectMultiplier: 1
   effects:
   - rid: 9031231527144652837
@@ -40,11 +49,7 @@ MonoBehaviour:
       type: {class: PE_Stun, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 3963142723388571650
         tick: 0
@@ -55,6 +60,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
     - rid: 3963142723388571650
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -63,14 +69,10 @@ MonoBehaviour:
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 0.5
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 73747
-            value: 1
+        ignoreFrames: 50
         targetSelector:
           rid: 3963142721972731907
-        ignoreFrames: 50
+        damageModifiers: []
         skipFlatDamageReduction: 0
         preventTriggers: 0
         ownerEffects: []

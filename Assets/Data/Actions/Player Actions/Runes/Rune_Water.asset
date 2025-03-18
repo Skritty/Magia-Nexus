@@ -20,7 +20,16 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 4
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
   effectMultiplier: 1
   effects:
   - rid: 9031231598746927115
@@ -44,6 +53,7 @@ MonoBehaviour:
         refreshDuration: 0
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         effectModifiers:
         - calculationType: 3
           damageType: 0
@@ -83,6 +93,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         actionOverrides:
           serializedPairs:
           - key: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}

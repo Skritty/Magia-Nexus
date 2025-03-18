@@ -18,7 +18,16 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 5
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
   effectMultiplier: 1
   effects:
   - rid: 7867064604153348156
@@ -56,6 +65,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: -5
         trigger:
           rid: 1130977675299520566
@@ -87,6 +97,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         effectModifiers: []
     - rid: 7867064604153348163
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}

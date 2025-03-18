@@ -197,6 +197,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 0
         trigger:
           rid: 7867064604153348204
@@ -267,6 +268,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
     - rid: 9031231527144652832
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -277,6 +279,7 @@ MonoBehaviour:
         Owner: {fileID: 6345354840142092050}
         baseStat: 0
         mergeBehavior: 0
+        proxyOwner: {fileID: 0}
         playerCharacter: 0
         scaleWithPlayerCharacterModifiers: 1
         characterNamePlate: {fileID: 0}
@@ -390,7 +393,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 418ba4f91e0331942a25085eacd2127c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -343,6 +343,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 0
         trigger:
           rid: 1130977700642291807
@@ -408,11 +409,8 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        controller: {fileID: 3663811516769054534}
-        spriteAnimations:
-          serializedPairs:
-          - key: 1
-            value: {fileID: 0}
+        animator: {fileID: 3663811516769054534}
+        animationSkin: {fileID: 22100000, guid: b3fe5494adee6b449a5399c7a3ef1969, type: 2}
     - rid: 7867064604153348194
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
@@ -428,6 +426,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 9999
         trigger:
           rid: 1130977698592063696
@@ -470,6 +469,8 @@ MonoBehaviour:
         mergeBehavior: 0
         useRunesToEnchantAttacks: 0
         consumeRunesOnEnchant: 1
+        vfx: {fileID: -836890817849390660, guid: 5335b7fd561477d4db43b51b4db65725, type: 3}
+        runeIndex: 000000000100000002000000030000000400000005000000
     - rid: 9031231661127237636
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
@@ -598,7 +599,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 418ba4f91e0331942a25085eacd2127c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -2,11 +2,12 @@ using Skritty.Tools.Utilities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class VFX : PooledObject
 {
     public int tickDuration;
-    public ParticleSystem particles;
+    public VisualEffect visualEffect;
     private Transform attachedTo;
     private Vector3 offset;
     private Coroutine effect;
@@ -18,16 +19,17 @@ public class VFX : PooledObject
         vfx.transform.rotation = Quaternion.FromToRotation(Vector3.up, facing);
         if (attachToOwner) vfx.attachedTo = owner;
         vfx.gameObject.SetActive(true);
-        if (effect != null) vfx.StopCoroutine(effect);
+        //if (effect != null) vfx.StopCoroutine(effect);
         effect = vfx.StartCoroutine(vfx.Effect());
         return (T)vfx;
     }
 
     public void StopVFX()
     {
-        StopCoroutine(effect);
+        //StopCoroutine(effect);
         OnEnd();
         ReleaseObject();
+        //visualEffect.SendEvent(,);
     }
 
     private IEnumerator Effect()

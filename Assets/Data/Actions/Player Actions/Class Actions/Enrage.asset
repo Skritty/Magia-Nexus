@@ -19,7 +19,17 @@ MonoBehaviour:
   damageTypeColor: {r: 0.5660378, g: 0.19432876, b: 0.03025984, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 1
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
+  effectMultiplier: 1
   effects: []
   references:
     version: 2

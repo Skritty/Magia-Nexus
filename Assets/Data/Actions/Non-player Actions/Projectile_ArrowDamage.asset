@@ -18,7 +18,16 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 2
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
   effectMultiplier: 1
   effects:
   - rid: 9031231527144652837
@@ -29,14 +38,10 @@ MonoBehaviour:
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 0.8
-        inheritEffectTagsOnTrigger: 0
-        effectTags:
-          serializedPairs:
-          - key: 73795
-            value: 1
+        ignoreFrames: 50
         targetSelector:
           rid: 9031231527144652840
-        ignoreFrames: 50
+        damageModifiers: []
         skipFlatDamageReduction: 0
         preventTriggers: 0
         ownerEffects: []
@@ -53,3 +58,4 @@ MonoBehaviour:
         vfx: {fileID: 0}
         length: 1
         width: 0.4
+        faceFirstTarget: 0

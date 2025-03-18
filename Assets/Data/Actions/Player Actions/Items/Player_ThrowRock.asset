@@ -24,49 +24,33 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 1
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
+  effectMultiplier: 1
   effects:
   - rid: 3963142721972731916
   references:
     version: 2
     RefIds:
-    - rid: 2626413821580542079
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 8388608
-            value: -0.02
-        targetSelector:
-          rid: 2626413821580542080
-        tick: 0
-        tickDuration: -1
-        maxStacks: 99
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        modifierType: 2
-        contributionMultiplier: 1
-        scaleWithEffectMulti: 0
-    - rid: 2626413821580542080
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        name: 
-        description: 
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 3963142721972731916
       type: {class: PersistentEffectGate, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 3963142721972731917
-        referenceEffect:
-          rid: 2626413821580542079
+        persistentEffect:
+          rid: -2
         requiredAmount: 1
         stacksAddedOnSuccess: -1
         stacksAddedOnFailure: 1
@@ -76,23 +60,28 @@ MonoBehaviour:
     - rid: 3963142721972731917
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
     - rid: 3963142721972731920
       type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        effectTags:
-          serializedPairs: []
+        ignoreFrames: 0
         targetSelector:
           rid: 3963142723388571648
         entityType: 2
         entity: {fileID: 6345354840142092050, guid: 85043b1ac81df9d42877ce23329d4fc4, type: 3}
         spawnOnTarget: 0
+        movementTarget: 2
+        numberOfProjectiles: 1
+        ignoreAdditionalProjectiles: 0
         projectileFanType: 4
         projectileFanAngle: 45
+        numberOfSummons: 1
+        overcapSummons: 0
+        damageMultiplier: 1
+        lifeMultiplier: 1
+        ignoreAdditionalSummons: 0
     - rid: 3963142723388571648
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0

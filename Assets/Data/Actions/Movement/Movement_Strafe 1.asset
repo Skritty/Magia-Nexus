@@ -12,13 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Movement_Strafe 1
   m_EditorClassIdentifier: 
-  actionName: Group Up
+  actionAliases: []
   actionDescription: Move to be closer to your allies
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 2
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
+  effectMultiplier: 1
   effects:
   - rid: 9031231598746927109
   references:
@@ -27,14 +37,13 @@ MonoBehaviour:
     - rid: 9031231598746927109
       type: {class: Move, ns: , asm: Assembly-CSharp}
       data:
-        tags: 2097152
-        baseEffectMultiplier: 1
-        contributeOnActivate: 0
+        effectMultiplier: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927110
         rotate: 0
+        obeyMapEdge: 0
     - rid: 9031231598746927110
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0

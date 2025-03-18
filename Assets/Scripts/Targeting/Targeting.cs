@@ -142,6 +142,7 @@ public abstract class MultiTargeting : Targeting
     }
     protected virtual void DoFX(Effect source, List<Entity> targets)
     {
+        if (vfx == null) return;
         foreach(Entity target in targets)
         {
             VFX_Damage damage = vfx.PlayVFX<VFX_Damage>(target.transform, offset, Vector3.up, true);

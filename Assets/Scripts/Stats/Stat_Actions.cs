@@ -162,8 +162,10 @@ public class Stat_Actions : GenericStat<Stat_Actions>
                 if(tick != 0)
                     a?.OnEnd(Owner);
                 a?.OnStart(Owner);
+                a?.Tick(Owner, ticksPerPhase, tick);
             }
             currentAction?.OnStart(Owner);
+            currentAction?.Tick(Owner, ticksPerPhase, tick);
             new Trigger_ActionStart(Owner, currentAction, Owner, currentAction);
         }
     }

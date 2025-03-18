@@ -20,7 +20,17 @@ MonoBehaviour:
   damageTypeColor: {r: 0.5442267, g: 0.25649688, b: 0.8238993, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 4
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
+  effectMultiplier: 1
   effects:
   - rid: 9031231527144652824
   references:
@@ -29,17 +39,11 @@ MonoBehaviour:
     - rid: 2626413410273722614
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
     - rid: 9031231527144652824
       type: {class: Invoke, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 2626413410273722614
-        spellPrefab: {fileID: 4300648619749440453, guid: 1b5a9dd3aeef568429994bd7f63261b9, type: 3}
-        spellAction: {fileID: 11400000, guid: 020f7e0e21e74bb4b978415d7c253ebd, type: 2}

@@ -10,8 +10,34 @@ public class Stat_Magic : GenericStat<Stat_Magic>
     public List<Rune> runes = new List<Rune>(); // spellcasting queue
     [SerializeReference, FoldoutGroup("Magic")]
     public List<Spell> ownedSpells = new List<Spell>();
+    [FoldoutGroup("Magic")]
     public bool useRunesToEnchantAttacks;
+    [FoldoutGroup("Magic")]
     public bool consumeRunesOnEnchant = true;
+    [FoldoutGroup("Magic")]
+    public VFX vfx;
+    [SerializeReference, FoldoutGroup("Magic")]
+    public List<RuneElement> runeIndex = new List<RuneElement>(); // spellcasting queue
+
+    protected override void Initialize()
+    {
+        //vfx = vfx.PlayVFX<VFX>(Owner.transform, Vector3.up, Vector3.zero, true);
+        //vfx.transform.parent = Owner.transform;
+    }
+
+    public void AddRune(Rune rune)
+    {
+        runes.Add(rune);
+        vfx.visualEffect.SetInt("RuneCount", runes.Count);
+        Texture2D runeInfo = new Texture2D(runes.Count, 1);
+        for(int i = 0; i < runes.Count; i++)
+        {
+            runeInfo.SetPixel(i, 0, new Color(runeIndex.IndexOf(runes[i].element), 0, 0));// TODO: remove runeindex
+        }
+        runeInfo.Apply();
+        vfx.visualEffect.SetTexture("Runes", runeInfo);
+        vfx.visualEffect.SendEvent("OnCast");
+    }
 }
 
 public enum SpellShape { Circle, Conjuration, Line, Projectile, Summon, Curse }

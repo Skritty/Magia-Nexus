@@ -64,7 +64,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   onTick: 0
-  timing: 0.6
+  timing: 0
   effectMultiplier: 1
   effects:
   - rid: 9031231598746927104

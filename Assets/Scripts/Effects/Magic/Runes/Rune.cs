@@ -11,7 +11,7 @@ public abstract class Rune : Effect
 
     public override void Activate()
     {
-        Owner.Stat<Stat_Magic>().runes.Add(this);
+        Owner.Stat<Stat_Magic>().AddRune(this);
         new Trigger_RuneUsed(this, this, Target);
     }
     // Magic Effect On Hit

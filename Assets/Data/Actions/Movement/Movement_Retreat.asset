@@ -19,7 +19,17 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  timing: 2
+  initialAnimationState: 0
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0
+  effectMultiplier: 1
   effects:
   - rid: 9031231646890721447
   - rid: 2626413410273722977
@@ -30,10 +40,7 @@ MonoBehaviour:
       type: {class: Move, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 2626413410273722978
         rotate: 0
@@ -41,16 +48,12 @@ MonoBehaviour:
     - rid: 2626413410273722978
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
     - rid: 9031231646890721447
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 0.8
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 9031231646890721448
         distanceFromTarget: 100
@@ -58,5 +61,4 @@ MonoBehaviour:
     - rid: 9031231646890721448
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
