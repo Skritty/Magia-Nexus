@@ -55,9 +55,9 @@ public class Stat_Life : GenericStat<Stat_Life>
         //Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
         currentLife = Mathf.Clamp(currentLife - totalDamage, 0, maxLife);
         
-        if (!damage.preventTriggers)
+        if (!damage.preventTriggers || totalDamage == 0)
         {
-            damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, true)
+            damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, false)
             ?.ApplyPopupInfo(Mathf.Round(totalDamage).ToString("0"), new Color(.9f, .2f, .2f));
 
             new Trigger_Damage(damage, damage, damage.Owner, damage.Target);

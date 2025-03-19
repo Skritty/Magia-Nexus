@@ -27,7 +27,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  onTick: 0
+  onTick: 1
   timing: 0
   effectMultiplier: 1
   effects:

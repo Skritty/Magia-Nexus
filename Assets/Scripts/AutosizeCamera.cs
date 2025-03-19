@@ -12,7 +12,7 @@ public class AutosizeCamera : MonoBehaviour
     private Vector3 targetPosition = Vector3.zero;
     private float targetSize = 0;
 
-    private void OnPreRender()
+    private void Update()
     {
         Vector2 lowest = new Vector2(float.MaxValue, float.MaxValue);
         Vector2 highest = new Vector2(float.MinValue, float.MinValue);

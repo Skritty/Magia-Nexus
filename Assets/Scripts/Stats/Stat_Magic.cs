@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,27 +17,41 @@ public class Stat_Magic : GenericStat<Stat_Magic>
     public bool consumeRunesOnEnchant = true;
     [FoldoutGroup("Magic")]
     public VFX vfx;
-    [SerializeReference, FoldoutGroup("Magic")]
-    public List<RuneElement> runeIndex = new List<RuneElement>(); // spellcasting queue
+    private GraphicsBuffer runeInfo;
 
     protected override void Initialize()
     {
-        //vfx = vfx.PlayVFX<VFX>(Owner.transform, Vector3.up, Vector3.zero, true);
-        //vfx.transform.parent = Owner.transform;
+        vfx = vfx.PlayVFX<VFX>(Owner.transform, Vector3.up * 1.5f, Vector3.zero, true);
+        vfx.transform.parent = Owner.transform;
     }
 
     public void AddRune(Rune rune)
     {
+        if(runes.Count == 0)
+        {
+            vfx.visualEffect.enabled = true;
+        }
         runes.Add(rune);
         vfx.visualEffect.SetInt("RuneCount", runes.Count);
-        Texture2D runeInfo = new Texture2D(runes.Count, 1);
+        runeInfo?.Dispose();
+        runeInfo = new GraphicsBuffer(GraphicsBuffer.Target.Structured, runes.Count, 4);
+        float[] runeIndex = new float[runes.Count];
         for(int i = 0; i < runes.Count; i++)
         {
-            runeInfo.SetPixel(i, 0, new Color(runeIndex.IndexOf(runes[i].element), 0, 0));// TODO: remove runeindex
+            runeIndex[i] = 1f * Array.IndexOf(Enum.GetValues(typeof(RuneElement)), runes[i].element);
         }
-        runeInfo.Apply();
-        vfx.visualEffect.SetTexture("Runes", runeInfo);
-        vfx.visualEffect.SendEvent("OnCast");
+        runeInfo.SetData(runeIndex);
+        vfx.visualEffect.SetGraphicsBuffer("Runes", runeInfo);
+        vfx.visualEffect.SendEvent("SpawnRuneType");
+    }
+
+    public void ConsumeRunes()
+    {
+        if (consumeRunesOnEnchant)
+        {
+            runes.Clear();
+            vfx.visualEffect.enabled = false;
+        }
     }
 }
 

@@ -46,6 +46,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 0
         trigger:
           rid: 1130977519447835493
@@ -71,6 +72,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         effectModifiers:
         - calculationType: 0
           damageType: 0
@@ -108,6 +110,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 0
         trigger:
           rid: 1130977675299520680

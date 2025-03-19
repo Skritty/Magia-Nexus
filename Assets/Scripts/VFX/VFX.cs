@@ -13,8 +13,8 @@ public class VFX : PooledObject
     private Coroutine effect;
     public T PlayVFX<T>(Transform owner, Vector3 offset, Vector3 facing, bool attachToOwner) where T : VFX
     {
-        this.offset = offset;
         VFX vfx = RequestObject<VFX>();
+        vfx.offset = offset;
         vfx.transform.position = owner.position + offset;
         vfx.transform.rotation = Quaternion.FromToRotation(Vector3.up, facing);
         if (attachToOwner) vfx.attachedTo = owner;

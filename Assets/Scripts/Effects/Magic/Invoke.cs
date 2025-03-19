@@ -12,6 +12,6 @@ public class Invoke : Effect
         if (Owner.Stat<Stat_Magic>().runes.Count == 0) return;
         Spell spell = new Spell(Owner, Owner.Stat<Stat_Magic>().runes);
         spell.GenerateSpell(this, null);
-        Owner.Stat<Stat_Magic>().runes.Clear();
+        Owner.Stat<Stat_Magic>().ConsumeRunes();
     }
 }

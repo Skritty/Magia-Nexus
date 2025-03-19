@@ -24,5 +24,5 @@ public abstract class Rune : Effect
 
 public enum RuneElement
 {
-    Fire, Water, Earth, Air, Order, Chaos
+    Fire, Water, Earth, Air, Chaos, Order
 }

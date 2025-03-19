@@ -127,12 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a087bb16afde24408c2bd157ab7c996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolID: 0
+  poolID: 39382
   OnGet:
     m_PersistentCalls:
       m_Calls: []
   OnRelease:
     m_PersistentCalls:
       m_Calls: []
-  tickDuration: 0
+  tickDuration: 9999
   visualEffect: {fileID: 5197290060372609763}

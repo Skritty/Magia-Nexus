@@ -96,6 +96,6 @@ MonoBehaviour:
         sortingMethod: 1
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 6737957494741180686, guid: e940b76180137114598924cb29170e97, type: 3}
+        vfx: {fileID: 1036146162269477068, guid: e940b76180137114598924cb29170e97, type: 3}
         radius: 2
         angle: 45

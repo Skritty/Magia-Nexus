@@ -92,7 +92,7 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927120
-        element: 4
+        element: 5
         magicEffectFlatDamage: 80
         damageType: 0
         opposite: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}

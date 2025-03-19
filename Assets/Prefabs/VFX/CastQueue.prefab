@@ -62,7 +62,7 @@ VisualEffect:
       m_Array: []
     m_Int:
       m_Array:
-      - m_Value: 4
+      - m_Value: 8
         m_Name: RuneCount
         m_Overridden: 1
     m_Matrix4x4f:
@@ -120,7 +120,7 @@ VFXRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 184
 --- !u!114 &-836890817849390660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629258adfaf510f4bbef9a81c1206046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolID: 31498
+  poolID: 29532
   OnGet:
     m_PersistentCalls:
       m_Calls: []

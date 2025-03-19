@@ -39,10 +39,7 @@ public class DamageInstance : Effect
             if (Owner.Stat<Stat_Magic>().useRunesToEnchantAttacks)
             {
                 runes.AddRange(Owner.Stat<Stat_Magic>().runes);
-                if (Owner.Stat<Stat_Magic>().consumeRunesOnEnchant)
-                {
-                    Owner.Stat<Stat_Magic>().runes.Clear();
-                }
+                Owner.Stat<Stat_Magic>().ConsumeRunes();
             }
             foreach (Effect effect in targetEffects)
             {
