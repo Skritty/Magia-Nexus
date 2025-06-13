@@ -1,0 +1,1 @@
+public enum EffectTargetSelector { None, Owner, Target }

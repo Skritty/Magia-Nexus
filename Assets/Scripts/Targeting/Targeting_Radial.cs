@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class Targeting_Radial : MultiTargeting
 {
@@ -29,11 +30,14 @@ public class Targeting_Radial : MultiTargeting
         return true;
     }
 
-    protected override void DoFX(Effect source, List<Entity> targets)
+    protected override void DoFX(Effect source, Entity owner, List<Entity> targets)
     {
         if (vfx is not VFX_AoE) return;
-        VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : Owner).transform, offset, Vector3.up, true);
-        aoe.ApplyAoE(radius, angle);
+        Vector3 lookDir = owner.Stat<Stat_Movement>().facingDir;
+        int ticksPerAction = owner.Stat<Stat_Actions>().TicksPerAction;
+        float timePerAction = owner.Stat<Stat_Actions>().TimePerAction;
+        VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : Owner).transform, offset, lookDir, true, ticksPerAction);
+        aoe.ApplyAoE(radius, angle, timePerAction);
         aoe.ApplyDamage(source as DamageInstance);
     }
 

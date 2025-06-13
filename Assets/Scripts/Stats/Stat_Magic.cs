@@ -12,9 +12,7 @@ public class Stat_Magic : GenericStat<Stat_Magic>
     [SerializeReference, FoldoutGroup("Magic")]
     public List<Spell> ownedSpells = new List<Spell>();
     [FoldoutGroup("Magic")]
-    public bool useRunesToEnchantAttacks;
-    [FoldoutGroup("Magic")]
-    public bool consumeRunesOnEnchant = true;
+    public Queue<List<Rune>> enchantedAttacks = new Queue<List<Rune>>();
     [FoldoutGroup("Magic")]
     public VFX vfx;
     private GraphicsBuffer runeInfo;
@@ -47,11 +45,8 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 
     public void ConsumeRunes()
     {
-        if (consumeRunesOnEnchant)
-        {
-            runes.Clear();
-            vfx.visualEffect.enabled = false;
-        }
+        runes.Clear();
+        vfx.visualEffect.enabled = false;
     }
 }
 

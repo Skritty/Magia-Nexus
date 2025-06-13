@@ -24,7 +24,8 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     [FoldoutGroup("Actions")]
     public bool channelInstead;
 
-    public int ticksPerPhase => (int)(GameManager.Instance.timePerTurn / actionsPerTurn * (1 / Time.fixedDeltaTime));
+    public float TimePerAction => GameManager.Instance.timePerTurn / actionsPerTurn;
+    public int TicksPerAction => (int)(TimePerAction / Time.fixedDeltaTime);
     private int phase;
     [ShowInInspector]
     private Action currentAction;
@@ -132,7 +133,7 @@ public class Stat_Actions : GenericStat<Stat_Actions>
     private void FetchNextAction()
     {
         if (actions.Count == 0 || tick < startingTickDelay - Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Initiative)) return;
-        if (tick % ticksPerPhase == 0)
+        if (tick % TicksPerAction == 0)
         {
             currentAction?.OnEnd(Owner);
             if (channelInstead)
@@ -173,8 +174,8 @@ public class Stat_Actions : GenericStat<Stat_Actions>
         if (stunned) return;
         foreach (Action a in repeatActions)
         {
-            a?.Tick(Owner, ticksPerPhase, tick);
+            a?.Tick(Owner, TicksPerAction, tick);
         }
-        currentAction?.Tick(Owner, ticksPerPhase, tick);
+        currentAction?.Tick(Owner, TicksPerAction, tick);
     }
 }

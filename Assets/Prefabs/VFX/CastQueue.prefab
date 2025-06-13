@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6452976093491709905}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.26754153, y: -4.2144704, z: -0.01724931}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51,7 +51,10 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 0.5
+        m_Name: Size
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -118,9 +121,9 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 184
+  m_SortingLayerID: -141039399
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!114 &-836890817849390660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629258adfaf510f4bbef9a81c1206046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolID: 29532
+  poolID: 29550
   OnGet:
     m_PersistentCalls:
       m_Calls: []

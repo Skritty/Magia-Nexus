@@ -55,6 +55,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 0
         trigger:
           rid: 1130977675299520578
@@ -87,16 +88,19 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 2
+        vfx: {fileID: 0}
         damage:
           effectMultiplier: 0.008
           ignoreFrames: 0
           targetSelector:
             rid: 7867064604153348127
+          calculatedDamage: 0
           damageModifiers:
-          - calculationType: 0
+          - value: 100
+            tag: 1
+            method: 0
+            appliesTo: 0
             damageType: 32901
-            effectTag: 0
-            magnitude: 200
           skipFlatDamageReduction: 1
           preventTriggers: 1
           ownerEffects: []

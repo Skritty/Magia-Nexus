@@ -47,8 +47,10 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         effectModifiers:
-        - calculationType: 0
-          damageType: 2
-          effectTag: 2
-          magnitude: 10
+        - value: 10
+          tag: 1
+          method: 0
+          appliesTo: 2
+          damageType: 115

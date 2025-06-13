@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 826594225116567055}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09, y: -4.83, z: -0.016010273}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -112,8 +112,8 @@ VFXRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -141039399
+  m_SortingLayer: 1
   m_SortingOrder: 0
 --- !u!114 &1036146162269477068
 MonoBehaviour:
@@ -127,12 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a087bb16afde24408c2bd157ab7c996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolID: 39382
+  poolID: 29548
   OnGet:
     m_PersistentCalls:
       m_Calls: []
   OnRelease:
     m_PersistentCalls:
       m_Calls: []
-  tickDuration: 9999
+  tickDuration: 0
   visualEffect: {fileID: 5197290060372609763}

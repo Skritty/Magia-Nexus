@@ -23,5 +23,10 @@ public class Viewer
     public float killGainMultiplier;
     public int gold;
     public int totalGold;
+    public int deaths;
+    public int wins;
+    public int losses;
+    public int winstreak;
     public Dictionary<Viewer, float> killedBy = new Dictionary<Viewer, float>();
+    public HashSet<string> unlockedClasses = new HashSet<string>();
 }

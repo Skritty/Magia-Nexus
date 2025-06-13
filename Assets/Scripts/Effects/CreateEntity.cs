@@ -23,7 +23,7 @@ public class CreateEntity : Effect
     [FoldoutGroup("@GetType()")]
     public bool spawnOnTarget;
     [FoldoutGroup("@GetType()")]
-    public MovementTarget movementTarget = MovementTarget.Target;
+    public EffectTargetSelector movementTarget = EffectTargetSelector.Target;
 
     [FoldoutGroup("Projectile Behavior")]
     public int numberOfProjectiles = 1;
@@ -61,7 +61,7 @@ public class CreateEntity : Effect
                 }
             case EntityType.Projectile:
                 {
-                    int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectiles) - 1);
+                    int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectiles));
                     for (int i = 0; i < projectileCount; i++)
                     {
                         Entity spawnedEntity = Create(i);
@@ -89,7 +89,7 @@ public class CreateEntity : Effect
                                     }
                                 case ProjectileFanType.Sequence:
                                     {
-                                        int tickDelay = (int)(1f * Owner.Stat<Stat_Actions>().ticksPerPhase / projectileCount);
+                                        int tickDelay = (int)(1f * Owner.Stat<Stat_Actions>().TicksPerAction / projectileCount);
                                         for (int tick = 0; tick < tickDelay; tick++)
                                         {
                                             yield return new WaitForFixedUpdate();
@@ -105,15 +105,14 @@ public class CreateEntity : Effect
                 }
             case EntityType.Summon:
                 {
-                    int summonCount = numberOfSummons + (ignoreAdditionalSummons ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Summons) - 1);
-                    int maxSummons = overcapSummons + (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.MaxSummons) - 1;
+                    int summonCount = numberOfSummons + (ignoreAdditionalSummons ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Summons));
+                    int maxSummons = overcapSummons + (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.MaxSummons);
                     for (int i = 0; i < summonCount; i++)
                     {
                         if (Owner.Stat<Stat_Team>().summons.Count >= maxSummons) break;
                         Entity spawnedEntity = Create(i);
                         spawnedEntity.Stat<Stat_Life>().maxLife *= lifeMultiplier;
                         spawnedEntity.Stat<Stat_Life>().currentLife *= lifeMultiplier;
-                        spawnedEntity.Stat<Stat_EffectModifiers>().AddModifier(DamageType.None, EffectTag.DamageDealt, damageMultiplier, EffectModifierCalculationType.Multiplicative, 0, null);
                         // TODO: summon position
                         Owner.Stat<Stat_Team>().summons.Add(spawnedEntity);
                         Trigger_Expire.Subscribe(x => Owner.Stat<Stat_Team>().summons.Remove(spawnedEntity), spawnedEntity);
@@ -135,10 +134,10 @@ public class CreateEntity : Effect
         spawnedEntity.Stat<Stat_Team>().team = Owner.Stat<Stat_Team>().team;
         switch (movementTarget)
         {
-            case MovementTarget.Owner:
+            case EffectTargetSelector.Owner:
                 spawnedEntity.Stat<Stat_Movement>().movementTarget = Owner;
                 break;
-            case MovementTarget.Target:
+            case EffectTargetSelector.Target:
                 spawnedEntity.Stat<Stat_Movement>().movementTarget = Target;
                 break;
         }

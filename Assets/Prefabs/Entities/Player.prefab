@@ -362,7 +362,7 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         healthBar: {fileID: 9101917831146373091}
-        damagePopup: {fileID: 1206888003998408235, guid: bbe9e86b035842c49b2eae50fa2df8ef, type: 3}
+        damagePopup: {fileID: 1206888003998408235, guid: ddaf2cdb81fa36d40ac1e933ecce4c05, type: 3}
         maxLife: 10000
         currentLife: 10000
         invulnerable: 0
@@ -403,6 +403,42 @@ MonoBehaviour:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
+    - rid: 5286389302403793010
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 3
+        method: 0
+    - rid: 5286389302403793011
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 5
+        method: 0
+    - rid: 5286389302403793012
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 9
+        method: 0
+    - rid: 5286389302403793013
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 2
+        tag: 14
+        method: 0
+    - rid: 5286389302403793014
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 11
+        method: 0
+    - rid: 5286389302403793016
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 6
+        method: 0
     - rid: 7133257989892341792
       type: {class: Stat_AnimationStates, ns: , asm: Assembly-CSharp}
       data:
@@ -410,7 +446,7 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         animator: {fileID: 3663811516769054534}
-        animationSkin: {fileID: 22100000, guid: b3fe5494adee6b449a5399c7a3ef1969, type: 2}
+        animationSkin: {fileID: 22100000, guid: f95a19e226fca6e4291ad4a4a16f4b86, type: 2}
     - rid: 7867064604153348194
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
@@ -470,7 +506,6 @@ MonoBehaviour:
         useRunesToEnchantAttacks: 0
         consumeRunesOnEnchant: 1
         vfx: {fileID: -836890817849390660, guid: 5335b7fd561477d4db43b51b4db65725, type: 3}
-        runeIndex: 000000000100000002000000030000000400000005000000
     - rid: 9031231661127237636
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
@@ -495,6 +530,10 @@ MonoBehaviour:
           killGainMultiplier: 0
           gold: 0
           totalGold: 0
+          deaths: 0
+          wins: 0
+          losses: 0
+          winstreak: 0
     - rid: 9031231661127237637
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
@@ -510,6 +549,13 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
+        effectModifiers:
+        - rid: 5286389302403793011
+        - rid: 5286389302403793016
+        - rid: 5286389302403793014
+        - rid: 5286389302403793010
+        - rid: 5286389302403793012
+        - rid: 5286389302403793013
     - rid: 9031231668284555680
       type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
       data:
@@ -544,11 +590,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1949708619030334370}
-  - component: {fileID: 7531742837703302904}
-  - component: {fileID: 5875872937032074693}
   - component: {fileID: 3206242795324888508}
   - component: {fileID: 3663811516769054534}
   - component: {fileID: 948158255463526017}
+  - component: {fileID: 8496658560629366567}
   m_Layer: 0
   m_Name: Player Model
   m_TagString: Untagged
@@ -565,62 +610,12 @@ Transform:
   m_GameObject: {fileID: 6044390600065127432}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5444420482956494905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7531742837703302904
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6044390600065127432}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5875872937032074693
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6044390600065127432}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 418ba4f91e0331942a25085eacd2127c, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &3206242795324888508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -678,6 +673,58 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!212 &8496658560629366567
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044390600065127432}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 9fd5a14223779dd41a9845b23cea6106, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5.78, y: 10.48}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &8169663364642632237
 GameObject:
   m_ObjectHideFlags: 0

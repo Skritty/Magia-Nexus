@@ -23,8 +23,8 @@ public class Action : ScriptableObject
     public Color damageTypeColor = Color.white;
     public bool hidden;
     public int maxUses;
-    public AnimationState initialAnimationState;
-    public AnimationState activateAnimationState;
+    public AnimationState initialAnimationState = AnimationState.None;
+    public AnimationState activateAnimationState = AnimationState.None;
     public AnimationCurve movementSpeedOverDuration;
     public bool onTick;
     [Range(0,1)]
@@ -48,7 +48,7 @@ public class Action : ScriptableObject
     }
     public virtual void OnEnd(Entity owner)
     {
-        owner.Stat<Stat_AnimationStates>().AnimationState = AnimationState.Move;
+
     }
     public void DoEffects(Entity owner)
     {

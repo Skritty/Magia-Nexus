@@ -35,13 +35,27 @@ public class Rune_Fire : Rune
 
     public override void MagicEffect(DamageInstance damage)
     {
-        damage.onHitEffects.Add(debuff);
+        damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        DamageInstance explosion = (DamageInstance)magicEffectModifier.Clone();
-        damage.onHitEffects.Add(explosion);
+        if (damage.postOnHitEffects[0] == null)
+        {
+            if (damage.runes.Count <= 1) return;
+
+            DamageInstance explosion = (DamageInstance)magicEffectModifier.Clone();
+            explosion.runes.AddRange(damage.runes);
+            explosion.runes.RemoveAt(0);
+            
+            damage.postOnHitEffects.Add(explosion);
+        }
+        else
+        {
+            damage.postOnHitEffects[0].effectMultiplier += magicEffectModifier.effectMultiplier;
+            //(damage.postOnHitEffects[0].targetSelector as Targeting_Radial).radius += (magicEffectModifier.targetSelector as Targeting_Radial).radius;
+        }
+        
         // TODO: Add delay, add debuffs/other effects?
     }
 
@@ -97,7 +111,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Curse:
                 {
-                    spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => CurseExplode(spell, x.PersistentEffect.Target), spell.effect);
+                    spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => CurseExplode(x, spell, x.PersistentEffect.Target), spell.effect);
                     break;
                 }
         }
@@ -122,10 +136,10 @@ public class Rune_Fire : Rune
         // TODO
     }
 
-    private void CurseExplode(Spell spell, Entity proxy)
+    private void CurseExplode(Trigger_PersistentEffectLost trigger, Spell spell, Entity proxy)
     {
         DamageInstance explosion = (DamageInstance)curseExplosion.Clone();
         spell.AddRunesToDamageInstance(explosion);
-        explosion.Create(spell.Owner, proxy);
+        explosion.Create(spell.Owner, trigger, proxy);
     }
 }

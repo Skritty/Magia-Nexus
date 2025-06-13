@@ -32,7 +32,7 @@ public abstract class Targeting
     public bool lockTarget;
     
     public abstract List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null);
-    public abstract List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner);
+    public abstract List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null);
     public virtual void OnDrawGizmos(Transform owner) { }
     public virtual Targeting Clone()
     {
@@ -125,22 +125,22 @@ public abstract class MultiTargeting : Targeting
 
         if(targets.Count > 0)
         {
-            DoFX(source, targets);
+            DoFX(source, owner, targets);
             primaryTarget = targets[0];
         }
             
         return targets;
     }
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
     {
-        GetTargets(source, owner);
+        GetTargets(source, owner, proxy);
         /*if (conditionalOnTrigger && trigger.effect != null && targets.Contains(trigger.effect.Owner))
         {
             targets = conditionalTarget.GetTargets(source, owner);
         }*/
         return targets;
     }
-    protected virtual void DoFX(Effect source, List<Entity> targets)
+    protected virtual void DoFX(Effect source, Entity owner, List<Entity> targets)
     {
         if (vfx == null) return;
         foreach(Entity target in targets)

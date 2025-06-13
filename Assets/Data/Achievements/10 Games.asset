@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabcf0d7157231741aa6999c905595e7, type: 3}
+  m_Name: 10 Games
+  m_EditorClassIdentifier: 
+  rewardTask:
+    rid: -2
+  activationTriggers:
+  - rid: 8583327136231194686
+  tasks:
+  - rid: 8583327136231194688
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8583327136231194686
+      type: {class: Trigger_GameEnd, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8583327136231194688
+      type: {class: Task_Filter_PlayerActivationThreshold, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 0
+        thresholdInclusive: 10
+        lifetimeThreshold: 1

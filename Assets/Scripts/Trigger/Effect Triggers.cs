@@ -1,11 +1,12 @@
-public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCalc>, ITriggerData_Effect
+public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCalc>, ITriggerData_OwnerEntity
 {
-    private Effect _effect;
-    public Effect Effect => _effect;
+    private Entity _entity;
+    public Entity Entity => _entity;
+
     public Trigger_MovementDirectionCalc() { }
-    public Trigger_MovementDirectionCalc(Effect effect, params object[] bindingObjects)
+    public Trigger_MovementDirectionCalc(Entity owner, params object[] bindingObjects)
     {
-        _effect = effect;
+        _entity = owner;
         Invoke(bindingObjects);
     }
 }

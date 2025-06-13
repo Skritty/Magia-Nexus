@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabcf0d7157231741aa6999c905595e7, type: 3}
+  m_Name: Die 50 times
+  m_EditorClassIdentifier: 
+  rewardTask:
+    rid: 8583327136231194731
+  activationTriggers:
+  - rid: 8583327136231194712
+  tasks:
+  - rid: 8583327136231194713
+  references:
+    version: 2
+    RefIds:
+    - rid: 8583327136231194712
+      type: {class: Trigger_RoundEnd, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 8583327136231194713
+      type: {class: Task_Filter_Deaths, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 0
+        threshold: 50
+    - rid: 8583327136231194731
+      type: {class: Task_UnlockClass, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 0
+        classUnlock: necromancer

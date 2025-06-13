@@ -18,12 +18,12 @@ public class Rune_Wind : Rune
 
     public override void MagicEffect(DamageInstance damage)
     {
-        damage.onHitEffects.Add(debuff);
+        damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        damage.onHitEffects.Add(magicEffectModifier);
+        damage.postOnHitEffects.Add(magicEffectModifier);
     }
 
     public override void Shape(Spell spell)

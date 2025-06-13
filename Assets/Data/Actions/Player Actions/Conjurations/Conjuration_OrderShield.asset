@@ -98,7 +98,17 @@ MonoBehaviour:
         contributeToAssists: 0
         alignment: 0
         vfx: {fileID: 0}
-        effectModifiers: []
+        effectModifiers:
+        - value: 0.5
+          tag: 0
+          method: 2
+          appliesTo: 8192
+          damageType: 0
+        - value: 0.3
+          tag: 0
+          method: 2
+          appliesTo: 16384
+          damageType: 0
     - rid: 7867064604153348163
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

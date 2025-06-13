@@ -280,8 +280,8 @@ Transform:
   m_GameObject: {fileID: 5630421904790809788}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1949708619030334370}
@@ -402,6 +402,42 @@ MonoBehaviour:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
+    - rid: 5286389302403793017
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 5
+        method: 0
+    - rid: 5286389302403793018
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 6
+        method: 0
+    - rid: 5286389302403793019
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 11
+        method: 0
+    - rid: 5286389302403793020
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 3
+        method: 0
+    - rid: 5286389302403793021
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 1
+        tag: 9
+        method: 0
+    - rid: 5286389302403793022
+      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
+      data:
+        value: 2
+        tag: 14
+        method: 0
     - rid: 7867064604153348194
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
@@ -460,6 +496,7 @@ MonoBehaviour:
         mergeBehavior: 0
         useRunesToEnchantAttacks: 1
         consumeRunesOnEnchant: 0
+        vfx: {fileID: 0}
     - rid: 9031231661127237636
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
@@ -484,6 +521,10 @@ MonoBehaviour:
           killGainMultiplier: 0
           gold: 0
           totalGold: 0
+          deaths: 0
+          wins: 0
+          losses: 0
+          winstreak: 0
     - rid: 9031231661127237637
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
@@ -499,6 +540,13 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
+        effectModifiers:
+        - rid: 5286389302403793017
+        - rid: 5286389302403793018
+        - rid: 5286389302403793019
+        - rid: 5286389302403793020
+        - rid: 5286389302403793021
+        - rid: 5286389302403793022
     - rid: 9031231668284555680
       type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
       data:

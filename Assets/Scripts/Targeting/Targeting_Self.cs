@@ -9,7 +9,7 @@ public class Targeting_Self : Targeting
         return new List<Entity>() { owner };
     }
 
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
     {
         return new List<Entity>() { owner };
     }

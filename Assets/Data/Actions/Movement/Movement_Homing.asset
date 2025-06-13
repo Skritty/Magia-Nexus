@@ -18,7 +18,7 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  initialAnimationState: 0
+  initialAnimationState: 1
   activateAnimationState: 0
   movementSpeedOverDuration:
     serializedVersion: 2

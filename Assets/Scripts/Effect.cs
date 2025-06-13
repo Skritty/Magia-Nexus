@@ -107,7 +107,7 @@ public abstract class Effect
     /// </summary>
     public void Create(Entity owner, Trigger trigger, Entity proxy = null)
     {
-        foreach (Entity target in targetSelector.GetTargets(this, trigger, owner))
+        foreach (Entity target in targetSelector.GetTargets(this, trigger, owner, proxy))
         {
             Effect e = Clone();
             e._source = this;
@@ -155,7 +155,7 @@ public abstract class Effect
         return clone;
     }
     
-    public virtual void DoEffect()
+    public void DoEffect()
     {
         if (ignoreFrames > 0)
             new PE_IgnoreEntity(this, ignoreFrames);

@@ -7,16 +7,16 @@ using UnityEngine;
 
 public class PE_EffectModifer : PersistentEffect
 {
-
+    // TODO: make one of these for numerical modifiers (not just damage mods)
     [InfoBox("Formatting\nFlat: 0.2 = (+0.2 flat) | Increased: 0.2 = (20% increased) | More: 1.2 = (20% more)")]
     [FoldoutGroup("@GetType()")]
-    public List<EffectModifier> effectModifiers = new List<EffectModifier>();
+    public List<DamageModifier> effectModifiers = new List<DamageModifier>();
     public override void OnGained()
     {
-        foreach (EffectModifier modifier in effectModifiers)
+        foreach (DamageModifier modifier in effectModifiers)
         {
-            EffectModifier newMod = modifier.Clone();
-            newMod.effect = this;
+            DamageModifier newMod = modifier.Clone();
+            newMod.source = this;
             Target.Stat<Stat_EffectModifiers>().AddModifier(newMod);
         }
     }

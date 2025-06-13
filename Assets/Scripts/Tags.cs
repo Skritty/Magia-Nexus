@@ -4,7 +4,7 @@ using System;
 public enum DamageType
 {
     // Parent Types
-    None = 0, // 0000
+    True = 0, // 0000
     Damage = 1, // 0000
     Physical = 2, // 1000
     Elemental = 4, // 0100
@@ -30,14 +30,14 @@ public enum DamageType
     Projectile = 1 << 16, // Gains projectile behaviors (chain, multiple projectiles)
     AoE = 1 << 17,
 
-    True = int.MaxValue
+    All = int.MaxValue
 }
 
 public enum EffectTag
 {
     None,
-    DamageTaken,
     DamageDealt,
+    DamageTaken,
     AoESize,
     Projectiles,
     Targets,

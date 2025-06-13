@@ -24,11 +24,22 @@ public abstract class Phase_Combat : Phase
     public int killPointGain;
     private Dictionary<int, int> remainingPlayers = new Dictionary<int, int>();
     public List<EntitySpawns> spawns;
+    public List<Spell> globalSpell = new List<Spell>();
     private System.Action cleanup;
 
     public override void OnEnter()
     {
+        base.OnEnter();
         SpawnEntities();
+    }
+
+    public override void OnExit()
+    {
+        foreach (Viewer player in GameManager.Viewers)
+        {
+            new Trigger_RoundEnd(player, player);
+        }
+        base.OnExit();
     }
 
     private void SpawnEntities()
@@ -60,6 +71,7 @@ public abstract class Phase_Combat : Phase
     private void TrackKill(Trigger_Die trigger)
     {
         Entity dead = trigger.Effect.Target;
+        dead.Stat<Stat_PlayerOwner>().player.deaths++;
         int team = dead.Stat<Stat_Team>().team;
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);
@@ -75,6 +87,13 @@ public abstract class Phase_Combat : Phase
                     spawn.owner.points += winPointGain;
                     spawn.owner.gold += winPointGain;
                     spawn.owner.totalGold += winPointGain;
+                    spawn.owner.wins++;
+                    spawn.owner.winstreak++;
+                }
+                else
+                {
+                    spawn.owner.losses++;
+                    spawn.owner.winstreak = 0;
                 }
             }
             cleanup?.Invoke();

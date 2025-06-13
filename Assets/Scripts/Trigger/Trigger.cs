@@ -1,12 +1,13 @@
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using TwitchLib.Api.Helix;
 using TwitchLib.Api.Helix.Models.Subscriptions;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [Serializable]
 public abstract class Trigger : ITriggerData
@@ -68,7 +69,7 @@ public abstract class Trigger<T> : Trigger where T : Trigger
 
     public override void Invoke(params object[] bindingObjects)
     {
-        foreach(object bindingObject in bindingObjects)
+        foreach (object bindingObject in bindingObjects.Distinct())
         {
             // Bound Triggers
             if (bindings.ContainsKey(bindingObject))
@@ -126,5 +127,27 @@ public class Trigger_OnRemove : Trigger<Trigger_OnRemove>
     public override System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0)
     {
         return () => method.Invoke(this);
+    }
+}
+public class Trigger_GameEnd : Trigger<Trigger_GameEnd>, ITriggerData_Player 
+{
+    private Viewer _player;
+    public Viewer Player => _player;
+    public Trigger_GameEnd() { }
+    public Trigger_GameEnd(Viewer player, params object[] bindingObjects)
+    {
+        _player = player;
+        Invoke(bindingObjects);
+    }
+}
+public class Trigger_RoundEnd : Trigger<Trigger_RoundEnd>, ITriggerData_Player
+{
+    private Viewer _player;
+    public Viewer Player => _player;
+    public Trigger_RoundEnd() { }
+    public Trigger_RoundEnd(Viewer player, params object[] bindingObjects)
+    {
+        _player = player;
+        Invoke(bindingObjects);
     }
 }

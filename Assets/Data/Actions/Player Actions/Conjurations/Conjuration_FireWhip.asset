@@ -41,11 +41,13 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 7867064581498077213
+        calculatedDamage: 0
         damageModifiers:
-        - calculationType: 0
+        - value: 100
+          tag: 0
+          method: 0
+          appliesTo: 0
           damageType: 155781
-          effectTag: 2
-          magnitude: 100
         skipFlatDamageReduction: 0
         preventTriggers: 0
         ownerEffects: []

@@ -16,7 +16,7 @@ public class Rune_Water : Rune
 
     public override void MagicEffect(DamageInstance damage)
     {
-        damage.onHitEffects.Add(debuff);
+        damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
@@ -36,9 +36,9 @@ public class Rune_Water : Rune
 
     private void AddMagicEffectRunesToAttackDamage(Spell spell, DamageInstance damage)
     {
-        foreach(EffectModifier modifier in damage.damageModifiers)
+        foreach(DamageModifier modifier in damage.damageModifiers)
         {
-            if (modifier.calculationType == EffectModifierCalculationType.Flat && modifier.damageType.HasFlag(DamageType.Attack))
+            if (modifier.method == NumericalModifierCalculationMethod.Flat && modifier.damageType.HasFlag(DamageType.Attack))
             {
                 damage.runes.AddRange(spell.runes);
                 return;

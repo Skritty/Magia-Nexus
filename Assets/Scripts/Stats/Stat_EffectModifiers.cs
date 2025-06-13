@@ -1,81 +1,69 @@
-using Sirenix.OdinInspector;
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using TwitchLib.Api.Helix.Models.Common;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Stat_EffectModifiers : GenericStat<Stat_EffectModifiers>
 {
-    [ShowInInspector, ReadOnly, FoldoutGroup("Effect Modifiers")]
-    private List<EffectModifier> effectModifiers = new List<EffectModifier>();
+    [SerializeReference, FoldoutGroup("Effect Modifiers")]
+    private List<NumericalModifier> effectModifiers = new List<NumericalModifier>();
     private Dictionary<EffectTag, float> precalculatedModifiers = new Dictionary<EffectTag, float>();
 
-    public void AddModifier(EffectModifier modifier)
+    public void AddModifier(NumericalModifier modifier)
     {
-        if (precalculatedModifiers.ContainsKey(modifier.effectTag))
-            precalculatedModifiers.Remove(modifier.effectTag);
+        if (precalculatedModifiers.ContainsKey(modifier.tag))
+            precalculatedModifiers.Remove(modifier.tag);
         effectModifiers.Add(modifier);
-    }
-
-    public void AddModifier(DamageType damageType, EffectTag tag, float magnitude, EffectModifierCalculationType type, float contributionMultiplier, Effect effect)
-    {
-        if (precalculatedModifiers.ContainsKey(tag))
-            precalculatedModifiers.Remove(tag);
-        switch (type)
+        effectModifiers.Sort((x, y) =>
         {
-            case EffectModifierCalculationType.Flat:
-                effectModifiers.Insert(0, new EffectModifier(damageType, tag, magnitude, type, contributionMultiplier, effect));
-                break;
-            case EffectModifierCalculationType.Additive:
-            case EffectModifierCalculationType.Multiplicative:
-                effectModifiers.Add(new EffectModifier(damageType, tag, magnitude, type, contributionMultiplier, effect));
-                break;
-        }
+            switch (x.method)
+            {
+                case NumericalModifierCalculationMethod.Flat:
+                    return -1;
+                case NumericalModifierCalculationMethod.Additive:
+                case NumericalModifierCalculationMethod.Multiplicative:
+                    return 0;
+            }
+            return 0;
+        });
     }
 
     public void RemoveModifier(Effect effect)
     {
-        effectModifiers.RemoveAll(x => x.effect == effect);
-    }
-
-    public void AddModifiersToCalculation(EffectModifier calculation, EffectTag tag)
-    {
-        foreach (EffectModifier modifier in effectModifiers)
+        foreach(NumericalModifier modifier in effectModifiers.ToArray())
         {
-            if (modifier.effectTag != tag) continue;
-            calculation.AddModifier(modifier);
+            if (modifier.source != effect) continue;
+            if (precalculatedModifiers.ContainsKey(modifier.tag))
+                precalculatedModifiers.Remove(modifier.tag);
+            effectModifiers.Remove(modifier);
         }
     }
 
-    public float CalculateModifier(EffectTag tags, DamageType damage = DamageType.None)
+    /// <summary>
+    /// Adds valid effect modifiers to the calculation
+    /// </summary>
+    public void AddModifiersToCalculation(NumericalModifier calculation, EffectTag tag)
     {
-        float result = 0;
-        if (precalculatedModifiers.ContainsKey(tags))
+        foreach (NumericalModifier modifier in effectModifiers)
         {
-            result = precalculatedModifiers[tags];
+            if (modifier.tag != tag) continue;
+            calculation.AddModifier(new AssistContributingModifier(modifier, 1), modifier.method);
         }
-        else
-        {
-            result = CalculateModifier(damage, tags, null, 0, 0);
-            precalculatedModifiers.Add(tags, result);
-        }
-        return result;
     }
 
-    public float CalculateModifier(Effect contributingEffect, EffectTag tag, float contributionMultiplier = 1, float mitigationContributionMultiplier = 1)
+    public float CalculateModifier(EffectTag tag)
     {
-        return CalculateModifier(DamageType.None, tag, contributingEffect, contributionMultiplier, mitigationContributionMultiplier);
-    }
-
-    private float CalculateModifier(DamageType damageType, EffectTag tag, Effect contributingEffect, float contributionMultiplier, float mitigationContributionMultiplier)
-    {
-        EffectModifier calculation = EffectModifier.CreateCalculation(contributingEffect, true, damageType);
-        AddModifiersToCalculation(calculation, tag);
-        if (Owner.Stat<Stat_PlayerOwner>().scaleWithPlayerCharacterModifiers && !Owner.Stat<Stat_PlayerOwner>().playerCharacter)
+        if (!precalculatedModifiers.ContainsKey(tag))
         {
-            Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().AddModifiersToCalculation(calculation, tag);
+            NumericalModifier calculation = NumericalModifier.CreateCalculation();
+            AddModifiersToCalculation(calculation, tag);
+            if (Owner.Stat<Stat_PlayerOwner>().scaleWithPlayerCharacterModifiers && !Owner.Stat<Stat_PlayerOwner>().playerCharacter)
+            {
+                Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().AddModifiersToCalculation(calculation, tag);
+            }
+            precalculatedModifiers.Add(tag, calculation.Solve());
         }
-        return calculation.CalculateModifier(contributingEffect);
+        return precalculatedModifiers[tag];
     }
 
     public override void OnDestroy()

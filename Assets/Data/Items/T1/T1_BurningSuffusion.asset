@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
   - {fileID: 11400000, guid: cf7cd7de6af40a84381d78a138533f34, type: 2}
   grantedActions: []
+  grantedTargeting: []
   actionCountModifier: 0
   itemEffects:
   - rid: 1130977517639303266
@@ -46,6 +47,7 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 0
         trigger:
           rid: 1130977675299520565
@@ -81,16 +83,19 @@ MonoBehaviour:
         refreshDuration: 0
         contributeToAssists: 0
         alignment: 2
+        vfx: {fileID: 0}
         damage:
           effectMultiplier: 0.04
           ignoreFrames: 0
           targetSelector:
             rid: 1130977517639303276
+          calculatedDamage: 0
           damageModifiers:
-          - calculationType: 0
-            damageType: 49285
-            effectTag: 0
-            magnitude: 40
+          - value: 100
+            tag: 1
+            method: 0
+            appliesTo: 0
+            damageType: 32901
           skipFlatDamageReduction: 1
           preventTriggers: 1
           ownerEffects: []

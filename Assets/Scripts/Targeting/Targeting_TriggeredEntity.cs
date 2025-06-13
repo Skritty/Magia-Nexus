@@ -9,7 +9,7 @@ public class Targeting_TriggeredEntity : Targeting
         return new List<Entity>();
     }
 
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
     {
         if(trigger.Is(out ITriggerData_OwnerEntity data))
             return new List<Entity>() { data.Entity };

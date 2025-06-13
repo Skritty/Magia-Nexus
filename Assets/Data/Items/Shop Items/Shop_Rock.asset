@@ -46,11 +46,13 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         effectModifiers:
-        - calculationType: 2
+        - value: -0.05
+          tag: 9
+          method: 1
+          appliesTo: 0
           damageType: 0
-          effectTag: 8
-          magnitude: -0.02
     - rid: 3963142721972731913
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

@@ -47,11 +47,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca55bb5803779d4daf79df83fdcd977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <UseDontDestroyOnLoad>k__BackingField: 1
   timePerTurn: 2.5
   defaultActionsPerTurn: 5
   initialPhase: {fileID: 0}
   timer: {fileID: 3559958422687171977}
   defaultPlayer: {fileID: 4300648619749440453, guid: b7fc92d34dbec554eb4b7acca034fc24, type: 3}
+  defaultUnlockedClasses:
+  - fighter
+  - archer
+  - fortress
+  - wizard
   defaultTargeting:
     rid: 9031231670877684061
   startingClasses:
@@ -91,15 +97,16 @@ MonoBehaviour:
       value: []
     - key: wildmage
       value: []
+    - key: monk
+      value: []
+    - key: wretch
+      value: []
   viewers:
     serializedPairs:
     - key: Wizard
       value:
         viewerID: 0
         viewerName: Wizard
-        points: 0
-        roundPoints: 0
-        currency: 0
         targetType:
           rid: 9031231527144652855
         items:
@@ -112,13 +119,20 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 7ea5c5f86f30d3d45a4da9fd515b8c69, type: 2}
         - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
         - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+        character: {fileID: 0}
+        points: 0
+        roundPoints: 0
+        killGainMultiplier: 0
+        gold: 0
+        totalGold: 0
+        deaths: 0
+        wins: 0
+        losses: 0
+        winstreak: 0
     - key: Archer
       value:
         viewerID: 0
         viewerName: Archer
-        points: 0
-        roundPoints: 0
-        currency: 0
         targetType:
           rid: 9031231527144652856
         items:
@@ -131,13 +145,20 @@ MonoBehaviour:
         - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
         - {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
         - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+        character: {fileID: 0}
+        points: 0
+        roundPoints: 0
+        killGainMultiplier: 0
+        gold: 0
+        totalGold: 0
+        deaths: 0
+        wins: 0
+        losses: 0
+        winstreak: 0
     - key: Fighter
       value:
         viewerID: 0
         viewerName: Fighter
-        points: 0
-        roundPoints: 0
-        currency: 0
         targetType:
           rid: 9031231692007800958
         items:
@@ -150,41 +171,57 @@ MonoBehaviour:
         - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
         - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
         - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+        character: {fileID: 0}
+        points: 0
+        roundPoints: 0
+        killGainMultiplier: 0
+        gold: 0
+        totalGold: 0
+        deaths: 0
+        wins: 0
+        losses: 0
+        winstreak: 0
+  allViewers:
+    serializedPairs: []
   references:
     version: 2
     RefIds:
     - rid: 9031231527144652855
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
         entitiesAffected: 8
         sortingMethod: 4
         numberOfTargets: 0
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
     - rid: 9031231527144652856
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
         entitiesAffected: 8
         sortingMethod: 2
         numberOfTargets: 0
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
     - rid: 9031231670877684061
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
         entitiesAffected: 8
         sortingMethod: 2
         numberOfTargets: 0
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
     - rid: 9031231692007800958
       type: {class: Targeting_Life, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0
         entitiesAffected: 8
         sortingMethod: 2
         numberOfTargets: 0
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
 --- !u!1 &2525609995793762906
 GameObject:
   m_ObjectHideFlags: 0

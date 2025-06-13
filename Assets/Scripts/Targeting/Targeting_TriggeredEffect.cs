@@ -10,7 +10,7 @@ public class Targeting_TriggeredEffect : Targeting
         return new List<Entity>() { owner };
     }
 
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
     {
         if (trigger.Is(out ITriggerData_Effect data))
         {
@@ -23,7 +23,7 @@ public class Targeting_TriggeredEffect : Targeting
             {
                 target = data.Effect.Target;
             }
-            return GetTargets(source, target == null ? owner : target);
+            return GetTargets(source, target == null ? owner : target, proxy);
         }
         return new List<Entity>();
     }

@@ -9,7 +9,7 @@ public class Targeting_Owner : Targeting
         return new List<Entity>() { owner.Stat<Stat_PlayerOwner>().playerEntity };
     }
 
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner)
+    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
     {
         return new List<Entity>() { owner.Stat<Stat_PlayerOwner>().playerEntity };
     }

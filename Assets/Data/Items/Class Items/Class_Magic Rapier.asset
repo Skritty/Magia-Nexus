@@ -42,13 +42,15 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 0
         trigger:
           rid: 1130977835028054036
         tasks:
         - rid: 1130977835028054037
-        - rid: 1130977835028054040
-        - rid: 1130977835028054038
+        - rid: 5286389459233538410
+        - rid: 5286389459233538407
+        - rid: 5286389459233538411
     - rid: 1130977835028054035
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -60,12 +62,49 @@ MonoBehaviour:
       type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
-    - rid: 1130977835028054038
-      type: {class: Task_ModifyDamageInstanceRunes, ns: , asm: Assembly-CSharp}
+    - rid: 5286389459233538407
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
-    - rid: 1130977835028054040
+        proxy: 1
+        useProxyAsOwner: 1
+        effect:
+          rid: 5286389459233538408
+    - rid: 5286389459233538408
+      type: {class: Enchant, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 5286389459233538409
+        consumeRunes: 0
+        attacksEnchanted: 1
+    - rid: 5286389459233538409
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 5286389459233538410
       type: {class: Task_Filter_DamageType, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
         damageTypes: 8192
+    - rid: 5286389459233538411
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1
+        proxy: 1
+        useProxyAsOwner: 0
+        effect:
+          rid: 5286389459233538412
+    - rid: 5286389459233538412
+      type: {class: Invoke, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 5286389459233538414
+    - rid: 5286389459233538414
+      type: {class: Targeting_TriggeredEffect, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        selector: 1

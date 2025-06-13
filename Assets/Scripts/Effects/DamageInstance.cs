@@ -8,12 +8,16 @@ using UnityEngine;
 [Serializable]
 public class DamageInstance : Effect
 {
+    [HideInInspector]
+    public float calculatedDamage;
     [FoldoutGroup("@GetType()")]
-    public List<EffectModifier> damageModifiers = new List<EffectModifier>();
+    public List<DamageModifier> damageModifiers = new List<DamageModifier>();
     [FoldoutGroup("@GetType()")]
     public List<Rune> runes = new List<Rune>(); 
     [FoldoutGroup("@GetType()")]
     public bool skipFlatDamageReduction;
+    [FoldoutGroup("@GetType()")]
+    public bool triggerPlayerOwner;
     [FoldoutGroup("@GetType()")]
     public bool preventTriggers;
     
@@ -23,24 +27,24 @@ public class DamageInstance : Effect
     public List<Effect> targetEffects = new();
     [SerializeReference, FoldoutGroup("@GetType()")]
     public List<Effect> onHitEffects = new();
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public List<Effect> postOnHitEffects = new();
     [SerializeReference, FoldoutGroup("@GetType()"), InfoBox("These are in effect until the end of damage calculation")]
     public List<PE_Trigger> temporaryTriggeredEffects = new();
+    
 
     public override void Activate()
     {
         if (Target.Stat<Stat_Life>().maxLife <= 0) return;
         if (!preventTriggers)
         {
+            Entity triggerOwner = triggerPlayerOwner ? Owner.Stat<Stat_PlayerOwner>().Owner : Owner;
             foreach (PE_Trigger effect in temporaryTriggeredEffects)
             {
                 Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
             }
-            new Trigger_PreHit(this, this, Owner, Target, Source);
-            if (Owner.Stat<Stat_Magic>().useRunesToEnchantAttacks)
-            {
-                runes.AddRange(Owner.Stat<Stat_Magic>().runes);
-                Owner.Stat<Stat_Magic>().ConsumeRunes();
-            }
+            new Trigger_PreHit(this, this, Owner, triggerOwner, Target, Source);
+            runes.AddRange(Owner.Stat<Stat_Magic>().enchantedAttacks.Dequeue());
             foreach (Effect effect in targetEffects)
             {
                 effect.Create(Source, Owner, Target);
@@ -59,7 +63,11 @@ public class DamageInstance : Effect
                 Target.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
             }
             GenerateMagicEffect();
-            new Trigger_Hit(this, this, Owner, Target, Source);
+            new Trigger_Hit(this, this, Owner, triggerOwner, Target, Source);
+            foreach (Effect effect in postOnHitEffects)
+            {
+                effect.Create(this);
+            }
         }
 
         CalculateDamageType();
@@ -71,11 +79,16 @@ public class DamageInstance : Effect
         }
     }
 
-    public void AddModifiers(EffectModifier calculation)
+    public void AddModifiers(DamageModifier calculation)
     {
-        foreach(EffectModifier modifier in damageModifiers)
+        damageModifiers.Sort((x, y) =>
         {
-            calculation.AddModifier(modifier);
+            if (x.method == NumericalModifierCalculationMethod.Flat) return -1;
+            return 1;
+        });
+        foreach (DamageModifier modifier in damageModifiers)
+        {
+            calculation.AddModifier(new AssistContributingModifier(modifier, 1), modifier.method, modifier.damageType, DamageType.True);
         }
     }
 
@@ -83,7 +96,7 @@ public class DamageInstance : Effect
     {
         if (runes.Count == 0) return;
         int spellPhase = 0;
-        Owner.Stat<Stat_PlayerOwner>().Proxy(x => spellPhase += (int)x.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase) - 1);
+        Owner.Stat<Stat_PlayerOwner>().Proxy(x => spellPhase += (int)x.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase));
         spellPhase %= runes.Count;
         for (int i = spellPhase; i < runes.Count + spellPhase; i++)
         {
@@ -96,14 +109,14 @@ public class DamageInstance : Effect
 
     private void AddToDamage(float damage, DamageType tag)
     {
-        damageModifiers.Add(new EffectModifier(tag, EffectTag.None, damage, EffectModifierCalculationType.Flat, 1, null));
+        damageModifiers.Add(new DamageModifier(damage, NumericalModifierCalculationMethod.Flat, tag, DamageType.True));
         // TODO: contributing effect
     }
 
     public void CalculateDamageType()
     {
         if (runes.Count == 0) return;
-        float addedFlatDamage = 1;
+        float addedFlatDamage = 0;
         Tally<DamageType> damageTypeTally = new Tally<DamageType>();
         foreach (Rune effectRune in runes)
         {
@@ -159,11 +172,12 @@ public class DamageInstance : Effect
     public override Effect Clone()
     {
         DamageInstance clone = (DamageInstance)base.Clone();
-        clone.damageModifiers = new List<EffectModifier>(damageModifiers);
+        clone.damageModifiers = new List<DamageModifier>(damageModifiers);
         clone.runes = new List<Rune>(runes);
         clone.ownerEffects = new List<Effect>(ownerEffects);
         clone.targetEffects = new List<Effect>(targetEffects);
         clone.onHitEffects = new List<Effect>(onHitEffects);
+        clone.postOnHitEffects = new List<Effect>(postOnHitEffects);
         clone.temporaryTriggeredEffects = new List<PE_Trigger>(temporaryTriggeredEffects);
         return clone;
     }

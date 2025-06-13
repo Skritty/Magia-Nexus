@@ -1,9 +1,10 @@
 using System;
 
-public class Trigger_Expire : Trigger<Trigger_Expire>, ITriggerData_OwnerEntity
+public class Trigger_Expire : Trigger<Trigger_Expire>, ITriggerData_Player, ITriggerData_OwnerEntity
 {
     private Entity _owner;
     public Entity Entity => _owner;
+    public Viewer Player => _owner.Stat<Stat_PlayerOwner>().player;
     public Trigger_Expire() { }
     public Trigger_Expire(Entity entity, params object[] bindingObjects)
     {

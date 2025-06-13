@@ -17,14 +17,14 @@ public class Rune_Earth : Rune
 
     public override void MagicEffect(DamageInstance damage)
     {
-        damage.onHitEffects.Add(debuff);
+        damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
         PE_RuneCrystal crystal = new PE_RuneCrystal();
         crystal.rune = damage.runes[currentRuneIndex - 1]; // TODO: add stacks instead of new crystal
-        damage.onHitEffects.Add(crystal);
+        damage.postOnHitEffects.Add(crystal);
     }
 
     public override void Shape(Spell spell)

@@ -74,10 +74,11 @@ MonoBehaviour:
         alignment: 0
         vfx: {fileID: 0}
         effectModifiers:
-        - calculationType: 0
+        - value: 2
+          tag: 4
+          method: 0
+          appliesTo: 0
           damageType: 0
-          effectTag: 4
-          magnitude: 2
     - rid: 1130977519447835492
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -115,7 +116,7 @@ MonoBehaviour:
         trigger:
           rid: 1130977675299520680
         tasks:
-        - rid: 1130977520802070537
+        - rid: 5286389458132795894
         - rid: 1130977519447835500
     - rid: 1130977519447835500
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
@@ -129,21 +130,20 @@ MonoBehaviour:
         effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 1130977541448270711
+          rid: 5286389458132795918
         homingRateDegreesPerSecond: 65
-    - rid: 1130977520802070537
-      type: {class: Task_Filter_Target, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
     - rid: 1130977520802070747
       type: {class: Targeting_TriggeredEntity, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 1130977541448270711
-      type: {class: Targeting_TriggeredEffect, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        selector: 1
     - rid: 1130977675299520680
       type: {class: Trigger_MovementDirectionCalc, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 5286389458132795894
+      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1
+    - rid: 5286389458132795918
+      type: {class: Targeting_TriggeredEntity, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0

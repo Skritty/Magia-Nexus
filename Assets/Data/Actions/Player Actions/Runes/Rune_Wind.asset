@@ -68,7 +68,12 @@ MonoBehaviour:
         contributeToAssists: 0
         alignment: 0
         vfx: {fileID: 0}
-        effectModifiers: []
+        effectModifiers:
+        - value: 0.2
+          tag: 9
+          method: 1
+          appliesTo: 0
+          damageType: 0
     - rid: 5670261797178049040
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -108,8 +113,8 @@ MonoBehaviour:
         targetSelector:
           rid: 9031231598746927118
         element: 3
-        magicEffectFlatDamage: 110
-        damageType: 0
+        magicEffectFlatDamage: 55
+        damageType: 261
         opposite: {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
         buff:
           rid: 5670261797178049039
@@ -122,12 +127,14 @@ MonoBehaviour:
           ignoreFrames: 1
           targetSelector:
             rid: 1130977835028054074
+          calculatedDamage: 0
           damageModifiers: []
           skipFlatDamageReduction: 0
           preventTriggers: 0
           ownerEffects: []
           targetEffects: []
           onHitEffects: []
+          postOnHitEffects: []
     - rid: 9031231598746927118
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

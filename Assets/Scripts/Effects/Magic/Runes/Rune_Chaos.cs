@@ -14,6 +14,8 @@ public class Rune_Chaos : Rune
     [Header("Spell Shape")]
     [FoldoutGroup("Circle")]
     public float multiplierPerStage;
+    [FoldoutGroup("Projectile")]
+    public PE_Trigger homing;
     [FoldoutGroup("Curse")]
     public DamageInstance curseHit;
     [FoldoutGroup("Curse")]
@@ -105,7 +107,7 @@ public class Rune_Chaos : Rune
 
     private void AddHomingToProjectile(Trigger_ProjectileCreated trigger)
     {
-        if (!(trigger.Entity.Stat<Stat_Movement>().movementSelector is Movement_HomeToTarget))
+        if (trigger.Entity.Stat<Stat_Movement>().movementSelector == null || !(trigger.Entity.Stat<Stat_Movement>().movementSelector is Movement_HomeToTarget))
         {
             trigger.Entity.Stat<Stat_Movement>().movementSelector = new Movement_HomeToTarget();
         }

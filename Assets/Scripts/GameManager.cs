@@ -1,11 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Skritty.Tools.Utilities;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Linq;
-using TMPro;
-using System;
-using Skritty.Tools.Utilities;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -18,12 +18,14 @@ public class GameManager : Singleton<GameManager>
     public TextMeshProUGUI timer;
 
     public Entity defaultPlayer;
+    public List<string> defaultUnlockedClasses = new List<string>();
     [SerializeReference]
     public Targeting defaultTargeting;
     public SerializedDictionary<string, List<Item>> startingClasses;
     public SerializedDictionary<string, Viewer> viewers = new SerializedDictionary<string, Viewer>();
-    public SerializedDictionary<string, Viewer> inactiveViewers = new SerializedDictionary<string, Viewer>();
+    public SerializedDictionary<string, Viewer> allViewers = new SerializedDictionary<string, Viewer>();
     public static Viewer[] Viewers => Instance.viewers.Select(x => x.Value).ToArray();
+    public static Viewer[] ViewersScoreOrdered => Instance.viewers.Select(x => x.Value).OrderBy(x => x.points).ToArray();
 
     private void OnEnable()
     {
@@ -53,38 +55,44 @@ public class GameManager : Singleton<GameManager>
 
     private CommandError Command_JoinGame(string user, List<string> args)
     {
+        Viewer viewer;
+        if (allViewers.ContainsKey(user))
+        {
+            // Existing player (this game)
+            viewer = allViewers[user];
+            viewer.gold = viewer.totalGold;
+            viewer.items.Clear();
+            viewers.Remove(user);
+        }
+        else
+        {
+            // New player (this game)
+            viewer = new Viewer();
+            viewer.viewerName = user;
+            viewer.targetType = defaultTargeting;
+            foreach (string c in defaultUnlockedClasses) viewer.unlockedClasses.Add(c);
+            allViewers.Add(user, viewer);
+        }
+        
+        // Pick class
         if (args.Count == 0 || !startingClasses.ContainsKey(args[0]))
         {
             string classes = "";
-            foreach(KeyValuePair<string, List<Item>> c in startingClasses)
+            foreach(string c in viewer.unlockedClasses)
             {
-                if (c.Value.Count == 0) continue;
-                classes += $"{c.Key}, ";
+                if (startingClasses[c].Count == 0) continue;
+                classes += $"{c}, ";
             }
             classes = classes.Remove(classes.Length -2, 2);
-            return new CommandError(false, $"Please pick a valid starting class out of: {classes}");
+            return new CommandError(false, $"Please pick a valid class out of: {classes}");
         }
-
-        if (viewers.ContainsKey(user))
+        else if(!viewer.unlockedClasses.Contains(args[0]))
         {
-            inactiveViewers.Add(user, viewers[user]);
-            viewers.Remove(user);
+            return new CommandError(false, $"You do not have {args[0]} unlocked");
         }
-
-        Viewer viewer;
-        if (inactiveViewers.ContainsKey(user))
-        {
-            viewer = inactiveViewers[user];
-            viewer.gold = viewer.totalGold;
-            viewer.items.Clear();
-            inactiveViewers.Remove(user);
-        }
-        else viewer = new Viewer();
-
-        viewer.viewerName = user;
+        
         viewer.items.AddRange(startingClasses[args[0]]);
-        viewer.targetType = defaultTargeting;
-        viewers.Add(user, viewer);
+        viewers.Add(viewer.viewerName, viewer);
 
         TwitchClient.Instance.SendChatMessage($"@{user} joined as {args[0]}");
         return new CommandError(true, "");
@@ -94,7 +102,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (viewers.ContainsKey(user))
         {
-            inactiveViewers.Add(user, viewers[user]);
+            allViewers.Add(user, viewers[user]);
             viewers.Remove(user);
         }
         

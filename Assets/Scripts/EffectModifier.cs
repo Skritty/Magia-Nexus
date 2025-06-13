@@ -138,7 +138,7 @@ public class EffectModifier
         FindOrCreateSubcalculation(modifier.damageType).submodifiers.Add(modifier);
     }
 
-    public static EffectModifier CreateCalculation(Effect contributingEffect, bool noEffectDefaultFlat = true, DamageType defaultFlat = DamageType.None)
+    public static EffectModifier CreateCalculation(Effect contributingEffect, bool noEffectDefaultFlat = true, DamageType defaultFlat = DamageType.True)
     {
         EffectModifier rootCalculation = new EffectModifier(true);
         if (contributingEffect == null)
@@ -150,7 +150,7 @@ public class EffectModifier
         }
         else
         {
-            rootCalculation.submodifiers.Add(new EffectModifier(DamageType.None, EffectTag.None, contributingEffect.effectMultiplier, EffectModifierCalculationType.Multiplicative, 0, contributingEffect));
+            rootCalculation.submodifiers.Add(new EffectModifier(DamageType.True, EffectTag.None, contributingEffect.effectMultiplier, EffectModifierCalculationType.Multiplicative, 0, contributingEffect));
         }
         return rootCalculation;
     }
@@ -369,7 +369,7 @@ public class EffectModifier
 // Damage type subcalculation: ((Flat + ...) * (Increased + ...) * Multiplier * ...)
 
 //                                                      (ROOT REAL)
-// n0 Multiplicative: --------------------------(root)------------------------------ * (effect multiplier)(-)
+// n0 Multiplicative: --------------------------(root [flat])------------------------------ * (effect multiplier [increased])
 // n1 Additive:       -----------------------(tag subcalc)------------------------------ + ...
 // n2 Multiplicative: ---(flat)---    *    ---(increased)---(-)     * (more)(-) * (more)(-) * ...
 // n3 Additive:   [(f1) + (f2) + ...]     [(i1) + (i2) + ...]

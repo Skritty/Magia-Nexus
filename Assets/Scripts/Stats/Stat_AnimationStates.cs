@@ -24,13 +24,15 @@ public class Stat_AnimationStates : GenericStat<Stat_AnimationStates>
         set
         {
             _animationState = value;
-            animator.SetTrigger(value.ToString());
+            if(value != AnimationState.None)
+                animator.SetTrigger(value.ToString());
         }
     }
 }
 
 public enum AnimationState
 {
+    None,
     Move,
     Stunned,
     AttackWindup,

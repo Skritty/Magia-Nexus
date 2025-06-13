@@ -33,8 +33,8 @@ MonoBehaviour:
       type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
-    - rid: 1130977675299520575
-      type: {class: Trigger_ActionStart, ns: , asm: Assembly-CSharp}
+    - rid: 5286389458132795451
+      type: {class: Trigger_ActionEnd, ns: , asm: Assembly-CSharp}
       data: 
     - rid: 7867064604153348097
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
@@ -51,9 +51,10 @@ MonoBehaviour:
         refreshDuration: 1
         contributeToAssists: 0
         alignment: 0
+        vfx: {fileID: 0}
         triggerOrder: 0
         trigger:
-          rid: 1130977675299520575
+          rid: 5286389458132795451
         tasks:
         - rid: 1130977516618514438
         - rid: 7867064604153348107
@@ -74,16 +75,19 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 7867064604153348110
+        calculatedDamage: 0
         damageModifiers:
-        - calculationType: 0
+        - value: 100
+          tag: 1
+          method: 0
+          appliesTo: 0
           damageType: 8227
-          effectTag: 0
-          magnitude: 100
         skipFlatDamageReduction: 0
         preventTriggers: 0
         ownerEffects: []
         targetEffects: []
         onHitEffects: []
+        postOnHitEffects: []
     - rid: 7867064604153348110
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
@@ -93,5 +97,5 @@ MonoBehaviour:
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-        radius: 2
+        radius: 1.75
         angle: 60

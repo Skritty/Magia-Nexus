@@ -55,10 +55,11 @@ MonoBehaviour:
         alignment: 0
         vfx: {fileID: 0}
         effectModifiers:
-        - calculationType: 3
+        - value: 0.8
+          tag: 9
+          method: 2
+          appliesTo: 0
           damageType: 0
-          effectTag: 9
-          magnitude: 0.9
     - rid: 5670261797178049034
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -120,8 +121,8 @@ MonoBehaviour:
         targetSelector:
           rid: 9031231598746927116
         element: 1
-        magicEffectFlatDamage: 90
-        damageType: 0
+        magicEffectFlatDamage: 45
+        damageType: 517
         opposite: {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
         buff:
           rid: -2

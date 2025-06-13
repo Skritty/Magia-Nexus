@@ -20,7 +20,7 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  initialAnimationState: 0
+  initialAnimationState: 3
   activateAnimationState: 0
   movementSpeedOverDuration:
     serializedVersion: 2
@@ -117,10 +117,11 @@ MonoBehaviour:
         alignment: 0
         vfx: {fileID: 0}
         effectModifiers:
-        - calculationType: 3
+        - value: 0.2
+          tag: 2
+          method: 2
+          appliesTo: 24576
           damageType: 0
-          effectTag: 1
-          magnitude: 0.2
     - rid: 1130977517639303290
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

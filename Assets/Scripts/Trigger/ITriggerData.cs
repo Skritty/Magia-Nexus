@@ -1,4 +1,9 @@
 public interface ITriggerData { }
+public interface ITriggerData_Player : ITriggerData
+{
+    public Viewer Player { get; }
+}
+
 public interface ITriggerData_OwnerEntity : ITriggerData
 {
     public Entity Entity { get; }

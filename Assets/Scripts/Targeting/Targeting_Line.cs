@@ -28,7 +28,7 @@ public class Targeting_Line : MultiTargeting
         return true;
     }
 
-    protected override void DoFX(Effect source, List<Entity> targets)
+    protected override void DoFX(Effect source, Entity owner, List<Entity> targets)
     {
         if (vfx is not VFX_Line) return;
         VFX_Line line = vfx.PlayVFX<VFX_Line>((proxy != null ? proxy : Owner).transform, offset, Vector3.up, true);

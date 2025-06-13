@@ -11,11 +11,11 @@ public class Phase : ScriptableObject
 
     public virtual void OnEnter()
     {
-
+        
     }
 
     public virtual void OnExit()
     {
-
+        
     }
 }

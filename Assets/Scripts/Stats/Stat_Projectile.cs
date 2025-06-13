@@ -10,8 +10,6 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
     public Effect effect;
     [FoldoutGroup("Projectile"), SerializeReference]
     public Targeting aoe;
-    [FoldoutGroup("Projectile"), SerializeReference, HideReferenceObjectPicker]
-    public Move movement;
     [FoldoutGroup("Projectile")]
     public int piercesRemaining;
     [FoldoutGroup("Projectile")]
@@ -26,7 +24,6 @@ public class Stat_Projectile : GenericStat<Stat_Projectile>
 
     public override void Tick()
     {
-        movement.Create(Owner);
         if (effect == null) return;
         foreach (Entity entity in aoe.GetTargets(effect, Owner))
         {

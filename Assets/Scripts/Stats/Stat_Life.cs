@@ -43,30 +43,31 @@ public class Stat_Life : GenericStat<Stat_Life>
         }
 
         // Make a damage calculation damage.Owner.Stat<Stat_EffectModifiers>()
-        EffectModifier calculation = EffectModifier.CreateCalculation(damage);
+        DamageModifier calculation = DamageModifier.CreateCalculation(damage);
         damage.AddModifiers(calculation);
         damage.Owner.Stat<Stat_EffectModifiers>().AddModifiersToCalculation(calculation, EffectTag.DamageDealt);
         damage.Target.Stat<Stat_EffectModifiers>().AddModifiersToCalculation(calculation, EffectTag.DamageTaken);
-        float totalDamage = calculation.CalculateModifier(damage);
+        damage.calculatedDamage = calculation.Solve();
 
         // Handle Life
-        if (totalDamage > 0)
-            Owner.Stat<Stat_PlayerOwner>().ApplyContribution(damage.Owner, totalDamage / 100f * TankContributionMultiplier);
+        if (damage.calculatedDamage > 0)
+            Owner.Stat<Stat_PlayerOwner>().ApplyContribution(damage.Owner, damage.calculatedDamage / 100f * TankContributionMultiplier);
         //Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
-        currentLife = Mathf.Clamp(currentLife - totalDamage, 0, maxLife);
-        
-        if (!damage.preventTriggers || totalDamage == 0)
+        currentLife = Mathf.Clamp(currentLife - damage.calculatedDamage, 0, maxLife);
+
+        Entity triggerOwner = damage.triggerPlayerOwner ? damage.Owner.Stat<Stat_PlayerOwner>().Owner : damage.Owner;
+        if (!damage.preventTriggers || damage.calculatedDamage == 0)
         {
             damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, false)
-            ?.ApplyPopupInfo(Mathf.Round(totalDamage).ToString("0"), new Color(.9f, .2f, .2f));
+            ?.ApplyPopupInfo(Mathf.Round(damage.calculatedDamage).ToString("0"), new Color(.9f, .2f, .2f));
 
-            new Trigger_Damage(damage, damage, damage.Owner, damage.Target);
+            new Trigger_Damage(damage, damage, damage.Owner, triggerOwner, damage.Target);
         }
 
         if (currentLife <= 0)
         {
             Owner.Stat<Stat_PlayerOwner>().DistributeRewards();
-            new Trigger_Die(damage, damage, Owner);
+            new Trigger_Die(damage, damage, damage.Owner, triggerOwner, Owner);
         }
 
         healthBar.localScale = new Vector3(currentLife / maxLife, 1, 1);

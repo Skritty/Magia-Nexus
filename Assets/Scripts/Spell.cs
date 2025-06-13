@@ -50,8 +50,6 @@ public class Spell
     private void SetUpProjectile(Trigger_ProjectileCreated trigger)
     {
         trigger.Entity.Stat<Stat_Magic>().runes.AddRange(runes);
-        trigger.Entity.Stat<Stat_Magic>().useRunesToEnchantAttacks = true;
-        trigger.Entity.Stat<Stat_Magic>().consumeRunesOnEnchant = false;
     }
 
     public void GenerateSpell(Effect spellcast, Spell chainCast)

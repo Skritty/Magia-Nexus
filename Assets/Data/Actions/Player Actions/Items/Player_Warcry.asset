@@ -53,10 +53,11 @@ MonoBehaviour:
         alignment: 1
         vfx: {fileID: 0}
         effectModifiers:
-        - calculationType: 2
+        - value: 5
+          tag: 0
+          method: 1
+          appliesTo: 8192
           damageType: 8192
-          effectTag: 2
-          magnitude: 0.05
     - rid: 9031231777024770072
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:

@@ -19,14 +19,14 @@ MonoBehaviour:
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  initialAnimationState: 2
-  activateAnimationState: 3
+  initialAnimationState: 3
+  activateAnimationState: 4
   movementSpeedOverDuration:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 1.2
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -34,8 +34,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.59
-      value: 1
+      time: 0.29
+      value: 1.2
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6
+      time: 0.3
       value: 0
       inSlope: 0
       outSlope: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   onTick: 0
-  timing: 0
+  timing: 0.3
   effectMultiplier: 1
   effects:
   - rid: 9031231598746927104
@@ -78,11 +78,13 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927106
+        calculatedDamage: 0
         damageModifiers:
-        - calculationType: 0
+        - value: 100
+          tag: 1
+          method: 0
+          appliesTo: 0
           damageType: 8227
-          effectTag: 0
-          magnitude: 100
         skipFlatDamageReduction: 0
         preventTriggers: 0
         ownerEffects: []
@@ -97,5 +99,5 @@ MonoBehaviour:
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 1036146162269477068, guid: e940b76180137114598924cb29170e97, type: 3}
-        radius: 2
+        radius: 1.75
         angle: 45
