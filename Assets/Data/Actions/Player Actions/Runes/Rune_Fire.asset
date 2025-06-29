@@ -32,136 +32,20 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 9031231527144652811
+  - rid: 5286389775129641049
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1130977835028054064
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1.5
-        angle: 180
-    - rid: 1130977835028054067
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1.5
-        angle: 180
-    - rid: 5670261797178049021
-      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 0.2
-        ignoreFrames: 0
-        targetSelector:
-          rid: 5670261797178049023
-        calculatedDamage: 0
-        damageModifiers: []
-        skipFlatDamageReduction: 0
-        preventTriggers: 0
-        ownerEffects: []
-        targetEffects: []
-        onHitEffects: []
-        postOnHitEffects: []
-    - rid: 5670261797178049023
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1
-        angle: 180
-    - rid: 5670261797178049024
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 87.59981
-        ignoreFrames: 0
-        targetSelector:
-          rid: 5670261797178049025
-        tick: 0
-        tickDuration: 125
-        maxStacks: -1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 0
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        effectModifiers:
-        - value: 0.02
-          tag: 2
-          method: 1
-          appliesTo: 0
-          damageType: 1
-    - rid: 5670261797178049025
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 9031231527144652811
-      type: {class: Rune_Fire, ns: , asm: Assembly-CSharp}
+    - rid: 5286389775129641049
+      type: {class: GrantRunes, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 9031231527144652817
-        element: 0
-        magicEffectFlatDamage: 60
-        damageType: 133
-        opposite: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
-        buff:
-          rid: -2
-        debuff:
-          rid: 5670261797178049024
-        magicEffectModifier:
-          rid: 5670261797178049021
-        circleEffect:
-          effectMultiplier: 0.8
-          ignoreFrames: 1
-          targetSelector:
-            rid: 1130977835028054064
-          calculatedDamage: 0
-          damageModifiers: []
-          skipFlatDamageReduction: 0
-          preventTriggers: 0
-          ownerEffects: []
-          targetEffects: []
-          onHitEffects: []
-          postOnHitEffects: []
-        circleProxy: {fileID: 4300648619749440453, guid: 1b5a9dd3aeef568429994bd7f63261b9, type: 3}
-        maxStages: 2
-        multiplierPerStage: 0.4
-        circleModMultiplierPerStage: 0.2
-        multiplierPerConjureUse: 0.5
-        lineMulti: 1
-        curseExplosion:
-          effectMultiplier: 0.6
-          ignoreFrames: 0
-          targetSelector:
-            rid: 1130977835028054067
-          calculatedDamage: 0
-          damageModifiers: []
-          skipFlatDamageReduction: 0
-          preventTriggers: 0
-          ownerEffects: []
-          targetEffects: []
-          onHitEffects: []
-          postOnHitEffects: []
-    - rid: 9031231527144652817
+          rid: 5286389775129641050
+        runes:
+        - {fileID: 11400000, guid: 4435eab1899c3e64383e7acc806da571, type: 2}
+    - rid: 5286389775129641050
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0

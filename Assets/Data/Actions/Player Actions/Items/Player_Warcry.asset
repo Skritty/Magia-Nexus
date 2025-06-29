@@ -53,8 +53,8 @@ MonoBehaviour:
         alignment: 1
         vfx: {fileID: 0}
         effectModifiers:
-        - value: 5
-          tag: 0
+        - value: 0.05
+          tag: 1
           method: 1
           appliesTo: 8192
           damageType: 8192

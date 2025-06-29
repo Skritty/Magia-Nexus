@@ -30,13 +30,26 @@ public class Trigger_ActionEnd : Trigger<Trigger_ActionEnd>, ITriggerData_OwnerE
     }
 }
 
-public class Trigger_TurnComplete : Trigger<Trigger_TurnComplete>, ITriggerData_OwnerEntity
+public class Trigger_TurnStart : Trigger<Trigger_TurnStart>, ITriggerData_OwnerEntity
 {
     private Entity _owner;
     public Entity Entity => _owner;
 
-    public Trigger_TurnComplete() { }
-    public Trigger_TurnComplete(Entity owner, params object[] bindingObjects)
+    public Trigger_TurnStart() { }
+    public Trigger_TurnStart(Entity owner, params object[] bindingObjects)
+    {
+        _owner = owner;
+        Invoke(bindingObjects);
+    }
+}
+
+public class Trigger_TurnEnd : Trigger<Trigger_TurnEnd>, ITriggerData_OwnerEntity
+{
+    private Entity _owner;
+    public Entity Entity => _owner;
+
+    public Trigger_TurnEnd() { }
+    public Trigger_TurnEnd(Entity owner, params object[] bindingObjects)
     {
         _owner = owner;
         Invoke(bindingObjects);

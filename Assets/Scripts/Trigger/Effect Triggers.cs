@@ -62,18 +62,7 @@ public class Trigger_Die : Trigger<Trigger_Die>, ITriggerData_OwnerEntity, ITrig
         Invoke(bindingObjects);
     }
 }
-public class Trigger_RuneUsed : Trigger<Trigger_RuneUsed>, ITriggerData_Effect
-{
-    private Effect _effect;
-    public Effect Effect => _effect;
-    public Rune Rune => _effect as Rune;
-    public Trigger_RuneUsed() { }
-    public Trigger_RuneUsed(Rune rune, params object[] bindingObjects)
-    {
-        _effect = rune;
-        Invoke(bindingObjects);
-    }
-}
+
 public class Trigger_PersistantEffectApplied : Trigger<Trigger_PersistantEffectApplied>, ITriggerData_Effect
 {
     private Effect _effect;

@@ -1,7 +1,7 @@
-using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Stat_Magic : GenericStat<Stat_Magic>
@@ -19,8 +19,11 @@ public class Stat_Magic : GenericStat<Stat_Magic>
 
     protected override void Initialize()
     {
-        vfx = vfx.PlayVFX<VFX>(Owner.transform, Vector3.up * 1.5f, Vector3.zero, true);
-        vfx.transform.parent = Owner.transform;
+        if (vfx)
+        {
+            vfx = vfx.PlayVFX<VFX>(Owner.transform, Vector3.up * 1.5f, Vector3.zero, true);
+            vfx.transform.parent = Owner.transform;
+        }
     }
 
     public void AddRune(Rune rune)
@@ -30,6 +33,7 @@ public class Stat_Magic : GenericStat<Stat_Magic>
             vfx.visualEffect.enabled = true;
         }
         runes.Add(rune);
+        new Trigger_RuneGained(Owner, rune, Owner, rune);
         vfx.visualEffect.SetInt("RuneCount", runes.Count);
         runeInfo?.Dispose();
         runeInfo = new GraphicsBuffer(GraphicsBuffer.Target.Structured, runes.Count, 4);

@@ -29,6 +29,11 @@ public interface ITriggerData_Action : ITriggerData
     public Action Action { get; }
 }
 
+public interface ITriggerData_Rune : ITriggerData
+{
+    public Rune Rune { get; }
+}
+
 public interface ITriggerData_Spell : ITriggerData
 {
     public Spell Spell { get; }

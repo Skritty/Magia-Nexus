@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionAliases:
   - Retreat
-  actionDescription: Run away!
+  actionDescription: Run away from your target!
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
     - rid: 9031231646890721447
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 0.8
+        effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
           rid: 9031231646890721448

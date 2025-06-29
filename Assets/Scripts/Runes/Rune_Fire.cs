@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Rune/Fire")]
 public class Rune_Fire : Rune
 {
     [Header("Magic Effects")]
@@ -33,14 +34,14 @@ public class Rune_Fire : Rune
     [FoldoutGroup("Curse")]
     public DamageInstance curseExplosion;
 
-    public override void MagicEffect(DamageInstance damage)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        if (damage.postOnHitEffects[0] == null)
+        if (damage.postOnHitEffects.Count == 0)
         {
             if (damage.runes.Count <= 1) return;
 
@@ -59,7 +60,7 @@ public class Rune_Fire : Rune
         // TODO: Add delay, add debuffs/other effects?
     }
 
-    public override void Shape(Spell spell)
+    public override void Shape(Spell spell, int currentRuneIndex)
     {
         // Create effect
         spell.shape = SpellShape.Circle;
@@ -72,7 +73,7 @@ public class Rune_Fire : Rune
         // Create circle Proxy
         Entity proxy = GameObject.Instantiate(circleProxy, spell.spellcast.Target.transform.position, Quaternion.identity);
         spell.proxies.Add(proxy);
-        spell.cleanup += Trigger_SpellFinished.Subscribe(x => GameObject.Destroy(proxy.gameObject), spell);
+        spell.cleanup += Trigger_SpellFinished.Subscribe(x => { if (proxy != null) GameObject.Destroy(proxy.gameObject); }, spell);
     }
 
     private void SpellMultiPerStageFire(Trigger_SpellStageIncrement trigger)

@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Achievement")]
 public class Achievement : ScriptableObject
 {
+    public string description;
     [SerializeReference]
     public TriggerTask rewardTask;
     [SerializeReference]

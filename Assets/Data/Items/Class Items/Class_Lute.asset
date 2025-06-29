@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Class_Lute
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Lute
+  itemAliases:
+  - Lute
   itemDescription: 'You have unlimited actions
 
     Only do your next action when
@@ -23,6 +24,7 @@ MonoBehaviour:
   damageTypeColor: {r: 0.5849056, g: 0.43794626, b: 0.27038085, a: 1}
   craftingRecipe: []
   grantedActions: []
+  grantedTargeting: []
   actionCountModifier: 0
   itemEffects:
   - rid: 3963142589493018955
@@ -33,20 +35,20 @@ MonoBehaviour:
       type: {class: PE_StartingDelay, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
-        effectTags:
-          serializedPairs:
-          - key: 0
-            value: 1
+        ignoreFrames: 0
         targetSelector:
           rid: 3963142589493018956
         tick: 0
         tickDuration: -1
         maxStacks: 1
+        stacks: 1
+        perPlayer: 0
         refreshDuration: 1
         contributeToAssists: 0
+        alignment: 0
+        vfx: {fileID: 0}
         tickDelay: -50
     - rid: 3963142589493018956
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        name: 
-        description: 
+        lockTarget: 0

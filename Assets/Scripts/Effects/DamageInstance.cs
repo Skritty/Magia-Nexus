@@ -44,7 +44,8 @@ public class DamageInstance : Effect
                 Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
             }
             new Trigger_PreHit(this, this, Owner, triggerOwner, Target, Source);
-            runes.AddRange(Owner.Stat<Stat_Magic>().enchantedAttacks.Dequeue());
+            if(Owner.Stat<Stat_Magic>().enchantedAttacks.Count > 0)
+                runes.AddRange(Owner.Stat<Stat_Magic>().enchantedAttacks.Dequeue());
             foreach (Effect effect in targetEffects)
             {
                 effect.Create(Source, Owner, Target);
@@ -101,7 +102,7 @@ public class DamageInstance : Effect
         for (int i = spellPhase; i < runes.Count + spellPhase; i++)
         {
             if (i == spellPhase)
-                runes[i].MagicEffect(this);
+                runes[i].MagicEffect(this, i);
             else
                 runes[i % runes.Count].MagicEffectModifier(this, i);// TODO pass in rune list here
         }

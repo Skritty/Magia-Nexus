@@ -131,7 +131,9 @@ MonoBehaviour:
           method: 0
           appliesTo: 0
           damageType: 73795
+        runes: []
         skipFlatDamageReduction: 0
+        triggerPlayerOwner: 0
         preventTriggers: 0
         ownerEffects: []
         targetEffects: []
@@ -166,7 +168,7 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         movementTarget: {fileID: 0}
-        baseMovementSpeed: 8
+        baseMovementSpeed: 2
         movementSelector:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
@@ -224,6 +226,8 @@ MonoBehaviour:
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
         effect:
           rid: 7867064604153348207
     - rid: 7867064604153348207

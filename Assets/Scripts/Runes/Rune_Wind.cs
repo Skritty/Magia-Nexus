@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Rune/Wind")]
 public class Rune_Wind : Rune
 {
     [Header("Magic Effects")]
@@ -16,7 +17,7 @@ public class Rune_Wind : Rune
     [Header("Spell Shape")]
     public DamageInstance lineEffect;
 
-    public override void MagicEffect(DamageInstance damage)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
@@ -26,7 +27,7 @@ public class Rune_Wind : Rune
         damage.postOnHitEffects.Add(magicEffectModifier);
     }
 
-    public override void Shape(Spell spell)
+    public override void Shape(Spell spell, int currentRuneIndex)
     {
         spell.shape = SpellShape.Line;
         spell.effect = lineEffect.Clone();

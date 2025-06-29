@@ -1,10 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using TwitchLib.Api.Helix;
-using UnityEngine.Windows;
 using System;
-using TwitchLib.Api.Helix.Models.Teams;
 using TMPro;
 
 public class Shop : MonoBehaviour

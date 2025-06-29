@@ -15,19 +15,19 @@ MonoBehaviour:
   hidden: 0
   itemAliases:
   - Spell Focus
-  itemDescription: Grants Fire, Earth, Wind, and Water Rune actions
+  itemDescription: Grants the manifold metamagic rune and elemental spellcasting
   cost: 0
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.35975704, g: 0.21146306, b: 0.8301887, a: 1}
   craftingRecipe: []
   grantedActions:
+  - {fileID: 11400000, guid: b5743e9568d60fc42b6a92092f308786, type: 2}
   - {fileID: 11400000, guid: 7ea5c5f86f30d3d45a4da9fd515b8c69, type: 2}
   - {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
   - {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
   - {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
   - {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
-  - {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
-  - {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
+  grantedTargeting: []
   actionCountModifier: 0
   itemEffects: []
   references:

@@ -328,33 +328,6 @@ MonoBehaviour:
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 1130977700642291803
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 1130977700642291804
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        triggerOrder: 0
-        trigger:
-          rid: 1130977700642291807
-        tasks: []
-    - rid: 1130977700642291804
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 1130977700642291807
-      type: {class: Trigger_Die, ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 3492845359303229445
       type: {class: Stat_Life, ns: , asm: Assembly-CSharp}
       data:
@@ -398,11 +371,13 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         movementTarget: {fileID: 0}
-        baseMovementSpeed: 1
+        baseMovementSpeed: 0.4
         movementSelector:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
+        rotate: 0
+        obeyMapEdge: 0
     - rid: 5286389302403793010
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
@@ -439,6 +414,34 @@ MonoBehaviour:
         value: 1
         tag: 6
         method: 0
+    - rid: 5286389777395875982
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
+        effect:
+          rid: 5286389777395875983
+    - rid: 5286389777395875983
+      type: {class: PE_Invulnerable, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 5286389777395875984
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 0
+        vfx: {fileID: 0}
+    - rid: 5286389777395875984
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
     - rid: 7133257989892341792
       type: {class: Stat_AnimationStates, ns: , asm: Assembly-CSharp}
       data:
@@ -469,6 +472,7 @@ MonoBehaviour:
         tasks:
         - rid: 1130977699628843585
         - rid: 7867064604153348199
+        - rid: 5286389777395875982
     - rid: 7867064604153348195
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -477,6 +481,8 @@ MonoBehaviour:
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
         effect:
           rid: 7867064604153348200
     - rid: 7867064604153348200
@@ -496,15 +502,13 @@ MonoBehaviour:
         mergeBehavior: 0
         persistentEffects:
         - rid: 7867064604153348194
-        - rid: 1130977700642291803
     - rid: 9031231527144652886
       type: {class: Stat_Magic, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        useRunesToEnchantAttacks: 0
-        consumeRunesOnEnchant: 1
+        runes: []
         vfx: {fileID: -836890817849390660, guid: 5335b7fd561477d4db43b51b4db65725, type: 3}
     - rid: 9031231661127237636
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}

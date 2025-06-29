@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidden: 0
   itemAliases:
-  - EchantedQuiver
+  - Echanted Quiver
   itemDescription: '+2 projectile
 
     Projectiles home toward your target'
@@ -94,6 +94,8 @@ MonoBehaviour:
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
         effect:
           rid: 1130977519447835496
     - rid: 1130977519447835496
@@ -122,6 +124,8 @@ MonoBehaviour:
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
         effect:
           rid: 1130977519447835501
     - rid: 1130977519447835501

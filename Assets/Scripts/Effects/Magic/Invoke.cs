@@ -7,10 +7,21 @@ using UnityEngine;
 
 public class Invoke : Effect
 {
+    public bool useOwnerRunes;
+    public List<Rune> runes = new List<Rune>();
     public override void Activate()
     {
-        if (Owner.Stat<Stat_Magic>().runes.Count == 0) return;
-        Spell spell = new Spell(Owner, Owner.Stat<Stat_Magic>().runes);
+        Spell spell;
+        if (useOwnerRunes)
+        {
+            if (Owner.Stat<Stat_Magic>().runes.Count == 0) return;
+            spell = new Spell(Owner, Owner.Stat<Stat_Magic>().runes);
+        }
+        else
+        {
+            if (runes.Count == 0) return;
+            spell = new Spell(Owner, runes);
+        }
         spell.GenerateSpell(this, null);
         Owner.Stat<Stat_Magic>().ConsumeRunes();
     }

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Rune_Order
+  m_Name: Movement_Dash
   m_EditorClassIdentifier: 
   actionAliases:
-  - Order
-  - skritt3Order
-  actionDescription: 
+  - Dash
+  actionDescription: Quickly dash towards your target with 50% increased movement
+    speed
   actionImage: {fileID: 0}
   damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   hidden: 0
   maxUses: 0
-  initialAnimationState: 0
+  initialAnimationState: 1
   activateAnimationState: 0
   movementSpeedOverDuration:
     serializedVersion: 2
@@ -28,24 +28,38 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  onTick: 0
+  onTick: 1
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 5286389775129641051
+  - rid: 9031231646890721280
+  - rid: 2626413410273722975
   references:
     version: 2
     RefIds:
-    - rid: 5286389775129641051
-      type: {class: GrantRunes, ns: , asm: Assembly-CSharp}
+    - rid: 2626413410273722975
+      type: {class: Move, ns: , asm: Assembly-CSharp}
       data:
         effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 5286389775129641052
-        runes:
-        - {fileID: 11400000, guid: 6ed6aa2f5fca719449b9833a0bb1e527, type: 2}
-    - rid: 5286389775129641052
+          rid: 2626413410273722976
+        rotate: 0
+        obeyMapEdge: 1
+    - rid: 2626413410273722976
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 9031231646890721280
+      type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1.5
+        ignoreFrames: 0
+        targetSelector:
+          rid: 9031231646890721281
+        distanceFromTarget: 1.5
+        threshold: 0.2
+    - rid: 9031231646890721281
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0

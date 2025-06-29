@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Class_Gun
   m_EditorClassIdentifier: 
   hidden: 0
-  itemAliases: []
+  itemAliases:
+  - Gun
   itemDescription: 
   cost: 0
   itemImage: {fileID: 0}
@@ -64,6 +65,8 @@ MonoBehaviour:
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
         effect:
           rid: 7133258169638978165
     - rid: 7133258169638978165
@@ -103,6 +106,8 @@ MonoBehaviour:
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
         effect:
           rid: 7133258169638978170
     - rid: 7133258169638978170

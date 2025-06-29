@@ -65,3 +65,4 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 2626413410273722614
+        useOwnerRunes: 1

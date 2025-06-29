@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Skritty.Tools.Utilities;
 using UnityEngine;
 
 [Serializable]
@@ -30,6 +31,46 @@ public class Task_DoEffect : TriggerTask
         else
         {
             effect.Create(Owner, trigger);
+        }
+        return true;
+    }
+}
+
+[LabelText("Task: Do Random Effect")]
+public class Task_DoRandomEffect : TriggerTask
+{
+    public EffectTargetSelector proxy;
+    public bool useProxyAsOwner;
+    [SerializeReference]
+    public List<Effect> effects;
+    public List<Action> actions; // TODO: actions should NOT be a source of truth
+
+    public override bool DoTask(Trigger trigger, Entity Owner)
+    {
+        WeightedChance<Effect> effect = new WeightedChance<Effect>();
+        if (actions.Count > 0)
+        {
+            foreach (Action action in actions)
+            {
+                effect.Add(action.effects[0], 1);
+            }
+        }
+        else
+        {
+            foreach (Effect e in effects)
+            {
+                effect.Add(e, 1);
+            }
+        }
+            
+        if (proxy != EffectTargetSelector.None && trigger.Is(out ITriggerData_Effect data))
+        {
+            Entity proxyEntity = proxy == EffectTargetSelector.Owner ? data.Effect.Owner : data.Effect.Target;
+            effect.GetRandomEntry().Create(useProxyAsOwner ? proxyEntity : Owner, trigger, useProxyAsOwner ? null : proxyEntity);
+        }
+        else
+        {
+            effect.GetRandomEntry().Create(Owner, trigger);
         }
         return true;
     }

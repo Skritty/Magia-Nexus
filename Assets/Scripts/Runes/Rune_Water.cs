@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Rune/Water")]
 public class Rune_Water : Rune
 {
     [Header("Magic Effects")]
@@ -14,18 +15,19 @@ public class Rune_Water : Rune
     [SerializeReference]
     public Targeting multicastConeTargeting;
 
-    public override void MagicEffect(DamageInstance damage)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        damage.runes[(currentRuneIndex + 1) % damage.runes.Count].MagicEffect(damage);
+        int index = (currentRuneIndex + 1) % damage.runes.Count;
+        damage.runes[index].MagicEffect(damage, index);
         //damage.GenerateMagicEffect(damage.runes.Where(x => x.element != RuneElement.Water).ToList());
     }
 
-    public override void Shape(Spell spell)
+    public override void Shape(Spell spell, int currentRuneIndex)
     {
         spell.shape = SpellShape.Conjuration;
         spell.effect = actionOverride.Clone();
@@ -54,7 +56,10 @@ public class Rune_Water : Rune
                 {
                     if((spell.effect.targetSelector as Targeting_Radial).angle == 180)
                     {
-                        GameObject.Destroy(spell.proxies[0]);
+                        if(spell.proxies.Count != 0)
+                        {
+                            GameObject.Destroy(spell.proxies[0].gameObject);
+                        }
                         spell.proxies.Add(spell.Owner);
                         (spell.effect.targetSelector as Targeting_Radial).angle = 30f;
                         (spell.effect.targetSelector as Targeting_Radial).radius 

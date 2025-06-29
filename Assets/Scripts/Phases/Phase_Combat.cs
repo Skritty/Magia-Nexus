@@ -61,7 +61,13 @@ public abstract class Phase_Combat : Phase
             {
                 item.OnGained(entity);
             }
-            for (int i = 0; i < spawn.owner.actions.Count; i++)
+            int turnActionCount = GameManager.Instance.defaultActionsPerTurn;
+            foreach (Item item in spawn.owner.items)
+            {
+                turnActionCount += item.actionCountModifier;
+            }
+            entity.Stat<Stat_Actions>().actionsPerTurn = turnActionCount;
+            for (int i = 0; i < turnActionCount; i++)
             {
                 entity.Stat<Stat_Actions>().SetAction(spawn.owner.actions[i], i);
             }
@@ -71,12 +77,14 @@ public abstract class Phase_Combat : Phase
     private void TrackKill(Trigger_Die trigger)
     {
         Entity dead = trigger.Effect.Target;
-        dead.Stat<Stat_PlayerOwner>().player.deaths++;
         int team = dead.Stat<Stat_Team>().team;
+        if (!remainingPlayers.ContainsKey(team)) return;
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);
-        
-        if(remainingPlayers.Count == 1)
+
+        dead.Stat<Stat_PlayerOwner>().player.deaths++;
+
+        if (remainingPlayers.Count == 1)
         {
             int winningTeam = 0;
             foreach (KeyValuePair<int, int> t in remainingPlayers) winningTeam = t.Key;

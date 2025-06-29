@@ -121,3 +121,19 @@ public class Trigger_SpellFinished : Trigger<Trigger_SpellFinished>, ITriggerDat
         Invoke(bindingObjects);
     }
 }
+
+public class Trigger_RuneGained : Trigger<Trigger_RuneGained>, ITriggerData_OwnerEntity, ITriggerData_Rune
+{
+    private Rune _rune;
+    public Rune Rune => _rune;
+    private Entity _owner;
+    public Entity Entity => _owner;
+
+    public Trigger_RuneGained() { }
+    public Trigger_RuneGained(Entity entity, Rune rune, params object[] bindingObjects)
+    {
+        _owner = entity;
+        _rune = rune;
+        Invoke(bindingObjects);
+    }
+}

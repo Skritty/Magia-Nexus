@@ -55,9 +55,9 @@ MonoBehaviour:
         vfx: {fileID: 0}
         effectModifiers:
         - value: 0.92
-          tag: 0
+          tag: 2
           method: 2
-          appliesTo: 0
+          appliesTo: 3
           damageType: 2
     - rid: 9031231777024770073
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}

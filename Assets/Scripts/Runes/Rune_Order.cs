@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
+[CreateAssetMenu(menuName = "Rune/Order")]
 public class Rune_Order : Rune
 {
     [Header("Magic Effects")]
@@ -20,7 +20,7 @@ public class Rune_Order : Rune
     public float lifeMultiplier;
     public float damageMultiplier;
 
-    public override void MagicEffect(DamageInstance damage)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
@@ -32,7 +32,7 @@ public class Rune_Order : Rune
         damage.onHitEffects.Add(removeEffect);*/
     }
 
-    public override void Shape(Spell spell)
+    public override void Shape(Spell spell, int currentRuneIndex)
     {
         spell.shape = SpellShape.Summon;
         spell.effect = createSummons.Clone();
@@ -59,6 +59,7 @@ public class Rune_Order : Rune
         entity.Stat<Stat_Actions>().AddAction(move);
         for (int i = 1; i < spell.runes.Count; i++)
         {
+            if (spell.runes[i].element == RuneElement.Null) continue;
             entity.Stat<Stat_Actions>().AddAction(summonRunes[spell.runes[i].element]);
         }
         switch (spell.runes[spell.runes.Count - 1].element)
@@ -67,7 +68,7 @@ public class Rune_Order : Rune
             case RuneElement.Earth:
             case RuneElement.Order:
                 {
-                    meleeOverride.Create(meleeOverride, Owner, entity);
+                    meleeOverride.Create(meleeOverride, spell.Owner, entity);
                     for (int i = 1; i < spell.runes.Count; i++)
                     {
                         entity.Stat<Stat_Magic>().runes.Add(spell.runes[i]);
@@ -75,7 +76,7 @@ public class Rune_Order : Rune
                     break;
                 }
         }
-        Trigger_TurnComplete.Subscribe(Invoke, entity);
+        Trigger_TurnStart.Subscribe(Invoke, entity);
         spell.cleanup += Trigger_Die.Subscribe(y => SummonDeath(spell, entity), entity);
     }
 
@@ -85,7 +86,7 @@ public class Rune_Order : Rune
         spell.Stage++;
     }
 
-    private void Invoke(Trigger_TurnComplete trigger)
+    private void Invoke(Trigger_TurnStart trigger)
     {
         invoke.DoEffects(trigger.Entity);
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Rune/Earth")]
 public class Rune_Earth : Rune
 {
     [Header("Magic Effects")]
@@ -15,7 +16,7 @@ public class Rune_Earth : Rune
     [SerializeReference]
     public CreateEntity createProjectiles;
 
-    public override void MagicEffect(DamageInstance damage)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
@@ -23,11 +24,11 @@ public class Rune_Earth : Rune
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
         PE_RuneCrystal crystal = new PE_RuneCrystal();
-        crystal.rune = damage.runes[currentRuneIndex - 1]; // TODO: add stacks instead of new crystal
+        crystal.rune = damage.runes[currentRuneIndex - 1];
         damage.postOnHitEffects.Add(crystal);
     }
 
-    public override void Shape(Spell spell)
+    public override void Shape(Spell spell, int currentRuneIndex)
     {
         spell.shape = SpellShape.Projectile;
         spell.effect = createProjectiles.Clone();

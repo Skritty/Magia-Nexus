@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: Class_Ritual Dagger
   m_EditorClassIdentifier: 
   hidden: 0
-  itemName: Ritual Dagger
+  itemAliases:
+  - Ritual Dagger
   itemDescription: 
   cost: 0
   itemImage: {fileID: 0}
   damageTypeColor: {r: 0.4274113, g: 0.27095437, b: 0.6289307, a: 1}
   craftingRecipe: []
   grantedActions: []
+  grantedTargeting: []
   actionCountModifier: 0
   itemEffects: []
   references:

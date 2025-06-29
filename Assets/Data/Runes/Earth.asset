@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd17066b54da56a4e8850e080aa082a8, type: 3}
+  m_Name: Earth
+  m_EditorClassIdentifier: 
+  element: 3
+  magicEffectFlatDamage: 30
+  damageType: 3
+  opposite: {fileID: 11400000, guid: b9e7ba8a99d59f84481757bf8a004b91, type: 2}
+  buff:
+    rid: 5286389775129641009
+  debuff:
+    rid: 5286389775129641011
+  createProjectiles:
+    rid: 5286389775129641013
+  references:
+    version: 2
+    RefIds:
+    - rid: 5286389775129641009
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 5286389775129641010
+        tick: 0
+        tickDuration: 125
+        maxStacks: -1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 0
+        contributeToAssists: 0
+        alignment: 0
+        vfx: {fileID: 0}
+        effectModifiers:
+        - value: 0.9
+          tag: 2
+          method: 2
+          appliesTo: 0
+          damageType: 1
+    - rid: 5286389775129641010
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 5286389775129641011
+      type: {class: PE_Stun, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 5286389775129641012
+        tick: 0
+        tickDuration: 15
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 0
+        vfx: {fileID: 0}
+    - rid: 5286389775129641012
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 5286389775129641013
+      type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 1
+        targetSelector:
+          rid: 5286389775129641014
+        entityType: 1
+        entity: {fileID: 6345354840142092050, guid: 755c57cf1f6d0cc4ebd4abec0330714f, type: 3}
+        spawnOnTarget: 0
+        movementTarget: 2
+        numberOfProjectiles: 1
+        ignoreAdditionalProjectiles: 0
+        projectileFanType: 1
+        projectileFanAngle: 45
+        numberOfSummons: 1
+        overcapSummons: 0
+        damageMultiplier: 1
+        lifeMultiplier: 1
+        ignoreAdditionalSummons: 0
+    - rid: 5286389775129641014
+      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0

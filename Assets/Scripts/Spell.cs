@@ -128,7 +128,7 @@ public class Spell
     public void CastSpell(Entity proxy)
     {
         int targets = additionalCastTargets + (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.CastTargets);
-        targets = Mathf.Clamp(targets, 0, int.MaxValue);
+        targets = Mathf.Clamp(targets, 1, int.MaxValue);
         for (int t = 0; t < targets; t++)
         {
             effect.Create(Owner, proxy);
@@ -140,7 +140,7 @@ public class Spell
         for (int i = 0; i < runes.Count; i++)
         {
             if(i == 0)
-                runes[i].Shape(this);
+                runes[i].Shape(this, i);
             else
                 runes[i].ShapeModifier(this, i);
         }

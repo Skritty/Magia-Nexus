@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Rune/Chaos")]
 public class Rune_Chaos : Rune
 {
     [Header("Magic Effects")]
@@ -21,7 +22,7 @@ public class Rune_Chaos : Rune
     [FoldoutGroup("Curse")]
     public float baseChanneledCurseEffect;
 
-    public override void MagicEffect(DamageInstance damage)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.onHitEffects.Add(debuff);
     }
@@ -44,12 +45,12 @@ public class Rune_Chaos : Rune
             else
             {
                 // Buff/Debuff
-                pick.MagicEffect(damage);
+                pick.MagicEffect(damage, damage.runes.IndexOf(pick));
             }
         }
     }
 
-    public override void Shape(Spell spell)
+    public override void Shape(Spell spell, int currentRuneIndex)
     {
         spell.shape = SpellShape.Curse;
         spell.effect = curseHit.Clone();

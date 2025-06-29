@@ -303,6 +303,7 @@ MonoBehaviour:
   baseStats:
   - rid: 9031231661127237636
   - rid: 3492845359303229454
+  - rid: 5286389775129641457
   - rid: 3492845359303229445
   - rid: 3492845359303229448
   - rid: 3492845359303229458
@@ -361,7 +362,7 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         healthBar: {fileID: 9101917831146373091}
-        damagePopup: {fileID: 1206888003998408235, guid: bbe9e86b035842c49b2eae50fa2df8ef, type: 3}
+        damagePopup: {fileID: 1206888003998408235, guid: ddaf2cdb81fa36d40ac1e933ecce4c05, type: 3}
         maxLife: 4000
         currentLife: 4000
         invulnerable: 0
@@ -397,11 +398,13 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         movementTarget: {fileID: 0}
-        baseMovementSpeed: 1
+        baseMovementSpeed: 0.4
         movementSelector:
           rid: -2
         facingDir: {x: 1, y: 0, z: 0}
         dirMovementSpeedMulti: 1
+        rotate: 0
+        obeyMapEdge: 0
     - rid: 5286389302403793017
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
@@ -438,6 +441,14 @@ MonoBehaviour:
         value: 2
         tag: 14
         method: 0
+    - rid: 5286389775129641457
+      type: {class: Stat_AnimationStates, ns: , asm: Assembly-CSharp}
+      data:
+        Owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        mergeBehavior: 0
+        animator: {fileID: 7209061637694041792}
+        animationSkin: {fileID: 22100000, guid: f95a19e226fca6e4291ad4a4a16f4b86, type: 2}
     - rid: 7867064604153348194
       type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
       data:
@@ -468,6 +479,8 @@ MonoBehaviour:
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
         effect:
           rid: 7867064604153348200
     - rid: 7867064604153348200
@@ -494,9 +507,8 @@ MonoBehaviour:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        useRunesToEnchantAttacks: 1
-        consumeRunesOnEnchant: 0
-        vfx: {fileID: 0}
+        runes: []
+        vfx: {fileID: -836890817849390660, guid: 5335b7fd561477d4db43b51b4db65725, type: 3}
     - rid: 9031231661127237636
       type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
@@ -581,9 +593,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1949708619030334370}
-  - component: {fileID: 7531742837703302904}
-  - component: {fileID: 5875872937032074693}
   - component: {fileID: 3206242795324888508}
+  - component: {fileID: 7209061637694041792}
+  - component: {fileID: 1093640900421246050}
+  - component: {fileID: 7144272816322594829}
   m_Layer: 0
   m_Name: Player Model
   m_TagString: Untagged
@@ -601,61 +614,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5444420482956494905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7531742837703302904
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6044390600065127432}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5875872937032074693
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6044390600065127432}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 418ba4f91e0331942a25085eacd2127c, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &3206242795324888508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -677,6 +640,94 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &7209061637694041792
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044390600065127432}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 08d2bf87fee246d4db229bc2bf413a0d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!111 &1093640900421246050
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044390600065127432}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!212 &7144272816322594829
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044390600065127432}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 9fd5a14223779dd41a9845b23cea6106, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 5.78, y: 10.48}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &8169663364642632237
 GameObject:
   m_ObjectHideFlags: 0
