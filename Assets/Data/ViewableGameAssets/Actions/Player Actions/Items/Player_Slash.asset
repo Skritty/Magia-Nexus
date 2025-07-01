@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
+  m_Name: Player_Slash
+  m_EditorClassIdentifier: 
+  aliases:
+  - Slash
+  info: Deal 160 slashing damage in a 1.75m cone.
+  image: {fileID: 0}
+  hidden: 0
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  maxUses: 0
+  initialAnimationState: 3
+  activateAnimationState: 4
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.29
+      value: 1.2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.3
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0.3
+  effectMultiplier: 1
+  effects:
+  - rid: 9031231598746927104
+  references:
+    version: 2
+    RefIds:
+    - rid: 9031231598746927104
+      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1.6
+        ignoreFrames: 0
+        targetSelector:
+          rid: 9031231598746927106
+        calculatedDamage: 0
+        damageModifiers:
+        - value: 100
+          tag: 1
+          method: 0
+          appliesTo: 0
+          damageType: 8227
+        runes: []
+        skipFlatDamageReduction: 0
+        triggerPlayerOwner: 0
+        preventTriggers: 0
+        ownerEffects: []
+        targetEffects: []
+        onHitEffects: []
+        postOnHitEffects: []
+    - rid: 9031231598746927106
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 1036146162269477068, guid: e940b76180137114598924cb29170e97, type: 3}
+        radius: 1.75
+        angle: 45

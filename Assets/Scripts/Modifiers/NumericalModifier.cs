@@ -21,7 +21,7 @@ public class NumericalModifier : Modifier<float>
     public NumericalModifier() { }
     public NumericalModifier(float value, NumericalModifierCalculationMethod method)
     { 
-        this.value = value;
+        this.Value = value;
         this.method = method;
     }
 
@@ -36,18 +36,18 @@ public class NumericalModifier : Modifier<float>
     protected NumericalModifier(float baseValue, Effect source = null, bool root = false)
     {
         this.source = source;
-        this.value = baseValue;
+        this.Value = baseValue;
 
         if (!root) return;
         method = NumericalModifierCalculationMethod.Multiplicative;
         // Flat
-        submodifiers.Add(new NumericalModifier(NumericalModifierCalculationMethod.Flat, 0, source));
+        modifiers.Add(new NumericalModifier(NumericalModifierCalculationMethod.Flat, 0, source));
         // Increased
-        submodifiers.Add(new NumericalModifier(NumericalModifierCalculationMethod.Additive, 1, source));
+        modifiers.Add(new NumericalModifier(NumericalModifierCalculationMethod.Additive, 1, source));
         // More
         if (source != null)
         {
-            submodifiers.Add(new NumericalModifier(source.effectMultiplier, source));
+            modifiers.Add(new NumericalModifier(source.effectMultiplier, source));
         }
     }
 
@@ -56,7 +56,7 @@ public class NumericalModifier : Modifier<float>
         this.source = source;
         this.method = calculationType;
         if(baseValue != 0)
-            submodifiers.Add(new NumericalModifier(baseValue, source));
+            modifiers.Add(new NumericalModifier(baseValue, source));
     }
 
     public void AddModifier(Modifier<float> modifier, NumericalModifierCalculationMethod method)
@@ -65,25 +65,25 @@ public class NumericalModifier : Modifier<float>
         {
             case NumericalModifierCalculationMethod.Flat:
                 {
-                    submodifiers[0].submodifiers.Add(modifier);
+                    modifiers[0].modifiers.Add(modifier);
                     break;
                 }
             case NumericalModifierCalculationMethod.Additive:
                 {
-                    submodifiers[1].submodifiers.Add(modifier);
+                    modifiers[1].modifiers.Add(modifier);
                     break;
                 }
             case NumericalModifierCalculationMethod.Multiplicative:
                 {
-                    submodifiers.Add(modifier);
+                    modifiers.Add(modifier);
                     break;
                 }
         }
     }
 
-    public override float Solve()
+    public override void Solve()
     {
-        foreach (Modifier<float> modifier in submodifiers)
+        foreach (Modifier<float> modifier in modifiers)
         {
             modifier.Solve();
             // If a non-NumericalModifier leaf with a positive value set its absolute
@@ -97,26 +97,25 @@ public class NumericalModifier : Modifier<float>
                 case NumericalModifierCalculationMethod.Flat:
                 case NumericalModifierCalculationMethod.Additive:
                     {
-                        value += modifier.value;
+                        Value += modifier.Value;
                         //absolute += modifier.absolute;
                         break;
                     }
                 case NumericalModifierCalculationMethod.Multiplicative:
                     {
-                        value *= modifier.value;
+                        Value *= modifier.Value;
                         //absolute *= modifier.absolute;
                         break;
                     }
             }
         }
-        return value;
     }
 
     public override void InverseSolve()
     {
-        foreach (Modifier<float> modifier in submodifiers)
+        foreach (Modifier<float> modifier in modifiers)
         {
-            modifier.value = value / modifier.value;
+            modifier.Value = Value / modifier.Value;
             modifier.InverseSolve();
 
             // (1) * (1 -0.5) * 1 = (0.5, 1) / (2.5, 3)
@@ -124,6 +123,6 @@ public class NumericalModifier : Modifier<float>
             //         1=(0.16, 0.33), -0.5=(-0.083, 0)
         }
         if (!source.Owner || !source.Target) return;
-        source.Owner.Stat<Stat_PlayerOwner>().ApplyContribution(source.Target, Math.Abs(value));
+        source.Owner.GetMechanic<Stat_PlayerOwner>().ApplyContribution(source.Target, Math.Abs(Value));
     }
 }

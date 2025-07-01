@@ -7,10 +7,10 @@ public class Targeting_LifePercent : MultiTargeting
     protected override int SortTargets(Entity e1, Entity e2)
     {
         int comparison = 0;
-        float e1hp = e1.Stat<Stat_Life>().currentLife / e2.Stat<Stat_Life>().maxLife;
-        float e2hp = e2.Stat<Stat_Life>().currentLife / e2.Stat<Stat_Life>().maxLife;
-        float e1Enmity = e1.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
-        float e2Enmity = e2.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
+        float e1hp = e1.Stat<Stat_CurrentLife>().Value / e2.Stat<Stat_MaxLife>().Value;
+        float e2hp = e2.Stat<Stat_CurrentLife>().Value / e2.Stat<Stat_MaxLife>().Value;
+        float e1Enmity = e1.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
+        float e2Enmity = e2.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
         switch (sortingMethod)
         {
             case TargetSorting.Highest:

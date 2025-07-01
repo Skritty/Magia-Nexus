@@ -56,12 +56,12 @@ public class CreateEntity : Effect
         {
             case EntityType.Basic:
                 {
-                    Create(0).Stat<Stat_Actions>().Tick();
+                    Create(0).GetMechanic<Stat_Actions>().Tick();
                     break;
                 }
             case EntityType.Projectile:
                 {
-                    int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectiles));
+                    int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Owner.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.Projectiles));
                     for (int i = 0; i < projectileCount; i++)
                     {
                         Entity spawnedEntity = Create(i);
@@ -71,25 +71,25 @@ public class CreateEntity : Effect
                             {
                                 case ProjectileFanType.EvenlySpaced:
                                     {
-                                        spawnedEntity.Stat<Stat_Movement>().facingDir =
+                                        spawnedEntity.GetMechanic<Stat_Movement>().facingDir =
                                             Quaternion.Euler(0, 0,
                                             Mathf.Lerp(-projectileFanAngle, projectileFanAngle,
                                             i * 1f / (projectileCount - 1)))
-                                            * spawnedEntity.Stat<Stat_Movement>().facingDir;
+                                            * spawnedEntity.GetMechanic<Stat_Movement>().facingDir;
                                         break;
                                     }
                                 case ProjectileFanType.Shotgun:
                                     {
-                                        spawnedEntity.Stat<Stat_Movement>().facingDir =
+                                        spawnedEntity.GetMechanic<Stat_Movement>().facingDir =
                                             Quaternion.Euler(0, 0,
                                             Mathf.Lerp(-projectileFanAngle, projectileFanAngle,
                                             UnityEngine.Random.Range(0f, 1f)))
-                                            * spawnedEntity.Stat<Stat_Movement>().facingDir;
+                                            * spawnedEntity.GetMechanic<Stat_Movement>().facingDir;
                                         break;
                                     }
                                 case ProjectileFanType.Sequence:
                                     {
-                                        int tickDelay = (int)(1f * Owner.Stat<Stat_Actions>().TicksPerAction / projectileCount);
+                                        int tickDelay = (int)(1f * Owner.GetMechanic<Stat_Actions>().TicksPerAction / projectileCount);
                                         for (int tick = 0; tick < tickDelay; tick++)
                                         {
                                             yield return new WaitForFixedUpdate();
@@ -97,27 +97,27 @@ public class CreateEntity : Effect
                                         break;
                                     }
                             }
-                        spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);
+                        spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Stat_Movement>().facingDir);
                         new Trigger_ProjectileCreated(spawnedEntity, spawnedEntity, entity, this, Source);
-                        spawnedEntity.Stat<Stat_Actions>().Tick();
+                        spawnedEntity.GetMechanic<Stat_Actions>().Tick();
                     }
                     break;
                 }
             case EntityType.Summon:
                 {
-                    int summonCount = numberOfSummons + (ignoreAdditionalSummons ? 0 : (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Summons));
-                    int maxSummons = overcapSummons + (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.MaxSummons);
+                    int summonCount = numberOfSummons + (ignoreAdditionalSummons ? 0 : (int)Owner.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.Summons));
+                    int maxSummons = overcapSummons + (int)Owner.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.MaxSummons);
                     for (int i = 0; i < summonCount; i++)
                     {
-                        if (Owner.Stat<Stat_Team>().summons.Count >= maxSummons) break;
+                        if (Owner.GetMechanic<Stat_Team>().summons.Count >= maxSummons) break;
                         Entity spawnedEntity = Create(i);
-                        spawnedEntity.Stat<Stat_Life>().maxLife *= lifeMultiplier;
-                        spawnedEntity.Stat<Stat_Life>().currentLife *= lifeMultiplier;
+                        spawnedEntity.Stat<Stat_MaxLife>().Value *= lifeMultiplier;
+                        spawnedEntity.Stat<Stat_CurrentLife>().Value *= lifeMultiplier;
                         // TODO: summon position
-                        Owner.Stat<Stat_Team>().summons.Add(spawnedEntity);
-                        Trigger_Expire.Subscribe(x => Owner.Stat<Stat_Team>().summons.Remove(spawnedEntity), spawnedEntity);
+                        Owner.GetMechanic<Stat_Team>().summons.Add(spawnedEntity);
+                        Trigger_Expire.Subscribe(x => Owner.GetMechanic<Stat_Team>().summons.Remove(spawnedEntity), spawnedEntity);
                         new Trigger_SummonCreated(spawnedEntity, spawnedEntity, entity, this, Source);
-                        spawnedEntity.Stat<Stat_Actions>().Tick();
+                        spawnedEntity.GetMechanic<Stat_Actions>().Tick();
                     }
                     break;
                 }
@@ -129,19 +129,19 @@ public class CreateEntity : Effect
         Entity spawnedEntity = GameObject.Instantiate(entity, spawnOnTarget ? Target.transform.position : Owner.transform.position, Quaternion.identity);
         spawnedEntity.gameObject.SetActive(true);
         spawnedEntity.gameObject.name = ""+id;
-        spawnedEntity.Stat<Stat_PlayerOwner>().SetPlayer(Owner.Stat<Stat_PlayerOwner>());
-        spawnedEntity.Stat<Stat_PlayerOwner>().proxyOwner = Owner;
-        spawnedEntity.Stat<Stat_Team>().team = Owner.Stat<Stat_Team>().team;
+        spawnedEntity.GetMechanic<Stat_PlayerOwner>().SetPlayer(Owner.GetMechanic<Stat_PlayerOwner>());
+        spawnedEntity.GetMechanic<Stat_PlayerOwner>().proxyOwner = Owner;
+        spawnedEntity.GetMechanic<Stat_Team>().team = Owner.GetMechanic<Stat_Team>().team;
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                spawnedEntity.Stat<Stat_Movement>().movementTarget = Owner;
+                spawnedEntity.GetMechanic<Stat_Movement>().movementTarget = Owner;
                 break;
             case EffectTargetSelector.Target:
-                spawnedEntity.Stat<Stat_Movement>().movementTarget = Target;
+                spawnedEntity.GetMechanic<Stat_Movement>().movementTarget = Target;
                 break;
         }
-        spawnedEntity.Stat<Stat_Movement>().facingDir = (Target.transform.position - Owner.transform.position).normalized;
+        spawnedEntity.GetMechanic<Stat_Movement>().facingDir = (Target.transform.position - Owner.transform.position).normalized;
 
         return spawnedEntity;
     }

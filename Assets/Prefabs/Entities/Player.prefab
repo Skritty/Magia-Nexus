@@ -300,11 +300,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173ff5b1760c676449cf1535e4197e0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats:
+  - rid: 5286389933263290677
+  - rid: 5286389933263290678
+  - rid: 1083523656418066432
+  - rid: 1083523656418066435
   baseStats:
+  - rid: 5286389933263290672
   - rid: 9031231661127237636
   - rid: 3492845359303229454
   - rid: 7133257989892341792
-  - rid: 3492845359303229445
   - rid: 3492845359303229448
   - rid: 3492845359303229458
   - rid: 9031231668284555682
@@ -317,6 +322,16 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 1083523656418066432
+      type: {class: Stat_MovementSpeed, ns: , asm: Assembly-CSharp}
+      data:
+        mainStat: 0
+        <Value>k__BackingField: 4
+    - rid: 1083523656418066435
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        mainStat: 0
+        <Value>k__BackingField: 0
     - rid: 1130977698592063696
       type: {class: Trigger_Die, ns: , asm: Assembly-CSharp}
       data: 
@@ -328,17 +343,6 @@ MonoBehaviour:
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 3492845359303229445
-      type: {class: Stat_Life, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        mergeBehavior: 0
-        healthBar: {fileID: 9101917831146373091}
-        damagePopup: {fileID: 1206888003998408235, guid: ddaf2cdb81fa36d40ac1e933ecce4c05, type: 3}
-        maxLife: 10000
-        currentLife: 10000
-        invulnerable: 0
     - rid: 3492845359303229448
       type: {class: Stat_Actions, ns: , asm: Assembly-CSharp}
       data:
@@ -381,38 +385,38 @@ MonoBehaviour:
     - rid: 5286389302403793010
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
-        value: 1
-        tag: 3
+        mainStat: 0
+        <Value>k__BackingField: 0
         method: 0
     - rid: 5286389302403793011
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
-        value: 1
-        tag: 5
+        mainStat: 0
+        <Value>k__BackingField: 0
         method: 0
     - rid: 5286389302403793012
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
-        value: 1
-        tag: 9
+        mainStat: 0
+        <Value>k__BackingField: 0
         method: 0
     - rid: 5286389302403793013
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
-        value: 2
-        tag: 14
+        mainStat: 0
+        <Value>k__BackingField: 0
         method: 0
     - rid: 5286389302403793014
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
-        value: 1
-        tag: 11
+        mainStat: 0
+        <Value>k__BackingField: 0
         method: 0
     - rid: 5286389302403793016
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
-        value: 1
-        tag: 6
+        mainStat: 0
+        <Value>k__BackingField: 0
         method: 0
     - rid: 5286389777395875982
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
@@ -442,6 +446,24 @@ MonoBehaviour:
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
+    - rid: 5286389933263290672
+      type: {class: Mechanic_Damageable, ns: , asm: Assembly-CSharp}
+      data:
+        Owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        mergeBehavior: 0
+        healthBar: {fileID: 0}
+        damagePopup: {fileID: 0}
+    - rid: 5286389933263290677
+      type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
+      data:
+        mainStat: 0
+        <Value>k__BackingField: 10000
+    - rid: 5286389933263290678
+      type: {class: Stat_CurrentLife, ns: , asm: Assembly-CSharp}
+      data:
+        mainStat: 0
+        <Value>k__BackingField: 10000
     - rid: 7133257989892341792
       type: {class: Stat_AnimationStates, ns: , asm: Assembly-CSharp}
       data:

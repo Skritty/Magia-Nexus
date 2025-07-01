@@ -50,12 +50,12 @@ public abstract class Phase_Combat : Phase
         {
             spawn.owner.killGainMultiplier = killPointGain;
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawn.position, Quaternion.identity);
-            entity.Stat<Stat_PlayerOwner>().SetPlayer(spawn.owner, entity);
+            entity.GetMechanic<Stat_PlayerOwner>().SetPlayer(spawn.owner, entity);
             spawn.owner.roundPoints = 0;
-            entity.Stat<Stat_Team>().team = spawn.team;
-            entity.Stat<Stat_Actions>().startingTickDelay = (int)(GameManager.Instance.timePerTurn * 50);
+            entity.GetMechanic<Stat_Team>().team = spawn.team;
+            entity.GetMechanic<Stat_Actions>().startingTickDelay = (int)(GameManager.Instance.timePerTurn * 50);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
-            entity.Stat<Stat_Targeting>().targetingType = spawn.owner.targetType;
+            entity.GetMechanic<Stat_Targeting>().targetingType = spawn.owner.targetType;
             cleanup += Trigger_Die.Subscribe(TrackKill, entity);
             foreach (Item item in spawn.owner.items)
             {
@@ -66,10 +66,10 @@ public abstract class Phase_Combat : Phase
             {
                 turnActionCount += item.actionCountModifier;
             }
-            entity.Stat<Stat_Actions>().actionsPerTurn = turnActionCount;
+            entity.GetMechanic<Stat_Actions>().actionsPerTurn = turnActionCount;
             for (int i = 0; i < turnActionCount; i++)
             {
-                entity.Stat<Stat_Actions>().SetAction(spawn.owner.actions[i], i);
+                entity.GetMechanic<Stat_Actions>().SetAction(spawn.owner.actions[i], i);
             }
         }
     }
@@ -77,12 +77,12 @@ public abstract class Phase_Combat : Phase
     private void TrackKill(Trigger_Die trigger)
     {
         Entity dead = trigger.Effect.Target;
-        int team = dead.Stat<Stat_Team>().team;
+        int team = dead.GetMechanic<Stat_Team>().team;
         if (!remainingPlayers.ContainsKey(team)) return;
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);
 
-        dead.Stat<Stat_PlayerOwner>().player.deaths++;
+        dead.GetMechanic<Stat_PlayerOwner>().player.deaths++;
 
         if (remainingPlayers.Count == 1)
         {

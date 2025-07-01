@@ -8,6 +8,6 @@ public class RemovePersistantEffect : Effect
     public PersistentEffect.Alignment alignmentRemoved;
     public override void Activate()
     {
-        Target.Stat<Stat_PersistentEffects>().RemoveRandomEffect(alignmentRemoved, stacksRemoved);
+        Target.GetMechanic<Stat_PersistentEffects>().RemoveRandomEffect(alignmentRemoved, stacksRemoved);
     }
 }

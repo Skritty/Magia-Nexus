@@ -6,7 +6,7 @@ public class ChannelSpells : Effect
 {
     public override void Activate()
     {
-        foreach(Spell spell in Target.Stat<Stat_Magic>().ownedSpells)
+        foreach(Spell spell in Target.GetMechanic<Stat_Magic>().ownedSpells)
         {
             spell.Stage++;
         }

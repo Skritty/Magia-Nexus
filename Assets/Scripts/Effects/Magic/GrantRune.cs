@@ -9,7 +9,7 @@ public class GrantRunes : Effect
     {
         foreach (Rune rune in runes)
         {
-            Owner.Stat<Stat_Magic>().AddRune(rune);
+            Owner.GetMechanic<Stat_Magic>().AddRune(rune);
         }
     }
 }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b83b8b2b42b24540a9c9956f35ef034, type: 3}
+  m_Name: Antimage
+  m_EditorClassIdentifier: 
+  aliases:
+  - Antimage
+  info: Targets whoever has cast the most spells recently.
+  image: {fileID: 0}
+  hidden: 0
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  targeting:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

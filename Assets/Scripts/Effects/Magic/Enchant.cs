@@ -11,11 +11,11 @@ public class Enchant : Effect
     public int attacksEnchanted;
     public override void Activate()
     {
-        if (Owner.Stat<Stat_Magic>().runes.Count == 0) return;
+        if (Owner.GetMechanic<Stat_Magic>().runes.Count == 0) return;
         for(int i = 0; i < attacksEnchanted; i++)
         {
-            Owner.Stat<Stat_Magic>().enchantedAttacks.Enqueue(new List<Rune>(Owner.Stat<Stat_Magic>().runes));
+            Owner.GetMechanic<Stat_Magic>().enchantedAttacks.Enqueue(new List<Rune>(Owner.GetMechanic<Stat_Magic>().runes));
         }
-        if(consumeRunes) Owner.Stat<Stat_Magic>().ConsumeRunes();
+        if(consumeRunes) Owner.GetMechanic<Stat_Magic>().ConsumeRunes();
     }
 }

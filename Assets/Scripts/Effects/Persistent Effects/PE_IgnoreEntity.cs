@@ -21,11 +21,11 @@ public class PE_IgnoreEntity : PersistentEffect
 
     public override void OnGained()
     {
-        Target.Stat<Stat_Targetable>().AddIgnored(Owner, ignoredSource);
+        Target.GetMechanic<Stat_Targetable>().AddIgnored(Owner, ignoredSource);
     }
 
     public override void OnLost()
     {
-        Target.Stat<Stat_Targetable>().RemoveIgnored(Owner, ignoredSource);
+        Target.GetMechanic<Stat_Targetable>().RemoveIgnored(Owner, ignoredSource);
     }
 }

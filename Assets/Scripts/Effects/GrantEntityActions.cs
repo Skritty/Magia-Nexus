@@ -13,11 +13,11 @@ public class GrantEntityActions : Effect
     {
         foreach (Action action in actions)
         {
-            Target.Stat<Stat_Actions>().AddAction(action);
+            Target.GetMechanic<Stat_Actions>().AddAction(action);
         }
         foreach (Action action in repeatActions)
         {
-            Target.Stat<Stat_Actions>().AddRepeatAction(action);
+            Target.GetMechanic<Stat_Actions>().AddRepeatAction(action);
         }
     }
 }

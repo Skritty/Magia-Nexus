@@ -39,12 +39,12 @@ public class Rune_Order : Rune
         Entity owner = spell.Owner;
         float lMult = lifeMultiplier;
         float dMult = damageMultiplier;
-        if(owner.Stat<Stat_PlayerOwner>().player != null)
-            while (!owner.Stat<Stat_PlayerOwner>().playerCharacter)
+        if(owner.GetMechanic<Stat_PlayerOwner>().player != null)
+            while (!owner.GetMechanic<Stat_PlayerOwner>().playerCharacter)
             {
                 lMult *= lifeMultiplier;
                 dMult *= damageMultiplier;
-                owner = owner.Stat<Stat_PlayerOwner>().proxyOwner;
+                owner = owner.GetMechanic<Stat_PlayerOwner>().proxyOwner;
             }
         (spell.effect as CreateEntity).lifeMultiplier = lMult;
         (spell.effect as CreateEntity).damageMultiplier = dMult;
@@ -56,11 +56,11 @@ public class Rune_Order : Rune
 
     private void SetupSummon(Spell spell, Entity entity)
     {
-        entity.Stat<Stat_Actions>().AddAction(move);
+        entity.GetMechanic<Stat_Actions>().AddAction(move);
         for (int i = 1; i < spell.runes.Count; i++)
         {
             if (spell.runes[i].element == RuneElement.Null) continue;
-            entity.Stat<Stat_Actions>().AddAction(summonRunes[spell.runes[i].element]);
+            entity.GetMechanic<Stat_Actions>().AddAction(summonRunes[spell.runes[i].element]);
         }
         switch (spell.runes[spell.runes.Count - 1].element)
         {
@@ -71,7 +71,7 @@ public class Rune_Order : Rune
                     meleeOverride.Create(meleeOverride, spell.Owner, entity);
                     for (int i = 1; i < spell.runes.Count; i++)
                     {
-                        entity.Stat<Stat_Magic>().runes.Add(spell.runes[i]);
+                        entity.GetMechanic<Stat_Magic>().runes.Add(spell.runes[i]);
                     }
                     break;
                 }
@@ -82,7 +82,7 @@ public class Rune_Order : Rune
 
     private void SummonDeath(Spell spell, Entity entity)
     {
-        spell.Owner.Stat<Stat_Team>().summons.Remove(entity);
+        spell.Owner.GetMechanic<Stat_Team>().summons.Remove(entity);
         spell.Stage++;
     }
 

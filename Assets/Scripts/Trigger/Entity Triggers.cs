@@ -1,10 +1,10 @@
 using System;
 
-public class Trigger_Expire : Trigger<Trigger_Expire>, ITriggerData_Player, ITriggerData_OwnerEntity
+public class Trigger_Expire : Trigger<Trigger_Expire>, IDataContainer_Player, IDataContainer_OwnerEntity
 {
     private Entity _owner;
     public Entity Entity => _owner;
-    public Viewer Player => _owner.Stat<Stat_PlayerOwner>().player;
+    public Viewer Player => _owner.GetMechanic<Stat_PlayerOwner>().player;
     public Trigger_Expire() { }
     public Trigger_Expire(Entity entity, params object[] bindingObjects)
     {
@@ -12,7 +12,7 @@ public class Trigger_Expire : Trigger<Trigger_Expire>, ITriggerData_Player, ITri
         Invoke(bindingObjects);
     }
 }
-public class Trigger_ProjectileCreated : Trigger<Trigger_ProjectileCreated>, ITriggerData_OwnerEntity
+public class Trigger_ProjectileCreated : Trigger<Trigger_ProjectileCreated>, IDataContainer_OwnerEntity
 {
     private Entity _owner;
     public Entity Entity => _owner;
@@ -23,7 +23,7 @@ public class Trigger_ProjectileCreated : Trigger<Trigger_ProjectileCreated>, ITr
         Invoke(bindingObjects);
     }
 }
-public class Trigger_SummonCreated : Trigger<Trigger_SummonCreated>, ITriggerData_OwnerEntity
+public class Trigger_SummonCreated : Trigger<Trigger_SummonCreated>, IDataContainer_OwnerEntity
 {
     private Entity _owner;
     public Entity Entity => _owner;
@@ -34,7 +34,7 @@ public class Trigger_SummonCreated : Trigger<Trigger_SummonCreated>, ITriggerDat
         Invoke(bindingObjects);
     }
 }
-public class Trigger_Channel : Trigger<Trigger_Channel>, ITriggerData_OwnerEntity
+public class Trigger_Channel : Trigger<Trigger_Channel>, IDataContainer_OwnerEntity
 {
     private Entity _owner;
     public Entity Entity => _owner;
@@ -46,7 +46,7 @@ public class Trigger_Channel : Trigger<Trigger_Channel>, ITriggerData_OwnerEntit
         Invoke(bindingObjects);
     }
 }
-public class Trigger_SpellCast : Trigger<Trigger_SpellCast>, ITriggerData_OwnerEntity, ITriggerData_Spell
+public class Trigger_SpellCast : Trigger<Trigger_SpellCast>, IDataContainer_OwnerEntity, IDataContainer_Spell
 {
     private Entity _owner;
     public Entity Entity => _owner;
@@ -61,7 +61,7 @@ public class Trigger_SpellCast : Trigger<Trigger_SpellCast>, ITriggerData_OwnerE
         Invoke(bindingObjects);
     }
 }
-public class Trigger_SpellStageIncrement : Trigger<Trigger_SpellStageIncrement>, ITriggerData_OwnerEntity, ITriggerData_Spell
+public class Trigger_SpellStageIncrement : Trigger<Trigger_SpellStageIncrement>, IDataContainer_OwnerEntity, IDataContainer_Spell
 {
     private Entity _owner;
     public Entity Entity => _owner;
@@ -75,7 +75,7 @@ public class Trigger_SpellStageIncrement : Trigger<Trigger_SpellStageIncrement>,
         Invoke(bindingObjects);
     }
 }
-public class Trigger_SpellMaxStage : Trigger<Trigger_SpellMaxStage>, ITriggerData_OwnerEntity, ITriggerData_Spell
+public class Trigger_SpellMaxStage : Trigger<Trigger_SpellMaxStage>, IDataContainer_OwnerEntity, IDataContainer_Spell
 {
     private Entity _owner;
     public Entity Entity => _owner;
@@ -89,7 +89,7 @@ public class Trigger_SpellMaxStage : Trigger<Trigger_SpellMaxStage>, ITriggerDat
         Invoke(bindingObjects);
     }
 }
-public class Trigger_SpellEffectApplied : Trigger<Trigger_SpellEffectApplied>, ITriggerData_OwnerEntity, ITriggerData_Effect, ITriggerData_Spell
+public class Trigger_SpellEffectApplied : Trigger<Trigger_SpellEffectApplied>, IDataContainer_OwnerEntity, IDataContainer_Effect, IDataContainer_Spell
 {
     private Effect _effect;
     public Effect Effect => _effect;
@@ -107,7 +107,7 @@ public class Trigger_SpellEffectApplied : Trigger<Trigger_SpellEffectApplied>, I
     }
 }
 
-public class Trigger_SpellFinished : Trigger<Trigger_SpellFinished>, ITriggerData_OwnerEntity, ITriggerData_Spell
+public class Trigger_SpellFinished : Trigger<Trigger_SpellFinished>, IDataContainer_OwnerEntity, IDataContainer_Spell
 {
     private Entity _owner;
     public Entity Entity => _owner;
@@ -122,7 +122,7 @@ public class Trigger_SpellFinished : Trigger<Trigger_SpellFinished>, ITriggerDat
     }
 }
 
-public class Trigger_RuneGained : Trigger<Trigger_RuneGained>, ITriggerData_OwnerEntity, ITriggerData_Rune
+public class Trigger_RuneGained : Trigger<Trigger_RuneGained>, IDataContainer_OwnerEntity, IDataContainer_Rune
 {
     private Rune _rune;
     public Rune Rune => _rune;

@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
+  m_Name: Shop_Butter
+  m_EditorClassIdentifier: 
+  aliases:
+  - Butter
+  info: +1 initiative (max 125 stacks)
+  image: {fileID: 0}
+  hidden: 0
+  UIColor: {r: 1, g: 0.91581047, b: 0.5943395, a: 1}
+  cost: 5
+  craftingRecipe: []
+  grantedActions: []
+  grantedTargeting: []
+  actionCountModifier: 0
+  itemEffects:
+  - rid: 1130977675299520545
+  references:
+    version: 2
+    RefIds:
+    - rid: 1130977675299520545
+      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 1130977675299520546
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 0
+        vfx: {fileID: 0}
+        effectModifiers:
+        - value: 1
+          tag: 10
+          method: 0
+          appliesTo: 0
+          damageType: 0
+    - rid: 1130977675299520546
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0

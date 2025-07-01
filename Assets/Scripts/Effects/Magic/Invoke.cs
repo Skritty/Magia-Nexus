@@ -14,8 +14,8 @@ public class Invoke : Effect
         Spell spell;
         if (useOwnerRunes)
         {
-            if (Owner.Stat<Stat_Magic>().runes.Count == 0) return;
-            spell = new Spell(Owner, Owner.Stat<Stat_Magic>().runes);
+            if (Owner.GetMechanic<Stat_Magic>().runes.Count == 0) return;
+            spell = new Spell(Owner, Owner.GetMechanic<Stat_Magic>().runes);
         }
         else
         {
@@ -23,6 +23,6 @@ public class Invoke : Effect
             spell = new Spell(Owner, runes);
         }
         spell.GenerateSpell(this, null);
-        Owner.Stat<Stat_Magic>().ConsumeRunes();
+        Owner.GetMechanic<Stat_Magic>().ConsumeRunes();
     }
 }

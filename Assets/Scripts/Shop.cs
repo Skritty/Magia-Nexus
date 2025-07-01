@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using TMPro;
+using UnityEngine.Assertions.Must;
 
 public class Shop : MonoBehaviour
 {
@@ -72,8 +73,7 @@ public class Shop : MonoBehaviour
         foreach(Item item in shopItems)
         {
             DisplayItem display = Instantiate(shopItemDisplayPrefab, shopLayout);
-            display.title.text = item.ItemName;
-            display.desc.text = item.itemDescription;
+            display.title.text = item.name;
             display.id.text = "i" + (ownedItems.IndexOf(item) + 1);
             display.cost.text = item.cost + "g";
         }
@@ -109,10 +109,10 @@ public class Shop : MonoBehaviour
         CheckForPlaceholder(itemDisplayLayout.childCount);
 
         DisplayItem display = Instantiate(itemDisplayPrefab, itemDisplayLayout);
-        display.title.text = item.ItemName;
-        display.desc.text = item.itemDescription;
+        display.title.text = item.name;
+        display.desc.text = item.info;
         display.id.text = "i" + (ownedItems.IndexOf(item) + 1);
-        display.background.color = item.damageTypeColor;
+        display.background.color = item.UIColor;
         display.subboxes = item.grantedActions.Count;
         string recipe = "";
         foreach (Item ingredient in item.craftingRecipe)
@@ -129,13 +129,12 @@ public class Shop : MonoBehaviour
             DisplayItem displayAction = Instantiate(actionDisplayPrefab, display.transform);
             displayAction.GetComponent<RectTransform>().anchoredPosition =
                 new Vector2(0, ++a * -displayAction.GetComponent<RectTransform>().sizeDelta.y);
-            displayAction.title.text = action.ActionName;
-            displayAction.desc.text = action.actionDescription;
+            displayAction.title.text = action.name;
             displayAction.id.text = "a" + (ownedActions.IndexOf(action) + 1);
-            displayAction.background.color = item.damageTypeColor;
+            displayAction.background.color = item.UIColor;
         }
 
-        foreach (TargetingShopItem targeting in item.grantedTargeting)
+        /*foreach (TargetingShopItem targeting in item.grantedTargeting)
         {
             DisplayItem displayAction = Instantiate(actionDisplayPrefab, display.transform);
             displayAction.GetComponent<RectTransform>().anchoredPosition =
@@ -143,8 +142,8 @@ public class Shop : MonoBehaviour
             displayAction.title.text = targeting.name;
             displayAction.desc.text = targeting.description;
             displayAction.id.text = "t" + (ownedTargeting.IndexOf(targeting) + 1);
-            displayAction.background.color = item.damageTypeColor;
-        }
+            displayAction.background.color = item.UIColor;
+        }*/
     }
 
     public void CheckForPlaceholder(int currentChildIndex)
@@ -211,20 +210,20 @@ public class Shop : MonoBehaviour
 
             if(totalGoldCost > viewer.gold)
             {
-                message = $"You only have {viewer.gold}g out of {totalGoldCost}g to buy a {item.ItemName}";
+                message = $"You only have {viewer.gold}g out of {totalGoldCost}g to buy a {item.name}";
                 return false;
             }
 
             foreach(Item component in itemsHeld) viewer.items.Remove(component);
             viewer.gold -= totalGoldCost;
             viewer.items.Add(item);
-            message = $"{item.ItemName}, ";
+            message = $"{item.name}, ";
         }
         else
         {
             viewer.gold -= item.cost;
             viewer.items.Add(item);
-            message = $"{item.ItemName}, ";
+            message = $"{item.name}, ";
         }
         
         return true;
@@ -245,7 +244,7 @@ public class Shop : MonoBehaviour
         }
         if(item.craftingRecipe.Count == 0 && item.cost == 0)
         {
-            message = $"{item.ItemName} is unsellable!";
+            message = $"{item.name} is unsellable!";
             return false;
         }
 
@@ -268,7 +267,7 @@ public class Shop : MonoBehaviour
         viewer.gold += totalGoldCost;
 
         gold += totalGoldCost;
-        message = $"{item.ItemName}, ";
+        message = $"{item.name}, ";
 
         foreach (Action action in item.grantedActions)
         {
@@ -306,7 +305,7 @@ public class Shop : MonoBehaviour
             message = "You don't have ";
             foreach (Item component in components)
             {
-                message += component.ItemName + ", ";
+                message += component.name + ", ";
             }
             message = message.Remove(message.Length - 2, 2);
             return false;
@@ -316,7 +315,7 @@ public class Shop : MonoBehaviour
             viewer.items.Remove(material);
         }
         viewer.items.Add(craft);
-        message = craft.ItemName;
+        message = craft.name;
         if (!ownedItems.Contains(craft))
         {
             ownedItems.Add(craft);
@@ -327,13 +326,13 @@ public class Shop : MonoBehaviour
                     ownedActions.Add(action);
                 }
             }
-            foreach (TargetingShopItem targeting in craft.grantedTargeting)
+            /*foreach (TargetingShopItem targeting in craft.grantedTargeting)
             {
                 if (!ownedTargeting.Contains(targeting))
                 {
                     ownedTargeting.Add(targeting);
                 }
-            }
+            }*/
             CreateItemUI(craft);
         }
         return true;
@@ -383,7 +382,7 @@ public class Shop : MonoBehaviour
                     viewer.items.Remove(item);
                 }
                 viewer.items.Add(craft);
-                message = craft.ItemName;
+                message = craft.name;
                 if (!ownedItems.Contains(craft))
                 {
                     ownedItems.Add(craft);
@@ -394,13 +393,13 @@ public class Shop : MonoBehaviour
                             ownedActions.Add(action);
                         }
                     }
-                    foreach (TargetingShopItem targeting in craft.grantedTargeting)
+                    /*foreach (TargetingShopItem targeting in craft.grantedTargeting)
                     {
                         if (!ownedTargeting.Contains(targeting))
                         {
                             ownedTargeting.Add(targeting);
                         }
-                    }
+                    }*/
                     CreateItemUI(craft);
                 }
                 return true;
@@ -489,13 +488,13 @@ public class Shop : MonoBehaviour
     {
         foreach (Item item in ownedItems)
         {
-            foreach (TargetingShopItem targeting in item.grantedTargeting)
+            /*foreach (TargetingShopItem targeting in item.grantedTargeting)
             {
                 if (!ownedTargeting.Contains(targeting))
                 {
                     ownedTargeting.Add(targeting);
                 }
-            }
+            }*/
         }
     }
 
@@ -544,11 +543,11 @@ public class Shop : MonoBehaviour
             }
             if (!ownedActions.Contains(action))
             {
-                message = $"None of your items grant you the action {action.ActionName}! \nUse '!actions' to see what actions you can use!";
+                message = $"None of your items grant you the action {action.name}! \nUse '!actions' to see what actions you can use!";
                 return false;
             }
             actions.Add(action);
-            turn += $" {action.ActionName}, ";
+            turn += $" {action.name}, ";
         }
         viewer.actions = actions;
         message = $"Your new turn is:{turn.Remove(turn.Length - 2, 2)}!";
@@ -797,11 +796,11 @@ public class Shop : MonoBehaviour
                 ownedActions.Add(action);
             }
 
-            foreach (TargetingShopItem targeting in item.grantedTargeting)
+            /*foreach (TargetingShopItem targeting in item.grantedTargeting)
             {
                 if (ownedTargeting.Contains(targeting)) continue;
                 ownedTargeting.Add(targeting);
-            }
+            }*/
         }
 
         return new CommandError(true, "");

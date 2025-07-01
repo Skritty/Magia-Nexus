@@ -7,6 +7,7 @@ using UnityEngine;
 [Serializable]
 public class DamageModifier : NumericalModifier
 {
+    [HideInInspector]
     public Dictionary<DamageType, float> finalDamage;
     public DamageType appliesTo;
     [HideIf("@method != NumericalModifierCalculationMethod.Flat")]
@@ -35,7 +36,7 @@ public class DamageModifier : NumericalModifier
         {
             bool validModifier = appliesTo == DamageType.True ? true : false;
             if(!validModifier)
-                foreach (DamageModifier subcalculation in submodifiers[0].submodifiers)
+                foreach (DamageModifier subcalculation in modifiers[0].modifiers)
                 {
                     if (subcalculation.damageType.HasFlag(appliesTo))
                     {
@@ -58,7 +59,7 @@ public class DamageModifier : NumericalModifier
         }
         else
         {
-            foreach (DamageModifier subcalculation in submodifiers[0].submodifiers)
+            foreach (DamageModifier subcalculation in modifiers[0].modifiers)
             {
                 if (appliesTo == DamageType.All || subcalculation.damageType.HasFlag(appliesTo))
                 {
@@ -76,7 +77,7 @@ public class DamageModifier : NumericalModifier
     {
         DamageModifier subcalculation = new DamageModifier(1, null, true);
         subcalculation.damageType = damageType;
-        submodifiers[0].AddModifier(subcalculation);
+        modifiers[0].AddModifier(subcalculation);
         return subcalculation;
     }
 
@@ -92,7 +93,7 @@ public class AssistContributingModifier : NumericalModifier
 
     public AssistContributingModifier(Modifier<float> modifier, float contributionMultiplier)
     {
-        this.value = modifier.value;
+        this.Value = modifier.Value;
         this.source = modifier.source;
         this.contributionMultiplier = contributionMultiplier;
     }
@@ -100,7 +101,7 @@ public class AssistContributingModifier : NumericalModifier
     public override void InverseSolve()
     {
         if (source == null) return;
-        source.Owner.Stat<Stat_PlayerOwner>().ApplyContribution(source.Target, value);
+        source.Owner.GetMechanic<Stat_PlayerOwner>().ApplyContribution(source.Target, Value);
         //source.Owner.Stat<Stat_PlayerOwner>().ApplyContribution(source.Target, absolute);
         /*foreach (KeyValuePair<Entity, float> contributor2 in contributors)
         {

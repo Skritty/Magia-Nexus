@@ -12,20 +12,20 @@ public class Move : Effect
 
     public override void Activate()
     {
-        Owner.Stat<Stat_Movement>().movementSelector?.Create(this);
+        Owner.GetMechanic<Stat_Movement>().movementSelector?.Create(this);
         new Trigger_MovementDirectionCalc(Target, Target);
 
         if (rotate)
         {
-            Owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir);
+            Owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Stat_Movement>().facingDir);
         }
 
         Owner.transform.position +=
             GetMultiplier(EffectTag.MovementSpeed) 
-            * Mathf.Clamp(Owner.Stat<Stat_Movement>().baseMovementSpeed, 0, float.MaxValue) 
-            * Mathf.Clamp(Target.Stat<Stat_Movement>().dirMovementSpeedMulti, 0, float.MaxValue) 
+            * Mathf.Clamp(Owner.GetMechanic<Stat_Movement>().baseMovementSpeed, 0, float.MaxValue) 
+            * Mathf.Clamp(Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti, 0, float.MaxValue) 
             * Time.fixedDeltaTime 
-            * Owner.Stat<Stat_Movement>().facingDir.normalized;
+            * Owner.GetMechanic<Stat_Movement>().facingDir.normalized;
         if (obeyMapEdge)
         {
             Owner.transform.position = Vector3.ClampMagnitude(Owner.transform.position, 15f);// TODO: Change this to pathing

@@ -17,22 +17,22 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
 
     private void SetMoveDir()
     {
-        if (Target.Stat<Stat_Movement>().movementTarget == null)
+        if (Target.GetMechanic<Stat_Movement>().movementTarget == null)
         {
-            Target.Stat<Stat_Movement>().dirMovementSpeedMulti = 0;
+            Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = 0;
         }
         else
         {
-            Vector3 dirFromTarget = Target.transform.position - Target.Stat<Stat_Movement>().movementTarget.transform.position;
+            Vector3 dirFromTarget = Target.transform.position - Target.GetMechanic<Stat_Movement>().movementTarget.transform.position;
             dirFromTarget = dirFromTarget.normalized * distanceFromTarget - dirFromTarget;
             if(dirFromTarget.magnitude <= threshold)
             {
-                Target.Stat<Stat_Movement>().dirMovementSpeedMulti = 0;
+                Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = 0;
             }
             else
             {
-                Target.Stat<Stat_Movement>().facingDir = dirFromTarget.normalized;
-                Target.Stat<Stat_Movement>().dirMovementSpeedMulti = effectMultiplier;
+                Target.GetMechanic<Stat_Movement>().facingDir = dirFromTarget.normalized;
+                Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = effectMultiplier;
             }
         }
     }

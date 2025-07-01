@@ -15,14 +15,14 @@ public class PersistentEffectGate : FlipFlopPersistentEffect
     public List<Effect> effectsOnFailure = new List<Effect>();
     public override void Activate()
     {
-        List<PersistentEffect> effects = Owner.Stat<Stat_PersistentEffects>().GetEffectsViaReference(persistentEffect);
+        List<PersistentEffect> effects = Owner.GetMechanic<Stat_PersistentEffects>().GetEffectsViaReference(persistentEffect);
         if (effects.Count > 0)
         {
             foreach(Effect effect in effectsOnSuccess)
             {
                 effect.Create(Owner);
             }
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, stacksAddedOnSuccess, Owner);
+            Owner.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, stacksAddedOnSuccess, Owner);
         }
         else
         {
@@ -30,7 +30,7 @@ public class PersistentEffectGate : FlipFlopPersistentEffect
             {
                 effect.Create(Owner);
             }
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, stacksAddedOnFailure, Owner);
+            Owner.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, stacksAddedOnFailure, Owner);
         }
     }
 }

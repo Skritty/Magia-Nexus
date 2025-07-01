@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
+  m_Name: T1_Bow
+  m_EditorClassIdentifier: 
+  aliases:
+  - Bow
+  info: Grants [Arrow], a physical projectile attack.
+  image: {fileID: 0}
+  hidden: 0
+  UIColor: {r: 0.9559748, g: 0.8915088, b: 0.8086705, a: 1}
+  cost: 0
+  craftingRecipe:
+  - {fileID: 11400000, guid: da2ae0772fe25054fa22f8e7e1cd63e9, type: 2}
+  - {fileID: 11400000, guid: da2ae0772fe25054fa22f8e7e1cd63e9, type: 2}
+  - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
+  grantedActions:
+  - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+  grantedTargeting: []
+  actionCountModifier: 0
+  itemEffects: []
+  references:
+    version: 2
+    RefIds: []

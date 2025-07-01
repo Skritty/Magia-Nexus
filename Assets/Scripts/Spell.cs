@@ -49,7 +49,7 @@ public class Spell
 
     private void SetUpProjectile(Trigger_ProjectileCreated trigger)
     {
-        trigger.Entity.Stat<Stat_Magic>().runes.AddRange(runes);
+        trigger.Entity.GetMechanic<Stat_Magic>().runes.AddRange(runes);
     }
 
     public void GenerateSpell(Effect spellcast, Spell chainCast)
@@ -57,7 +57,7 @@ public class Spell
         this.spellcast = spellcast;
         GenerateShape();
         cleanup += Trigger_Hit.Subscribe((x) => new Trigger_SpellEffectApplied(x.Effect, Owner, this, effect, Owner, this), effect);
-        Owner.Stat<Stat_Magic>().ownedSpells.Add(this);
+        Owner.GetMechanic<Stat_Magic>().ownedSpells.Add(this);
         if (!channeled)
         {
             CastFromProxies();
@@ -96,7 +96,7 @@ public class Spell
     {
         this.maxStages = maxStages;
         channeled = true;
-        Owner.Stat<Stat_Actions>().channelInstead = true;
+        Owner.GetMechanic<Stat_Actions>().channelInstead = true;
         cleanup += Trigger_Channel.Subscribe(ChannelSpell, Owner);
         cleanup += Trigger_SpellMaxStage.Subscribe(FinishChanneling, this);
     }
@@ -108,7 +108,7 @@ public class Spell
 
     private void FinishChanneling(Trigger_SpellMaxStage trigger)
     {
-        trigger.Spell.Owner.Stat<Stat_Actions>().channelInstead = false;
+        trigger.Spell.Owner.GetMechanic<Stat_Actions>().channelInstead = false;
         if (!ignoreMaxStageCast)
         {
             CastFromProxies();
@@ -127,7 +127,7 @@ public class Spell
 
     public void CastSpell(Entity proxy)
     {
-        int targets = additionalCastTargets + (int)Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.CastTargets);
+        int targets = additionalCastTargets + (int)Owner.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.CastTargets);
         targets = Mathf.Clamp(targets, 1, int.MaxValue);
         for (int t = 0; t < targets; t++)
         {
@@ -150,6 +150,6 @@ public class Spell
     {
         new Trigger_SpellFinished(Owner, this, Owner, this);
         cleanup?.Invoke();
-        Owner.Stat<Stat_Magic>().ownedSpells.Remove(this);
+        Owner.GetMechanic<Stat_Magic>().ownedSpells.Remove(this);
     }
 }

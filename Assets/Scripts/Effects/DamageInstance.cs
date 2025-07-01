@@ -35,17 +35,17 @@ public class DamageInstance : Effect
 
     public override void Activate()
     {
-        if (Target.Stat<Stat_Life>().maxLife <= 0) return;
+        if (Target.Stat<Stat_MaxLife>().Value <= 0) return;
         if (!preventTriggers)
         {
-            Entity triggerOwner = triggerPlayerOwner ? Owner.Stat<Stat_PlayerOwner>().Owner : Owner;
+            Entity triggerOwner = triggerPlayerOwner ? Owner.GetMechanic<Stat_PlayerOwner>().Owner : Owner;
             foreach (PE_Trigger effect in temporaryTriggeredEffects)
             {
-                Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
+                Owner.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
             }
             new Trigger_PreHit(this, this, Owner, triggerOwner, Target, Source);
-            if(Owner.Stat<Stat_Magic>().enchantedAttacks.Count > 0)
-                runes.AddRange(Owner.Stat<Stat_Magic>().enchantedAttacks.Dequeue());
+            if(Owner.GetMechanic<Stat_Magic>().enchantedAttacks.Count > 0)
+                runes.AddRange(Owner.GetMechanic<Stat_Magic>().enchantedAttacks.Dequeue());
             foreach (Effect effect in targetEffects)
             {
                 effect.Create(Source, Owner, Target);
@@ -58,10 +58,10 @@ public class DamageInstance : Effect
             {
                 effect.Create(this);
             }
-            foreach (PE_RuneCrystal crystal in Target.Stat<Stat_PersistentEffects>().GetEffects<PE_RuneCrystal>())
+            foreach (PE_RuneCrystal crystal in Target.GetMechanic<Stat_PersistentEffects>().GetEffects<PE_RuneCrystal>())
             {
                 runes.Add(crystal.rune);
-                Target.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
+                Target.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
             }
             GenerateMagicEffect();
             new Trigger_Hit(this, this, Owner, triggerOwner, Target, Source);
@@ -72,11 +72,11 @@ public class DamageInstance : Effect
         }
 
         CalculateDamageType();
-        Target.Stat<Stat_Life>().TakeDamage(this);
+        Target.GetMechanic<Mechanic_Damageable>().TakeDamage(this);
 
         foreach (PE_Trigger effect in temporaryTriggeredEffects)
         {
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, -effect.stacks, Owner);
+            Owner.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, -effect.stacks, Owner);
         }
     }
 
@@ -97,7 +97,7 @@ public class DamageInstance : Effect
     {
         if (runes.Count == 0) return;
         int spellPhase = 0;
-        Owner.Stat<Stat_PlayerOwner>().Proxy(x => spellPhase += (int)x.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase));
+        Owner.GetMechanic<Stat_PlayerOwner>().Proxy(x => spellPhase += (int)x.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase));
         spellPhase %= runes.Count;
         for (int i = spellPhase; i < runes.Count + spellPhase; i++)
         {

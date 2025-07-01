@@ -14,7 +14,7 @@ public class PE_PreventExpire : PersistentEffect
     }
     public override void OnTick()
     {
-        foreach (PersistentEffect effect in Target.Stat<Stat_PersistentEffects>().persistentEffects)
+        foreach (PersistentEffect effect in Target.GetMechanic<Stat_PersistentEffects>().persistentEffects)
         {
             if(effect.tick + 1 == effect.tickDuration && effect.alignment == alignment && effect is not PE_PreventExpire)
             {

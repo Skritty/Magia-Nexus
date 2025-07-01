@@ -20,11 +20,11 @@ public class Targeting_Line : MultiTargeting
         if (length == 0 || width == 0) return false;
 
         Vector3 dirToEntity = target.transform.position - GetCenter();
-        dirToTarget = firstTarget && faceFirstTarget ? dirToEntity : Owner.Stat<Stat_Movement>().facingDir;
+        dirToTarget = firstTarget && faceFirstTarget ? dirToEntity : Owner.GetMechanic<Stat_Movement>().facingDir;
         Vector3 projectedDir = Vector3.Project(dirToEntity, dirToTarget);
         if (Vector3.Dot(dirToEntity, dirToTarget) < 0) return false;
-        if (projectedDir.magnitude > length * Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;
-        if ((dirToEntity - projectedDir).magnitude > width * Owner.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;
+        if (projectedDir.magnitude > length * Owner.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;
+        if ((dirToEntity - projectedDir).magnitude > width * Owner.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;
         return true;
     }
 

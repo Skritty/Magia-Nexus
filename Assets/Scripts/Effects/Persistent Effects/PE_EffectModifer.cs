@@ -17,12 +17,12 @@ public class PE_EffectModifer : PersistentEffect
         {
             DamageModifier newMod = modifier.Clone();
             newMod.source = this;
-            Target.Stat<Stat_EffectModifiers>().AddModifier(newMod);
+            Target.GetMechanic<Stat_EffectModifiers>().AddModifier(newMod);
         }
     }
 
     public override void OnLost()
     {
-        Target.Stat<Stat_EffectModifiers>().RemoveModifier(this);
+        Target.GetMechanic<Stat_EffectModifiers>().RemoveModifier(this);
     }
 }

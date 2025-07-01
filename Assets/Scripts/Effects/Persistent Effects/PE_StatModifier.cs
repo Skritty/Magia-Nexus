@@ -5,7 +5,7 @@ using UnityEngine;
 public class PE_StatModifier : PersistentEffect
 {
     [SerializeReference, Sirenix.OdinInspector.BoxGroup("Effect", showLabel: false)]
-    public BaseStat statModifier;
+    public Mechanic statModifier;
     public override void OnGained()
     {
         statModifier.ModifyStat(Target);

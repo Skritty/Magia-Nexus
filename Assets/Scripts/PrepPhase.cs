@@ -82,11 +82,11 @@ public class PrepPhase : MonoBehaviour
             }
             if (!ownedActions.Contains(action))
             {
-                message = $"None of your items grant you the action {action.ActionName}! \nUse '!actions' to see what actions you can use!";
+                message = $"None of your items grant you the action {action.name}! \nUse '!actions' to see what actions you can use!";
                 return false;
             }
             actions.Add(action);
-            turn += $" {action.ActionName}, ";
+            turn += $" {action.name}, ";
         }
         viewer.actions = actions;
         message = $"Your new turn is:{turn.Remove(turn.Length - 2, 2)}!";
@@ -117,7 +117,7 @@ public class PrepPhase : MonoBehaviour
         string message = $"@{user} You have: ";
         foreach (Action action in FindAvailableActions(GameManager.Instance.viewers[user]))
         {
-            message += $"{action.ActionName}, ";
+            message += $"{action.name}, ";
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
@@ -145,7 +145,7 @@ public class PrepPhase : MonoBehaviour
         string message = $"@{user} Your turn will be: ";
         foreach (Action action in GameManager.Instance.viewers[user].actions)
         {
-            message += $"{action.ActionName}, ";
+            message += $"{action.name}, ";
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);

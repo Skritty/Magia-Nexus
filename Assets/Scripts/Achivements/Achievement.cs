@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Achievement")]
-public class Achievement : ScriptableObject
+public class Achievement : ViewableGameAsset
 {
     public string description;
     [SerializeReference]
@@ -30,7 +30,7 @@ public class Achievement : ScriptableObject
 
     protected void Check(Trigger trigger)
     {
-        if (trigger.Is(out ITriggerData_Player data))
+        if (trigger.Is(out IDataContainer_Player data))
         {
             bool allComplete = true;
             foreach (TriggerTask task in tasks)

@@ -54,11 +54,11 @@ public abstract class MultiTargeting : Targeting
     {
         if(proxy != null)
         {
-            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir) * offset; // Direction still determined by owner
+            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Stat_Movement>().facingDir) * offset; // Direction still determined by owner
         }
         else
         {
-            return Owner.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.Stat<Stat_Movement>().facingDir) * offset;
+            return Owner.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Stat_Movement>().facingDir) * offset;
         }
         
     }
@@ -82,10 +82,10 @@ public abstract class MultiTargeting : Targeting
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>())
         {
             // Can it be targeted?
-            if (!entity.Stat<Stat_Targetable>().IsTargetable(owner, source)) continue;
+            if (!entity.GetMechanic<Stat_Targetable>().IsTargetable(owner, source)) continue;
 
             // Is it in the affected entities?
-            if(entity.Stat<Stat_Team>().team != owner.Stat<Stat_Team>().team)
+            if(entity.GetMechanic<Stat_Team>().team != owner.GetMechanic<Stat_Team>().team)
             {
                 targetType = TargetFilter.Enemies;
             }
@@ -93,7 +93,7 @@ public abstract class MultiTargeting : Targeting
             {
                 targetType = TargetFilter.Self;
             }
-            else if (entity == owner.Stat<Stat_PlayerOwner>().playerCharacter)
+            else if (entity == owner.GetMechanic<Stat_PlayerOwner>().playerCharacter)
             {
                 targetType = TargetFilter.Owner;
             }
@@ -118,7 +118,7 @@ public abstract class MultiTargeting : Targeting
 
         if(numberOfTargets >= 0)
         {
-            int actualNumberOfTargets = numberOfTargets + owner.Stat<Stat_Targeting>().additionalTargets;
+            int actualNumberOfTargets = numberOfTargets + owner.GetMechanic<Stat_Targeting>().additionalTargets;
             if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
                 targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
         }

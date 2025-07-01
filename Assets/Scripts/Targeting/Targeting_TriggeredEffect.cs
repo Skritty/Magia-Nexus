@@ -12,7 +12,7 @@ public class Targeting_TriggeredEffect : Targeting
 
     public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
     {
-        if (trigger.Is(out ITriggerData_Effect data))
+        if (trigger.Is(out IDataContainer_Effect data))
         {
             Entity target;
             if (selector == EffectTargetingSelector.Owner)

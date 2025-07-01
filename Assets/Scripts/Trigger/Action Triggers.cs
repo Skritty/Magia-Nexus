@@ -1,4 +1,4 @@
-public class Trigger_ActionStart : Trigger<Trigger_ActionStart>, ITriggerData_OwnerEntity, ITriggerData_Action
+public class Trigger_ActionStart : Trigger<Trigger_ActionStart>, IDataContainer_OwnerEntity, IDataContainer_Action
 {
     private Action _action;
     public Action Action => _action;
@@ -14,7 +14,7 @@ public class Trigger_ActionStart : Trigger<Trigger_ActionStart>, ITriggerData_Ow
     }
 }
 
-public class Trigger_ActionEnd : Trigger<Trigger_ActionEnd>, ITriggerData_OwnerEntity, ITriggerData_Action
+public class Trigger_ActionEnd : Trigger<Trigger_ActionEnd>, IDataContainer_OwnerEntity, IDataContainer_Action
 {
     private Action _action;
     public Action Action => _action;
@@ -30,7 +30,7 @@ public class Trigger_ActionEnd : Trigger<Trigger_ActionEnd>, ITriggerData_OwnerE
     }
 }
 
-public class Trigger_TurnStart : Trigger<Trigger_TurnStart>, ITriggerData_OwnerEntity
+public class Trigger_TurnStart : Trigger<Trigger_TurnStart>, IDataContainer_OwnerEntity
 {
     private Entity _owner;
     public Entity Entity => _owner;
@@ -43,7 +43,7 @@ public class Trigger_TurnStart : Trigger<Trigger_TurnStart>, ITriggerData_OwnerE
     }
 }
 
-public class Trigger_TurnEnd : Trigger<Trigger_TurnEnd>, ITriggerData_OwnerEntity
+public class Trigger_TurnEnd : Trigger<Trigger_TurnEnd>, IDataContainer_OwnerEntity
 {
     private Entity _owner;
     public Entity Entity => _owner;

@@ -8,7 +8,7 @@ public class Accelerate : Effect
     {
         for(int i = 0; i < effectMultiplier; i++)
         {
-            Target.Stat<Stat_Actions>().Tick();
+            Target.GetMechanic<Stat_Actions>().Tick();
         }
     }
 }

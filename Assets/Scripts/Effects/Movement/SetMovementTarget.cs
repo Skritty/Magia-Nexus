@@ -9,14 +9,14 @@ public class SetMovementTarget : Effect
     public EffectTargetSelector movementTarget = EffectTargetSelector.Target;
     public override void Activate()
     {
-        Owner.Stat<Stat_Movement>().facingDir = Target.transform.position - Owner.transform.position;
+        Owner.GetMechanic<Stat_Movement>().facingDir = Target.transform.position - Owner.transform.position;
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                Owner.Stat<Stat_Movement>().movementTarget = Owner;
+                Owner.GetMechanic<Stat_Movement>().movementTarget = Owner;
                 break;
             case EffectTargetSelector.Target:
-                Owner.Stat<Stat_Movement>().movementTarget = Target;
+                Owner.GetMechanic<Stat_Movement>().movementTarget = Target;
                 break;
         }
     }

@@ -9,8 +9,8 @@ public class Targeting_Distance : MultiTargeting
         int comparison = 0;
         float e1dist = Vector3.Distance(Owner.transform.position, e1.transform.position);
         float e2dist = Vector3.Distance(Owner.transform.position, e2.transform.position);
-        float e1Enmity = e1.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
-        float e2Enmity = e2.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
+        float e1Enmity = e1.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
+        float e2Enmity = e2.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
         switch (sortingMethod)
         {
             case TargetSorting.Highest:

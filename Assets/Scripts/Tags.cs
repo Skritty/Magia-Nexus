@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using Unity.VisualScripting;
+using UnityEngine;
 
 [Flags]
 public enum DamageType
@@ -49,8 +53,12 @@ public enum EffectTag
     Enmity,
     SpellPhase,
     Summons,
-    MaxSummons
+    MaxSummons,
+    TargetingMethod,
+    MovementTargetingMethod
 }
+
+
 
 // Calc (DamageDealt)
 // Fire Whip: +100 (damage, elemental, fire, attack | hit)

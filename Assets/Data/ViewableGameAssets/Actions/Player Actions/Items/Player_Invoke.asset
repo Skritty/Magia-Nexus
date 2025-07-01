@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
+  m_Name: Player_Invoke
+  m_EditorClassIdentifier: 
+  aliases:
+  - Invoke
+  - skritt3Invoke
+  info: Casts your spell, consuming all the runes of your spellcasting queue.
+  image: {fileID: 0}
+  hidden: 0
+  UIColor: {r: 0.5442267, g: 0.25649688, b: 0.8238993, a: 1}
+  actionAliases:
+  - Invoke
+  - skritt3Invoke
+  actionDescription: 
+  actionImage: {fileID: 0}
+  damageTypeColor: {r: 0.5442267, g: 0.25649688, b: 0.8238993, a: 1}
+  maxUses: 0
+  initialAnimationState: 5
+  activateAnimationState: 6
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 0
+  timing: 0.8
+  effectMultiplier: 1
+  effects:
+  - rid: 9031231527144652824
+  references:
+    version: 2
+    RefIds:
+    - rid: 2626413410273722614
+      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 9031231527144652824
+      type: {class: Invoke, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 2626413410273722614
+        useOwnerRunes: 1
+        runes: []

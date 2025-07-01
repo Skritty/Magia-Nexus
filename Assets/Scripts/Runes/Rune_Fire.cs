@@ -103,7 +103,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(x => x.Entity.Stat<Stat_Projectile>().piercesRemaining += 2, spell.effect);
+                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(x => x.Entity.GetMechanic<Stat_Projectile>().piercesRemaining += 2, spell.effect);
                     break;
                 }
             case SpellShape.Summon:

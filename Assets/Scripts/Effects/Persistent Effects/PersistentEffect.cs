@@ -39,7 +39,7 @@ public abstract class PersistentEffect: Effect
     public override void Activate()
     {
         //Owner = Owner.Stat<Stat_PlayerOwner>().playerEntity;
-        Target.Stat<Stat_PersistentEffects>().ApplyEffect(this);
+        Target.GetMechanic<Stat_PersistentEffects>().ApplyEffect(this);
     }
     public void Gained()
     {
@@ -65,6 +65,6 @@ public abstract class PersistentEffect: Effect
     public virtual void ApplyContribution()
     {
         if (!contributeToAssists || tick <= 0) return;
-        Owner.Stat<Stat_PlayerOwner>().ApplyContribution(Target, effectMultiplier * tick);
+        Owner.GetMechanic<Stat_PlayerOwner>().ApplyContribution(Target, effectMultiplier * tick);
     }
 }

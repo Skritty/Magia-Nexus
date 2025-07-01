@@ -17,17 +17,17 @@ public class Movement_Orbit : MovementDirectionSelector
 
     private void SetMoveDir()
     {
-        float orbitDist = orbitDistance * Target.Stat<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize);
+        float orbitDist = orbitDistance * Target.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize);
         Vector3 dirToTarget = Vector3.zero;
         bool zero = false;
-        if (Target.Stat<Stat_Movement>().movementTarget != null)
+        if (Target.GetMechanic<Stat_Movement>().movementTarget != null)
         {
-            dirToTarget = Target.transform.position - Target.Stat<Stat_Movement>().movementTarget.transform.position;
+            dirToTarget = Target.transform.position - Target.GetMechanic<Stat_Movement>().movementTarget.transform.position;
         }
         if (dirToTarget == Vector3.zero)
         {
             zero = true;
-            dirToTarget = Target.Stat<Stat_Movement>().movementTarget.Stat<Stat_Movement>().facingDir;
+            dirToTarget = Target.GetMechanic<Stat_Movement>().movementTarget.GetMechanic<Stat_Movement>().facingDir;
             Debug.Log(dirToTarget);
         }
         //if (dirToTarget == Vector3.zero) dirToTarget = Target.transform.position + Target.transform.up * orbitDistance;
@@ -47,7 +47,7 @@ public class Movement_Orbit : MovementDirectionSelector
             perpendicularVector = Vector3.Lerp(dirToTarget, perpendicularVector, dirToTarget.magnitude / orbitDist);
         }
         
-        Target.Stat<Stat_Movement>().facingDir = perpendicularVector;
-        Target.Stat<Stat_Movement>().dirMovementSpeedMulti = effectMultiplier;
+        Target.GetMechanic<Stat_Movement>().facingDir = perpendicularVector;
+        Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = effectMultiplier;
     }
 }

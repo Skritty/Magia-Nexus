@@ -57,7 +57,7 @@ public abstract class Effect
 
     public float GetMultiplier(EffectTag tags)
     {
-        return Owner.Stat<Stat_PlayerOwner>().playerEntity.Stat<Stat_EffectModifiers>().CalculateModifier(tags);
+        return Owner.GetMechanic<Stat_PlayerOwner>().playerEntity.GetMechanic<Stat_EffectModifiers>().CalculateModifier(tags);
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public abstract class Effect
             e._source = this;
             e._owner = owner;
             e._target = target;
-            if (trigger.Is(out ITriggerData_Effect data))
+            if (trigger.Is(out IDataContainer_Effect data))
             {
                 e.effectMultiplier *= data.Effect.effectMultiplier;
             }

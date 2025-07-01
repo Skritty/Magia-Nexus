@@ -1,20 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using TwitchLib.Api.Helix;
-using TwitchLib.Api.Helix.Models.Subscriptions;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 [Serializable]
-public abstract class Trigger : ITriggerData
+public abstract class Trigger : IDataContainer
 {
-    public bool Is<T1>(out T1 data) where T1 : class, ITriggerData
+    public bool Is<T>(out T data) where T : class, IDataContainer
     {
-        data = this as T1;
+        data = this as T;
         return data != null;
     }
     public abstract void Invoke(params object[] bindingObjects);
@@ -129,7 +123,7 @@ public class Trigger_OnRemove : Trigger<Trigger_OnRemove>
         return () => method.Invoke(this);
     }
 }
-public class Trigger_GameEnd : Trigger<Trigger_GameEnd>, ITriggerData_Player 
+public class Trigger_GameEnd : Trigger<Trigger_GameEnd>, IDataContainer_Player 
 {
     private Viewer _player;
     public Viewer Player => _player;
@@ -140,7 +134,7 @@ public class Trigger_GameEnd : Trigger<Trigger_GameEnd>, ITriggerData_Player
         Invoke(bindingObjects);
     }
 }
-public class Trigger_RoundEnd : Trigger<Trigger_RoundEnd>, ITriggerData_Player
+public class Trigger_RoundEnd : Trigger<Trigger_RoundEnd>, IDataContainer_Player
 {
     private Viewer _player;
     public Viewer Player => _player;

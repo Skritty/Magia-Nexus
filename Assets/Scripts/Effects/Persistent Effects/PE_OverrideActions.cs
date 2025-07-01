@@ -11,11 +11,11 @@ public class PE_OverrideActions : PersistentEffect
     public SerializedDictionary<Action, Action> actionOverrides;
     public override void OnGained()
     {
-        Target.Stat<Stat_Actions>().OverrideActions(actionOverrides);
+        Target.GetMechanic<Stat_Actions>().OverrideActions(actionOverrides);
     }
 
     public override void OnLost()
     {
-        Target.Stat<Stat_Actions>().OverrideActions(actionOverrides, true);
+        Target.GetMechanic<Stat_Actions>().OverrideActions(actionOverrides, true);
     }
 }

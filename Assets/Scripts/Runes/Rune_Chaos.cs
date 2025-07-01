@@ -108,10 +108,10 @@ public class Rune_Chaos : Rune
 
     private void AddHomingToProjectile(Trigger_ProjectileCreated trigger)
     {
-        if (trigger.Entity.Stat<Stat_Movement>().movementSelector == null || !(trigger.Entity.Stat<Stat_Movement>().movementSelector is Movement_HomeToTarget))
+        if (trigger.Entity.GetMechanic<Stat_Movement>().movementSelector == null || !(trigger.Entity.GetMechanic<Stat_Movement>().movementSelector is Movement_HomeToTarget))
         {
-            trigger.Entity.Stat<Stat_Movement>().movementSelector = new Movement_HomeToTarget();
+            trigger.Entity.GetMechanic<Stat_Movement>().movementSelector = new Movement_HomeToTarget();
         }
-        (trigger.Entity.Stat<Stat_Movement>().movementSelector as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
+        (trigger.Entity.GetMechanic<Stat_Movement>().movementSelector as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
     }
 }

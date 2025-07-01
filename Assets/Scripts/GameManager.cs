@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using Skritty.Tools.Utilities;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +18,8 @@ public class GameManager : Singleton<GameManager>
     private Phase currentPhase;
     private Coroutine phaseTimer;
     public TextMeshProUGUI timer;
+    [ReadOnly, SerializeReference]
+    public List<ViewableGameAsset> viewableGameAssets;
 
     public Entity defaultPlayer;
     public List<string> defaultUnlockedClasses = new List<string>();
@@ -38,6 +42,7 @@ public class GameManager : Singleton<GameManager>
         TwitchClient.Instance.AddCommand("items", Command_ListHeldItems);
         TwitchClient.Instance.AddCommand("actions", Command_ListActions);
         TwitchClient.Instance.AddCommand("turn", Command_ListTurn);
+        TwitchClient.Instance.AddCommand("info", Command_Info);
     }
 
     private void OnDisable()
@@ -51,6 +56,7 @@ public class GameManager : Singleton<GameManager>
         TwitchClient.Instance.RemoveCommand("items", Command_ListHeldItems);
         TwitchClient.Instance.RemoveCommand("actions", Command_ListActions);
         TwitchClient.Instance.RemoveCommand("turn", Command_ListTurn);
+        TwitchClient.Instance.RemoveCommand("info", Command_Info);
     }
 
     private CommandError Command_JoinGame(string user, List<string> args)
@@ -160,13 +166,13 @@ public class GameManager : Singleton<GameManager>
         foreach (Item item in GameManager.Instance.viewers[user].items)
         {
             if (item.hidden) continue;
-            if (itemAmounts.ContainsKey(item.ItemName))
+            if (itemAmounts.ContainsKey(item.name))
             {
-                itemAmounts[item.ItemName]++;
+                itemAmounts[item.name]++;
             }
             else
             {
-                itemAmounts.Add(item.ItemName, 1);
+                itemAmounts.Add(item.name, 1);
             }
         }
         foreach (KeyValuePair<string, int> item in itemAmounts)
@@ -190,7 +196,7 @@ public class GameManager : Singleton<GameManager>
         string message = $"@{user} Your turn will be: ";
         foreach (Action action in GameManager.Instance.viewers[user].actions)
         {
-            message += $"{action.ActionName}, ";
+            message += $"{action.name}, ";
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
@@ -224,11 +230,46 @@ public class GameManager : Singleton<GameManager>
             {
                 if (actions.Contains(action)) continue;
                 actions.Add(action);
-                message += $"{action.ActionName}, ";
+                message += $"{action.name}, ";
             }
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
         return new CommandError(true, "");
     }
+
+    public CommandError Command_Info(string user, List<string> args)
+    {
+        if (args.Count == 0) return new CommandError(true, "");
+        string message = $"@{user} ";
+        HashSet<Action> actions = new HashSet<Action>();
+
+        string name = string.Join(" ", args);
+        bool found = false;
+        foreach (ViewableGameAsset asset in viewableGameAssets)
+        {
+            if (!asset.NameMatch(name)) continue;
+            message += asset.name + ": " + asset.info;
+            found = true;
+            break;
+        }
+        if (!found)
+        {
+            return new CommandError(true, "");
+        }
+
+        TwitchClient.Instance.SendChatMessage(message);
+        return new CommandError(true, "");
+    }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        viewableGameAssets.Clear();
+        foreach (string guid in AssetDatabase.FindAssets("t:ViewableGameAsset", new string[] { "Assets/Data/ViewableGameAssets" }))
+        {
+            viewableGameAssets.Add((ViewableGameAsset)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guid), typeof(ViewableGameAsset)));
+        }
+    }
+#endif
 }

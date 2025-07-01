@@ -1,18 +1,21 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
-[Serializable]
+/*[Serializable]
 public abstract class Modifier<T>
 {
     public T value;
+    //public T absolute, mitigated;
     public List<Modifier<T>> submodifiers = new List<Modifier<T>>();
     public Effect source; // Optional, for contribution
     public EffectTag tag;
-    //public T absolute, mitigated;
+    [SerializeReference]
+    public ModifierTag modifierTag;
     public virtual void AddModifier(Modifier<T> modifier)
     {
         submodifiers.Add(modifier);
     }
-    public virtual T Solve() => value;
+    public abstract T Solve();
     public virtual void InverseSolve() { }
-}
+}*/

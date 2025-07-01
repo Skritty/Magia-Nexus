@@ -9,14 +9,14 @@ public class FlipFlopPersistentEffect : Effect
     public PersistentEffect persistentEffect;
     public override void Activate()
     {
-        List<PersistentEffect> effects = Owner.Stat<Stat_PersistentEffects>().GetEffectsViaReference(persistentEffect);
+        List<PersistentEffect> effects = Owner.GetMechanic<Stat_PersistentEffects>().GetEffectsViaReference(persistentEffect);
         if (effects.Count > 0)
         {
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, -1, Owner);
+            Owner.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, -1, Owner);
         }
         else
         {
-            Owner.Stat<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, 1, Owner);
+            Owner.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(persistentEffect, 1, Owner);
         }
     }
 }

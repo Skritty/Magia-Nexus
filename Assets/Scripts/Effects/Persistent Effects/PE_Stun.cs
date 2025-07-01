@@ -6,11 +6,11 @@ public class PE_Stun : PersistentEffect
 {
     public override void OnGained()
     {
-        Target.Stat<Stat_Actions>().stunned = true;
+        Target.GetMechanic<Stat_Actions>().stunned = true;
     }
 
     public override void OnLost()
     {
-        Target.Stat<Stat_Actions>().stunned = false;
+        Target.GetMechanic<Stat_Actions>().stunned = false;
     }
 }

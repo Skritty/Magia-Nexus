@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
+  m_Name: Class_Headtaker
+  m_EditorClassIdentifier: 
+  aliases:
+  - Headtaker
+  - Fighter
+  info: Perform a swift slash alongside every action.
+  image: {fileID: 0}
+  hidden: 1
+  UIColor: {r: 0.57861626, g: 0.57861626, b: 0.57861626, a: 1}
+  cost: 0
+  craftingRecipe: []
+  grantedActions:
+  - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+  grantedPersonalities: []
+  actionCountModifier: 0
+  itemEffects:
+  - rid: 7867064604153348097
+  references:
+    version: 2
+    RefIds:
+    - rid: 5286389777395876405
+      type: {class: Trigger_ActionEnd, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5286389933263290467
+      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1
+    - rid: 7867064604153348097
+      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 1
+        ignoreFrames: 0
+        targetSelector:
+          rid: 7867064604153348098
+        tick: 0
+        tickDuration: -1
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        refreshDuration: 1
+        contributeToAssists: 0
+        alignment: 0
+        vfx: {fileID: 0}
+        triggerOrder: 0
+        trigger:
+          rid: 5286389777395876405
+        tasks:
+        - rid: 5286389933263290467
+        - rid: 7867064604153348107
+    - rid: 7867064604153348098
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+    - rid: 7867064604153348107
+      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1
+        proxy: 0
+        useProxyAsOwner: 0
+        effect:
+          rid: 7867064604153348108
+    - rid: 7867064604153348108
+      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
+      data:
+        effectMultiplier: 0.6
+        ignoreFrames: 0
+        targetSelector:
+          rid: 7867064604153348110
+        calculatedDamage: 0
+        damageModifiers:
+        - mainStat: 0
+          <Value>k__BackingField: 0
+          method: 0
+          appliesTo: 0
+          damageType: 8227
+        runes: []
+        skipFlatDamageReduction: 0
+        triggerPlayerOwner: 0
+        preventTriggers: 0
+        ownerEffects: []
+        targetEffects: []
+        onHitEffects: []
+        postOnHitEffects: []
+    - rid: 7867064604153348110
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        lockTarget: 0
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        radius: 1.75
+        angle: 60

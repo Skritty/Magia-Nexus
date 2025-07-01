@@ -1,4 +1,4 @@
-public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCalc>, ITriggerData_OwnerEntity
+public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCalc>, IDataContainer_OwnerEntity
 {
     private Entity _entity;
     public Entity Entity => _entity;
@@ -10,7 +10,7 @@ public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCa
         Invoke(bindingObjects);
     }
 }
-public class Trigger_PreHit : Trigger<Trigger_PreHit>, ITriggerData_DamageInstance
+public class Trigger_PreHit : Trigger<Trigger_PreHit>, IDataContainer_DamageInstance
 {
     private DamageInstance _damageInstance;
     public DamageInstance Damage => _damageInstance;
@@ -22,7 +22,7 @@ public class Trigger_PreHit : Trigger<Trigger_PreHit>, ITriggerData_DamageInstan
         Invoke(bindingObjects);
     }
 }
-public class Trigger_Hit : Trigger<Trigger_Hit>, ITriggerData_DamageInstance
+public class Trigger_Hit : Trigger<Trigger_Hit>, IDataContainer_DamageInstance
 {
     private DamageInstance _damageInstance;
     public DamageInstance Damage => _damageInstance;
@@ -34,7 +34,7 @@ public class Trigger_Hit : Trigger<Trigger_Hit>, ITriggerData_DamageInstance
         Invoke(bindingObjects);
     }
 }
-public class Trigger_Damage : Trigger<Trigger_Damage>, ITriggerData_DamageInstance
+public class Trigger_Damage : Trigger<Trigger_Damage>, IDataContainer_DamageInstance
 {
     private DamageInstance _damageInstance;
     public DamageInstance Damage => _damageInstance;
@@ -46,7 +46,7 @@ public class Trigger_Damage : Trigger<Trigger_Damage>, ITriggerData_DamageInstan
         Invoke(bindingObjects);
     }
 }
-public class Trigger_Die : Trigger<Trigger_Die>, ITriggerData_OwnerEntity, ITriggerData_DamageInstance
+public class Trigger_Die : Trigger<Trigger_Die>, IDataContainer_OwnerEntity, IDataContainer_DamageInstance
 {
     private DamageInstance _damageInstance;
     public DamageInstance Damage => _damageInstance;
@@ -63,7 +63,7 @@ public class Trigger_Die : Trigger<Trigger_Die>, ITriggerData_OwnerEntity, ITrig
     }
 }
 
-public class Trigger_PersistantEffectApplied : Trigger<Trigger_PersistantEffectApplied>, ITriggerData_Effect
+public class Trigger_PersistantEffectApplied : Trigger<Trigger_PersistantEffectApplied>, IDataContainer_Effect
 {
     private Effect _effect;
     public Effect Effect => _effect;
@@ -76,7 +76,7 @@ public class Trigger_PersistantEffectApplied : Trigger<Trigger_PersistantEffectA
     }
     
 }
-public class Trigger_ProjectilePierce : Trigger<Trigger_ProjectilePierce>, ITriggerData_Effect
+public class Trigger_ProjectilePierce : Trigger<Trigger_ProjectilePierce>, IDataContainer_Effect
 {
     private Effect _effect;
     public Effect Effect => _effect;
@@ -88,7 +88,7 @@ public class Trigger_ProjectilePierce : Trigger<Trigger_ProjectilePierce>, ITrig
     }
 }
 
-public class Trigger_PersistentEffectGained : Trigger<Trigger_PersistentEffectGained>, ITriggerData_Effect, ITriggerData_PersistentEffect
+public class Trigger_PersistentEffectGained : Trigger<Trigger_PersistentEffectGained>, IDataContainer_Effect, IDataContainer_PersistentEffect
 {
     private Effect _effect;
     public Effect Effect => _effect;
@@ -101,7 +101,7 @@ public class Trigger_PersistentEffectGained : Trigger<Trigger_PersistentEffectGa
     }
 }
 
-public class Trigger_PersistentEffectLost : Trigger<Trigger_PersistentEffectLost>, ITriggerData_Effect, ITriggerData_PersistentEffect
+public class Trigger_PersistentEffectLost : Trigger<Trigger_PersistentEffectLost>, IDataContainer_Effect, IDataContainer_PersistentEffect
 {
     private Effect _effect;
     public Effect Effect => _effect;
