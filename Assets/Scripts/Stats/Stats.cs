@@ -23,7 +23,7 @@ public abstract class Stat<T> : Stat, IDataContainer<T>
     public bool mainStat;
     [field: SerializeField]
     public T Value { get; set; }
-    [ShowInInspector, HideIf("@!(this is IStatTag)")] // TODO UPDATE UNITY
+    [SerializeReference, HideIf("@!(this is IStatTag)")]
     public List<Modifier<T>> modifiers = new List<Modifier<T>>();
     public override void AddModifier(Stat modifier)
     {
@@ -54,7 +54,7 @@ public abstract class Modifier<T> : Stat<T>, IModifier<T>
     [HideInInspector]
     public Effect source; // Optional, for contribution
 
-    [field: ShowInInspector] // TODO
+    [field: SerializeReference]
     public IStatTag<T> Tag { get; set; }
     public override bool Equals(Stat other)
     {

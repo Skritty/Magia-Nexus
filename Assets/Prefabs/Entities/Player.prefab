@@ -327,11 +327,31 @@ MonoBehaviour:
       data:
         mainStat: 0
         <Value>k__BackingField: 4
+        modifiers: []
     - rid: 1083523656418066435
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
         <Value>k__BackingField: 0
+        modifiers:
+        - rid: 1083523673405259898
+    - rid: 1083523673405259898
+      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
+      data:
+        mainStat: 0
+        <Value>k__BackingField: 50
+        modifiers: []
+        <Tag>k__BackingField:
+          rid: 1083523673405259908
+        method: 0
+        appliesTo: 8192
+        damageType: 0
+    - rid: 1083523673405259908
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        mainStat: 0
+        <Value>k__BackingField: 0
+        modifiers: []
     - rid: 1130977698592063696
       type: {class: Trigger_Die, ns: , asm: Assembly-CSharp}
       data: 
@@ -387,36 +407,54 @@ MonoBehaviour:
       data:
         mainStat: 0
         <Value>k__BackingField: 0
+        modifiers: []
+        <Tag>k__BackingField:
+          rid: -2
         method: 0
     - rid: 5286389302403793011
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
         <Value>k__BackingField: 0
+        modifiers: []
+        <Tag>k__BackingField:
+          rid: -2
         method: 0
     - rid: 5286389302403793012
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
         <Value>k__BackingField: 0
+        modifiers: []
+        <Tag>k__BackingField:
+          rid: -2
         method: 0
     - rid: 5286389302403793013
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
         <Value>k__BackingField: 0
+        modifiers: []
+        <Tag>k__BackingField:
+          rid: -2
         method: 0
     - rid: 5286389302403793014
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
         <Value>k__BackingField: 0
+        modifiers: []
+        <Tag>k__BackingField:
+          rid: -2
         method: 0
     - rid: 5286389302403793016
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
         <Value>k__BackingField: 0
+        modifiers: []
+        <Tag>k__BackingField:
+          rid: -2
         method: 0
     - rid: 5286389777395875982
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
@@ -459,11 +497,13 @@ MonoBehaviour:
       data:
         mainStat: 0
         <Value>k__BackingField: 10000
+        modifiers: []
     - rid: 5286389933263290678
       type: {class: Stat_CurrentLife, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
         <Value>k__BackingField: 10000
+        modifiers: []
     - rid: 7133257989892341792
       type: {class: Stat_AnimationStates, ns: , asm: Assembly-CSharp}
       data:
@@ -665,7 +705,7 @@ BoxCollider:
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &3663811516769054534
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -679,6 +719,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -692,12 +733,13 @@ Animation:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6044390600065127432}
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Animation: {fileID: 0}
   m_Animations: []
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
+  m_UpdateMode: 0
   m_CullingType: 0
 --- !u!212 &8496658560629366567
 SpriteRenderer:
@@ -716,6 +758,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -859,15 +904,17 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
