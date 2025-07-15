@@ -2,45 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
-using System;
+using UnityCommon;
 
 public class Entity : MonoBehaviour
 {
-    [SerializeReference]
-    public List<Stat> stats = new List<Stat>();
     public System.Action cleanup;
+
+    [SerializeReference]
+    private ReferenceSerializableHashSet<IStatTag> stats = new();
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
-    private List<Mechanic> baseStats = new List<Mechanic>();
+    private List<Mechanic> baseStats = new();
     public T GetMechanic<T>() where T : Mechanic => IBoundInstances<Entity, T>.GetInstance(this);
 
-    public T Stat<T>() where T: IStatTag
+    public T Stat<T>() where T : IStatTag
     {
         foreach (IStatTag stat in stats)
         {
             if (stat is T)
             {
-                return (T)stat; 
+                return (T)stat;
             }
         }
         return default;
     }
 
-    public void AddModifier<T>(IModifier<T> modifier)
+    public bool HasStat<T>() where T : IStatTag
     {
-        foreach (Stat stat in stats)
+        foreach (IStatTag stat in stats)
         {
-            if (modifier.Tag != stat) continue;
-            stat.AddModifier((Stat)modifier);
+            if (stat is T)
+            {
+                return true; 
+            }
         }
+        return false;
+        
     }
 
-    public void RemoveModifier<T>(IModifier<T> modifier)
+    public void AddModifier(IModifier modifier)
+    {
+        if (!stats.Contains(modifier.Tag)) stats.Add(modifier.Tag);
+        (modifier.Tag as Stat).AddModifier(modifier);
+        // TODO: precalculate modifiers
+    }
+
+    public void RemoveModifier(IModifier modifier)
     {
         foreach (Stat stat in stats)
         {
             if (modifier.Tag != stat) continue;
-            stat.AddModifier((Stat)modifier);
+            stat.AddModifier(modifier);
         }
     }
 
@@ -59,15 +70,21 @@ public class Entity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleStats();
+        TickMechanics();
+        TickStats();
     }
 
-    private void HandleStats()
+    private void TickMechanics()
     {
         foreach (Mechanic stat in baseStats)
         {
             stat.Tick();
         }
+    }
+
+    private void TickStats()
+    {
+
     }
 
     private void OnDestroy()
@@ -90,3 +107,15 @@ public class Entity : MonoBehaviour
         }
     }
 }
+
+// Entity: a thing that can be interacted with
+// - Stats
+// - Mechanics
+
+// Stat: A value linked to a reference class that can be modified and solved
+
+// Mechanic: Functionality that ticks on the owner and can be referenced
+
+// Effect: Modifiable container class with functionality that happens instantaneously
+
+// Trigger: A callback with stored data

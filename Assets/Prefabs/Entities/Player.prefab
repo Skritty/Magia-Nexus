@@ -301,10 +301,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-  - rid: 5286389933263290677
-  - rid: 5286389933263290678
-  - rid: 1083523656418066432
-  - rid: 1083523656418066435
+  - rid: 1083523827607798109
+  stats1:
+    rid: 1000
   baseStats:
   - rid: 5286389933263290672
   - rid: 9031231661127237636
@@ -322,35 +321,22 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1083523656418066432
-      type: {class: Stat_MovementSpeed, ns: , asm: Assembly-CSharp}
+    - rid: 1000
+      type: {class: 'ReferenceSerializableHashSet`1[[IStatTag, Assembly-CSharp]]', ns: UnityCommon, asm: Assembly-CSharp}
+      data:
+        values:
+        - rid: 1083523827607798097
+    - rid: 1083523827607798097
+      type: {class: Stat_CurrentLife, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
-        <Value>k__BackingField: 4
+        <Value>k__BackingField: 100
         modifiers: []
-    - rid: 1083523656418066435
-      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+    - rid: 1083523827607798109
+      type: {class: Stat_CurrentLife, ns: , asm: Assembly-CSharp}
       data:
         mainStat: 0
-        <Value>k__BackingField: 0
-        modifiers:
-        - rid: 1083523673405259898
-    - rid: 1083523673405259898
-      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 50
-        modifiers: []
-        <Tag>k__BackingField:
-          rid: 1083523673405259908
-        method: 0
-        appliesTo: 8192
-        damageType: 0
-    - rid: 1083523673405259908
-      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 0
+        <Value>k__BackingField: 100
         modifiers: []
     - rid: 1130977698592063696
       type: {class: Trigger_Die, ns: , asm: Assembly-CSharp}
@@ -370,9 +356,7 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         tick: -1
-        stunned: 0
         actionsPerTurn: 5
-        startingTickDelay: 0
         repeatActions:
         - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
         actions: []
@@ -410,6 +394,14 @@ MonoBehaviour:
         modifiers: []
         <Tag>k__BackingField:
           rid: -2
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        alignment: 0
+        temporary: 0
+        tick: 0
+        tickDuration: -1
+        refreshDuration: 1
         method: 0
     - rid: 5286389302403793011
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
@@ -419,6 +411,14 @@ MonoBehaviour:
         modifiers: []
         <Tag>k__BackingField:
           rid: -2
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        alignment: 0
+        temporary: 0
+        tick: 0
+        tickDuration: -1
+        refreshDuration: 1
         method: 0
     - rid: 5286389302403793012
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
@@ -428,6 +428,14 @@ MonoBehaviour:
         modifiers: []
         <Tag>k__BackingField:
           rid: -2
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        alignment: 0
+        temporary: 0
+        tick: 0
+        tickDuration: -1
+        refreshDuration: 1
         method: 0
     - rid: 5286389302403793013
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
@@ -437,6 +445,14 @@ MonoBehaviour:
         modifiers: []
         <Tag>k__BackingField:
           rid: -2
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        alignment: 0
+        temporary: 0
+        tick: 0
+        tickDuration: -1
+        refreshDuration: 1
         method: 0
     - rid: 5286389302403793014
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
@@ -446,6 +462,14 @@ MonoBehaviour:
         modifiers: []
         <Tag>k__BackingField:
           rid: -2
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        alignment: 0
+        temporary: 0
+        tick: 0
+        tickDuration: -1
+        refreshDuration: 1
         method: 0
     - rid: 5286389302403793016
       type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
@@ -455,6 +479,14 @@ MonoBehaviour:
         modifiers: []
         <Tag>k__BackingField:
           rid: -2
+        maxStacks: 1
+        stacks: 1
+        perPlayer: 0
+        alignment: 0
+        temporary: 0
+        tick: 0
+        tickDuration: -1
+        refreshDuration: 1
         method: 0
     - rid: 5286389777395875982
       type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
@@ -463,27 +495,7 @@ MonoBehaviour:
         proxy: 0
         useProxyAsOwner: 0
         effect:
-          rid: 5286389777395875983
-    - rid: 5286389777395875983
-      type: {class: PE_Invulnerable, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 5286389777395875984
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-    - rid: 5286389777395875984
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
+          rid: -2
     - rid: 5286389933263290672
       type: {class: Mechanic_Damageable, ns: , asm: Assembly-CSharp}
       data:
@@ -492,18 +504,6 @@ MonoBehaviour:
         mergeBehavior: 0
         healthBar: {fileID: 0}
         damagePopup: {fileID: 0}
-    - rid: 5286389933263290677
-      type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 10000
-        modifiers: []
-    - rid: 5286389933263290678
-      type: {class: Stat_CurrentLife, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 10000
-        modifiers: []
     - rid: 7133257989892341792
       type: {class: Stat_AnimationStates, ns: , asm: Assembly-CSharp}
       data:

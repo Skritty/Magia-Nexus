@@ -15,18 +15,18 @@ public class Action : ViewableGameAsset
     public float timing = 0;
     public float effectMultiplier = 1;
     [SerializeReference]
-    public List<Effect> effects = new List<Effect>();
+    public List<EffectTask> effects = new List<EffectTask>();
     public virtual void OnStart(Entity owner) 
     {
-        owner.GetMechanic<Stat_AnimationStates>().AnimationState = initialAnimationState;
+        owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
         // TODO: return to this animation state after stunned
     }
     public virtual void Tick(Entity owner, int tickLength, int tick)
     {
-        owner.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = movementSpeedOverDuration.Evaluate((tick % tickLength) * 1f / tickLength);
+        owner.GetMechanic<Mechanic_Movement>().dirMovementSpeedMulti = movementSpeedOverDuration.Evaluate((tick % tickLength) * 1f / tickLength);
         if (onTick || tick % tickLength == (int)(tickLength * timing))
         {
-            owner.GetMechanic<Stat_AnimationStates>().AnimationState = activateAnimationState;
+            owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
             DoEffects(owner);
         }
     }
@@ -36,9 +36,9 @@ public class Action : ViewableGameAsset
     }
     public void DoEffects(Entity owner)
     {
-        foreach (Effect effect in effects)
+        foreach (EffectTask effect in effects)
         {
-            effect.Create(owner, effectMultiplier);
+            effect.DoTask(null, owner);
         }
     }
 }

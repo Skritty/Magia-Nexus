@@ -18,7 +18,7 @@ public class AutosizeCamera : MonoBehaviour
         Vector2 highest = new Vector2(float.MinValue, float.MinValue);
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>()) // TODO: messy
         {
-            if (!entity.GetMechanic<Stat_PlayerOwner>().playerCharacter || !entity.gameObject.activeSelf) continue;
+            if (!entity.GetMechanic<Mechanic_PlayerOwner>().playerCharacter || !entity.gameObject.activeSelf) continue;
             if (entity.transform.position.x < lowest.x) lowest.x = entity.transform.position.x;
             if (entity.transform.position.y < lowest.y) lowest.y = entity.transform.position.y;
             if (entity.transform.position.x > highest.x) highest.x = entity.transform.position.x;

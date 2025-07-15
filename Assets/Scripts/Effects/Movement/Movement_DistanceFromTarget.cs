@@ -10,29 +10,29 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
     [FoldoutGroup("@GetType()")]
     public float threshold = 0.25f;
 
-    public override void Activate()
+    public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        SetMoveDir();
+        SetMoveDir(Target);
     }
 
-    private void SetMoveDir()
+    private void SetMoveDir(Entity Target)
     {
-        if (Target.GetMechanic<Stat_Movement>().movementTarget == null)
+        if (Target.Stat<Stat_MovementTarget>().Value == null)
         {
-            Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = 0;
+            Target.Stat<Stat_MovementSpeed>().Modifiers[1].Value = 0;
         }
         else
         {
-            Vector3 dirFromTarget = Target.transform.position - Target.GetMechanic<Stat_Movement>().movementTarget.transform.position;
+            Vector3 dirFromTarget = Target.transform.position - Target.Stat<Stat_MovementTarget>().Value.transform.position;
             dirFromTarget = dirFromTarget.normalized * distanceFromTarget - dirFromTarget;
             if(dirFromTarget.magnitude <= threshold)
             {
-                Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = 0;
+                Target.Stat<Stat_MovementSpeed>().Modifiers[1].Value = 0;
             }
             else
             {
-                Target.GetMechanic<Stat_Movement>().facingDir = dirFromTarget.normalized;
-                Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = effectMultiplier;
+                Target.GetMechanic<Mechanic_Movement>().facingDir = dirFromTarget.normalized;
+                Target.Stat<Stat_MovementSpeed>().Modifiers[1].Value = effectMultiplier;
             }
         }
     }

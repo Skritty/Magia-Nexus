@@ -19,7 +19,7 @@ public class Achievement : ViewableGameAsset
     {
         foreach(Trigger trigger in activationTriggers)
         {
-            unsubscribe += trigger.Subscribe(Check, null); // TODO
+            unsubscribe += trigger.SubscribeDynamic(Check, null); // TODO
         }
     }
 
@@ -28,14 +28,14 @@ public class Achievement : ViewableGameAsset
         unsubscribe?.Invoke();
     }
 
-    protected void Check(Trigger trigger)
+    protected void Check(IDataContainer data)
     {
-        if (trigger.Is(out IDataContainer_Player data))
+        if (data.Get(out Viewer viewer))
         {
             bool allComplete = true;
             foreach (TriggerTask task in tasks)
             {
-                if (!task.DoTask(trigger, null))
+                if (!task.DoTask((Trigger)data, null)) // TODO
                 {
                     allComplete = false;
                     break;
@@ -43,7 +43,7 @@ public class Achievement : ViewableGameAsset
             }
             if (allComplete)
             {
-                AchievementManager.Instance.GrantAchievement(this, data.Player);
+                AchievementManager.Instance.GrantAchievement(this, viewer);
             }
         }
         else

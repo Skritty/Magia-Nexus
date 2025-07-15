@@ -35,6 +35,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 1083523807942279377
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        mainStat: 0
+        <Value>k__BackingField: 0
+        modifiers: []
     - rid: 9031231777024770052
       type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
       data:
@@ -54,6 +60,17 @@ MonoBehaviour:
         effectModifiers:
         - mainStat: 0
           <Value>k__BackingField: 0.05
+          modifiers: []
+          <Tag>k__BackingField:
+            rid: 1083523807942279377
+          maxStacks: 20
+          stacks: 1
+          perPlayer: 0
+          alignment: 1
+          temporary: 1
+          tick: 0
+          tickDuration: 500
+          refreshDuration: 0
           method: 1
           appliesTo: 8192
           damageType: 8192

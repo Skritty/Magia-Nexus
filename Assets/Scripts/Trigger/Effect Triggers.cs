@@ -1,115 +1,85 @@
-public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCalc>, IDataContainer_OwnerEntity
+public class Trigger_MovementDirectionCalc : Trigger<Entity>
 {
-    private Entity _entity;
-    public Entity Entity => _entity;
-
     public Trigger_MovementDirectionCalc() { }
     public Trigger_MovementDirectionCalc(Entity owner, params object[] bindingObjects)
     {
-        _entity = owner;
+        Value = owner;
         Invoke(bindingObjects);
     }
 }
-public class Trigger_PreHit : Trigger<Trigger_PreHit>, IDataContainer_DamageInstance
+public class Trigger_PreHit : Trigger<EffectTask>
 {
-    private DamageInstance _damageInstance;
-    public DamageInstance Damage => _damageInstance;
-    public Effect Effect => _damageInstance;
     public Trigger_PreHit() { }
-    public Trigger_PreHit(DamageInstance damageInstance, params object[] bindingObjects)
+    public Trigger_PreHit(EffectTask damageInstance, params object[] bindingObjects)
     {
-        _damageInstance = damageInstance;
+        Value = damageInstance;
         Invoke(bindingObjects);
     }
 }
-public class Trigger_Hit : Trigger<Trigger_Hit>, IDataContainer_DamageInstance
+public class Trigger_Hit : Trigger<EffectTask>
 {
-    private DamageInstance _damageInstance;
-    public DamageInstance Damage => _damageInstance;
-    public Effect Effect => _damageInstance;
     public Trigger_Hit() { }
-    public Trigger_Hit(DamageInstance damageInstance, params object[] bindingObjects)
+    public Trigger_Hit(EffectTask damageInstance, params object[] bindingObjects)
     {
-        _damageInstance = damageInstance;
+        Value = damageInstance;
         Invoke(bindingObjects);
     }
 }
-public class Trigger_Damage : Trigger<Trigger_Damage>, IDataContainer_DamageInstance
+public class Trigger_Damage : Trigger<DamageInstanceOLD>
 {
-    private DamageInstance _damageInstance;
-    public DamageInstance Damage => _damageInstance;
-    public Effect Effect => _damageInstance;
     public Trigger_Damage() { }
-    public Trigger_Damage(DamageInstance damageInstance, params object[] bindingObjects)
+    public Trigger_Damage(DamageInstanceOLD damageInstance, params object[] bindingObjects)
     {
-        _damageInstance = damageInstance;
+        Value = damageInstance;
         Invoke(bindingObjects);
     }
 }
-public class Trigger_Die : Trigger<Trigger_Die>, IDataContainer_OwnerEntity, IDataContainer_DamageInstance
+public class Trigger_Die : Trigger<DamageInstanceOLD>
 {
-    private DamageInstance _damageInstance;
-    public DamageInstance Damage => _damageInstance;
-    public Effect Effect => _damageInstance;
-    private Entity _owner;
-    public Entity Entity => _owner;
-
     public Trigger_Die() { }
-    public Trigger_Die(DamageInstance damageInstance, params object[] bindingObjects)
+    public Trigger_Die(DamageInstanceOLD damageInstance, params object[] bindingObjects)
     {
-        _owner = damageInstance.Target;
-        _damageInstance = damageInstance;
+        Value = damageInstance;
         Invoke(bindingObjects);
     }
 }
 
-public class Trigger_PersistantEffectApplied : Trigger<Trigger_PersistantEffectApplied>, IDataContainer_Effect
+public class Trigger_PersistantEffectApplied : Trigger<PersistentEffect>
 {
-    private Effect _effect;
-    public Effect Effect => _effect;
-    public PersistentEffect PersistentEffect => _effect as PersistentEffect;
     public Trigger_PersistantEffectApplied() { }
     protected Trigger_PersistantEffectApplied(PersistentEffect persistentEffect, params object[] bindingObjects)
     {
-        _effect = persistentEffect;
+        Value = persistentEffect;
         Invoke(bindingObjects);
     }
     
 }
-public class Trigger_ProjectilePierce : Trigger<Trigger_ProjectilePierce>, IDataContainer_Effect
+public class Trigger_ProjectilePierce : Trigger<Effect>
 {
-    private Effect _effect;
-    public Effect Effect => _effect;
     public Trigger_ProjectilePierce() { }
     public Trigger_ProjectilePierce(Effect effect, params object[] bindingObjects)
     {
-        _effect = effect;
+        Value = effect;
         Invoke(bindingObjects);
     }
 }
 
-public class Trigger_PersistentEffectGained : Trigger<Trigger_PersistentEffectGained>, IDataContainer_Effect, IDataContainer_PersistentEffect
+public class Trigger_PersistentEffectGained : Trigger<PersistentEffect>
 {
-    private Effect _effect;
-    public Effect Effect => _effect;
-    public PersistentEffect PersistentEffect => _effect as PersistentEffect;
     public Trigger_PersistentEffectGained() { }
-    public Trigger_PersistentEffectGained(Effect effect, params object[] bindingObjects)
+    public Trigger_PersistentEffectGained(PersistentEffect effect, params object[] bindingObjects)
     {
-        _effect = effect;
+        Value = effect;
         Invoke(bindingObjects);
     }
 }
 
-public class Trigger_PersistentEffectLost : Trigger<Trigger_PersistentEffectLost>, IDataContainer_Effect, IDataContainer_PersistentEffect
+public class Trigger_PersistentEffectLost : Trigger<PersistentEffect>
 {
-    private Effect _effect;
-    public Effect Effect => _effect;
-    public PersistentEffect PersistentEffect => _effect as PersistentEffect;
     public Trigger_PersistentEffectLost() { }
-    public Trigger_PersistentEffectLost(Effect effect, params object[] bindingObjects)
+    public Trigger_PersistentEffectLost(PersistentEffect effect, params object[] bindingObjects)
     {
-        _effect = effect;
+        Value = effect;
         Invoke(bindingObjects);
     }
 }

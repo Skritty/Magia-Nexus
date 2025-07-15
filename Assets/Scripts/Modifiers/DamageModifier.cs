@@ -1,113 +1,28 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[Serializable]
-public class DamageModifier : NumericalModifier
+public class DamageModifier : DamageSolver, IModifier<float>
 {
-    [HideInInspector]
-    public Dictionary<DamageType, float> finalDamage;
-    public DamageType appliesTo;
-    [HideIf("@method != NumericalModifierCalculationMethod.Flat")]
-    public DamageType damageType;
-
     public DamageModifier() { }
-
-    public DamageModifier(float value, NumericalModifierCalculationMethod method, DamageType damageType, DamageType appliesTo) : base(value, method)
+    public DamageModifier(DamageType damageType, float baseValue)
     {
         this.damageType = damageType;
-        this.appliesTo = appliesTo;
+        Value = baseValue;
+        /*if (baseValue != 0)
+            Modifiers.Add(new NumericalModifier(baseValue));*/
     }
-
-    /// <summary>
-    /// Creates a modifier calculation that accepts flat, increased, and more modifiers
-    /// </summary>
-    public new static DamageModifier CreateCalculation(Effect source = null)
-    {
-        return new DamageModifier(1, source, true);
-    }
-    public DamageModifier(int baseValue, Effect source = null, bool root = false) : base(baseValue, source, root) { }
-
-    public void AddModifier(Modifier<float> modifier, NumericalModifierCalculationMethod method, DamageType damageType, DamageType appliesTo)
-    {
-        if(method == NumericalModifierCalculationMethod.Flat)
-        {
-            bool validModifier = appliesTo == DamageType.True ? true : false;
-            if(!validModifier)
-                foreach (DamageModifier subcalculation in modifiers[0].modifiers)
-                {
-                    if (subcalculation.damageType.HasFlag(appliesTo))
-                    {
-                        if(subcalculation.damageType == damageType)
-                        {
-                            subcalculation.AddModifier(modifier, method);
-                            validModifier = false;
-                            break;
-                        }
-                        {
-                            validModifier = true;
-                        }
-                    }
-                }
-            
-            if (validModifier)
-            {
-                AddSubcalculation(damageType).AddModifier(modifier, method);
-            }
-        }
-        else
-        {
-            foreach (DamageModifier subcalculation in modifiers[0].modifiers)
-            {
-                if (appliesTo == DamageType.All || subcalculation.damageType.HasFlag(appliesTo))
-                {
-                    subcalculation.AddModifier(modifier, method);
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Add a subcalculation to a root EffectModifier
-    /// </summary>
-    /// <param name="tags"></param>
-    protected DamageModifier AddSubcalculation(DamageType damageType)
-    {
-        DamageModifier subcalculation = new DamageModifier(1, null, true);
-        subcalculation.damageType = damageType;
-        modifiers[0].AddModifier(subcalculation);
-        return subcalculation;
-    }
-
-    public DamageModifier Clone()
-    {
-        return (DamageModifier)MemberwiseClone();
-    }
-}
-
-public class AssistContributingModifier : NumericalModifier
-{
-    public float contributionMultiplier = 1;
-
-    public AssistContributingModifier(Modifier<float> modifier, float contributionMultiplier)
-    {
-        this.Value = modifier.Value;
-        this.source = modifier.source;
-        this.contributionMultiplier = contributionMultiplier;
-    }
-
-    public override void InverseSolve()
-    {
-        if (source == null) return;
-        source.Owner.GetMechanic<Stat_PlayerOwner>().ApplyContribution(source.Target, Value);
-        //source.Owner.Stat<Stat_PlayerOwner>().ApplyContribution(source.Target, absolute);
-        /*foreach (KeyValuePair<Entity, float> contributor2 in contributors)
-        {
-            if (contributor2.Value <= 0) continue;
-            contributor.Key.Stat<Stat_PlayerOwner>().ApplyContribution(contributor2.Key, -contributor.Value * contributor2.Value / totalPositiveContribution * contributingEffect.effectMultiplier);
-        }*/
-    }
-
+    public EffectTask Source { get; set; }
+    [field: SerializeReference]
+    public IStatTag Tag { get; set; }
+    public int MaxStacks { get; set; } = -1;
+    public int Stacks { get; set; } = 1;
+    public bool PerPlayer { get; set; }
+    public Alignment Alignment { get; set; }
+    public bool Temporary { get; set; }
+    [field: ShowIf("@Temporary"), ReadOnly]
+    public int Tick { get; set; }
+    [field: ShowIf("@Temporary"), ReadOnly]
+    public int TickDuration { get; set; } = -1;
+    [field: ShowIf("@Temporary"), ReadOnly]
+    public bool RefreshDuration { get; set; }
 }

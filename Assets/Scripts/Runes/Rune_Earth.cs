@@ -14,14 +14,14 @@ public class Rune_Earth : Rune
 
     [Header("Spell Shape")]
     [SerializeReference]
-    public CreateEntity createProjectiles;
+    public Effect_CreateEntity createProjectiles;
 
-    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
+    public override void MagicEffect(DamageInstanceOLD damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
+    public override void MagicEffectModifier(DamageInstanceOLD damage, int currentRuneIndex)
     {
         PE_RuneCrystal crystal = new PE_RuneCrystal();
         crystal.rune = damage.runes[currentRuneIndex - 1];
@@ -33,12 +33,12 @@ public class Rune_Earth : Rune
         spell.shape = SpellShape.Projectile;
         spell.effect = createProjectiles.Clone();
         spell.SetToProjectile();
-        (spell.effect as CreateEntity).projectileFanAngle = 30f;
+        (spell.effect as Effect_CreateEntity).projectileFanAngle = 30f;
         spell.proxies.Add(spell.Owner);
         spell.maxStages = 1;
         spell.cleanup += Trigger_ProjectileCreated.Subscribe(
-            x => spell.cleanup += Trigger_Expire.Subscribe(y => ProjectileDeath(spell, y.Entity)));
-        spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.Spell.StopSpell(), spell);
+            x => spell.cleanup += Trigger_Expire.Subscribe(y => ProjectileDeath(spell, y)));
+        spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.StopSpell(), spell);
     }
 
     private void ProjectileDeath(Spell spell, Entity entity)
@@ -65,7 +65,7 @@ public class Rune_Earth : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    (spell.effect as CreateEntity).numberOfProjectiles += 2;
+                    (spell.effect as Effect_CreateEntity).numberOfProjectiles += 2;
                     spell.maxStages += 2;
                     break;
                 }

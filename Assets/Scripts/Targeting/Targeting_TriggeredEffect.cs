@@ -10,21 +10,17 @@ public class Targeting_TriggeredEffect : Targeting
         return new List<Entity>() { owner };
     }
 
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(Effect source, Effect effect, Entity owner, Entity proxy = null)
     {
-        if (trigger.Is(out IDataContainer_Effect data))
+        Entity target;
+        if (selector == EffectTargetingSelector.Owner)
         {
-            Entity target;
-            if (selector == EffectTargetingSelector.Owner)
-            {
-                target = data.Effect.Owner;
-            }
-            else
-            {
-                target = data.Effect.Target;
-            }
-            return GetTargets(source, target == null ? owner : target, proxy);
+            target = effect.Owner;
         }
-        return new List<Entity>();
+        else
+        {
+            target = effect.Target;
+        }
+        return GetTargets(source, target == null ? owner : target, proxy);
     }
 }

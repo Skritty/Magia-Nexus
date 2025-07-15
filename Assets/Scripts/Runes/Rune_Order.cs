@@ -7,12 +7,12 @@ public class Rune_Order : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public PersistentEffect buff;
+    public EffectTask buff;
     [SerializeReference]
-    public PersistentEffect debuff;
+    public EffectTask debuff;
 
     [Header("Spell Shape")]
-    public CreateEntity createSummons;
+    public Effect_CreateEntity createSummons;
     public SerializedDictionary<RuneElement, Action> summonRunes = new();
     public Action invoke;
     public Action move;
@@ -39,28 +39,28 @@ public class Rune_Order : Rune
         Entity owner = spell.Owner;
         float lMult = lifeMultiplier;
         float dMult = damageMultiplier;
-        if(owner.GetMechanic<Stat_PlayerOwner>().player != null)
-            while (!owner.GetMechanic<Stat_PlayerOwner>().playerCharacter)
+        if(owner.GetMechanic<Mechanic_PlayerOwner>().player != null)
+            while (!owner.GetMechanic<Mechanic_PlayerOwner>().playerCharacter)
             {
                 lMult *= lifeMultiplier;
                 dMult *= damageMultiplier;
-                owner = owner.GetMechanic<Stat_PlayerOwner>().proxyOwner;
+                owner = owner.GetMechanic<Mechanic_PlayerOwner>().proxyOwner;
             }
-        (spell.effect as CreateEntity).lifeMultiplier = lMult;
-        (spell.effect as CreateEntity).damageMultiplier = dMult;
-        spell.cleanup += Trigger_SummonCreated.Subscribe(x => SetupSummon(spell, x.Entity), spell.effect);
+        (spell.effect as Effect_CreateEntity).lifeMultiplier = lMult;
+        (spell.effect as Effect_CreateEntity).damageMultiplier = dMult;
+        spell.cleanup += Trigger_SummonCreated.Subscribe(x => SetupSummon(spell, x), spell.effect);
         spell.proxies.Add(spell.Owner);
-        spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.Spell.StopSpell(), spell);
+        spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.StopSpell(), spell);
         spell.maxStages = 1;
     }
 
     private void SetupSummon(Spell spell, Entity entity)
     {
-        entity.GetMechanic<Stat_Actions>().AddAction(move);
+        entity.GetMechanic<Mechanic_Actions>().AddAction(move);
         for (int i = 1; i < spell.runes.Count; i++)
         {
             if (spell.runes[i].element == RuneElement.Null) continue;
-            entity.GetMechanic<Stat_Actions>().AddAction(summonRunes[spell.runes[i].element]);
+            entity.GetMechanic<Mechanic_Actions>().AddAction(summonRunes[spell.runes[i].element]);
         }
         switch (spell.runes[spell.runes.Count - 1].element)
         {
@@ -71,7 +71,7 @@ public class Rune_Order : Rune
                     meleeOverride.Create(meleeOverride, spell.Owner, entity);
                     for (int i = 1; i < spell.runes.Count; i++)
                     {
-                        entity.GetMechanic<Stat_Magic>().runes.Add(spell.runes[i]);
+                        entity.GetMechanic<Mechanic_Magic>().runes.Add(spell.runes[i]);
                     }
                     break;
                 }
@@ -82,13 +82,13 @@ public class Rune_Order : Rune
 
     private void SummonDeath(Spell spell, Entity entity)
     {
-        spell.Owner.GetMechanic<Stat_Team>().summons.Remove(entity);
+        spell.Owner.GetMechanic<Mechanic_Team>().summons.Remove(entity);
         spell.Stage++;
     }
 
-    private void Invoke(Trigger_TurnStart trigger)
+    private void Invoke(Entity entity)
     {
-        invoke.DoEffects(trigger.Entity);
+        invoke.DoEffects(entity);
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)

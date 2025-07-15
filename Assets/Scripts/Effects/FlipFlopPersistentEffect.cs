@@ -1,9 +1,9 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class FlipFlopPersistentEffect : Effect
+public class FlipFlopPersistentEffect : EffectTask
 {
     [SerializeReference, FoldoutGroup("@GetType()")]
     public PersistentEffect persistentEffect;
@@ -20,3 +20,4 @@ public class FlipFlopPersistentEffect : Effect
         }
     }
 }
+*/

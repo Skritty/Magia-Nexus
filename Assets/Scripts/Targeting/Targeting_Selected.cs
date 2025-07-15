@@ -6,11 +6,11 @@ public class Targeting_Selected : Targeting
 {
     public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
     {
-        return owner.GetMechanic<Stat_Targeting>().targetingType.GetTargets(source, owner);
+        return owner.Stat<Stat_SelectedTargeting>().Value.GetTargets(source, owner);
     }
 
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(Effect source, Effect effect, Entity owner, Entity proxy = null)
     {
-        return owner.GetMechanic<Stat_Targeting>().targetingType.GetTargets(source, trigger, owner);
+        return owner.Stat<Stat_SelectedTargeting>().Value.GetTargets(source, effect, owner);
     }
 }

@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+/*using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
 using System.Collections;
@@ -105,18 +105,15 @@ public abstract class Effect
     /// <summary>
     /// Activates a clone of the effect to targets returned by the targetSelector, which is given the trigger
     /// </summary>
-    public void Create(Entity owner, Trigger trigger, Entity proxy = null)
+    public void CreateFromTrigger(Entity owner, Effect effect, Entity proxy = null)
     {
-        foreach (Entity target in targetSelector.GetTargets(this, trigger, owner, proxy))
+        foreach (Entity target in targetSelector.GetTargets(this, effect, owner, proxy))
         {
             Effect e = Clone();
             e._source = this;
             e._owner = owner;
             e._target = target;
-            if (trigger.Is(out IDataContainer_Effect data))
-            {
-                e.effectMultiplier *= data.Effect.effectMultiplier;
-            }
+            e.effectMultiplier *= effect.effectMultiplier;
 
             e.DoEffect();
         }
@@ -155,7 +152,7 @@ public abstract class Effect
         return clone;
     }
     
-    public void DoEffect()
+    public void DoEffect(float multiplier, Entity target)
     {
         if (ignoreFrames > 0)
             new PE_IgnoreEntity(this, ignoreFrames);
@@ -181,4 +178,4 @@ public struct EffectTagContainer
         this.tag = tag;
         this.value = value;
     }
-}
+}*/

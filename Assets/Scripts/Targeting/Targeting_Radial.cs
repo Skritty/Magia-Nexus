@@ -23,7 +23,7 @@ public class Targeting_Radial : MultiTargeting
         if (dirToEntity.magnitude > radius * Owner.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;
         if (angle >= 180) return true;
 
-        Vector3 dirToTarget = Owner.GetMechanic<Stat_Movement>().facingDir;
+        Vector3 dirToTarget = Owner.GetMechanic<Mechanic_Movement>().facingDir;
         float fromTo = Mathf.Rad2Deg * Mathf.Acos(Vector3.Dot(dirToEntity, dirToTarget) / (dirToEntity.magnitude * dirToTarget.magnitude));
         if (float.IsNaN(fromTo)) fromTo = 0;
         if (fromTo > angle) return false;
@@ -33,12 +33,12 @@ public class Targeting_Radial : MultiTargeting
     protected override void DoFX(Effect source, Entity owner, List<Entity> targets)
     {
         if (vfx is not VFX_AoE) return;
-        Vector3 lookDir = owner.GetMechanic<Stat_Movement>().facingDir;
-        int ticksPerAction = owner.GetMechanic<Stat_Actions>().TicksPerAction;
-        float timePerAction = owner.GetMechanic<Stat_Actions>().TimePerAction;
+        Vector3 lookDir = owner.GetMechanic<Mechanic_Movement>().facingDir;
+        int ticksPerAction = owner.GetMechanic<Mechanic_Actions>().TicksPerAction;
+        float timePerAction = owner.GetMechanic<Mechanic_Actions>().TimePerAction;
         VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : Owner).transform, offset, lookDir, true, ticksPerAction);
         aoe.ApplyAoE(radius, angle, timePerAction);
-        aoe.ApplyDamage(source as DamageInstance);
+        aoe.ApplyDamage(source as DamageInstanceOLD);
     }
 
     public override void OnDrawGizmos(Transform source)

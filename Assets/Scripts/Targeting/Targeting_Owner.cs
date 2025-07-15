@@ -6,11 +6,11 @@ public class Targeting_Owner : Targeting
 {
     public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
     {
-        return new List<Entity>() { owner.GetMechanic<Stat_PlayerOwner>().playerEntity };
+        return new List<Entity>() { owner.GetMechanic<Mechanic_PlayerOwner>().playerEntity };
     }
 
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(Effect source, Effect effect, Entity owner, Entity proxy = null)
     {
-        return new List<Entity>() { owner.GetMechanic<Stat_PlayerOwner>().playerEntity };
+        return new List<Entity>() { owner.GetMechanic<Mechanic_PlayerOwner>().playerEntity };
     }
 }

@@ -15,14 +15,14 @@ public class Rune_Wind : Rune
     public Effect magicEffectModifier;
 
     [Header("Spell Shape")]
-    public DamageInstance lineEffect;
+    public DamageInstanceOLD lineEffect;
 
-    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
+    public override void MagicEffect(DamageInstanceOLD damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
+    public override void MagicEffectModifier(DamageInstanceOLD damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(magicEffectModifier);
     }
@@ -31,7 +31,7 @@ public class Rune_Wind : Rune
     {
         spell.shape = SpellShape.Line;
         spell.effect = lineEffect.Clone();
-        spell.AddRunesToDamageInstance(spell.effect as DamageInstance);
+        spell.AddRunesToDamageInstance(spell.effect as DamageInstanceOLD);
         spell.proxies.Add(spell.Owner);
         spell.cleanup += Trigger_SpellCast.Subscribe(x => spell.StopSpell(), spell);
     }
@@ -72,7 +72,7 @@ public class Rune_Wind : Rune
         }
     }
 
-    private void StageIncrease(Trigger_SpellCast trigger)
+    private void StageIncrease(Spell spell)
     {
         //trigger.Spell.proxyBlueprint.Stat<Stat_Magic>().Stage++;
     }

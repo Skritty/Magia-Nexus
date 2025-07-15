@@ -4,89 +4,104 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public abstract class Stat : IDataContainer, IEquatable<Stat>
+public abstract class Stat : IDataContainer
 {
-    public abstract void AddModifier(Stat modifier);
-    public abstract void RemoveModifier(Stat modifier);
+    public virtual void Tick(Entity Owner) { }
+    public abstract void AddModifier(IModifier modifier);
+    public abstract void RemoveModifier(IModifier modifier);
     public virtual void Solve() { }
-    public virtual void InverseSolve() { }
-    public abstract bool Equals(Stat other);
-    public bool Is<T>(out T data) where T : class, IDataContainer
+    //public virtual void InverseSolve() { }
+    public bool Get<T>(out T data)
     {
-        data = this as T;
-        return data != null;
+        IDataContainer<T> container = (this as IDataContainer<T>);
+        if (container == null) data = default;
+        else data = container.Value;
+        return container != null;
     }
 }
+
 public abstract class Stat<T> : Stat, IDataContainer<T>
 {
-    [HideInInspector]
-    public bool mainStat;
-    [field: SerializeField]
-    public T Value { get; set; }
-    [SerializeReference, HideIf("@!(this is IStatTag)")]
-    public List<Modifier<T>> modifiers = new List<Modifier<T>>();
-    public override void AddModifier(Stat modifier)
+    public Action<T> OnChange;
+    private T precalculatedModifier;
+    public virtual T Value 
+    { 
+        get
+        {
+            return precalculatedModifier;
+        }
+        set
+        {
+            OnChange?.Invoke(value);
+            precalculatedModifier = value;
+        }
+    }
+
+    [field: SerializeReference, HideIf("@!(this is IStatTag)")]
+    public List<IModifier<T>> Modifiers { get; } = new();
+    public override void AddModifier(IModifier modifier)
     {
-        Modifier<T> mod = (Modifier<T>)modifier;
+        IModifier<T> mod = (IModifier<T>)modifier;
         if (mod == null) return;
-        modifiers.Add(mod);
+        Modifiers.Add(mod);
+        Solve();
     }
-    public override void RemoveModifier(Stat modifier)
+    public override void RemoveModifier(IModifier modifier)
     {
-        Modifier<T> mod = (Modifier<T>)modifier;
-        modifiers.Remove(mod);
-    }
-    public override bool Equals(Stat other)
-    {
-        if (other == null) return false;
-        if (other.Is(out IDataContainer<T> data)) return true;
-        return false;
+        IModifier<T> mod = (IModifier<T>)modifier;
+        Modifiers.Remove(mod);
+        Solve();
     }
 }
 
-public interface IModifier<T>
+public interface IModifier : IDataContainer 
 {
-    public IStatTag<T> Tag { get; set; }
-}
-[Serializable]
-public abstract class Modifier<T> : Stat<T>, IModifier<T>
-{
-    [HideInInspector]
-    public Effect source; // Optional, for contribution
+    public EffectTask Source {  get; set; }
+    public IStatTag Tag { get; set; }
 
-    [field: SerializeReference]
-    public IStatTag<T> Tag { get; set; }
-    public override bool Equals(Stat other)
-    {
-        if (other == null) return false;
-        if (other.GetHashCode() == GetHashCode()) return true;
-        return false;
-    }
+    public int MaxStacks { get; set; }
+    public int Stacks { get; set; }
+    public bool PerPlayer { get; set; }
+    public Alignment Alignment { get; set; }
+
+    public bool Temporary { get; set; }
+    public int Tick { get; set; }
+    public int TickDuration { get; set; }
+    public bool RefreshDuration { get; set; }
+    public void Solve();
 }
 
-public interface IStatTag { }
-public interface IStatTag<T> 
-{
-    public T Value { get; set; }
-}
-public abstract class StatTag<T> : Stat<T>, IStatTag, IStatTag<T> { }
+public class ListStat<T> : Stat<List<T>> { }
 
-public class Stat_CurrentLife : StatTag<float> { }
-public class Stat_MaxLife : StatTag<float> { }
-public class Stat_Invulnerable : StatTag<bool> { }
-public class Stat_DamageDealt : StatTag<float> { }
-public class Stat_DamageTaken : StatTag<float> { }
-public class Stat_AoESize : StatTag<float> { }
-public class Stat_Projectiles : StatTag<float> { }
-public class Stat_Targets : StatTag<float> { }
-public class Stat_CastTargets : StatTag<float> { }
-public class Stat_Removeable : StatTag<float> { }
-public class Stat_Knockback : StatTag<float> { }
-public class Stat_MovementSpeed : StatTag<float> { }
-public class Stat_Initiative : StatTag<float> { }
-public class Stat_Enmity : StatTag<float> { }
-public class Stat_SpellPhase : StatTag<float> { }
-public class Stat_Summons : StatTag<float> { }
-public class Stat_MaxSummons : StatTag<float> { }
-public class Stat_TargetingMethod : StatTag<Targeting> { }
-public class Stat_MovementTargetingMethod : StatTag<Targeting> { }
+public interface IModifier<T> : IModifier, IDataContainer<T> 
+{
+    public List<IModifier<T>> Modifiers { get; }
+}
+
+[Flags]
+public enum Alignment 
+{ 
+    Neutral = 0, 
+    Buff = 1, 
+    Debuff = 2 
+}
+
+public interface IStatTag : IDataContainer { }
+public class Stat_PreventExpire : EnumPrioritySolver<Alignment>, IStatTag { }
+public class Stat_AoESize : NumericalSolver, IStatTag { }
+public class Stat_Projectiles : NumericalSolver, IStatTag { }
+public class Stat_Targets : NumericalSolver, IStatTag { }
+public class Stat_CastTargets : NumericalSolver, IStatTag { }
+public class Stat_Removeable : NumericalSolver, IStatTag { }
+public class Stat_Knockback : NumericalSolver, IStatTag { }
+public class Stat_Enmity : NumericalSolver, IStatTag { }
+public class Stat_Untargetable : ListStat<(Entity, int)>, IStatTag { }
+public class Stat_Team : PrioritySolver<int>, IStatTag { }
+public class Stat_SummonCount : NumericalSolver, IStatTag { }
+public class Stat_Summons : ListStat<Entity>, IStatTag { }
+public class Stat_Proxies : ListStat<Entity>, IStatTag { }
+public class Stat_RuneCrystals : ListStat<Rune>, IStatTag { }
+public class Stat_TeamPlayers : NumericalSolver, IStatTag { }
+public class Stat_MaxSummons : NumericalSolver, IStatTag { }
+public class Stat_TargetingMethod : PrioritySolver<Targeting>, IStatTag { }
+public class Stat_MovementTargetingMethod : PrioritySolver<Targeting>, IStatTag { }

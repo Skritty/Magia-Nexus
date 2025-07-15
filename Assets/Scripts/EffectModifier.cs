@@ -278,7 +278,7 @@ public class EffectModifier
         {
             if (contributor.Value >= 0)
             {
-                contributor.Key.GetMechanic<Stat_PlayerOwner>().ApplyContribution(contributingEffect.Target, contributor.Value * contributingEffect.effectMultiplier);
+                contributor.Key.GetMechanic<Mechanic_PlayerOwner>().ApplyContribution(contributingEffect.Target, contributor.Value * contributingEffect.effectMultiplier);
             }
             else
             {
@@ -289,7 +289,7 @@ public class EffectModifier
                 foreach (KeyValuePair<Entity, float> contributor2 in contributors)
                 {
                     if (contributor2.Value <= 0) continue;
-                    contributor.Key.GetMechanic<Stat_PlayerOwner>().ApplyContribution(contributor2.Key, -contributor.Value * contributor2.Value / totalPositiveContribution * contributingEffect.effectMultiplier);
+                    contributor.Key.GetMechanic<Mechanic_PlayerOwner>().ApplyContribution(contributor2.Key, -contributor.Value * contributor2.Value / totalPositiveContribution * contributingEffect.effectMultiplier);
                 }
             }
         }

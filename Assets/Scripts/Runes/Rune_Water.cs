@@ -5,9 +5,9 @@ public class Rune_Water : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public PersistentEffect buff;
+    public EffectTask buff;
     [SerializeReference]
-    public Effect debuff;
+    public EffectTask debuff;
 
     [Header("Spell Shape")]
     [SerializeReference]
@@ -32,13 +32,13 @@ public class Rune_Water : Rune
         spell.shape = SpellShape.Conjuration;
         spell.effect = actionOverride.Clone();
         spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => spell.StopSpell(), spell.effect);
-        spell.cleanup += Trigger_PreHit.Subscribe(x => AddMagicEffectRunesToAttackDamage(spell, x.Damage), spell.Owner, -5);
+        spell.cleanup += Trigger_PreHit.Subscribe(x => AddMagicEffectRunesToAttackDamage(spell, x), spell.Owner, -5);
         spell.proxies.Add(spell.Owner);
     }
 
-    private void AddMagicEffectRunesToAttackDamage(Spell spell, DamageInstance damage)
+    private void AddMagicEffectRunesToAttackDamage(Spell spell, DamageInstanceOLD damage)
     {
-        foreach(DamageModifier modifier in damage.damageModifiers)
+        foreach(DamageSolver modifier in damage.damageModifiers)
         {
             if (modifier.method == NumericalModifierCalculationMethod.Flat && modifier.damageType.HasFlag(DamageType.Attack))
             {

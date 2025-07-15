@@ -9,10 +9,8 @@ public class Targeting_TriggeredEntity : Targeting
         return new List<Entity>();
     }
 
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(Effect source, Effect effect, Entity owner, Entity proxy = null)
     {
-        if(trigger.Is(out IDataContainer_OwnerEntity data))
-            return new List<Entity>() { data.Entity };
-        return new List<Entity>();
+        return new List<Entity>() { effect.Owner }; // TODO rethink or remove
     }
 }

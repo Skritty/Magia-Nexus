@@ -18,10 +18,10 @@ public class Spell
         set
         {
             _stage = value;
-            new Trigger_SpellStageIncrement(Owner, this, Owner, this);
+            new Trigger_SpellStageIncrement(this, Owner, this);
             if (_stage == maxStages)
             {
-                new Trigger_SpellMaxStage(Owner, this, Owner, this);
+                new Trigger_SpellMaxStage(this, Owner, this);
             }
         }
     }
@@ -47,17 +47,17 @@ public class Spell
         cleanup += Trigger_ProjectileCreated.Subscribe(SetUpProjectile, effect);
     }
 
-    private void SetUpProjectile(Trigger_ProjectileCreated trigger)
+    private void SetUpProjectile(Entity entity)
     {
-        trigger.Entity.GetMechanic<Stat_Magic>().runes.AddRange(runes);
+        entity.GetMechanic<Mechanic_Magic>().runes.AddRange(runes);
     }
 
     public void GenerateSpell(Effect spellcast, Spell chainCast)
     {
         this.spellcast = spellcast;
         GenerateShape();
-        cleanup += Trigger_Hit.Subscribe((x) => new Trigger_SpellEffectApplied(x.Effect, Owner, this, effect, Owner, this), effect);
-        Owner.GetMechanic<Stat_Magic>().ownedSpells.Add(this);
+        cleanup += Trigger_Hit.Subscribe((x) => new Trigger_SpellEffectApplied(x, Owner, this, effect, Owner, this), effect);
+        Owner.GetMechanic<Mechanic_Magic>().ownedSpells.Add(this);
         if (!channeled)
         {
             CastFromProxies();
@@ -73,15 +73,15 @@ public class Spell
         chainsRemaining += additionalBranches;
     }
 
-    private void ChainCast(Trigger_Hit trigger)
+    private void ChainCast(DamageInstanceOLD damage)
     {
         if (--chainsRemaining >= 0)
         {
-            CastSpell(trigger.Effect.Target);
+            CastSpell(damage.Target);
         }
     }
 
-    public void AddRunesToDamageInstance(DamageInstance damage)
+    public void AddRunesToDamageInstance(DamageInstanceOLD damage)
     {
         damage.runes.AddRange(runes);
     }
@@ -96,19 +96,19 @@ public class Spell
     {
         this.maxStages = maxStages;
         channeled = true;
-        Owner.GetMechanic<Stat_Actions>().channelInstead = true;
+        Owner.GetMechanic<Mechanic_Actions>().channelInstead = true;
         cleanup += Trigger_Channel.Subscribe(ChannelSpell, Owner);
         cleanup += Trigger_SpellMaxStage.Subscribe(FinishChanneling, this);
     }
 
-    private void ChannelSpell(Trigger_Channel trigger)
+    private void ChannelSpell(Entity entity)
     {
         Stage++;
     }
 
-    private void FinishChanneling(Trigger_SpellMaxStage trigger)
+    private void FinishChanneling(Spell spell)
     {
-        trigger.Spell.Owner.GetMechanic<Stat_Actions>().channelInstead = false;
+        spell.Owner.GetMechanic<Mechanic_Actions>().channelInstead = false;
         if (!ignoreMaxStageCast)
         {
             CastFromProxies();
@@ -122,7 +122,7 @@ public class Spell
         {
             CastSpell(proxy);
         }
-        new Trigger_SpellCast(Owner, this, Owner, this);
+        new Trigger_SpellCast(this, Owner, this);
     }
 
     public void CastSpell(Entity proxy)
@@ -148,8 +148,8 @@ public class Spell
 
     public void StopSpell()
     {
-        new Trigger_SpellFinished(Owner, this, Owner, this);
+        new Trigger_SpellFinished(this, Owner, this);
         cleanup?.Invoke();
-        Owner.GetMechanic<Stat_Magic>().ownedSpells.Remove(this);
+        Owner.GetMechanic<Mechanic_Magic>().ownedSpells.Remove(this);
     }
 }

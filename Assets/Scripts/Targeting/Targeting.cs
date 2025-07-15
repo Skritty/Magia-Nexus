@@ -32,7 +32,7 @@ public abstract class Targeting
     public bool lockTarget;
     
     public abstract List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null);
-    public abstract List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null);
+    public abstract List<Entity> GetTargets(Effect source, Effect effect, Entity owner, Entity proxy = null);
     public virtual void OnDrawGizmos(Transform owner) { }
     public virtual Targeting Clone()
     {
@@ -54,11 +54,11 @@ public abstract class MultiTargeting : Targeting
     {
         if(proxy != null)
         {
-            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Stat_Movement>().facingDir) * offset; // Direction still determined by owner
+            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Mechanic_Movement>().facingDir) * offset; // Direction still determined by owner
         }
         else
         {
-            return Owner.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Stat_Movement>().facingDir) * offset;
+            return Owner.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Mechanic_Movement>().facingDir) * offset;
         }
         
     }
@@ -82,10 +82,10 @@ public abstract class MultiTargeting : Targeting
         foreach (Entity entity in Entity.FindObjectsOfType<Entity>())
         {
             // Can it be targeted?
-            if (!entity.GetMechanic<Stat_Targetable>().IsTargetable(owner, source)) continue;
+            if (!entity.GetMechanic<Mechanic_Targetable>().IsTargetable(owner, source)) continue;
 
             // Is it in the affected entities?
-            if(entity.GetMechanic<Stat_Team>().team != owner.GetMechanic<Stat_Team>().team)
+            if(entity.GetMechanic<Mechanic_Team>().team != owner.GetMechanic<Mechanic_Team>().team)
             {
                 targetType = TargetFilter.Enemies;
             }
@@ -93,7 +93,7 @@ public abstract class MultiTargeting : Targeting
             {
                 targetType = TargetFilter.Self;
             }
-            else if (entity == owner.GetMechanic<Stat_PlayerOwner>().playerCharacter)
+            else if (entity == owner.GetMechanic<Mechanic_PlayerOwner>().playerCharacter)
             {
                 targetType = TargetFilter.Owner;
             }
@@ -131,7 +131,7 @@ public abstract class MultiTargeting : Targeting
             
         return targets;
     }
-    public override List<Entity> GetTargets(Effect source, Trigger trigger, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(Effect source, Effect effect, Entity owner, Entity proxy = null)
     {
         GetTargets(source, owner, proxy);
         /*if (conditionalOnTrigger && trigger.effect != null && targets.Contains(trigger.effect.Owner))
@@ -146,7 +146,7 @@ public abstract class MultiTargeting : Targeting
         foreach(Entity target in targets)
         {
             VFX_Damage damage = vfx.PlayVFX<VFX_Damage>(target.transform, offset, Vector3.up, true);
-            damage.ApplyDamage(source as DamageInstance);
+            damage.ApplyDamage(source as DamageInstanceOLD);
         }
     }
     protected virtual bool IsValidTarget(Entity target, bool firstTarget) => true;

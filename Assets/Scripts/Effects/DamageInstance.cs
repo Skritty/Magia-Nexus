@@ -1,103 +1,40 @@
-using Sirenix.OdinInspector;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-[Serializable]
-public class DamageInstance : Effect
+public class DamageInstance
 {
     [HideInInspector]
     public float calculatedDamage;
     [FoldoutGroup("@GetType()")]
-    public List<DamageModifier> damageModifiers = new List<DamageModifier>();
+    public List<DamageSolver> damageModifiers = new();
     [FoldoutGroup("@GetType()")]
-    public List<Rune> runes = new List<Rune>(); 
+    public List<Rune> runes = new();
     [FoldoutGroup("@GetType()")]
     public bool skipFlatDamageReduction;
     [FoldoutGroup("@GetType()")]
     public bool triggerPlayerOwner;
     [FoldoutGroup("@GetType()")]
     public bool preventTriggers;
-    
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<Effect> ownerEffects = new();
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<Effect> targetEffects = new();
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<Effect> onHitEffects = new();
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<Effect> postOnHitEffects = new();
-    [SerializeReference, FoldoutGroup("@GetType()"), InfoBox("These are in effect until the end of damage calculation")]
-    public List<PE_Trigger> temporaryTriggeredEffects = new();
-    
 
-    public override void Activate()
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public List<TriggerTask> onHitEffects = new();
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public List<TriggerTask> postOnHitEffects = new();
+
+    public DamageInstance() { }
+    public DamageInstance(List<DamageSolver> damageModifiers, List<Rune> runes, List<TriggerTask> tasks)
     {
-        if (Target.Stat<Stat_MaxLife>().Value <= 0) return;
-        if (!preventTriggers)
-        {
-            Entity triggerOwner = triggerPlayerOwner ? Owner.GetMechanic<Stat_PlayerOwner>().Owner : Owner;
-            foreach (PE_Trigger effect in temporaryTriggeredEffects)
-            {
-                Owner.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, effect.stacks, Owner);
-            }
-            new Trigger_PreHit(this, this, Owner, triggerOwner, Target, Source);
-            if(Owner.GetMechanic<Stat_Magic>().enchantedAttacks.Count > 0)
-                runes.AddRange(Owner.GetMechanic<Stat_Magic>().enchantedAttacks.Dequeue());
-            foreach (Effect effect in targetEffects)
-            {
-                effect.Create(Source, Owner, Target);
-            }
-            foreach (Effect effect in ownerEffects)
-            {
-                effect.Create(Source, Owner, Owner);
-            }
-            foreach (Effect effect in onHitEffects)
-            {
-                effect.Create(this);
-            }
-            foreach (PE_RuneCrystal crystal in Target.GetMechanic<Stat_PersistentEffects>().GetEffects<PE_RuneCrystal>())
-            {
-                runes.Add(crystal.rune);
-                Target.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
-            }
-            GenerateMagicEffect();
-            new Trigger_Hit(this, this, Owner, triggerOwner, Target, Source);
-            foreach (Effect effect in postOnHitEffects)
-            {
-                effect.Create(this);
-            }
-        }
-
-        CalculateDamageType();
-        Target.GetMechanic<Mechanic_Damageable>().TakeDamage(this);
-
-        foreach (PE_Trigger effect in temporaryTriggeredEffects)
-        {
-            Owner.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(effect, -effect.stacks, Owner);
-        }
+        damageModifiers.AddRange(damageModifiers);
+        runes.AddRange(runes);
+        tasks.AddRange(tasks);
     }
 
-    public void AddModifiers(DamageModifier calculation)
-    {
-        damageModifiers.Sort((x, y) =>
-        {
-            if (x.method == NumericalModifierCalculationMethod.Flat) return -1;
-            return 1;
-        });
-        foreach (DamageModifier modifier in damageModifiers)
-        {
-            calculation.AddModifier(new AssistContributingModifier(modifier, 1), modifier.method, modifier.damageType, DamageType.True);
-        }
-    }
-
-    private void GenerateMagicEffect()
+    public void GenerateMagicEffect()
     {
         if (runes.Count == 0) return;
         int spellPhase = 0;
-        Owner.GetMechanic<Stat_PlayerOwner>().Proxy(x => spellPhase += (int)x.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase));
+        Owner.GetMechanic<Mechanic_PlayerOwner>().Proxy(x => spellPhase += (int)x.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase));
         spellPhase %= runes.Count;
         for (int i = spellPhase; i < runes.Count + spellPhase; i++)
         {
@@ -108,9 +45,24 @@ public class DamageInstance : Effect
         }
     }
 
+    public void DoTriggers(EffectTask Source, Entity Owner, Entity Target)
+    {
+        foreach (TriggerTask task in onHitEffects)
+        {
+            if (!task.DoTask(null, Owner)) break;
+        }
+
+        new Trigger_Hit(Source, this, Owner, Target, Source.SourceID);
+
+        foreach (TriggerTask task in postOnHitEffects)
+        {
+            if (!task.DoTask(null, Owner)) break;
+        }
+    }
+
     private void AddToDamage(float damage, DamageType tag)
     {
-        damageModifiers.Add(new DamageModifier(damage, NumericalModifierCalculationMethod.Flat, tag, DamageType.True));
+        damageModifiers.Add(new DamageSolver(damage, NumericalModifierCalculationMethod.Flat, tag, DamageType.True));
         // TODO: contributing effect
     }
 
@@ -168,18 +120,5 @@ public class DamageInstance : Effect
         {
             AddToDamage(addedFlatDamage, damageTypes[0] | DamageType.Spell);
         }
-    }
-
-    public override Effect Clone()
-    {
-        DamageInstance clone = (DamageInstance)base.Clone();
-        clone.damageModifiers = new List<DamageModifier>(damageModifiers);
-        clone.runes = new List<Rune>(runes);
-        clone.ownerEffects = new List<Effect>(ownerEffects);
-        clone.targetEffects = new List<Effect>(targetEffects);
-        clone.onHitEffects = new List<Effect>(onHitEffects);
-        clone.postOnHitEffects = new List<Effect>(postOnHitEffects);
-        clone.temporaryTriggeredEffects = new List<PE_Trigger>(temporaryTriggeredEffects);
-        return clone;
     }
 }

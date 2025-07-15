@@ -8,17 +8,17 @@ public class Rune_Chaos : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public PersistentEffect buff;
+    public EffectTask buff;
     [SerializeReference]
-    public PersistentEffect debuff;
+    public EffectTask debuff;
 
     [Header("Spell Shape")]
     [FoldoutGroup("Circle")]
     public float multiplierPerStage;
     [FoldoutGroup("Projectile")]
-    public PE_Trigger homing;
+    public Movement_HomeToTarget homing;
     [FoldoutGroup("Curse")]
-    public DamageInstance curseHit;
+    public DamageInstanceOLD curseHit;
     [FoldoutGroup("Curse")]
     public float baseChanneledCurseEffect;
 
@@ -54,9 +54,9 @@ public class Rune_Chaos : Rune
     {
         spell.shape = SpellShape.Curse;
         spell.effect = curseHit.Clone();
-        spell.AddRunesToDamageInstance(spell.effect as DamageInstance);
+        spell.AddRunesToDamageInstance(spell.effect as DamageInstanceOLD);
         spell.proxies.Add(spell.Owner);
-        spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => spell.StopSpell(), (spell.effect as DamageInstance).onHitEffects[0]);
+        spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => spell.StopSpell(), (spell.effect as DamageInstanceOLD).onHitEffects[0]);
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -101,17 +101,17 @@ public class Rune_Chaos : Rune
         }
     }
 
-    private void SpellMultiPerStageFire(Trigger_SpellStageIncrement trigger)
+    private void SpellMultiPerStageFire(Spell spell)
     {
-        trigger.Spell.effect.effectMultiplier -= multiplierPerStage;
+        spell.effect.effectMultiplier -= multiplierPerStage;
     }
 
-    private void AddHomingToProjectile(Trigger_ProjectileCreated trigger)
+    private void AddHomingToProjectile(Entity entity)
     {
-        if (trigger.Entity.GetMechanic<Stat_Movement>().movementSelector == null || !(trigger.Entity.GetMechanic<Stat_Movement>().movementSelector is Movement_HomeToTarget))
+        if (entity.GetMechanic<Mechanic_Movement>().movementSelector == null || !(entity.GetMechanic<Mechanic_Movement>().movementSelector is Movement_HomeToTarget))
         {
-            trigger.Entity.GetMechanic<Stat_Movement>().movementSelector = new Movement_HomeToTarget();
+            entity.GetMechanic<Mechanic_Movement>().movementSelector = new Movement_HomeToTarget();
         }
-        (trigger.Entity.GetMechanic<Stat_Movement>().movementSelector as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
+        (entity.GetMechanic<Mechanic_Movement>().movementSelector as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
     }
 }

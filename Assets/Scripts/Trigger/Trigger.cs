@@ -6,17 +6,21 @@ using UnityEngine;
 [Serializable]
 public abstract class Trigger : IDataContainer
 {
-    public bool Is<T>(out T data) where T : class, IDataContainer
+    public bool Get<T>(out T data)
     {
-        data = this as T;
-        return data != null;
+        IDataContainer<T> container = (this as IDataContainer<T>);
+        if (container == null) data = default;
+        else data = container.Value;
+        return container != null;
     }
+
     public abstract void Invoke(params object[] bindingObjects);
-    public abstract System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0);
+    public abstract System.Action SubscribeDynamic(Action<IDataContainer> method, object bindingObject, int order = 0);
 }
 
-public abstract class Trigger<T> : Trigger where T : Trigger
+public abstract class Trigger<T> : Trigger, IDataContainer<T>
 {
+    public T Value { get; set; }
     protected static Dictionary<object, List<TriggerSubscription>> bindings = new();
     protected class TriggerSubscription
     {
@@ -30,7 +34,8 @@ public abstract class Trigger<T> : Trigger where T : Trigger
         }
     }
 
-    public override System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0) => Subscribe(method, bindingObject, order);
+    public virtual System.Action SubscribeGeneric(Action<T> method, object bindingObject, int order = 0) => Subscribe(method, bindingObject, order);
+    public override System.Action SubscribeDynamic(Action<IDataContainer> method, object bindingObject, int order = 0) => Subscribe(_ => method.Invoke(this), bindingObject, order);
 
     /// <summary>
     /// Subscribes a method to this Trigger. Be sure to set conditionals and use the unsubscribe method that is returned.
@@ -69,7 +74,7 @@ public abstract class Trigger<T> : Trigger where T : Trigger
             if (bindings.ContainsKey(bindingObject))
                 foreach (TriggerSubscription subscription in bindings[bindingObject].ToArray())
                 {
-                    subscription.method.Invoke(this as T);
+                    subscription.method.Invoke(Value);
                 }
         }
 
@@ -77,7 +82,7 @@ public abstract class Trigger<T> : Trigger where T : Trigger
         if (bindings.ContainsKey(0))
             foreach (TriggerSubscription subscription in bindings[0].ToArray())
             {
-                subscription.method.Invoke(this as T);
+                subscription.method.Invoke(Value);
             }
     }
 }
@@ -109,32 +114,33 @@ public class Trigger_OnSomethingHappens : Trigger<Trigger_OnSomethingHappens>
     }
 }
 
-public class Trigger_Immediate : Trigger<Trigger_Immediate>
+public class Trigger_Immediate : Trigger<IDataContainer>
 {
-    public override System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0)
+    public override System.Action SubscribeGeneric(Action<IDataContainer> method, object bindingObject, int order = 0)
     {
-        return () => {};
+        Invoke();
+        return () => { };
     }
+    public override System.Action SubscribeDynamic(Action<IDataContainer> method, object bindingObject, int order = 0) => SubscribeGeneric(method, bindingObject, order);
 }
-public class Trigger_OnRemove : Trigger<Trigger_OnRemove>
+public class Trigger_OnRemove : Trigger<IDataContainer>
 {
-    public override System.Action Subscribe(Action<Trigger> method, object bindingObject, int order = 0)
+    public override System.Action SubscribeGeneric(Action<IDataContainer> method, object bindingObject, int order = 0)
     {
-        return () => method.Invoke(this);
+        return () => Invoke();
     }
+    public override System.Action SubscribeDynamic(Action<IDataContainer> method, object bindingObject, int order = 0) => SubscribeGeneric(method, bindingObject, order);
 }
-public class Trigger_GameEnd : Trigger<Trigger_GameEnd>, IDataContainer_Player 
+public class Trigger_GameEnd : Trigger<Viewer>
 {
-    private Viewer _player;
-    public Viewer Player => _player;
     public Trigger_GameEnd() { }
     public Trigger_GameEnd(Viewer player, params object[] bindingObjects)
     {
-        _player = player;
+        Value = player;
         Invoke(bindingObjects);
     }
 }
-public class Trigger_RoundEnd : Trigger<Trigger_RoundEnd>, IDataContainer_Player
+public class Trigger_RoundEnd : Trigger<Viewer>
 {
     private Viewer _player;
     public Viewer Player => _player;

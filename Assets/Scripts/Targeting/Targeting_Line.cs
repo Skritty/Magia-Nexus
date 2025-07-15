@@ -20,7 +20,7 @@ public class Targeting_Line : MultiTargeting
         if (length == 0 || width == 0) return false;
 
         Vector3 dirToEntity = target.transform.position - GetCenter();
-        dirToTarget = firstTarget && faceFirstTarget ? dirToEntity : Owner.GetMechanic<Stat_Movement>().facingDir;
+        dirToTarget = firstTarget && faceFirstTarget ? dirToEntity : Owner.GetMechanic<Mechanic_Movement>().facingDir;
         Vector3 projectedDir = Vector3.Project(dirToEntity, dirToTarget);
         if (Vector3.Dot(dirToEntity, dirToTarget) < 0) return false;
         if (projectedDir.magnitude > length * Owner.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize)) return false;
@@ -33,7 +33,7 @@ public class Targeting_Line : MultiTargeting
         if (vfx is not VFX_Line) return;
         VFX_Line line = vfx.PlayVFX<VFX_Line>((proxy != null ? proxy : Owner).transform, offset, Vector3.up, true);
         line.ApplyLine(length, width);
-        line.ApplyDamage(source as DamageInstance);
+        line.ApplyDamage(source as DamageInstanceOLD);
     }
 
     public override void OnDrawGizmos(Transform source)

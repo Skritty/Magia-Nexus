@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -67,4 +67,4 @@ public abstract class PersistentEffect: Effect
         if (!contributeToAssists || tick <= 0) return;
         Owner.GetMechanic<Stat_PlayerOwner>().ApplyContribution(Target, effectMultiplier * tick);
     }
-}
+}*/

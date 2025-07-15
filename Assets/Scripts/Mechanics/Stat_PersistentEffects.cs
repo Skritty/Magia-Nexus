@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+/*using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -171,4 +171,4 @@ public class Stat_PersistentEffects : Mechanic<Stat_PersistentEffects>
         }
         persistentEffects.Clear();
     }
-}
+}*/

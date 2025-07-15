@@ -10,29 +10,75 @@ using UnityEngine;
 public abstract class TriggerTask
 {
     public bool incompatableTriggerBehavior = true;
-    public abstract bool DoTask(Trigger trigger, Entity Owner);
+    public abstract bool DoTask(IDataContainer data, Entity Owner);
 }
 
-[LabelText("Task: Do Effect")]
-public class Task_DoEffect : TriggerTask
+public abstract class TriggerTask<T> : TriggerTask
 {
-    public EffectTargetSelector proxy;
-    public bool useProxyAsOwner;
-    [SerializeReference]
-    public Effect effect;
-    
-    public override bool DoTask(Trigger trigger, Entity Owner)
+    public override bool DoTask(IDataContainer data, Entity Owner)
     {
-        if (proxy != EffectTargetSelector.None && trigger.Is(out IDataContainer_Effect data))
+        if (data.Get(out T value)) return DoTask(value, Owner);
+        return incompatableTriggerBehavior;
+    }
+    public abstract bool DoTask(T data, Entity Owner);
+}
+
+// Source + Owner on effect, immutable
+// Multiplier + Target carried through chain and can change
+// Effect (2x)
+// |-> Trigger<Effect>
+//      |-> Effect (2x -> 4x)
+
+// Task
+// EffectInfo: source, owner, target, multiplier, task
+
+public abstract class EffectTask : TriggerTask<EffectTask>
+{
+    protected int _sourceID;
+    //[FoldoutGroup("@GetType()"), ShowInInspector, ReadOnly]
+    public int SourceID
+    {
+        get
         {
-            Entity proxyEntity = proxy == EffectTargetSelector.Owner ? data.Effect.Owner : data.Effect.Target;
-            effect.Create(useProxyAsOwner ? proxyEntity : Owner, trigger, useProxyAsOwner ? null : proxyEntity);
+            if (_sourceID == 0) _sourceID = GetHashCode();
+            return _sourceID;
         }
-        else
+    }
+
+    [FoldoutGroup("@GetType()")]
+    public float effectMultiplier = 1;
+    [FoldoutGroup("@GetType()")]
+    public int ignoreFrames;
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public Targeting targetSelector = new Targeting_Self();
+
+    public override bool DoTask(IDataContainer data, Entity Owner)
+    {
+        data.Get(out EffectTask value);
+        return DoTask(value, Owner);
+    }
+
+    public override bool DoTask(EffectTask data, Entity Owner)
+    {
+        foreach(Entity target in targetSelector.GetTargets(null, Owner))
         {
-            effect.Create(Owner, trigger);
+            if (ignoreFrames > 0)
+                new PE_IgnoreEntity(this, ignoreFrames);
+            DoEffect(Owner, target, effectMultiplier * (data == null ? 1 : data.effectMultiplier), data != null);
         }
         return true;
+    }
+
+    public abstract void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered);
+}
+
+[LabelText("Task: Grant Buff")]
+public class Effect_GrantModifer : EffectTask
+{
+    public IModifier modifier;
+    public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
+    {
+        Target.AddModifier(modifier);
     }
 }
 
@@ -47,421 +93,55 @@ public class Task_DoRandomEffect : TriggerTask
 
     public override bool DoTask(Trigger trigger, Entity Owner)
     {
-        WeightedChance<Effect> effect = new WeightedChance<Effect>();
+        WeightedChance<Effect> random = new WeightedChance<Effect>();
         if (actions.Count > 0)
         {
             foreach (Action action in actions)
             {
-                effect.Add(action.effects[0], 1);
+                random.Add(action.effects[0], 1);
             }
         }
         else
         {
             foreach (Effect e in effects)
             {
-                effect.Add(e, 1);
+                random.Add(e, 1);
             }
         }
             
-        if (proxy != EffectTargetSelector.None && trigger.Is(out IDataContainer_Effect data))
+        if (proxy != EffectTargetSelector.None && trigger.Get(out Effect effect))
         {
-            Entity proxyEntity = proxy == EffectTargetSelector.Owner ? data.Effect.Owner : data.Effect.Target;
-            effect.GetRandomEntry().Create(useProxyAsOwner ? proxyEntity : Owner, trigger, useProxyAsOwner ? null : proxyEntity);
+            Entity proxyEntity = proxy == EffectTargetSelector.Owner ? effect.Owner : effect.Target;
+            random.GetRandomEntry().CreateFromTrigger(useProxyAsOwner ? proxyEntity : Owner, effect, useProxyAsOwner ? null : proxyEntity);
         }
         else
         {
-            effect.GetRandomEntry().Create(Owner, trigger);
+            random.GetRandomEntry().Create(Owner);
         }
         return true;
     }
 }
 
-[LabelText("Is: Player Character?")]
-public class Task_Filter_PlayerOwned : TriggerTask
-{
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_OwnerEntity data))
-            return data.Entity.GetMechanic<Stat_PlayerOwner>().playerEntity == Owner;
-        return incompatableTriggerBehavior;
-    }
-}
 
-[LabelText("Is: Player Proxy?")]
-public class Task_Filter_PlayerProxy : TriggerTask
-{
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_OwnerEntity data))
-            return data.Entity.GetMechanic<Stat_PlayerOwner>().playerEntity == Owner.GetMechanic<Stat_PlayerOwner>().playerEntity;
-        return incompatableTriggerBehavior;
-    }
-}
 
-[LabelText("Is: Owner?")]
-public class Task_Filter_Owner : TriggerTask
+[LabelText("Task: Unlock Class")]
+public class Task_UnlockClass : TriggerTask<Viewer>
 {
-    public override bool DoTask(Trigger trigger, Entity Owner)
+    public string classUnlock;
+    public override bool DoTask(Viewer viewer, Entity Owner)
     {
-        if (trigger.Is(out IDataContainer_OwnerEntity data2))
-            return data2.Entity == Owner;
-        else if (trigger.Is(out IDataContainer_Effect data))
-            return data.Effect.Owner == Owner;
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Is: Target?")]
-public class Task_Filter_Target : TriggerTask
-{
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Effect data))
-            return data.Effect.Target == Owner;
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Is: Specific Action?")]
-public class Task_Filter_Action : TriggerTask
-{
-    public Action action;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Action data))
-            return data.Action == action;
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Is: Specific Spell?")]
-public class Task_Filter_Spell : TriggerTask
-{
-    public List<RuneElement> runes;
-    public bool containsPartOf;
-    public bool ignoreOrderOfModifiers;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Spell data))
-        {
-            if (!containsPartOf && data.Spell.runes.Count == runes.Count) return false;
-            if (runes[0] != data.Spell.runes[0].element) return false;
-            if (ignoreOrderOfModifiers)
-            {
-                List<RuneElement> runesLeft = new List<RuneElement>();
-                runesLeft.AddRange(runes);
-                foreach(Rune rune in data.Spell.runes)
-                {
-                    runesLeft.Remove(rune.element);
-                }
-                if (runesLeft.Count == 0) return true;
-            }
-            else
-            {
-                for (int i = 1; i < runes.Count; i++)
-                {
-                    if (data.Spell.runes.Count == i)
-                    {
-                        if (containsPartOf) break;
-                        return false;
-                    }
-                    if (data.Spell.runes[i].element != runes[i]) return false;
-                }
-                return true;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Damage Types")]
-public class Task_Filter_DamageType : TriggerTask
-{
-    public DamageType damageTypes;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_DamageInstance data))
-            foreach (DamageModifier modifier in data.Damage.damageModifiers)
-            {
-                if (modifier.damageType.HasFlag(damageTypes)) return true;
-            }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Damage Threshold")]
-public class Task_Filter_DamageTreshold : TriggerTask
-{
-    public float damageThreshold;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_DamageInstance data))
-            if (data.Damage.calculatedDamage >= damageThreshold) return true;
-            else return false;
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Has Items")]
-public class Task_Filter_HasItems : TriggerTask
-{
-    [SerializeReference]
-    public List<Item> items;
-    public int multiples = 1;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_OwnerEntity data))
-        {
-            List<Item> itemsLeft = new List<Item>();
-            for(int i = 0; i < multiples; i++)
-            {
-                itemsLeft.AddRange(items);
-            }
-            foreach (Item item in data.Entity.GetMechanic<Stat_PlayerOwner>().player.items)
-            {
-                itemsLeft.Remove(item);
-            }
-            if(itemsLeft.Count == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Targetable")]
-public class Task_Filter_Targetable : TriggerTask
-{
-    public EffectTargetingSelector selector;
-    [SerializeReference]
-    public Targeting targeting;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Effect data))
-            return targeting.GetTargets(data.Effect, data.Effect.Owner)
-                .Contains(selector == EffectTargetingSelector.Owner ? data.Effect.Target : data.Effect.Owner);
-        return incompatableTriggerBehavior;
+        viewer.unlockedClasses.Add(classUnlock);
+        return true;
     }
 }
 
 [LabelText("Task: Add Runes to Damage Instance")]
-public class Task_ModifyDamageInstanceRunes : TriggerTask
+public class Task_ModifyDamageInstanceRunes : TriggerTask<DamageInstance>
 {
     [SerializeReference]
     public List<Rune> runes;
-    public override bool DoTask(Trigger trigger, Entity Owner)
+    public override bool DoTask(DamageInstance damage, Entity Owner)
     {
-        if (trigger.Is(out IDataContainer_DamageInstance data))
-        {
-            data.Damage.runes.AddRange(runes);
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Threshold")]
-public class Task_Filter_ActivationThreshold : TriggerTask
-{
-    public int thresholdInclusive;
-    [ShowInInspector, ReadOnly]
-    public Dictionary<Entity, int> count = new();
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_OwnerEntity data))
-        {
-            Entity entity = data.Entity;
-            count.TryAdd(entity, 0);
-            count[entity]++;
-            if (count[entity] >= thresholdInclusive)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Player Threshold")]
-public class Task_Filter_PlayerActivationThreshold : TriggerTask
-{
-    public int thresholdInclusive;
-    [ShowInInspector, ReadOnly]
-    public Dictionary<Viewer, int> count = new();
-    public bool lifetimeThreshold;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Player data))
-        {
-            Viewer player = data.Player;
-            count.TryAdd(player, 0);
-            count[player]++;
-            if (lifetimeThreshold)
-            {
-                // Save to file/database
-            }
-            if (count[player] >= thresholdInclusive)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Leaderboard Position")]
-public class Task_Filter_LeadboardPosition : TriggerTask
-{
-    public int topNumber;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Player data))
-        {
-            if (Array.FindIndex(GameManager.ViewersScoreOrdered, x => x == data.Player) < topNumber)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Winstreak")]
-public class Task_Filter_Winstreak : TriggerTask
-{
-    public int threshold;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Player data))
-        {
-            if (data.Player.winstreak >= threshold)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Wins")]
-public class Task_Filter_Wins : TriggerTask
-{
-    public int threshold;
-    public bool invert;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Player data))
-        {
-            if (data.Player.wins >= threshold)
-            {
-                return invert ? false : true;
-            }
-            else
-            {
-                return invert ? true : false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Losses")]
-public class Task_Filter_Losses : TriggerTask
-{
-    public int threshold;
-    public bool invert;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Player data))
-        {
-            if (data.Player.losses >= threshold)
-            {
-                return invert ? false : true;
-            }
-            else
-            {
-                return invert ? true : false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Deaths")]
-public class Task_Filter_Deaths : TriggerTask
-{
-    public int threshold;
-    public bool invert;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Player data))
-        {
-            if (data.Player.deaths >= threshold)
-            {
-                return invert ? false : true;
-            }
-            else
-            {
-                return invert ? true : false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Filter: Gold Spent")]
-public class Task_Filter_GoldSpent : TriggerTask
-{
-    public int threshold;
-    public bool invert;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Player data))
-        {
-            int goldSpent = data.Player.totalGold - data.Player.gold; // TODO: make lifetime gold spent
-            if (goldSpent >= threshold)
-            {
-                return invert ? false : true;
-            }
-            else
-            {
-                return invert ? true : false;
-            }
-        }
-        return incompatableTriggerBehavior;
-    }
-}
-
-[LabelText("Task: Unlock Class")]
-public class Task_UnlockClass : TriggerTask
-{
-    public string classUnlock;
-    public override bool DoTask(Trigger trigger, Entity Owner)
-    {
-        if (trigger.Is(out IDataContainer_Player data))
-        {
-            data.Player.unlockedClasses.Add(classUnlock);
-        }
-        return incompatableTriggerBehavior;
+        damage.runes.AddRange(runes);
     }
 }

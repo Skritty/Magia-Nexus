@@ -71,6 +71,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 1083523807942279281
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        mainStat: 0
+        <Value>k__BackingField: 0
+        modifiers: []
     - rid: 9031231598746927104
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
@@ -78,10 +84,22 @@ MonoBehaviour:
         ignoreFrames: 0
         targetSelector:
           rid: 9031231598746927106
+        stats: []
         calculatedDamage: 0
         damageModifiers:
-        - value: 100
-          tag: 1
+        - mainStat: 0
+          <Value>k__BackingField: 0
+          modifiers: []
+          <Tag>k__BackingField:
+            rid: 1083523807942279281
+          maxStacks: 1
+          stacks: 1
+          perPlayer: 0
+          alignment: 0
+          temporary: 0
+          tick: 0
+          tickDuration: -1
+          refreshDuration: 1
           method: 0
           appliesTo: 0
           damageType: 8227

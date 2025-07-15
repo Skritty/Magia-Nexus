@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class SetMovementTarget : Effect
+public class SetMovementTarget : EffectTask
 {
     [FoldoutGroup("@GetType()")]
     public EffectTargetSelector movementTarget = EffectTargetSelector.Target;
-    public override void Activate()
+
+    public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        Owner.GetMechanic<Stat_Movement>().facingDir = Target.transform.position - Owner.transform.position;
+        Owner.GetMechanic<Mechanic_Movement>().facingDir = Target.transform.position - Owner.transform.position;
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                Owner.GetMechanic<Stat_Movement>().movementTarget = Owner;
+                Owner.Stat<Stat_MovementTarget>().Value = Owner;
                 break;
             case EffectTargetSelector.Target:
-                Owner.GetMechanic<Stat_Movement>().movementTarget = Target;
+                Owner.Stat<Stat_MovementTarget>().Value = Target; // TODO: this is bad
                 break;
         }
     }

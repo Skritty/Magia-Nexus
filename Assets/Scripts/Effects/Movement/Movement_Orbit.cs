@@ -10,24 +10,24 @@ public class Movement_Orbit : MovementDirectionSelector
     [FoldoutGroup("@GetType()")]
     public bool reverseDirection;
 
-    public override void Activate()
+    public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        SetMoveDir();
+        SetMoveDir(Target);
     }
 
-    private void SetMoveDir()
+    private void SetMoveDir(Entity Target)
     {
-        float orbitDist = orbitDistance * Target.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.AoESize);
+        float orbitDist = orbitDistance * Target.Stat<Stat_AoESize>().Value;
         Vector3 dirToTarget = Vector3.zero;
         bool zero = false;
-        if (Target.GetMechanic<Stat_Movement>().movementTarget != null)
+        if (Target.Stat<Stat_MovementTarget>().Value != null)
         {
-            dirToTarget = Target.transform.position - Target.GetMechanic<Stat_Movement>().movementTarget.transform.position;
+            dirToTarget = Target.transform.position - Target.Stat<Stat_MovementTarget>().Value.transform.position;
         }
         if (dirToTarget == Vector3.zero)
         {
             zero = true;
-            dirToTarget = Target.GetMechanic<Stat_Movement>().movementTarget.GetMechanic<Stat_Movement>().facingDir;
+            dirToTarget = Target.Stat<Stat_MovementTarget>().Value.GetMechanic<Mechanic_Movement>().facingDir;
             Debug.Log(dirToTarget);
         }
         //if (dirToTarget == Vector3.zero) dirToTarget = Target.transform.position + Target.transform.up * orbitDistance;
@@ -47,7 +47,7 @@ public class Movement_Orbit : MovementDirectionSelector
             perpendicularVector = Vector3.Lerp(dirToTarget, perpendicularVector, dirToTarget.magnitude / orbitDist);
         }
         
-        Target.GetMechanic<Stat_Movement>().facingDir = perpendicularVector;
-        Target.GetMechanic<Stat_Movement>().dirMovementSpeedMulti = effectMultiplier;
+        Target.GetMechanic<Mechanic_Movement>().facingDir = perpendicularVector;
+        Target.Stat<Stat_MovementSpeed>().Modifiers[1].Value = effectMultiplier;
     }
 }

@@ -1,9 +1,12 @@
 using Sirenix.OdinInspector;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+public class Stat_DamageOverTime : DamageSolver, IStatTag { }
+public class Stat_DamageDealt : DamageSolver, IStatTag { }
+public class Stat_DamageTaken : DamageSolver, IStatTag { }
+public class Stat_Invulnerable : BooleanSolver, IStatTag { }
+public class Stat_CurrentLife : NumericalSolver, IStatTag { }
+public class Stat_MaxLife : NumericalSolver, IStatTag { }
 public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 {
     #region Internal Variables
@@ -18,12 +21,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
     protected override void Initialize()
     {
         base.Initialize();
-        Owner.cleanup += Trigger_Die.Subscribe((x) => Debug.Log($"{x.Damage.Target} DIED"), Owner);
-    }
-
-    public override void OnDestroy()
-    {
-        base.OnDestroy();
+        Owner.cleanup += Trigger_Die.Subscribe(x => Debug.Log($"{x.Target} DIED"), Owner);
     }
 
     public void TakeDamage(DamageInstance damage)
@@ -34,7 +32,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         }
 
         // Make a damage calculation damage.Owner.Stat<Stat_EffectModifiers>()
-        DamageModifier calculation = DamageModifier.CreateCalculation(damage);
+        DamageSolver calculation = DamageSolver.CreateCalculation(damage);
         damage.AddModifiers(calculation);
         damage.Owner.GetMechanic<Stat_EffectModifiers>().AddModifiersToCalculation(calculation, EffectTag.DamageDealt);
         damage.Target.GetMechanic<Stat_EffectModifiers>().AddModifiersToCalculation(calculation, EffectTag.DamageTaken);
@@ -43,11 +41,11 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
         // Handle Life
         if (damage.calculatedDamage > 0)
-            Owner.GetMechanic<Stat_PlayerOwner>().ApplyContribution(damage.Owner, damage.calculatedDamage / 100f * TankContributionMultiplier);
+            Owner.GetMechanic<Mechanic_PlayerOwner>().ApplyContribution(damage.Owner, damage.calculatedDamage / 100f * TankContributionMultiplier);
         //Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
         Owner.Stat<Stat_CurrentLife>().Value = Mathf.Clamp(Owner.Stat<Stat_CurrentLife>().Value - damage.calculatedDamage, 0, Owner.Stat<Stat_MaxLife>().Value);
 
-        Entity triggerOwner = damage.triggerPlayerOwner ? damage.Owner.GetMechanic<Stat_PlayerOwner>().Owner : damage.Owner;
+        Entity triggerOwner = damage.triggerPlayerOwner ? damage.Owner.GetMechanic<Mechanic_PlayerOwner>().Owner : damage.Owner;
         if (!damage.preventTriggers || damage.calculatedDamage == 0)
         {
             damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, false)
@@ -58,7 +56,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
         if (Owner.Stat<Stat_CurrentLife>().Value <= 0)
         {
-            Owner.GetMechanic<Stat_PlayerOwner>().DistributeRewards();
+            Owner.GetMechanic<Mechanic_PlayerOwner>().DistributeRewards();
             new Trigger_Die(damage, damage, damage.Owner, triggerOwner, Owner);
         }
 
