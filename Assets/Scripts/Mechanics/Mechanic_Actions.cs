@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class Stat_Stunned : BooleanSolver, IStatTag { }
-public class Stat_Channeling : BooleanSolver, IStatTag { }
+public class Stat_Stunned : BooleanPrioritySolver, IStatTag { }
+public class Stat_Channeling : BooleanPrioritySolver, IStatTag { }
 public class Stat_Actions : ListPrioritySolver<Action>, IStatTag { }
 public class Stat_Initiative : NumericalSolver, IStatTag { }
 public class Mechanic_Actions : Mechanic<Mechanic_Actions>

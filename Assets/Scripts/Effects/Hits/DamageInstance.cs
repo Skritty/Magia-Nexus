@@ -1,38 +1,30 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using UnityEngine;
-
-public class DamageInstance
+public class DamageInstance : Hit
 {
-    [HideInInspector]
-    public float calculatedDamage;
+    [FoldoutGroup("@GetType()")]
+    public float finalDamage;
     [FoldoutGroup("@GetType()")]
     public List<DamageSolver> damageModifiers = new();
     [FoldoutGroup("@GetType()")]
     public List<Rune> runes = new();
     [FoldoutGroup("@GetType()")]
     public bool skipFlatDamageReduction;
-    [FoldoutGroup("@GetType()")]
-    public bool triggerPlayerOwner;
-    [FoldoutGroup("@GetType()")]
-    public bool preventTriggers;
-
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<TriggerTask> onHitEffects = new();
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<TriggerTask> postOnHitEffects = new();
-
-    public DamageInstance() { }
-    public DamageInstance(List<DamageSolver> damageModifiers, List<Rune> runes, List<TriggerTask> tasks)
-    {
-        damageModifiers.AddRange(damageModifiers);
-        runes.AddRange(runes);
-        tasks.AddRange(tasks);
-    }
 
     public void GenerateMagicEffect()
     {
+        foreach (Rune rune in Target.Stat<Stat_RuneCrystals>().Value)
+        {
+            runes.Add(rune);
+            Target.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
+        }
+        if (Owner.GetMechanic<Mechanic_Magic>().enchantedAttacks.Count > 0)
+        {
+            damageInstance.runes.AddRange(Owner.GetMechanic<Mechanic_Magic>().enchantedAttacks.Dequeue());
+        }
+
         if (runes.Count == 0) return;
+
         int spellPhase = 0;
         Owner.GetMechanic<Mechanic_PlayerOwner>().Proxy(x => spellPhase += (int)x.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase));
         spellPhase %= runes.Count;
@@ -45,24 +37,9 @@ public class DamageInstance
         }
     }
 
-    public void DoTriggers(EffectTask Source, Entity Owner, Entity Target)
-    {
-        foreach (TriggerTask task in onHitEffects)
-        {
-            if (!task.DoTask(null, Owner)) break;
-        }
-
-        new Trigger_Hit(Source, this, Owner, Target, Source.SourceID);
-
-        foreach (TriggerTask task in postOnHitEffects)
-        {
-            if (!task.DoTask(null, Owner)) break;
-        }
-    }
-
     private void AddToDamage(float damage, DamageType tag)
     {
-        damageModifiers.Add(new DamageSolver(damage, NumericalModifierCalculationMethod.Flat, tag, DamageType.True));
+        damageModifiers.Add(new DamageSolver(damage, CalculationStep.Flat, tag, DamageType.True));
         // TODO: contributing effect
     }
 
@@ -120,5 +97,13 @@ public class DamageInstance
         {
             AddToDamage(addedFlatDamage, damageTypes[0] | DamageType.Spell);
         }
+    }
+
+    public new DamageInstance Clone()
+    {
+        DamageInstance clone = (DamageInstance)base.Clone();
+        clone.damageModifiers = new List<DamageSolver>(damageModifiers);
+        clone.runes = new List<Rune>(runes);
+        return clone;
     }
 }

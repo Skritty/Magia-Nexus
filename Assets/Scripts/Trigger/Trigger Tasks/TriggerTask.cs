@@ -17,10 +17,15 @@ public abstract class TriggerTask<T> : TriggerTask
 {
     public override bool DoTask(IDataContainer data, Entity Owner)
     {
-        if (data.Get(out T value)) return DoTask(value, Owner);
+        if (data.Get(out T value)) return DoTask(value, Owner); // TODO YOU WERE HERE
         return incompatableTriggerBehavior;
     }
     public abstract bool DoTask(T data, Entity Owner);
+    public TriggerTask Clone()
+    {
+        TriggerTask clone = (TriggerTask)MemberwiseClone();
+        return clone;
+    }
 }
 
 // Source + Owner on effect, immutable
@@ -34,17 +39,6 @@ public abstract class TriggerTask<T> : TriggerTask
 
 public abstract class EffectTask : TriggerTask<EffectTask>
 {
-    protected int _sourceID;
-    //[FoldoutGroup("@GetType()"), ShowInInspector, ReadOnly]
-    public int SourceID
-    {
-        get
-        {
-            if (_sourceID == 0) _sourceID = GetHashCode();
-            return _sourceID;
-        }
-    }
-
     [FoldoutGroup("@GetType()")]
     public float effectMultiplier = 1;
     [FoldoutGroup("@GetType()")]
@@ -70,11 +64,24 @@ public abstract class EffectTask : TriggerTask<EffectTask>
     }
 
     public abstract void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered);
+
+    public new EffectTask Clone()
+    {
+        EffectTask clone = base.Clone() as EffectTask;
+        clone.targetSelector = targetSelector.Clone();
+        return clone;
+    }
 }
 
 [LabelText("Task: Grant Buff")]
 public class Effect_GrantModifer : EffectTask
 {
+    public Effect_GrantModifer() { }
+    public Effect_GrantModifer(IModifier modifier) 
+    {
+        this.modifier = modifier;
+    }
+
     public IModifier modifier;
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {

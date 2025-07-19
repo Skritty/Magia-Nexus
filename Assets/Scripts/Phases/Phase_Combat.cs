@@ -74,7 +74,7 @@ public abstract class Phase_Combat : Phase
         }
     }
 
-    private void TrackKill(DamageInstanceOLD damage)
+    private void TrackKill(DamageInstance damage)
     {
         Entity dead = damage.Target;
         int team = dead.GetMechanic<Mechanic_Team>().team;

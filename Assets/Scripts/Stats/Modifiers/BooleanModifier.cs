@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public class BooleanModifier : BooleanSolver, IModifier<bool>
+public class BooleanModifier : BooleanPrioritySolver, IModifier<bool>
 {
     public BooleanModifier() { }
     public EffectTask Source { get; set; }
@@ -16,7 +16,7 @@ public class BooleanModifier : BooleanSolver, IModifier<bool>
     public Alignment Alignment { get; set; }
     public bool Temporary { get; set; }
     [field: ShowIf("@Temporary"), ReadOnly]
-    public int Tick { get; set; }
+    public int CurrentTick { get; set; }
     [field: ShowIf("@Temporary"), ReadOnly]
     public int TickDuration { get; set; } = -1;
     [field: ShowIf("@Temporary"), ReadOnly]

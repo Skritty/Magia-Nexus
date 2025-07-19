@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VFX_Damage : VFX
 {
-    public void ApplyDamage(DamageInstanceOLD damage)
+    public void ApplyDamage(DamageInstance damage)
     {
         if (damage != null) return;
     }

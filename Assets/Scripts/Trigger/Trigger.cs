@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TwitchLib.Api.Helix.Models.Subscriptions;
 using UnityEngine;
 
 [Serializable]
@@ -20,17 +21,20 @@ public abstract class Trigger : IDataContainer
 
 public abstract class Trigger<T> : Trigger, IDataContainer<T>
 {
-    public T Value { get; set; }
+    protected T _value;
+    public T Value => _value;
     protected static Dictionary<object, List<TriggerSubscription>> bindings = new();
     protected class TriggerSubscription
     {
         public Action<T> method;
         public int order = 0;
+        public bool triggerOnce = false;
 
-        public TriggerSubscription(Action<T> method, int order = 0)
+        public TriggerSubscription(Action<T> method, int order = 0, bool triggerOnce = false)
         {
             this.method = method;
             this.order = order;
+            this.triggerOnce = triggerOnce;
         }
     }
 
@@ -43,7 +47,7 @@ public abstract class Trigger<T> : Trigger, IDataContainer<T>
     /// <param name="method"></param>
     /// <param name="order">Lower numbers will happen earlier in trigger order</param>
     /// <returns>Unsubscribe action</returns>
-    public static System.Action Subscribe(Action<T> method, object bindingObject = null, int order = 0)
+    public static System.Action Subscribe(Action<T> method, object bindingObject = null, int order = 0, bool triggerOnce = false)
     {
         if (bindingObject == null)
         {
@@ -54,7 +58,7 @@ public abstract class Trigger<T> : Trigger, IDataContainer<T>
             bindings.Add(bindingObject, new List<TriggerSubscription>());
         }
 
-        TriggerSubscription subscription = new TriggerSubscription(method, order);
+        TriggerSubscription subscription = new TriggerSubscription(method, order, triggerOnce);
         bindings[bindingObject].Add(subscription);
         bindings[bindingObject].Sort((x, y) => x.order - y.order);
 
@@ -75,6 +79,7 @@ public abstract class Trigger<T> : Trigger, IDataContainer<T>
                 foreach (TriggerSubscription subscription in bindings[bindingObject].ToArray())
                 {
                     subscription.method.Invoke(Value);
+                    if (subscription.triggerOnce) bindings[bindingObject].Remove(subscription);
                 }
         }
 
@@ -83,6 +88,7 @@ public abstract class Trigger<T> : Trigger, IDataContainer<T>
             foreach (TriggerSubscription subscription in bindings[0].ToArray())
             {
                 subscription.method.Invoke(Value);
+                if (subscription.triggerOnce) bindings[0].Remove(subscription);
             }
     }
 }

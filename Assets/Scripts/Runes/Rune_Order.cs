@@ -16,7 +16,7 @@ public class Rune_Order : Rune
     public SerializedDictionary<RuneElement, Action> summonRunes = new();
     public Action invoke;
     public Action move;
-    public PE_OverrideActions meleeOverride;
+    public EffectTask meleeOverride;
     public float lifeMultiplier;
     public float damageMultiplier;
 

@@ -108,10 +108,10 @@ public class Rune_Chaos : Rune
 
     private void AddHomingToProjectile(Entity entity)
     {
-        if (entity.GetMechanic<Mechanic_Movement>().movementSelector == null || !(entity.GetMechanic<Mechanic_Movement>().movementSelector is Movement_HomeToTarget))
+        if (entity.Stat<Stat_MovementSelector>().Value == null || !(entity.Stat<Stat_MovementSelector>().Value is Movement_HomeToTarget))
         {
-            entity.GetMechanic<Mechanic_Movement>().movementSelector = new Movement_HomeToTarget();
+            entity.Stat<Stat_MovementSelector>().Value = new Movement_HomeToTarget();
         }
-        (entity.GetMechanic<Mechanic_Movement>().movementSelector as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
+        (entity.Stat<Stat_MovementSelector>().Value as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
     }
 }

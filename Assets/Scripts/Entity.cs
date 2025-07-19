@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityCommon;
+using System;
 
 public class Entity : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class Entity : MonoBehaviour
 
     [SerializeReference]
     private ReferenceSerializableHashSet<IStatTag> stats = new();
+    private List<(IModifier, int)> durationModifiers = new();
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
-    private List<Mechanic> baseStats = new();
+    private List<Mechanic> mechanics = new();
     public T GetMechanic<T>() where T : Mechanic => IBoundInstances<Entity, T>.GetInstance(this);
 
     public T Stat<T>() where T : IStatTag
@@ -41,17 +43,134 @@ public class Entity : MonoBehaviour
 
     public void AddModifier(IModifier modifier)
     {
-        if (!stats.Contains(modifier.Tag)) stats.Add(modifier.Tag);
-        (modifier.Tag as Stat).AddModifier(modifier);
-        // TODO: precalculate modifiers
+        // Get stat
+        Stat stat;
+        if (stats.TryGetValue(modifier.Tag, out IStatTag tag))
+        {
+            stat = tag as Stat;
+        }
+        else
+        {
+            stats.Add(modifier.Tag);
+            stat = modifier.Tag as Stat;
+        }
+
+        AddModifier(modifier, stat);
+    }
+
+    private void AddModifier(IModifier modifier, Stat stat)
+    {
+        // For each stack being added
+        for(int s = 0; s < modifier.StacksAdded; s++)
+        {
+            // Check if at max stacks
+            if (modifier.MaxStacks > 0 && stat.ContainsModifier(modifier, out int count))
+            {
+                if (modifier.RefreshDuration)
+                {
+                    for (int i = 0; i < durationModifiers.Count; i++)
+                    {
+                        var stack = durationModifiers[i];
+                        stack.Item2 = 0;
+                        durationModifiers[i] = stack;
+                    }
+                }
+                if (count == modifier.MaxStacks) return;
+            }
+
+            // Add new stack
+            stat.AddModifier(modifier);
+            if (modifier.Temporary)
+            {
+                durationModifiers.Add((modifier, modifier.TickDuration));
+            }
+        }
+        switch (modifier.Alignment)
+        {
+            case Alignment.Buff:
+                new Trigger_BuffGained(modifier, modifier, this);
+                break;
+            case Alignment.Debuff:
+                new Trigger_DebuffGained(modifier, modifier, this);
+                break;
+        }
+        new Trigger_ModifierGained(modifier, modifier, this);
     }
 
     public void RemoveModifier(IModifier modifier)
     {
-        foreach (Stat stat in stats)
+        Stat stat;
+        if (stats.TryGetValue(modifier.Tag, out IStatTag tag))
         {
-            if (modifier.Tag != stat) continue;
+            stat = tag as Stat;
+        }
+        else
+        {
+            stats.Add(modifier.Tag);
+            stat = modifier.Tag as Stat;
+        }
+        RemoveModifier(modifier, stat);
+    }
+
+    private void RemoveModifier(IModifier modifier, Stat stat)
+    {
+        if (!stat.ContainsModifier(modifier, out _)) return;
+        stat.RemoveModifier(modifier);
+        switch (modifier.Alignment)
+        {
+            case Alignment.Buff:
+                new Trigger_BuffLost(modifier, modifier, this);
+                break;
+            case Alignment.Debuff:
+                new Trigger_DebuffLost(modifier, modifier, this);
+                break;
+        }
+        new Trigger_ModifierLost(modifier, modifier, this);
+    }
+
+    public void AddModifier<T>(IDataContainer modifier) where T : IStatTag
+    {
+        Stat stat = null;
+        foreach (IStatTag s in stats)
+        {
+            if(s.GetType() == typeof(T))
+            {
+                stat = (Stat)s;
+            }
+        }
+        if(stat == null)
+        {
+            stat = default;
+            stats.Add((IStatTag)stat);
+        }
+        if(modifier is IModifier)
+        {
+            AddModifier((IModifier)modifier, stat);
+        }
+        else
+        {
             stat.AddModifier(modifier);
+        }
+    }
+
+    public void RemoveModifier<T>(IDataContainer modifier) where T : IStatTag
+    {
+        Stat stat = null;
+        foreach (IStatTag s in stats)
+        {
+            if (s.GetType() == typeof(T))
+            {
+                stat = (Stat)s;
+            }
+        }
+        if (stat == null) return;
+        if (modifier is IModifier)
+        {
+            RemoveModifier((IModifier)modifier, stat);
+        }
+        else
+        {
+            stat.RemoveModifier(modifier);
         }
     }
 
@@ -62,7 +181,7 @@ public class Entity : MonoBehaviour
 
     private void Initialize()
     {
-        foreach (Mechanic stat in baseStats)
+        foreach (Mechanic stat in mechanics)
         {
             stat.AddInstance(this);
         }
@@ -76,7 +195,7 @@ public class Entity : MonoBehaviour
 
     private void TickMechanics()
     {
-        foreach (Mechanic stat in baseStats)
+        foreach (Mechanic stat in mechanics)
         {
             stat.Tick();
         }
@@ -84,12 +203,26 @@ public class Entity : MonoBehaviour
 
     private void TickStats()
     {
+        for (int i = 0; i < durationModifiers.Count; i++)
+        {
+            var stack = durationModifiers[i];
 
+            if(stack.Item2 == 1)
+            {
+                RemoveModifier(stack.Item1);
+                durationModifiers.RemoveAt(i);
+                i--;
+                continue;
+            }
+
+            stack.Item2--;
+            durationModifiers[i] = stack;
+        }
     }
 
     private void OnDestroy()
     {
-        foreach (Mechanic stat in baseStats)
+        foreach (Mechanic stat in mechanics)
         {
             stat.OnDestroy();
             stat.RemoveInstance(this);
@@ -100,7 +233,7 @@ public class Entity : MonoBehaviour
 
     private void OnValidate()
     {
-        foreach (Mechanic stat in baseStats)
+        foreach (Mechanic stat in mechanics)
         {
             if (stat == null) continue;
             stat.Owner = this;

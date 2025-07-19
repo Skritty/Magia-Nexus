@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Stat_SpellPhase : NumericalSolver, IStatTag { }
-public class Stat_SpellcastingQueue : ListStat<Rune>, IStatTag { }
+public class Stat_SpellcastingRuneQueue : ListStat<Rune>, IStatTag { }
 //public class Stat_EnchantedAttacks : NumericalSolver, IStatTag { } TODO
 public class Mechanic_Magic : Mechanic<Mechanic_Magic>
 {

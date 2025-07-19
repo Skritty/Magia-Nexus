@@ -33,8 +33,8 @@ public abstract class PrioritySolver<T> : Stat<T>
                 priorityModifiers.Add(modifier);
             }
         }
-        if (priorityModifiers.Count == 0) Value = default;
-        Value = HandleSamePriorityModifiers(priorityModifiers);
+        if (priorityModifiers.Count == 0) _value = default;
+        _value = HandleSamePriorityModifiers(priorityModifiers);
     }
 
     protected virtual T HandleSamePriorityModifiers(List<Stat<T>> modifiers)

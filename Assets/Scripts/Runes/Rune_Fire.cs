@@ -7,15 +7,15 @@ public class Rune_Fire : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public PE_EffectModifer buff;
+    public EffectTask buff;
     [SerializeReference]
-    public PersistentEffect debuff;
+    public EffectTask debuff;
     [SerializeReference]
-    public DamageInstanceOLD magicEffectModifier;
+    public Effect_DealDamage magicEffectModifier;
 
     [Header("Spell Shape")]
     [FoldoutGroup("Circle")]
-    public DamageInstanceOLD circleEffect;
+    public Effect_DealDamage circleEffect;
     [FoldoutGroup("Circle")]
     public Entity circleProxy;
     [FoldoutGroup("Circle")]
@@ -32,20 +32,20 @@ public class Rune_Fire : Rune
     public float lineMulti;
 
     [FoldoutGroup("Curse")]
-    public DamageInstanceOLD curseExplosion;
+    public Effect_DealDamage curseExplosion;
 
-    public override void MagicEffect(DamageInstanceOLD damage, int currentRuneIndex)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(DamageInstanceOLD damage, int currentRuneIndex)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
         if (damage.postOnHitEffects.Count == 0)
         {
             if (damage.runes.Count <= 1) return;
 
-            DamageInstanceOLD explosion = (DamageInstanceOLD)magicEffectModifier.Clone();
+            Effect_DealDamage explosion = magicEffectModifier.Clone();
             explosion.runes.AddRange(damage.runes);
             explosion.runes.RemoveAt(0);
             
@@ -53,7 +53,7 @@ public class Rune_Fire : Rune
         }
         else
         {
-            damage.postOnHitEffects[0].effectMultiplier += magicEffectModifier.effectMultiplier;
+            (damage.postOnHitEffects[0] as Effect_DealDamage).effectMultiplier += magicEffectModifier.effectMultiplier;
             //(damage.postOnHitEffects[0].targetSelector as Targeting_Radial).radius += (magicEffectModifier.targetSelector as Targeting_Radial).radius;
         }
         
@@ -65,7 +65,7 @@ public class Rune_Fire : Rune
         // Create effect
         spell.shape = SpellShape.Circle;
         spell.effect = circleEffect.Clone();
-        spell.AddRunesToDamageInstance(spell.effect as DamageInstanceOLD);
+        spell.AddRunesToDamageInstance(spell.effect as Effect_DealDamage);
         spell.SetChannelSpell(maxStages);
         spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageFire, spell);
         
@@ -103,7 +103,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(x => x.GetMechanic<Mechanic_Projectile>().piercesRemaining += 2, spell.effect);
+                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(projectile => projectile.Stat<Stat_PiercesRemaining>().AddModifier(2), spell.effect);
                     break;
                 }
             case SpellShape.Summon:
@@ -112,7 +112,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Curse:
                 {
-                    spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => CurseExplode(x, spell, x.Target), spell.effect);
+                    spell.cleanup += Trigger_ModifierLost.Subscribe(x => CurseExplode(spell, x), spell.effect);
                     break;
                 }
         }
@@ -123,9 +123,9 @@ public class Rune_Fire : Rune
         spell.effect.effectMultiplier += circleModMultiplierPerStage;
     }
 
-    private void ConjureMultiPerUse(Spell spell, Effect e, float multi)
+    private void ConjureMultiPerUse(Spell spell, EffectTask e, float multi)
     {
-        if (e.Owner == spell.Owner) return;
+        //if (e.Owner == spell.Owner) return;
         /*foreach(KeyValuePair<EffectTag, float> tag in e.effectTags)
         {
             if (tag.Key.HasFlag(EffectTag.Attack | EffectTag.Spell))
@@ -137,10 +137,10 @@ public class Rune_Fire : Rune
         // TODO
     }
 
-    private void CurseExplode(PersistentEffect effect, Spell spell, Entity proxy)
+    private void CurseExplode(Spell spell, IModifier modifier)
     {
-        DamageInstanceOLD explosion = (DamageInstanceOLD)curseExplosion.Clone();
+        Effect_DealDamage explosion = curseExplosion.Clone();
         spell.AddRunesToDamageInstance(explosion);
-        explosion.CreateFromTrigger(spell.Owner, effect, proxy);
+        explosion.DoTask(spell.effect, spell.Owner);
     }
 }

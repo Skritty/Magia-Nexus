@@ -11,7 +11,7 @@ public class Rune_Water : Rune
 
     [Header("Spell Shape")]
     [SerializeReference]
-    public PE_OverrideActions actionOverride;
+    public EffectTask actionOverride;
     [SerializeReference]
     public Targeting multicastConeTargeting;
 
@@ -40,7 +40,7 @@ public class Rune_Water : Rune
     {
         foreach(DamageSolver modifier in damage.damageModifiers)
         {
-            if (modifier.method == NumericalModifierCalculationMethod.Flat && modifier.damageType.HasFlag(DamageType.Attack))
+            if (modifier.method == CalculationStep.Flat && modifier.damageType.HasFlag(DamageType.Attack))
             {
                 damage.runes.AddRange(spell.runes);
                 return;

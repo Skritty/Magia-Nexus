@@ -7,12 +7,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Rune/Extend")]
 public class Rune_Extend : Rune
 {
-    public override void MagicEffect(DamageInstanceOLD damage, int currentRuneIndex)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         // Spell phase +1
     }
 
-    public override void MagicEffectModifier(DamageInstanceOLD damage, int currentRuneIndex)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
         List<Rune> runes = new List<Rune>();
         for(int i = 1; i < damage.runes.Count; i++)

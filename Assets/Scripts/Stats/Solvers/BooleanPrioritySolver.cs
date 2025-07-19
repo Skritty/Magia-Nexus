@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BooleanSolver : PrioritySolver<bool>
+public class BooleanPrioritySolver : PrioritySolver<bool>
 {
     protected override bool HandleSamePriorityModifiers(List<Stat<bool>> modifiers)
     {

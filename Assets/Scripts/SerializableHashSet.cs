@@ -397,6 +397,23 @@ namespace UnityCommon
             }
         }
 
+        public bool TryGetValue(T equalValue, out T actualValue)
+        {
+            var hash = GetHashInternal(equalValue);
+            var slotIndex = hash % _slots.Length;
+            var slots = _slots[slotIndex];
+            for (int i = 0; i < slots?.Count; i++)
+            {
+                if (slots[i].hashCode == hash)
+                {
+                    actualValue = slots[i].value;
+                    return true;
+                }
+            }
+            actualValue = equalValue;
+            return false;
+        }
+
         private int GetHashInternal(T item)
         {
             if (item == null)

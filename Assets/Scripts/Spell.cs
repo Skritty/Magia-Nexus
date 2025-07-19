@@ -7,7 +7,7 @@ public class Spell
 {
     public Entity Owner; // The entity that cast the spell
     public List<Rune> runes = new List<Rune>(); // Rune formula
-    public Effect effect; // The effect of the spell (generated)
+    public EffectTask effect; // The effect of the spell (generated)
     public List<Entity> proxies = new List<Entity>(); // Entities that use the spell effect
     public System.Action cleanup; // Clean up any trigger subscriptions when the spell is finished
     public int maxStages;
@@ -27,7 +27,7 @@ public class Spell
     }
 
     // Spell Generating Info
-    public Effect spellcast;
+    public EffectTask spellcast;
     public SpellShape shape;
     public bool channeled;
     public bool ignoreMaxStageCast;
@@ -49,10 +49,10 @@ public class Spell
 
     private void SetUpProjectile(Entity entity)
     {
-        entity.GetMechanic<Mechanic_Magic>().runes.AddRange(runes);
+        entity.Stat<Stat_SpellcastingRuneQueue>().Value.AddRange(runes);
     }
 
-    public void GenerateSpell(Effect spellcast, Spell chainCast)
+    public void GenerateSpell(EffectTask spellcast, Spell chainCast)
     {
         this.spellcast = spellcast;
         GenerateShape();
@@ -73,15 +73,15 @@ public class Spell
         chainsRemaining += additionalBranches;
     }
 
-    private void ChainCast(DamageInstanceOLD damage)
+    private void ChainCast(EffectTask hit)
     {
         if (--chainsRemaining >= 0)
         {
-            CastSpell(damage.Target);
+            CastSpell(hit.Target);
         }
     }
 
-    public void AddRunesToDamageInstance(DamageInstanceOLD damage)
+    public void AddRunesToDamageInstance(Effect_DealDamage damage)
     {
         damage.runes.AddRange(runes);
     }

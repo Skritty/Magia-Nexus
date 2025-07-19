@@ -8,21 +8,21 @@ public class Rune_Wind : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public PersistentEffect buff;
+    public TriggerTask buff;
     [SerializeReference]
-    public PersistentEffect debuff;
+    public TriggerTask debuff;
     [SerializeReference]
-    public Effect magicEffectModifier;
+    public TriggerTask magicEffectModifier;
 
     [Header("Spell Shape")]
-    public DamageInstanceOLD lineEffect;
+    public Effect_DealDamage lineEffect;
 
-    public override void MagicEffect(DamageInstanceOLD damage, int currentRuneIndex)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(DamageInstanceOLD damage, int currentRuneIndex)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(magicEffectModifier);
     }
@@ -31,7 +31,7 @@ public class Rune_Wind : Rune
     {
         spell.shape = SpellShape.Line;
         spell.effect = lineEffect.Clone();
-        spell.AddRunesToDamageInstance(spell.effect as DamageInstanceOLD);
+        spell.AddRunesToDamageInstance(spell.effect as Effect_DealDamage);
         spell.proxies.Add(spell.Owner);
         spell.cleanup += Trigger_SpellCast.Subscribe(x => spell.StopSpell(), spell);
     }

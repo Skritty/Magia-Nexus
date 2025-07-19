@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 [Serializable]
-public abstract class Stat : IDataContainer
+public abstract class Stat : IDataContainer, IEqualityComparer<Stat>
 {
     public virtual void Tick(Entity Owner) { }
-    public abstract void AddModifier(IModifier modifier);
-    public abstract void RemoveModifier(IModifier modifier);
+    public abstract void AddModifier(IDataContainer modifier);
+    public abstract void RemoveModifier(IDataContainer modifier);
+    public abstract bool ContainsModifier(IDataContainer modifier, out int count);
     public virtual void Solve() { }
     //public virtual void InverseSolve() { }
     public bool Get<T>(out T data)
@@ -18,64 +20,136 @@ public abstract class Stat : IDataContainer
         else data = container.Value;
         return container != null;
     }
+
+    public bool Equals(Stat x, Stat y)
+    {
+        return x.Equals(y);
+    }
+
+    public int GetHashCode(Stat obj)
+    {
+        return GetType().GetHashCode();
+    }
 }
 
 public abstract class Stat<T> : Stat, IDataContainer<T>
 {
     public Action<T> OnChange;
-    private T precalculatedModifier;
-    public virtual T Value 
-    { 
+    protected T _value;
+    private bool changed;
+    public virtual T Value
+    {
         get
         {
-            return precalculatedModifier;
-        }
-        set
-        {
-            OnChange?.Invoke(value);
-            precalculatedModifier = value;
+            if (changed)
+            {
+                Solve();
+                changed = false;
+            }
+            return _value;
         }
     }
 
     [field: SerializeReference, HideIf("@!(this is IStatTag)")]
-    public List<IModifier<T>> Modifiers { get; } = new();
-    public override void AddModifier(IModifier modifier)
+    public List<IDataContainer<T>> Modifiers { get; } = new();
+
+    public void AddModifier(T value)
     {
-        IModifier<T> mod = (IModifier<T>)modifier;
-        if (mod == null) return;
-        Modifiers.Add(mod);
-        Solve();
+        Modifiers.Add(new DataContainer<T>(value) as IDataContainer<T>);
+        changed = true;
     }
-    public override void RemoveModifier(IModifier modifier)
+
+    public override void AddModifier(IDataContainer modifier)
     {
-        IModifier<T> mod = (IModifier<T>)modifier;
-        Modifiers.Remove(mod);
-        Solve();
+        if(modifier is IDataContainer<T>)
+        {
+            Modifiers.Add(modifier as IDataContainer<T>);
+            changed = true;
+            OnChange?.Invoke(Value);
+        }
     }
-}
 
-public interface IModifier : IDataContainer 
-{
-    public EffectTask Source {  get; set; }
-    public IStatTag Tag { get; set; }
+    public override void RemoveModifier(IDataContainer modifier)
+    {
+        if (modifier is IDataContainer<T>)
+        {
+            Modifiers.Remove(modifier as IDataContainer<T>);
+            changed = true;
+            OnChange?.Invoke(Value);
+        }
+    }
 
-    public int MaxStacks { get; set; }
-    public int Stacks { get; set; }
-    public bool PerPlayer { get; set; }
-    public Alignment Alignment { get; set; }
-
-    public bool Temporary { get; set; }
-    public int Tick { get; set; }
-    public int TickDuration { get; set; }
-    public bool RefreshDuration { get; set; }
-    public void Solve();
+    public override bool ContainsModifier(IDataContainer modifier, out int count)
+    {
+        count = 0;
+        foreach(IDataContainer<T> m in Modifiers)
+        {
+            if (m.Equals(modifier)) count++;
+        }
+        if(count > 0)
+        {
+            return true;
+        }
+        return false;
+    }
 }
 
 public class ListStat<T> : Stat<List<T>> { }
 
-public interface IModifier<T> : IModifier, IDataContainer<T> 
+public interface IModifier : IDataContainer
 {
-    public List<IModifier<T>> Modifiers { get; }
+    public IStatTag Tag { get; }
+    public Alignment Alignment { get; }
+    public int MaxStacks { get; }
+    public int StacksAdded { get; }
+    public bool PerPlayer { get; }
+    public bool Temporary { get; }
+    public int TickDuration { get; }
+    public bool RefreshDuration { get; }
+}
+
+public interface IModifier<T> : IModifier, IDataContainer<T>
+{
+    public List<IDataContainer<T>> Modifiers { get; }
+    public void AddModifier(IDataContainer modifier);
+}
+
+public class DummyModifier<T> : IDataContainer<T>, IModifier
+{
+    public T Value { get; }
+    public IStatTag Tag { get; }
+    public Alignment Alignment { get; }
+    public int MaxStacks { get; }
+    public int StacksAdded { get; } = 1;
+    public bool PerPlayer { get; }
+    public bool Temporary { get; }
+    public int TickDuration { get; }
+    public bool RefreshDuration { get; }
+
+    public DummyModifier() { }
+
+    public DummyModifier(T value = default, IStatTag tag = default, Alignment alignment = Alignment.Neutral,
+        int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false, 
+        bool temporary = false, int tickDuration = 0, bool refreshDuration = false)
+    {
+        Value = value;
+        Tag = tag;
+        Alignment = alignment;
+        MaxStacks = maxStacks;
+        StacksAdded = stacksAdded;
+        PerPlayer = perPlayer;
+        Temporary = temporary;
+        TickDuration = tickDuration;
+        RefreshDuration = refreshDuration;
+    }
+
+    public bool Get<T1>(out T1 data)
+    {
+        IDataContainer<T1> container = (IDataContainer<T1>)this;
+        if (container == null) data = default;
+        else data = container.Value;
+        return container != null;
+    }
 }
 
 [Flags]
@@ -86,7 +160,11 @@ public enum Alignment
     Debuff = 2 
 }
 
-public interface IStatTag : IDataContainer { }
+public interface IStatTag : IDataContainer 
+{
+    public void AddModifier(IDataContainer modifier);
+}
+public class Stat_Triggers : Stat<Alignment>, IStatTag { }
 public class Stat_PreventExpire : EnumPrioritySolver<Alignment>, IStatTag { }
 public class Stat_AoESize : NumericalSolver, IStatTag { }
 public class Stat_Projectiles : NumericalSolver, IStatTag { }

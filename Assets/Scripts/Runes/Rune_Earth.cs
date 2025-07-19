@@ -8,23 +8,23 @@ public class Rune_Earth : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public PersistentEffect buff;
+    public EffectTask buff;
     [SerializeReference]
-    public Effect debuff;
+    public EffectTask debuff;
 
     [Header("Spell Shape")]
     [SerializeReference]
     public Effect_CreateEntity createProjectiles;
 
-    public override void MagicEffect(DamageInstanceOLD damage, int currentRuneIndex)
+    public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
         damage.postOnHitEffects.Add(debuff);
     }
 
-    public override void MagicEffectModifier(DamageInstanceOLD damage, int currentRuneIndex)
+    public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        PE_RuneCrystal crystal = new PE_RuneCrystal();
-        crystal.rune = damage.runes[currentRuneIndex - 1];
+        Effect_GrantModifer crystal = new Effect_GrantModifer();
+        crystal.modifier = new Stat<Rune>();
         damage.postOnHitEffects.Add(crystal);
     }
 
