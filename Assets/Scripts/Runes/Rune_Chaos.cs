@@ -18,7 +18,7 @@ public class Rune_Chaos : Rune
     [FoldoutGroup("Projectile")]
     public Movement_HomeToTarget homing;
     [FoldoutGroup("Curse")]
-    public DamageInstanceOLD curseHit;
+    public Effect_DoHit curseHit;
     [FoldoutGroup("Curse")]
     public float baseChanneledCurseEffect;
 

@@ -23,7 +23,7 @@ public class Action : ViewableGameAsset
     }
     public virtual void Tick(Entity owner, int tickLength, int tick)
     {
-        owner.GetMechanic<Mechanic_Movement>().dirMovementSpeedMulti = movementSpeedOverDuration.Evaluate((tick % tickLength) * 1f / tickLength);
+        owner.AddModifier<Stat_MovementSpeed>(new NumericalModifier(value:movementSpeedOverDuration.Evaluate((tick % tickLength) * 1f / tickLength), step: CalculationStep.Multiplicative, temporary: true));
         if (onTick || tick % tickLength == (int)(tickLength * timing))
         {
             owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = activateAnimationState;

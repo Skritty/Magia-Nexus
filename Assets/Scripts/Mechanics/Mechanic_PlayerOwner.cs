@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public class Stat_PlayerCharacter : Stat<Entity>, IStatTag { } // TODO: make this the end all be all for referencing the player character
 public class Mechanic_PlayerOwner : Mechanic<Mechanic_PlayerOwner>
 {
     [FoldoutGroup("Player Owned")]
     public Entity proxyOwner;
-    [FoldoutGroup("Player Owned")]
-    public bool playerCharacter;
     [FoldoutGroup("Player Owned")]
     public bool scaleWithPlayerCharacterModifiers;
     [FoldoutGroup("Player Owned")]

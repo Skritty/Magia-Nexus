@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Targeting_Nemesis : MultiTargeting
 {
-    public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(object source, Entity owner, Entity proxy = null)
     {
         lockTarget = true;
         if (lockTarget && !(primaryTarget == null || !primaryTarget.gameObject.activeSelf))
@@ -25,7 +25,7 @@ public class Targeting_Nemesis : MultiTargeting
         if (sortingMethod != TargetSorting.Unsorted)
             targets.Sort(SortTargets);
 
-        int actualNumberOfTargets = numberOfTargets + owner.GetMechanic<Stat_Targeting>().additionalTargets;
+        int actualNumberOfTargets = numberOfTargets + (int)owner.Stat<Stat_Targets>().Value;
         if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
             targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
 

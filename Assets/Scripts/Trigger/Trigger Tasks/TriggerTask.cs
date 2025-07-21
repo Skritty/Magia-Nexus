@@ -5,6 +5,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Skritty.Tools.Utilities;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [Serializable]
 public abstract class TriggerTask
@@ -37,33 +38,47 @@ public abstract class TriggerTask<T> : TriggerTask
 // Task
 // EffectInfo: source, owner, target, multiplier, task
 
-public abstract class EffectTask : TriggerTask<EffectTask>
+public abstract class EffectTask : TriggerTask<Effect>
 {
-    [FoldoutGroup("@GetType()")]
-    public float effectMultiplier = 1;
+    [SerializeField, FoldoutGroup("@GetType()")]
+    private float effectMultiplier = 1;
     [FoldoutGroup("@GetType()")]
     public int ignoreFrames;
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
 
-    public override bool DoTask(IDataContainer data, Entity Owner)
+    public override bool DoTask(IDataContainer data, Entity owner)
     {
-        data.Get(out EffectTask value);
-        return DoTask(value, Owner);
+        data.Get(out Effect value);
+        return DoTask(value, owner);
     }
 
-    public override bool DoTask(EffectTask data, Entity Owner)
+    public override bool DoTask(Effect data, Entity owner)
     {
-        foreach(Entity target in targetSelector.GetTargets(null, Owner))
+        List<Entity> targets = null;
+        if(data == null)
+        {
+            targets = targetSelector.GetTargets(this, owner);
+        }
+        else
+        {
+            targets = targetSelector.GetTargets(this, data, owner);
+        }
+        foreach (Entity target in targets)
         {
             if (ignoreFrames > 0)
-                new PE_IgnoreEntity(this, ignoreFrames);
-            DoEffect(Owner, target, effectMultiplier * (data == null ? 1 : data.effectMultiplier), data != null);
+            {
+                target.AddModifier<Stat_Untargetable>(new DummyModifier<(Entity, object)>(
+                        value: (owner, this),
+                        temporary: true, tickDuration: ignoreFrames
+                        ));
+            }
+            DoEffect(owner, target, effectMultiplier * (data == null ? 1 : data.EffectMultiplier), data != null);
         }
         return true;
     }
 
-    public abstract void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered);
+    public abstract void DoEffect(Entity owner, Entity target, float multiplier, bool triggered);
 
     public new EffectTask Clone()
     {
@@ -90,17 +105,17 @@ public class Effect_GrantModifer : EffectTask
 }
 
 [LabelText("Task: Do Random Effect")]
-public class Task_DoRandomEffect : TriggerTask
+public class Task_DoRandomEffect : EffectTask
 {
     public EffectTargetSelector proxy;
     public bool useProxyAsOwner;
     [SerializeReference]
-    public List<Effect> effects;
+    public List<EffectTask> effects;
     public List<Action> actions; // TODO: actions should NOT be a source of truth
 
-    public override bool DoTask(Trigger trigger, Entity Owner)
+    public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
-        WeightedChance<Effect> random = new WeightedChance<Effect>();
+        WeightedChance<EffectTask> random = new WeightedChance<EffectTask>();
         if (actions.Count > 0)
         {
             foreach (Action action in actions)
@@ -110,22 +125,20 @@ public class Task_DoRandomEffect : TriggerTask
         }
         else
         {
-            foreach (Effect e in effects)
+            foreach (EffectTask e in effects)
             {
                 random.Add(e, 1);
             }
         }
-            
-        if (proxy != EffectTargetSelector.None && trigger.Get(out Effect effect))
+
+        if (proxy != EffectTargetSelector.None)
         {
-            Entity proxyEntity = proxy == EffectTargetSelector.Owner ? effect.Owner : effect.Target;
-            random.GetRandomEntry().CreateFromTrigger(useProxyAsOwner ? proxyEntity : Owner, effect, useProxyAsOwner ? null : proxyEntity);
+            Entity proxyEntity = proxy == EffectTargetSelector.Owner ? owner : target;
         }
         else
         {
-            random.GetRandomEntry().Create(Owner);
+            random.GetRandomEntry().DoTask(this, owner);
         }
-        return true;
     }
 }
 
@@ -150,5 +163,6 @@ public class Task_ModifyDamageInstanceRunes : TriggerTask<DamageInstance>
     public override bool DoTask(DamageInstance damage, Entity Owner)
     {
         damage.runes.AddRange(runes);
+        return true;
     }
 }

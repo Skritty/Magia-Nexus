@@ -22,7 +22,7 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
     public override void Tick()
     {
         if (tasks.Count == 0) return;
-        foreach (Entity entity in aoe.GetTargets(Owner))
+        foreach (Entity entity in aoe.GetTargets(this, Owner))
         {
             OnHit(entity);
         }
@@ -51,11 +51,11 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
         }
         if (--Owner.Stat<Stat_PiercesRemaining>().Value < 0)
         {
-            new Trigger_Expire(Owner);
+            new Trigger_Expire(Owner, Owner);
         }
         else
         {
-            new Trigger_ProjectilePierce(effect, effect, Owner);
+            new Trigger_ProjectilePierce(Owner, Owner);
         }
     }
 }

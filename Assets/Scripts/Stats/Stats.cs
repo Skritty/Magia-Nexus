@@ -7,19 +7,13 @@ using static UnityEngine.Rendering.DebugUI;
 [Serializable]
 public abstract class Stat : IDataContainer, IEqualityComparer<Stat>
 {
+    public abstract bool Get<Type>(out Type data);
     public virtual void Tick(Entity Owner) { }
     public abstract void AddModifier(IDataContainer modifier);
     public abstract void RemoveModifier(IDataContainer modifier);
     public abstract bool ContainsModifier(IDataContainer modifier, out int count);
     public virtual void Solve() { }
     //public virtual void InverseSolve() { }
-    public bool Get<T>(out T data)
-    {
-        IDataContainer<T> container = (this as IDataContainer<T>);
-        if (container == null) data = default;
-        else data = container.Value;
-        return container != null;
-    }
 
     public bool Equals(Stat x, Stat y)
     {
@@ -53,9 +47,15 @@ public abstract class Stat<T> : Stat, IDataContainer<T>
     [field: SerializeReference, HideIf("@!(this is IStatTag)")]
     public List<IDataContainer<T>> Modifiers { get; } = new();
 
+    public override bool Get<Type>(out Type data)
+    {
+        data = (Type)(Value as object);
+        return data != null;
+    }
+
     public void AddModifier(T value)
     {
-        Modifiers.Add(new DataContainer<T>(value) as IDataContainer<T>);
+        Modifiers.Add(new DataContainer<T>(value));
         changed = true;
     }
 
@@ -95,6 +95,7 @@ public abstract class Stat<T> : Stat, IDataContainer<T>
 }
 
 public class ListStat<T> : Stat<List<T>> { }
+public class QueueStat<T> : Stat<Queue<T>> { }
 
 public interface IModifier : IDataContainer
 {
@@ -173,7 +174,7 @@ public class Stat_CastTargets : NumericalSolver, IStatTag { }
 public class Stat_Removeable : NumericalSolver, IStatTag { }
 public class Stat_Knockback : NumericalSolver, IStatTag { }
 public class Stat_Enmity : NumericalSolver, IStatTag { }
-public class Stat_Untargetable : ListStat<(Entity, int)>, IStatTag { }
+public class Stat_Untargetable : ListStat<(Entity, object)>, IStatTag { }
 public class Stat_Team : PrioritySolver<int>, IStatTag { }
 public class Stat_SummonCount : NumericalSolver, IStatTag { }
 public class Stat_Summons : ListStat<Entity>, IStatTag { }

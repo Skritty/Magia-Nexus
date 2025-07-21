@@ -3,7 +3,7 @@ public class Trigger_ActionStart : Trigger<Action>
     public Trigger_ActionStart() { }
     public Trigger_ActionStart(Action action, params object[] bindingObjects)
     {
-        Value = action;
+        _value = action;
         Invoke(bindingObjects);
     }
 }
@@ -13,7 +13,7 @@ public class Trigger_ActionEnd : Trigger<Action>
     public Trigger_ActionEnd() { }
     public Trigger_ActionEnd(Action action, params object[] bindingObjects)
     {
-        Value= action;
+        _value = action;
         Invoke(bindingObjects);
     }
 }
@@ -23,7 +23,7 @@ public class Trigger_TurnStart : Trigger<Entity>
     public Trigger_TurnStart() { }
     public Trigger_TurnStart(Entity owner, params object[] bindingObjects)
     {
-        Value = owner;
+        _value = owner;
         Invoke(bindingObjects);
     }
 }
@@ -36,7 +36,7 @@ public class Trigger_TurnEnd : Trigger<Entity>
     public Trigger_TurnEnd() { }
     public Trigger_TurnEnd(Entity owner, params object[] bindingObjects)
     {
-        Value = owner;
+        _value = owner;
         Invoke(bindingObjects);
     }
 }

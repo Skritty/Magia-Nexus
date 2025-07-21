@@ -1,16 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityCommon;
-using System;
+using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
     public System.Action cleanup;
 
     [SerializeReference]
-    private ReferenceSerializableHashSet<IStatTag> stats = new();
+    private ReferenceSerializableHashSet<IStatTag> stats = new(); // TODO: make a backing fancy type dictionary for runtime
     private List<(IModifier, int)> durationModifiers = new();
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
     private List<Mechanic> mechanics = new();
@@ -99,6 +97,7 @@ public class Entity : MonoBehaviour
 
     public void RemoveModifier(IModifier modifier)
     {
+        if (modifier == null) return;
         Stat stat;
         if (stats.TryGetValue(modifier.Tag, out IStatTag tag))
         {
@@ -116,6 +115,14 @@ public class Entity : MonoBehaviour
     {
         if (!stat.ContainsModifier(modifier, out _)) return;
         stat.RemoveModifier(modifier);
+        foreach ((IModifier, int) mod in durationModifiers.ToArray())
+        {
+            if(mod.Item1 == modifier)
+            {
+                durationModifiers.Remove(mod);
+                break;
+            }
+        }
         switch (modifier.Alignment)
         {
             case Alignment.Buff:
@@ -126,6 +133,21 @@ public class Entity : MonoBehaviour
                 break;
         }
         new Trigger_ModifierLost(modifier, modifier, this);
+    }
+
+    public void RemoveOldestDurationModifier(Alignment alignment)
+    {
+        if (durationModifiers.Count == 0) return;
+        IModifier modifier = null;
+        foreach ((IModifier, int) mod in durationModifiers)
+        {
+            if(mod.Item1.Alignment == alignment)
+            {
+                modifier = durationModifiers[0].Item1;
+                break;
+            }
+        }
+        RemoveModifier(modifier);
     }
 
     public void AddModifier<T>(IDataContainer modifier) where T : IStatTag
@@ -189,8 +211,8 @@ public class Entity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        TickMechanics();
         TickStats();
+        TickMechanics();
     }
 
     private void TickMechanics()

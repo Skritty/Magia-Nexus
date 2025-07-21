@@ -1,6 +1,4 @@
 using Sirenix.OdinInspector;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement_DistanceFromTarget : MovementDirectionSelector
@@ -10,29 +8,29 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
     [FoldoutGroup("@GetType()")]
     public float threshold = 0.25f;
 
-    public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
+    public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
-        SetMoveDir(Target);
+        SetMoveDir(target, multiplier);
     }
 
-    private void SetMoveDir(Entity Target)
+    private void SetMoveDir(Entity target, float multiplier)
     {
-        if (Target.Stat<Stat_MovementTarget>().Value == null)
+        if (target.Stat<Stat_MovementTarget>().Value == null)
         {
-            Target.Stat<Stat_MovementSpeed>().Modifiers[1].Value = 0;
+            target.AddModifier<Stat_MovementSpeed>(new NumericalModifier(value: 0, step: CalculationStep.Multiplicative, temporary: true));
         }
         else
         {
-            Vector3 dirFromTarget = Target.transform.position - Target.Stat<Stat_MovementTarget>().Value.transform.position;
+            Vector3 dirFromTarget = target.transform.position - target.Stat<Stat_MovementTarget>().Value.transform.position;
             dirFromTarget = dirFromTarget.normalized * distanceFromTarget - dirFromTarget;
             if(dirFromTarget.magnitude <= threshold)
             {
-                Target.Stat<Stat_MovementSpeed>().Modifiers[1].Value = 0;
+                target.AddModifier<Stat_MovementSpeed>(new NumericalModifier(value: 0, step: CalculationStep.Multiplicative, temporary: true));
             }
             else
             {
-                Target.GetMechanic<Mechanic_Movement>().facingDir = dirFromTarget.normalized;
-                Target.Stat<Stat_MovementSpeed>().Modifiers[1].Value = effectMultiplier;
+                target.GetMechanic<Mechanic_Movement>().facingDir = dirFromTarget.normalized;
+                target.AddModifier<Stat_MovementSpeed>(new NumericalModifier(value: multiplier, step: CalculationStep.Multiplicative, temporary: true));
             }
         }
     }

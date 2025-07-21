@@ -10,8 +10,8 @@ public class Effect_Invoke : EffectTask
         Spell spell;
         if (useOwnerRunes)
         {
-            if (Owner.Stat<Stat_SpellcastingRuneQueue>().Value.Count == 0) return;
-            spell = new Spell(Owner, Owner.Stat<Stat_SpellcastingRuneQueue>().Value);
+            if (Owner.Stat<Stat_Runes>().Value.Count == 0) return;
+            spell = new Spell(Owner, Owner.Stat<Stat_Runes>().Value);
         }
         else
         {

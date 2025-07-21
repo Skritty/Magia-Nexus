@@ -12,11 +12,11 @@ public class Effect_Enchant : EffectTask
 
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        if (Owner.GetMechanic<Mechanic_Magic>().runes.Count == 0) return;
+        if (Owner.Stat<Stat_Runes>().Value.Count == 0) return;
         for (int i = 0; i < attacksEnchanted; i++)
         {
-            Owner.GetMechanic<Mechanic_Magic>().enchantedAttacks.Enqueue(new List<Rune>(Owner.GetMechanic<Mechanic_Magic>().runes));
+            Owner.Stat<Stat_Enchantments>().Value.Enqueue(new List<Rune>(Owner.Stat<Stat_Runes>().Value));
         }
-        if (consumeRunes) Owner.GetMechanic<Mechanic_Magic>().ConsumeRunes();
+        if (consumeRunes) Owner.Stat<Stat_Runes>().Value.Clear();
     }
 }

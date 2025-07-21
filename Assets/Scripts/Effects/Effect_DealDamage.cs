@@ -15,7 +15,6 @@ public class Effect_DealDamage : Effect_DoHit
         DamageInstance damageInstance = (hit as DamageInstance)?.Clone();
         if (damageInstance == null) return;
         damageInstance.EffectMultiplier = multiplier;
-        damageInstance.triggered = triggered;
         damageInstance.Source = this;
         damageInstance.Owner = Owner;
         damageInstance.Target = Target;

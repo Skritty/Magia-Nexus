@@ -13,6 +13,8 @@ public class Rune_Water : Rune
     [SerializeReference]
     public EffectTask actionOverride;
     [SerializeReference]
+    public EffectTask enchantAttack;
+    [SerializeReference]
     public Targeting multicastConeTargeting;
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
@@ -32,20 +34,8 @@ public class Rune_Water : Rune
         spell.shape = SpellShape.Conjuration;
         spell.effect = actionOverride.Clone();
         spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => spell.StopSpell(), spell.effect);
-        spell.cleanup += Trigger_PreHit.Subscribe(x => AddMagicEffectRunesToAttackDamage(spell, x), spell.Owner, -5);
+        spell.cleanup += Trigger_PreHit.Subscribe(x => enchantAttack.DoTask(x, spell.Owner), spell.Owner, -5);
         spell.proxies.Add(spell.Owner);
-    }
-
-    private void AddMagicEffectRunesToAttackDamage(Spell spell, DamageInstanceOLD damage)
-    {
-        foreach(DamageSolver modifier in damage.damageModifiers)
-        {
-            if (modifier.method == CalculationStep.Flat && modifier.damageType.HasFlag(DamageType.Attack))
-            {
-                damage.runes.AddRange(spell.runes);
-                return;
-            }
-        }
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)

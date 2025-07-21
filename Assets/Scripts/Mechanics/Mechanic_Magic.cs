@@ -5,15 +5,13 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Stat_SpellPhase : NumericalSolver, IStatTag { }
-public class Stat_SpellcastingRuneQueue : ListStat<Rune>, IStatTag { }
-//public class Stat_EnchantedAttacks : NumericalSolver, IStatTag { } TODO
+public class Stat_Runes : ListStat<Rune>, IStatTag { }
+public class Stat_Enchantments : QueueStat<List<Rune>>, IStatTag { }
 public class Mechanic_Magic : Mechanic<Mechanic_Magic>
 {
     public Spell originSpell;
     [SerializeReference, FoldoutGroup("Magic")]
     public List<Spell> ownedSpells = new List<Spell>();
-    [FoldoutGroup("Magic")]
-    public Queue<List<Rune>> enchantedAttacks = new Queue<List<Rune>>();
     [FoldoutGroup("Magic")]
     public VFX vfx;
     private GraphicsBuffer runeInfo;
@@ -24,6 +22,15 @@ public class Mechanic_Magic : Mechanic<Mechanic_Magic>
         {
             vfx = vfx.PlayVFX<VFX>(Owner.transform, Vector3.up * 1.5f, Vector3.zero, true);
             vfx.transform.parent = Owner.transform;
+            Owner.Stat<Stat_Runes>().OnChange
+        }
+    }
+
+    public override void Tick()
+    {
+        if (Owner.Stat<Stat_Runes>().Value.Count == 0)
+        {
+            vfx.visualEffect.enabled = false;
         }
     }
 
@@ -46,12 +53,6 @@ public class Mechanic_Magic : Mechanic<Mechanic_Magic>
         runeInfo.SetData(runeIndex);
         vfx.visualEffect.SetGraphicsBuffer("Runes", runeInfo);
         vfx.visualEffect.SendEvent("SpawnRuneType");
-    }
-
-    public void ConsumeRunes()
-    {
-        runes.Clear();
-        vfx.visualEffect.enabled = false;
     }
 }
 

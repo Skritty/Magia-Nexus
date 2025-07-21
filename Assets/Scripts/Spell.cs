@@ -49,7 +49,7 @@ public class Spell
 
     private void SetUpProjectile(Entity entity)
     {
-        entity.Stat<Stat_SpellcastingRuneQueue>().Value.AddRange(runes);
+        entity.Stat<Stat_Runes>().Value.AddRange(runes);
     }
 
     public void GenerateSpell(EffectTask spellcast, Spell chainCast)

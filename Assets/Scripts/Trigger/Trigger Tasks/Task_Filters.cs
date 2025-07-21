@@ -115,7 +115,7 @@ public class Task_Filter_DamageTreshold : TriggerTask<DamageInstance>
     public float damageThreshold;
     public override bool DoTask(DamageInstance damage, Entity Owner)
     {
-        if (damage.calculatedDamage >= damageThreshold) return true;
+        if (damage.finalDamage >= damageThreshold) return true;
         else return false;
     }
 }

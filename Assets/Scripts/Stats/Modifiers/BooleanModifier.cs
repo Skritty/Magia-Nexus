@@ -9,16 +9,14 @@ public class BooleanModifier : BooleanPrioritySolver, IModifier<bool>
     public BooleanModifier() { }
     public EffectTask Source { get; set; }
     [field: SerializeReference]
-    public IStatTag Tag { get; set; }
-    public int MaxStacks { get; set; } = -1;
-    public int Stacks { get; set; } = 1;
-    public bool PerPlayer { get; set; }
-    public Alignment Alignment { get; set; }
-    public bool Temporary { get; set; }
+    public IStatTag Tag { get; }
+    public Alignment Alignment { get; }
+    public int MaxStacks { get; }
+    public int StacksAdded { get; } = 1;
+    public bool PerPlayer { get; }
+    public bool Temporary { get; }
     [field: ShowIf("@Temporary"), ReadOnly]
-    public int CurrentTick { get; set; }
+    public int TickDuration { get; }
     [field: ShowIf("@Temporary"), ReadOnly]
-    public int TickDuration { get; set; } = -1;
-    [field: ShowIf("@Temporary"), ReadOnly]
-    public bool RefreshDuration { get; set; }
+    public bool RefreshDuration { get; }
 }

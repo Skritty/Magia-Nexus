@@ -7,33 +7,40 @@ public class DamageInstance : Hit
     [FoldoutGroup("@GetType()")]
     public List<DamageSolver> damageModifiers = new();
     [FoldoutGroup("@GetType()")]
-    public List<Rune> runes = new();
-    [FoldoutGroup("@GetType()")]
     public bool skipFlatDamageReduction;
 
     public void GenerateMagicEffect()
     {
+        // Check enchanted attack queue of the owner
+        bool isAttack = false;
+        foreach (DamageSolver solver in damageModifiers)
+        {
+            if (solver.damageType.HasFlag(DamageType.Attack))
+            {
+                isAttack = true;
+                break;
+            }
+        }
+        if (isAttack && Owner.Stat<Stat_Enchantments>().Value.Count > 0)
+        {
+            runes.AddRange(Owner.Stat<Stat_Enchantments>().Value.Dequeue());
+        }
+
+        // Check rune crystals on the target
         foreach (Rune rune in Target.Stat<Stat_RuneCrystals>().Value)
         {
             runes.Add(rune);
-            Target.GetMechanic<Stat_PersistentEffects>().AddOrRemoveSimilarEffect(crystal, -1);
         }
-        if (Owner.GetMechanic<Mechanic_Magic>().enchantedAttacks.Count > 0)
-        {
-            damageInstance.runes.AddRange(Owner.GetMechanic<Mechanic_Magic>().enchantedAttacks.Dequeue());
-        }
+        Target.Stat<Stat_RuneCrystals>().Value.Clear();
 
         if (runes.Count == 0) return;
 
-        int spellPhase = 0;
-        Owner.GetMechanic<Mechanic_PlayerOwner>().Proxy(x => spellPhase += (int)x.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.SpellPhase));
-        spellPhase %= runes.Count;
-        for (int i = spellPhase; i < runes.Count + spellPhase; i++)
+        // Generate the magic effect
+        int spellPhase = (int)Owner.Stat<Stat_PlayerCharacter>().Value.Stat<Stat_SpellPhase>().Value % runes.Count;
+        runes[spellPhase].MagicEffect(this, spellPhase);
+        for (int i = 1; i < runes.Count; i++)
         {
-            if (i == spellPhase)
-                runes[i].MagicEffect(this, i);
-            else
-                runes[i % runes.Count].MagicEffectModifier(this, i);// TODO pass in rune list here
+            runes[(i + spellPhase) % runes.Count].MagicEffectModifier(this, i);
         }
     }
 
@@ -103,7 +110,6 @@ public class DamageInstance : Hit
     {
         DamageInstance clone = (DamageInstance)base.Clone();
         clone.damageModifiers = new List<DamageSolver>(damageModifiers);
-        clone.runes = new List<Rune>(runes);
         return clone;
     }
 }

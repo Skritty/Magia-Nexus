@@ -7,7 +7,6 @@ public class Effect_DoHit : EffectTask
     {
         Hit clone = hit.Clone();
         clone.EffectMultiplier = multiplier;
-        clone.triggered = triggered;
         clone.Source = this;
         clone.Owner = Owner;
         clone.Target = Target;

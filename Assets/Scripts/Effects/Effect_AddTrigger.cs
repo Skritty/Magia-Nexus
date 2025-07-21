@@ -14,18 +14,18 @@ public class Effect_AddTrigger : EffectTask
     [SerializeReference, FoldoutGroup("@GetType()"), HideReferenceObjectPicker]
     public List<TriggerTask> tasks = new List<TriggerTask>();
 
-    public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
+    public override void DoEffect(Entity Owner, Entity target, float multiplier, bool triggered)
     {
         if (trigger == null)
         {
-            Debug.LogError($"NO TRIGGER SELECTED | {Owner.name} -> {Target.name}");
+            Debug.LogError($"NO TRIGGER SELECTED | {Owner.name} -> {target.name}");
             return;
         }
 
-        System.Action cleaup = trigger.SubscribeDynamic(OnTrigger, null, triggerOrder);
+        System.Action cleaup = trigger.SubscribeDynamic(x => OnTrigger(target, x), null, triggerOrder);
         TriggerModifier<Entity> dummy = new TriggerModifier<Entity>(
-            cleaup, value: Target, temporary: (duration > 0 ? true : false), tickDuration: duration);
-        Target.AddModifier<Stat_Triggers>(dummy);
+            cleaup, value: target, temporary: (duration > 0 ? true : false), tickDuration: duration);
+        target.AddModifier<Stat_Triggers>(dummy);
         Trigger_ModifierLost.Subscribe(Unsubscribe, dummy, 0, true);
     }
 
@@ -34,14 +34,11 @@ public class Effect_AddTrigger : EffectTask
         (data as TriggerModifier<Entity>).Cleanup?.Invoke();
     }
 
-    protected void OnTrigger(IDataContainer data)
+    protected void OnTrigger(Entity target, IDataContainer data)
     {
-        if (data.Get(out Entity target))
+        foreach (TriggerTask task in tasks)
         {
-            foreach (TriggerTask task in tasks)
-            {
-                if (!task.DoTask(data, target)) break;
-            }
+            if (!task.DoTask(data, target)) break;
         }
     }
 }
@@ -77,11 +74,9 @@ public class TriggerModifier<T> : IDataContainer<T>, IModifier
         RefreshDuration = refreshDuration;
     }
 
-    public bool Get<T1>(out T1 data)
+    public bool Get<Type>(out Type data)
     {
-        IDataContainer<T1> container = (IDataContainer<T1>)this;
-        if (container == null) data = default;
-        else data = container.Value;
-        return container != null;
+        data = (Type)(Value as object);
+        return data != null;
     }
 }

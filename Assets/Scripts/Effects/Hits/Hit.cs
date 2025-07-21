@@ -8,7 +8,8 @@ public class Hit : Effect
     public bool preventTriggers;
     [FoldoutGroup("@GetType()")]
     public bool triggerPlayerOwner;
-
+    [FoldoutGroup("@GetType()")]
+    public List<Rune> runes = new();
     [SerializeReference, FoldoutGroup("@GetType()")]
     public List<TriggerTask> onHitEffects = new();
     [SerializeReference, FoldoutGroup("@GetType()")]
@@ -36,6 +37,7 @@ public class Hit : Effect
     public Hit Clone()
     {
         Hit clone = (Hit)MemberwiseClone();
+        clone.runes = new List<Rune>(runes);
         clone.onHitEffects = new List<TriggerTask>(onHitEffects);
         clone.postOnHitEffects = new List<TriggerTask>(postOnHitEffects);
         return clone;

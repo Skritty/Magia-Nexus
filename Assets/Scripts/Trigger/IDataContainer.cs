@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 public interface IDataContainer 
 {
-    public bool Get<T>(out T data);
+    public bool Get<Type>(out Type data);
 }
 
 public interface IDataContainer<T> : IDataContainer
@@ -8,23 +10,21 @@ public interface IDataContainer<T> : IDataContainer
     public T Value { get; }
 }
 
-public class DataContainer : IDataContainer
+public abstract class DataContainer : IDataContainer
 {
-    public bool Get<T>(out T data)
-    {
-        IDataContainer<T> container = (this as IDataContainer<T>);
-        if (container == null) data = default;
-        else data = container.Value;
-        return container != null;
-    }
+    public abstract bool Get<Type>(out Type data);
 }
-public class DataContainer<T> : DataContainer
+public class DataContainer<T> : DataContainer, IDataContainer<T>
 {
     public T Value { get; set; }
-
     public DataContainer() { }
     public DataContainer(T value)
     {
         Value = value;
+    }
+    public override bool Get<Type>(out Type data)
+    {
+        data = (Type)(Value as object);
+        return data != null;
     }
 }

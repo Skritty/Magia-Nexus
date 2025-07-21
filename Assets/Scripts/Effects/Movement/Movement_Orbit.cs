@@ -1,7 +1,8 @@
-using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Movement_Orbit : MovementDirectionSelector
 {
@@ -10,24 +11,24 @@ public class Movement_Orbit : MovementDirectionSelector
     [FoldoutGroup("@GetType()")]
     public bool reverseDirection;
 
-    public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
+    public override void DoEffect(Entity Owner, Entity target, float multiplier, bool triggered)
     {
-        SetMoveDir(Target);
+        SetMoveDir(target, multiplier);
     }
 
-    private void SetMoveDir(Entity Target)
+    private void SetMoveDir(Entity target, float multiplier)
     {
-        float orbitDist = orbitDistance * Target.Stat<Stat_AoESize>().Value;
+        float orbitDist = orbitDistance * target.Stat<Stat_AoESize>().Value;
         Vector3 dirToTarget = Vector3.zero;
         bool zero = false;
-        if (Target.Stat<Stat_MovementTarget>().Value != null)
+        if (target.Stat<Stat_MovementTarget>().Value != null)
         {
-            dirToTarget = Target.transform.position - Target.Stat<Stat_MovementTarget>().Value.transform.position;
+            dirToTarget = target.transform.position - target.Stat<Stat_MovementTarget>().Value.transform.position;
         }
         if (dirToTarget == Vector3.zero)
         {
             zero = true;
-            dirToTarget = Target.Stat<Stat_MovementTarget>().Value.GetMechanic<Mechanic_Movement>().facingDir;
+            dirToTarget = target.Stat<Stat_MovementTarget>().Value.GetMechanic<Mechanic_Movement>().facingDir;
             Debug.Log(dirToTarget);
         }
         //if (dirToTarget == Vector3.zero) dirToTarget = Target.transform.position + Target.transform.up * orbitDistance;
@@ -47,7 +48,7 @@ public class Movement_Orbit : MovementDirectionSelector
             perpendicularVector = Vector3.Lerp(dirToTarget, perpendicularVector, dirToTarget.magnitude / orbitDist);
         }
         
-        Target.GetMechanic<Mechanic_Movement>().facingDir = perpendicularVector;
-        Target.Stat<Stat_MovementSpeed>().Modifiers[1].Value = effectMultiplier;
+        target.GetMechanic<Mechanic_Movement>().facingDir = perpendicularVector;
+        target.AddModifier<Stat_MovementSpeed>(new NumericalModifier(value: multiplier, step: CalculationStep.Multiplicative, temporary: true));
     }
 }

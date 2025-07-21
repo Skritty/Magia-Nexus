@@ -1,6 +1,3 @@
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,13 +10,13 @@ public class Item : ViewableGameAsset
     public List<Personality> grantedPersonalities = new List<Personality>();
     public int actionCountModifier;
     [SerializeReference]
-    public List<Effect> itemEffects = new();
+    public List<EffectTask> itemEffects = new();
 
     public void OnGained(Entity entity)
     {
-        foreach(Effect effect in itemEffects)
+        foreach(EffectTask effect in itemEffects)
         {
-            effect.Create(entity);
+            effect.DoTask(null, entity);
         }
     }
 }

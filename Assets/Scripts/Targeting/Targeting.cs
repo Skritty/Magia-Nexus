@@ -31,8 +31,8 @@ public abstract class Targeting
     protected Entity primaryTarget;
     public bool lockTarget;
     
-    public abstract List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null);
-    public abstract List<Entity> GetTargets(Effect source, Effect effect, Entity owner, Entity proxy = null);
+    public abstract List<Entity> GetTargets(object source, Entity owner, Entity proxy = null);
+    public abstract List<Entity> GetTargets(object source, Effect effect, Entity owner, Entity proxy = null);
     public virtual void OnDrawGizmos(Transform owner) { }
     public virtual Targeting Clone()
     {
@@ -63,11 +63,11 @@ public abstract class MultiTargeting : Targeting
         
     }
 
-    public override List<Entity> GetTargets(Effect source, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(object source, Entity owner, Entity proxy = null)
     {
         if(owner == null)
         {
-            Debug.LogWarning($"Owner of Targeting is null for {source.Owner}->{source.Target}!");
+            Debug.LogWarning($"Owner of Targeting is null for {source}!");
             return new List<Entity>();
         }
         if(lockTarget && !(primaryTarget == null || !primaryTarget.gameObject.activeSelf))
@@ -79,13 +79,13 @@ public abstract class MultiTargeting : Targeting
         targets = new List<Entity>();
         TargetFilter targetType;
         bool firstTarget = true;
-        foreach (Entity entity in Entity.FindObjectsOfType<Entity>())
+        foreach (Entity entity in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
         {
             // Can it be targeted?
-            if (!entity.GetMechanic<Mechanic_Targetable>().IsTargetable(owner, source)) continue;
+            if (!entity.Stat<Stat_Untargetable>().Value.Contains((owner, source))) continue;
 
             // Is it in the affected entities?
-            if(entity.GetMechanic<Mechanic_Team>().team != owner.GetMechanic<Mechanic_Team>().team)
+            if(entity.Stat<Stat_Team>().Value != owner.Stat<Stat_Team>().Value)
             {
                 targetType = TargetFilter.Enemies;
             }
@@ -93,7 +93,7 @@ public abstract class MultiTargeting : Targeting
             {
                 targetType = TargetFilter.Self;
             }
-            else if (entity == owner.GetMechanic<Mechanic_PlayerOwner>().playerCharacter)
+            else if (entity == owner.Stat<Stat_PlayerCharacter>().Value)
             {
                 targetType = TargetFilter.Owner;
             }
@@ -118,7 +118,7 @@ public abstract class MultiTargeting : Targeting
 
         if(numberOfTargets >= 0)
         {
-            int actualNumberOfTargets = numberOfTargets + owner.GetMechanic<Stat_Targeting>().additionalTargets;
+            int actualNumberOfTargets = numberOfTargets + (int)owner.Stat<Stat_Targets>().Value;
             if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
                 targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
         }
@@ -131,7 +131,7 @@ public abstract class MultiTargeting : Targeting
             
         return targets;
     }
-    public override List<Entity> GetTargets(Effect source, Effect effect, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(object source, Effect effect, Entity owner, Entity proxy = null)
     {
         GetTargets(source, owner, proxy);
         /*if (conditionalOnTrigger && trigger.effect != null && targets.Contains(trigger.effect.Owner))
@@ -140,13 +140,13 @@ public abstract class MultiTargeting : Targeting
         }*/
         return targets;
     }
-    protected virtual void DoFX(Effect source, Entity owner, List<Entity> targets)
+    protected virtual void DoFX(object source, Entity owner, List<Entity> targets)
     {
         if (vfx == null) return;
         foreach(Entity target in targets)
         {
             VFX_Damage damage = vfx.PlayVFX<VFX_Damage>(target.transform, offset, Vector3.up, true);
-            damage.ApplyDamage(source as DamageInstanceOLD);
+            damage.ApplyDamage(source as Effect_DealDamage);
         }
     }
     protected virtual bool IsValidTarget(Entity target, bool firstTarget) => true;
