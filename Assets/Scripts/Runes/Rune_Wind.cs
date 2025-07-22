@@ -31,7 +31,6 @@ public class Rune_Wind : Rune
     {
         spell.shape = SpellShape.Line;
         spell.effect = lineEffect.Clone();
-        spell.AddRunesToDamageInstance(spell.effect as Effect_DealDamage);
         spell.proxies.Add(spell.Owner);
         spell.cleanup += Trigger_SpellCast.Subscribe(x => spell.StopSpell(), spell);
     }

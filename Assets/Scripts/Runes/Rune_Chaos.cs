@@ -24,7 +24,7 @@ public class Rune_Chaos : Rune
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
-        damage.onHitEffects.Add(debuff);
+        damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
@@ -54,9 +54,8 @@ public class Rune_Chaos : Rune
     {
         spell.shape = SpellShape.Curse;
         spell.effect = curseHit.Clone();
-        spell.AddRunesToDamageInstance(spell.effect as DamageInstanceOLD);
         spell.proxies.Add(spell.Owner);
-        spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => spell.StopSpell(), (spell.effect as DamageInstanceOLD).onHitEffects[0]);
+        spell.SubscribeOnHit(x => Trigger_ModifierLost.Subscribe(x => spell.StopSpell(), x.postOnHitEffects[0]));
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -65,7 +64,7 @@ public class Rune_Chaos : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageFire, spell);
+                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(_ => spell.effect.effectMultiplier -= multiplierPerStage);
                     spell.SetCastOnStageGained();
                     break;
                 }
@@ -80,7 +79,7 @@ public class Rune_Chaos : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(AddHomingToProjectile, spell.effect);
+                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(x => AddHomingToProjectile(spell, x), spell.effect);
                     break;
                 }
             case SpellShape.Summon:
@@ -91,7 +90,7 @@ public class Rune_Chaos : Rune
                 {
                     if (!spell.channeled)
                     {
-                        spell.effect.effectMultiplier = baseChanneledCurseEffect;
+                        spell.EffectMultiplier = baseChanneledCurseEffect;
                         spell.SetChannelSpell(0);
                         spell.SetCastOnStageGained();
                     }
@@ -101,16 +100,11 @@ public class Rune_Chaos : Rune
         }
     }
 
-    private void SpellMultiPerStageFire(Spell spell)
-    {
-        spell.effect.effectMultiplier -= multiplierPerStage;
-    }
-
-    private void AddHomingToProjectile(Entity entity)
+    private void AddHomingToProjectile(Spell spell, Entity entity)
     {
         if (entity.Stat<Stat_MovementSelector>().Value == null || !(entity.Stat<Stat_MovementSelector>().Value is Movement_HomeToTarget))
         {
-            entity.Stat<Stat_MovementSelector>().Value = new Movement_HomeToTarget();
+            spell.cleanup += entity.Stat<Stat_MovementSelector>().AddModifier(new Movement_HomeToTarget(), 1);
         }
         (entity.Stat<Stat_MovementSelector>().Value as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
     }

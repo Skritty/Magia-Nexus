@@ -1,59 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [CreateAssetMenu(menuName = "Achievement")]
 public class Achievement : ViewableGameAsset
 {
     public string description;
     [SerializeReference]
-    public TriggerTask rewardTask;
+    public Trigger activationTrigger;
     [SerializeReference]
-    public List<Trigger> activationTriggers;
-    [SerializeReference, HideReferenceObjectPicker]
-    public List<TriggerTask> tasks = new List<TriggerTask>();
-    private System.Action unsubscribe;
+    public TriggerTask rewardTask;
 
-    public void Load()
+    public System.Action Load(Viewer player)
     {
-        foreach(Trigger trigger in activationTriggers)
-        {
-            unsubscribe += trigger.SubscribeDynamic(Check, null); // TODO
-        }
+        return activationTrigger.AddTaskOwner(player.character, new []{ new AchievementComplete(this) });
     }
 
-    public void Unload()
+    public class AchievementComplete : TriggerTask<Entity>
     {
-        unsubscribe?.Invoke();
-    }
-
-    protected void Check(IDataContainer data)
-    {
-        if (data.Get(out Viewer viewer))
+        public AchievementComplete(Achievement achievement)
         {
-            bool allComplete = true;
-            foreach (TriggerTask task in tasks)
-            {
-                if (!task.DoTask((Trigger)data, null)) // TODO
-                {
-                    allComplete = false;
-                    break;
-                }
-            }
-            if (allComplete)
-            {
-                AchievementManager.Instance.GrantAchievement(this, viewer);
-            }
+            this.achievement = achievement;
         }
-        else
+
+        public Achievement achievement;
+        public override bool DoTask(Entity data, Entity Owner)
         {
-            //Debug.LogWarning($"{trigger.GetType()} is not valid with achievement {name}");
+            AchievementManager.Instance.GrantAchievement(achievement, Owner);
+            return true;
         }
     }
 
     public void GrantReward(Viewer player)
     {
-        rewardTask?.DoTask(null, null);
+        rewardTask?.DoTaskNoData(null);
     }
 }

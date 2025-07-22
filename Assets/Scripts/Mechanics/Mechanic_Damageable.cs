@@ -6,8 +6,8 @@ public class Stat_DamageOverTime : ListStat<IDataContainer<float>>, IStatTag { }
 public class Stat_DamageDealt : ListStat<IDataContainer<float>>, IStatTag { }
 public class Stat_DamageTaken : ListStat<IDataContainer<float>>, IStatTag { }
 public class Stat_Invulnerable : BooleanPrioritySolver, IStatTag { }
-public class Stat_CurrentLife : NumericalSolver, IStatTag { }
-public class Stat_MaxLife : NumericalSolver, IStatTag { }
+public class Stat_CurrentLife : NumericalStepCalculationSolver, IStatTag { }
+public class Stat_MaxLife : NumericalStepCalculationSolver, IStatTag { }
 public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 {
     #region Internal Variables
@@ -36,7 +36,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
             return;
         }
 
-        DamageSolver calculation = new DamageSolver();
+        DamageTypeCalculationSolver calculation = new DamageTypeCalculationSolver();
         foreach(DamageSolver d in damage.damageModifiers)
         {
             calculation.AddModifier(d);
@@ -64,13 +64,13 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
             damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, false)
             ?.ApplyPopupInfo(Mathf.Round(damage.finalDamage).ToString("0"), new Color(.9f, .2f, .2f));
 
-            new Trigger_Damage(damage, damage, damage.Owner, triggerOwner, damage.Target);
+            Trigger_Damage.Invoke(damage, damage, damage.Owner, triggerOwner, damage.Target);
         }
 
         if (Owner.Stat<Stat_CurrentLife>().Value <= 0)
         {
             Owner.GetMechanic<Mechanic_PlayerOwner>().DistributeRewards();
-            new Trigger_Die(damage, damage, damage.Owner, triggerOwner, Owner);
+            Trigger_Die.Invoke(damage, damage, damage.Owner, triggerOwner, Owner);
         }
 
         healthBar.localScale = new Vector3(Owner.Stat<Stat_CurrentLife>().Value / Owner.Stat<Stat_MaxLife>().Value, 1, 1);

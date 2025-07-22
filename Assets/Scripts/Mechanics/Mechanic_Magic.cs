@@ -22,13 +22,12 @@ public class Mechanic_Magic : Mechanic<Mechanic_Magic>
         {
             vfx = vfx.PlayVFX<VFX>(Owner.transform, Vector3.up * 1.5f, Vector3.zero, true);
             vfx.transform.parent = Owner.transform;
-            Owner.Stat<Stat_Runes>().OnChange
         }
     }
 
     public override void Tick()
     {
-        if (Owner.Stat<Stat_Runes>().Value.Count == 0)
+        if (Owner.Stat<Stat_Runes>().Count == 0)
         {
             vfx.visualEffect.enabled = false;
         }
@@ -36,17 +35,18 @@ public class Mechanic_Magic : Mechanic<Mechanic_Magic>
 
     public void AddRune(Rune rune)
     {
-        if(runes.Count == 0)
+        if(vfx)
         {
             vfx.visualEffect.enabled = true;
         }
-        runes.Add(rune);
-        new Trigger_RuneGained(rune, Owner, rune);
-        vfx.visualEffect.SetInt("RuneCount", runes.Count);
+        Owner.Stat<Stat_Runes>().AddModifier(rune);
+        Rune[] runes = Owner.Stat<Stat_Runes>().ToArray;
+        Trigger_RuneGained.Invoke(rune, Owner, rune);
+        vfx.visualEffect.SetInt("RuneCount", runes.Length);
         runeInfo?.Dispose();
-        runeInfo = new GraphicsBuffer(GraphicsBuffer.Target.Structured, runes.Count, 4);
-        float[] runeIndex = new float[runes.Count];
-        for(int i = 0; i < runes.Count; i++)
+        runeInfo = new GraphicsBuffer(GraphicsBuffer.Target.Structured, runes.Length, 4);
+        float[] runeIndex = new float[runes.Length];
+        for(int i = 0; i < runes.Length; i++)
         {
             runeIndex[i] = 1f * Array.IndexOf(Enum.GetValues(typeof(RuneElement)), runes[i].element);
         }

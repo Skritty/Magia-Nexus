@@ -98,7 +98,7 @@ public class Effect_CreateEntity : EffectTask // TODO: split into multiple child
                                     }
                             }
                         spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Mechanic_Movement>().facingDir);
-                        new Trigger_ProjectileCreated(spawnedEntity, spawnedEntity, entity, this);
+                        Trigger_ProjectileCreated.Invoke(spawnedEntity, spawnedEntity, entity, this, Owner);
                         spawnedEntity.GetMechanic<Mechanic_Actions>().Tick();
                     }
                     break;
@@ -111,12 +111,11 @@ public class Effect_CreateEntity : EffectTask // TODO: split into multiple child
                     {
                         if (Owner.Stat<Stat_Summons>().Modifiers.Count >= maxSummons) break;
                         Entity spawnedEntity = Create(Owner, Target, multiplier, triggered, i);
-                        spawnedEntity.Stat<Stat_MaxLife>().Value *= lifeMultiplier;
-                        spawnedEntity.Stat<Stat_CurrentLife>().Value *= lifeMultiplier;
+                        spawnedEntity.Stat<Stat_MaxLife>().AddModifier(new NumericalSolver(lifeMultiplier, CalculationStep.Multiplicative));
                         // TODO: summon position
-                        Owner.Stat<Stat_Summons>().Value.Add(spawnedEntity);
-                        Trigger_Expire.Subscribe(x => Owner.Stat<Stat_Summons>().Value.Remove(spawnedEntity), spawnedEntity);
-                        new Trigger_SummonCreated(spawnedEntity, spawnedEntity, entity, this);
+                        Owner.Stat<Stat_Summons>().AddModifier(spawnedEntity);
+                        Trigger_Expire.Subscribe(x => Owner.Stat<Stat_Summons>().Remove(spawnedEntity), spawnedEntity);
+                        Trigger_SummonCreated.Invoke(spawnedEntity, spawnedEntity, entity, this);
                         spawnedEntity.GetMechanic<Mechanic_Actions>().Tick();
                     }
                     break;
@@ -131,14 +130,14 @@ public class Effect_CreateEntity : EffectTask // TODO: split into multiple child
         spawnedEntity.gameObject.name = ""+id;
         spawnedEntity.GetMechanic<Mechanic_PlayerOwner>().SetPlayer(Owner.GetMechanic<Mechanic_PlayerOwner>());
         spawnedEntity.GetMechanic<Mechanic_PlayerOwner>().proxyOwner = Owner;
-        spawnedEntity.Stat<Stat_Team>().Value = Owner.Stat<Stat_Team>().Value;
+        spawnedEntity.Stat<Stat_Team>().AddModifier(Owner.Stat<Stat_Team>().Value);
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                spawnedEntity.GetMechanic<Mechanic_Movement>().movementTarget = Owner;
+                spawnedEntity.Stat<Stat_MovementTarget>().AddModifier(Owner);
                 break;
             case EffectTargetSelector.Target:
-                spawnedEntity.GetMechanic<Mechanic_Movement>().movementTarget = Target;
+                spawnedEntity.Stat<Stat_MovementTarget>().AddModifier(Target);
                 break;
         }
         spawnedEntity.GetMechanic<Mechanic_Movement>().facingDir = (Target.transform.position - Owner.transform.position).normalized;

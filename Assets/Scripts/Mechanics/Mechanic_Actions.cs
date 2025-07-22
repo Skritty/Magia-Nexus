@@ -17,7 +17,7 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
     public float TimePerAction => GameManager.Instance.timePerTurn / actionsPerTurn;
     public int TicksPerAction => (int)(TimePerAction / Time.fixedDeltaTime);
     private int phase;
-    [ShowInInspector]
+    [FoldoutGroup("Actions"), ShowInInspector]
     private Action currentAction;
 
     public override void Tick()
@@ -87,7 +87,7 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
                     newList.Add(null);
                 }
             }
-            Owner.Stat<Stat_Actions>().Value = newList;
+            Owner.AddModifier<Stat_Actions, IList<Action>>(newList, 1);
         }
     }
 
@@ -100,7 +100,7 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
             currentAction?.OnEnd(Owner);
             if (Owner.Stat<Stat_Channeling>().Value)
             {
-                new Trigger_Channel(Owner, Owner);
+                Trigger_Channel.Invoke(Owner, Owner);
             }
             else
             {
@@ -108,18 +108,18 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
                 if (phase - 1 == actions.Count)
                 {
                     phase = 1;
-                    new Trigger_TurnEnd(Owner, Owner);
+                    Trigger_TurnEnd.Invoke(Owner, Owner);
                 }
 
                 currentAction = actions[phase - 1];
 
                 if(phase == 1)
                 {
-                    new Trigger_TurnStart(Owner, Owner);
+                    Trigger_TurnStart.Invoke(Owner, Owner);
                 }
             }
             currentAction?.OnStart(Owner);
-            new Trigger_ActionStart(currentAction, Owner, currentAction);
+            Trigger_ActionStart.Invoke(currentAction, Owner, currentAction);
         }
     }
 

@@ -21,7 +21,7 @@ public class Rune_Extend : Rune
         }
 
         Effect_Invoke invoke = new Effect_Invoke();
-        invoke.runes = runes;
+        invoke.runes = runes.ToArray();
 
         damage.postOnHitEffects.Add(invoke);// TODO: Proxy from hit target
     }

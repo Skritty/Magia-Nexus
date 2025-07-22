@@ -1,5 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using UnityEngine;
+
+[Serializable]
 public class DamageInstance : Hit
 {
     [FoldoutGroup("@GetType()")]
@@ -27,11 +31,11 @@ public class DamageInstance : Hit
         }
 
         // Check rune crystals on the target
-        foreach (Rune rune in Target.Stat<Stat_RuneCrystals>().Value)
+        foreach (Rune rune in Target.Stat<Stat_RuneCrystals>().ToArray)
         {
             runes.Add(rune);
         }
-        Target.Stat<Stat_RuneCrystals>().Value.Clear();
+        Target.Stat<Stat_RuneCrystals>().Clear();
 
         if (runes.Count == 0) return;
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityCommon;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Entity : MonoBehaviour
 {
@@ -78,7 +79,7 @@ public class Entity : MonoBehaviour
 
             // Add new stack
             stat.AddModifier(modifier);
-            if (modifier.Temporary)
+            if (modifier.TickDuration > 0)
             {
                 durationModifiers.Add((modifier, modifier.TickDuration));
             }
@@ -86,13 +87,13 @@ public class Entity : MonoBehaviour
         switch (modifier.Alignment)
         {
             case Alignment.Buff:
-                new Trigger_BuffGained(modifier, modifier, this);
+                Trigger_BuffGained.Invoke(modifier, modifier, this);
                 break;
             case Alignment.Debuff:
-                new Trigger_DebuffGained(modifier, modifier, this);
+                Trigger_DebuffGained.Invoke(modifier, modifier, this);
                 break;
         }
-        new Trigger_ModifierGained(modifier, modifier, this);
+        Trigger_ModifierGained.Invoke(modifier, modifier, this);
     }
 
     public void RemoveModifier(IModifier modifier)
@@ -126,13 +127,13 @@ public class Entity : MonoBehaviour
         switch (modifier.Alignment)
         {
             case Alignment.Buff:
-                new Trigger_BuffLost(modifier, modifier, this);
+                Trigger_BuffLost.Invoke(modifier, modifier, this);
                 break;
             case Alignment.Debuff:
-                new Trigger_DebuffLost(modifier, modifier, this);
+                Trigger_DebuffLost.Invoke(modifier, modifier, this);
                 break;
         }
-        new Trigger_ModifierLost(modifier, modifier, this);
+        Trigger_ModifierLost.Invoke(modifier, modifier, this);
     }
 
     public void RemoveOldestDurationModifier(Alignment alignment)
@@ -150,12 +151,12 @@ public class Entity : MonoBehaviour
         RemoveModifier(modifier);
     }
 
-    public void AddModifier<T>(IDataContainer modifier) where T : IStatTag
+    public void AddModifier<STAT>(IDataContainer modifier) where STAT : IStatTag
     {
         Stat stat = null;
         foreach (IStatTag s in stats)
         {
-            if(s.GetType() == typeof(T))
+            if(s.GetType() == typeof(STAT))
             {
                 stat = (Stat)s;
             }
@@ -175,12 +176,31 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public void RemoveModifier<T>(IDataContainer modifier) where T : IStatTag
+    public void AddModifier<STAT, T>(T value, int duration) where STAT : IStatTag
     {
         Stat stat = null;
         foreach (IStatTag s in stats)
         {
-            if (s.GetType() == typeof(T))
+            if (s.GetType() == typeof(STAT))
+            {
+                stat = (Stat)s;
+            }
+        }
+        if (stat == null)
+        {
+            stat = default;
+            stats.Add((IStatTag)stat);
+        }
+
+        AddModifier(new DummyModifier<T>(value, tickDuration: duration), stat);
+    }
+
+    public void RemoveModifier<STAT>(IDataContainer modifier) where STAT : IStatTag
+    {
+        Stat stat = null;
+        foreach (IStatTag s in stats)
+        {
+            if (s.GetType() == typeof(STAT))
             {
                 stat = (Stat)s;
             }

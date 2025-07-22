@@ -4,8 +4,9 @@ using Sirenix.OdinInspector;
 [Serializable]
 public class DamageSolver : NumericalSolver
 {
+    [FoldoutGroup("@GetType()")]
     public DamageType appliesTo;
-    [HideIf("@Step != CalculationStep.Flat")]
+    [FoldoutGroup("@GetType()"), HideIf("@step != CalculationStep.Flat")]
     public DamageType damageType;
 
     public DamageSolver() { }

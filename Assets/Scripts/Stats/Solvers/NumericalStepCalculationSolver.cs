@@ -8,7 +8,7 @@ public class NumericalStepCalculationSolver : NumericalSolver
     /// </summary>
     public NumericalStepCalculationSolver()
     {
-        Step = CalculationStep.Multiplicative;
+        step = CalculationStep.Multiplicative;
         // Flat
         Modifiers.Add(new NumericalSolver(0, CalculationStep.Flat));
         // Increased
@@ -20,11 +20,11 @@ public class NumericalStepCalculationSolver : NumericalSolver
         }*/
     }
 
-    public override void AddModifier(IDataContainer modifier)
+    public override void AddModifier<Data>(Data modifier)
     {
         Stat<float> calcStep = this;
         if(modifier is NumericalSolver)
-            switch ((modifier as NumericalSolver).Step)
+            switch ((modifier as NumericalSolver).step)
             {
                 case CalculationStep.Flat:
                     {

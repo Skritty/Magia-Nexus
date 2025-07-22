@@ -31,7 +31,7 @@ public class Mechanic_Movement : Mechanic<Mechanic_Movement>
     public void Move()
     {
         Owner.Stat<Stat_MovementSelector>().Value.DoTask(null, Owner);
-        new Trigger_MovementDirectionCalc(Owner, Owner);
+        Trigger_MovementDirectionCalc.Invoke(Owner, Owner);
 
         if (rotate)
         {

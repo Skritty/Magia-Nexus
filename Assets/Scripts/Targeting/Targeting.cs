@@ -82,7 +82,7 @@ public abstract class MultiTargeting : Targeting
         foreach (Entity entity in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
         {
             // Can it be targeted?
-            if (!entity.Stat<Stat_Untargetable>().Value.Contains((owner, source))) continue;
+            if (!entity.Stat<Stat_Untargetable>().Contains((owner, source))) continue;
 
             // Is it in the affected entities?
             if(entity.Stat<Stat_Team>().Value != owner.Stat<Stat_Team>().Value)

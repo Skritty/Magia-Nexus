@@ -301,202 +301,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
-  - rid: 1083523827607798109
-  stats1:
-    rid: 1000
-  baseStats:
-  - rid: 5286389933263290672
-  - rid: 9031231661127237636
-  - rid: 3492845359303229454
-  - rid: 7133257989892341792
-  - rid: 3492845359303229448
-  - rid: 3492845359303229458
-  - rid: 9031231668284555682
-  - rid: 9031231668284555680
-  - rid: 9031231527144652886
-  - rid: 9031231661127237638
-  - rid: 9031231465990389774
+    rid: 1083524128524730528
+  mechanics:
+  - rid: 1083524128524730534
+  - rid: 1083524128524730536
+  - rid: 1083524128524730529
+  - rid: 1083524128524730537
+  - rid: 1083524128524730538
+  - rid: 1083524128524730530
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1000
+    - rid: 1083524128524730528
       type: {class: 'ReferenceSerializableHashSet`1[[IStatTag, Assembly-CSharp]]', ns: UnityCommon, asm: Assembly-CSharp}
       data:
         values:
-        - rid: 1083523827607798097
-    - rid: 1083523827607798097
-      type: {class: Stat_CurrentLife, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 100
-        modifiers: []
-    - rid: 1083523827607798109
-      type: {class: Stat_CurrentLife, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 100
-        modifiers: []
-    - rid: 1130977698592063696
-      type: {class: Trigger_Die, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1130977699628843585
-      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-    - rid: 1130977699628843586
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 3492845359303229448
-      type: {class: Stat_Actions, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        mergeBehavior: 0
-        tick: -1
-        actionsPerTurn: 5
-        repeatActions:
-        - {fileID: 11400000, guid: 98892d1772828984c89337f32db2b69d, type: 2}
-        actions: []
-        actionsOverride: []
-        channelInstead: 0
-    - rid: 3492845359303229454
-      type: {class: Stat_Team, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        mergeBehavior: 0
-        team: 0
-        playerCharacters: []
-        summons: []
-        proxies: []
-    - rid: 3492845359303229458
-      type: {class: Stat_Movement, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        mergeBehavior: 0
-        movementTarget: {fileID: 0}
-        baseMovementSpeed: 0.4
-        movementSelector:
-          rid: -2
-        facingDir: {x: 1, y: 0, z: 0}
-        dirMovementSpeedMulti: 1
-        rotate: 0
-        obeyMapEdge: 0
-    - rid: 5286389302403793010
-      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 0
-        modifiers: []
-        <Tag>k__BackingField:
-          rid: -2
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        alignment: 0
-        temporary: 0
-        tick: 0
-        tickDuration: -1
-        refreshDuration: 1
-        method: 0
-    - rid: 5286389302403793011
-      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 0
-        modifiers: []
-        <Tag>k__BackingField:
-          rid: -2
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        alignment: 0
-        temporary: 0
-        tick: 0
-        tickDuration: -1
-        refreshDuration: 1
-        method: 0
-    - rid: 5286389302403793012
-      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 0
-        modifiers: []
-        <Tag>k__BackingField:
-          rid: -2
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        alignment: 0
-        temporary: 0
-        tick: 0
-        tickDuration: -1
-        refreshDuration: 1
-        method: 0
-    - rid: 5286389302403793013
-      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 0
-        modifiers: []
-        <Tag>k__BackingField:
-          rid: -2
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        alignment: 0
-        temporary: 0
-        tick: 0
-        tickDuration: -1
-        refreshDuration: 1
-        method: 0
-    - rid: 5286389302403793014
-      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 0
-        modifiers: []
-        <Tag>k__BackingField:
-          rid: -2
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        alignment: 0
-        temporary: 0
-        tick: 0
-        tickDuration: -1
-        refreshDuration: 1
-        method: 0
-    - rid: 5286389302403793016
-      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
-      data:
-        mainStat: 0
-        <Value>k__BackingField: 0
-        modifiers: []
-        <Tag>k__BackingField:
-          rid: -2
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        alignment: 0
-        temporary: 0
-        tick: 0
-        tickDuration: -1
-        refreshDuration: 1
-        method: 0
-    - rid: 5286389777395875982
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        proxy: 0
-        useProxyAsOwner: 0
-        effect:
-          rid: -2
-    - rid: 5286389933263290672
+        - rid: 1083524128524730547
+    - rid: 1083524128524730529
       type: {class: Mechanic_Damageable, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
@@ -504,90 +325,29 @@ MonoBehaviour:
         mergeBehavior: 0
         healthBar: {fileID: 0}
         damagePopup: {fileID: 0}
-    - rid: 7133257989892341792
-      type: {class: Stat_AnimationStates, ns: , asm: Assembly-CSharp}
+    - rid: 1083524128524730530
+      type: {class: Mechanic_Actions, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        animator: {fileID: 3663811516769054534}
-        animationSkin: {fileID: 22100000, guid: f95a19e226fca6e4291ad4a4a16f4b86, type: 2}
-    - rid: 7867064604153348194
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 7867064604153348195
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        triggerOrder: 9999
-        trigger:
-          rid: 1130977698592063696
-        tasks:
-        - rid: 1130977699628843585
-        - rid: 7867064604153348199
-        - rid: 5286389777395875982
-    - rid: 7867064604153348195
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 7867064604153348199
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        proxy: 0
-        useProxyAsOwner: 0
-        effect:
-          rid: 7867064604153348200
-    - rid: 7867064604153348200
-      type: {class: Expire, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 1130977699628843586
-        disable: 1
-        delay: 0
-    - rid: 9031231465990389774
-      type: {class: Stat_PersistentEffects, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        mergeBehavior: 0
-        persistentEffects:
-        - rid: 7867064604153348194
-    - rid: 9031231527144652886
-      type: {class: Stat_Magic, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        mergeBehavior: 0
-        runes: []
-        vfx: {fileID: -836890817849390660, guid: 5335b7fd561477d4db43b51b4db65725, type: 3}
-    - rid: 9031231661127237636
-      type: {class: Stat_PlayerOwner, ns: , asm: Assembly-CSharp}
+        tick: -1
+        actionsPerTurn: 0
+    - rid: 1083524128524730534
+      type: {class: Mechanic_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
         proxyOwner: {fileID: 0}
-        playerCharacter: 1
         scaleWithPlayerCharacterModifiers: 0
-        characterNamePlate: {fileID: 233806103433016068}
+        characterNamePlate: {fileID: 0}
         playerEntity: {fileID: 0}
         player:
           viewerID: 0
           viewerName: 
           targetType:
-            rid: 9031231661127237637
+            rid: 1083524128524730535
           items: []
           actions: []
           character: {fileID: 0}
@@ -600,53 +360,44 @@ MonoBehaviour:
           wins: 0
           losses: 0
           winstreak: 0
-    - rid: 9031231661127237637
+    - rid: 1083524128524730535
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
         entitiesAffected: 8
         sortingMethod: 1
-        numberOfTargets: 0
+        numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-    - rid: 9031231661127237638
-      type: {class: Stat_EffectModifiers, ns: , asm: Assembly-CSharp}
+    - rid: 1083524128524730536
+      type: {class: Mechanic_AnimationStates, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        effectModifiers:
-        - rid: 5286389302403793011
-        - rid: 5286389302403793016
-        - rid: 5286389302403793014
-        - rid: 5286389302403793010
-        - rid: 5286389302403793012
-        - rid: 5286389302403793013
-    - rid: 9031231668284555680
-      type: {class: Stat_Targeting, ns: , asm: Assembly-CSharp}
+        animator: {fileID: 0}
+        animationSkin: {fileID: 0}
+    - rid: 1083524128524730537
+      type: {class: Mechanic_Magic, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        targetingType:
-          rid: 9031231668284555681
-        additionalTargets: 0
-    - rid: 9031231668284555681
-      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 2
-        numberOfTargets: 1
-        offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-    - rid: 9031231668284555682
-      type: {class: Stat_Targetable, ns: , asm: Assembly-CSharp}
+    - rid: 1083524128524730538
+      type: {class: Mechanic_Movement, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        untargetable: 0
+        facingDir: {x: 1, y: 0, z: 0}
+        rotate: 0
+        obeyMapEdge: 0
+    - rid: 1083524128524730547
+      type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
+      data:
+        _value: 0
+        step: 2
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0
@@ -910,7 +661,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1

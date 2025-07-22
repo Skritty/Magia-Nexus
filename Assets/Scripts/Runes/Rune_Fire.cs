@@ -12,6 +12,8 @@ public class Rune_Fire : Rune
     public EffectTask debuff;
     [SerializeReference]
     public Effect_DealDamage magicEffectModifier;
+    public float explosionMultiplierPerStack;
+    public float explosionRadiusPerStack;
 
     [Header("Spell Shape")]
     [FoldoutGroup("Circle")]
@@ -46,15 +48,20 @@ public class Rune_Fire : Rune
             if (damage.runes.Count <= 1) return;
 
             Effect_DealDamage explosion = magicEffectModifier.Clone();
-            explosion.runes.AddRange(damage.runes);
-            explosion.runes.RemoveAt(0);
             
+            Trigger_PostHit.Subscribe(x =>
+            {
+                int i = x.runes.Count;
+                x.runes.AddRange(damage.runes); // TODO: currently pretending this works right
+                x.runes.RemoveAt(i);
+            }, explosion);
+
             damage.postOnHitEffects.Add(explosion);
         }
         else
         {
-            (damage.postOnHitEffects[0] as Effect_DealDamage).effectMultiplier += magicEffectModifier.effectMultiplier;
-            //(damage.postOnHitEffects[0].targetSelector as Targeting_Radial).radius += (magicEffectModifier.targetSelector as Targeting_Radial).radius;
+            (damage.postOnHitEffects[0] as Effect_DealDamage).effectMultiplier += explosionMultiplierPerStack;
+            ((damage.postOnHitEffects[0] as Effect_DealDamage).targetSelector as Targeting_Radial).radius += explosionRadiusPerStack;
         }
         
         // TODO: Add delay, add debuffs/other effects?
@@ -65,13 +72,12 @@ public class Rune_Fire : Rune
         // Create effect
         spell.shape = SpellShape.Circle;
         spell.effect = circleEffect.Clone();
-        spell.AddRunesToDamageInstance(spell.effect as Effect_DealDamage);
         spell.SetChannelSpell(maxStages);
         spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageFire, spell);
         
 
         // Create circle Proxy
-        Entity proxy = GameObject.Instantiate(circleProxy, spell.spellcast.Target.transform.position, Quaternion.identity);
+        Entity proxy = GameObject.Instantiate(circleProxy, spell.Target.transform.position, Quaternion.identity);
         spell.proxies.Add(proxy);
         spell.cleanup += Trigger_SpellFinished.Subscribe(x => { if (proxy != null) GameObject.Destroy(proxy.gameObject); }, spell);
     }
@@ -87,12 +93,12 @@ public class Rune_Fire : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(SpellMultiPerStageCircle, spell);
+                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(_ => spell.effect.effectMultiplier += circleModMultiplierPerStage, spell);
                     break;
                 }
             case SpellShape.Conjuration:
                 {
-                    //spell.cleanup += Trigger_OnActivateEffect.Subscribe(x => ConjureMultiPerUse(spell, x.Effect, multiplierPerConjureUse));
+                    spell.cleanup += Trigger_ActionStart.Subscribe(x => spell.cleanup += spell.Owner.Stat<Stat_DamageDealt>().AddModifier(new DataContainer<float>(multiplierPerConjureUse)), spell.Owner);
                     break;
                 }
             case SpellShape.Line:
@@ -118,29 +124,10 @@ public class Rune_Fire : Rune
         }
     }
 
-    private void SpellMultiPerStageCircle(Spell spell)
-    {
-        spell.effect.effectMultiplier += circleModMultiplierPerStage;
-    }
-
-    private void ConjureMultiPerUse(Spell spell, EffectTask e, float multi)
-    {
-        //if (e.Owner == spell.Owner) return;
-        /*foreach(KeyValuePair<EffectTag, float> tag in e.effectTags)
-        {
-            if (tag.Key.HasFlag(EffectTag.Attack | EffectTag.Spell))
-            {
-                e.effectMultiplier += multi;
-                return;
-            }
-        }*/
-        // TODO
-    }
-
     private void CurseExplode(Spell spell, IModifier modifier)
     {
         Effect_DealDamage explosion = curseExplosion.Clone();
-        spell.AddRunesToDamageInstance(explosion);
-        explosion.DoTask(spell.effect, spell.Owner);
+        spell.cleanup += Trigger_PreHit.Subscribe(x => x.runes.AddRange(spell.runes), explosion);
+        explosion.DoTask(null, spell.Owner); // TODO: WHERE IS EFFECT IN THESE HOW AM I SUPPOSED TO CHAIN EFFECT MULTIPLIERS
     }
 }

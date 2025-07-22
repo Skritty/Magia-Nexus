@@ -1,7 +1,9 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Effect_DoHit : EffectTask
 {
+    [SerializeReference, FoldoutGroup("@GetType()")]
     public Hit hit;
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {

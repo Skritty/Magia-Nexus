@@ -33,7 +33,7 @@ public class Rune_Water : Rune
     {
         spell.shape = SpellShape.Conjuration;
         spell.effect = actionOverride.Clone();
-        spell.cleanup += Trigger_PersistentEffectLost.Subscribe(x => spell.StopSpell(), spell.effect);
+        spell.cleanup += Trigger_ModifierLost.Subscribe(x => spell.StopSpell(), spell.effect);
         spell.cleanup += Trigger_PreHit.Subscribe(x => enchantAttack.DoTask(x, spell.Owner), spell.Owner, -5);
         spell.proxies.Add(spell.Owner);
     }

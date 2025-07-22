@@ -4,16 +4,19 @@ using UnityEngine;
 public class NumericalModifier : NumericalSolver, IModifier<float>
 {
     public EffectTask Source { get; set; }
-    [field: SerializeReference]
+    [field: SerializeReference, FoldoutGroup("Modifier")]
     public IStatTag Tag { get; }
+    [field: SerializeField, FoldoutGroup("Modifier")]
     public Alignment Alignment { get; }
+    [field: SerializeField, FoldoutGroup("@Modifier")]
     public int MaxStacks { get; }
+    [field: SerializeField, FoldoutGroup("@Modifier")]
     public int StacksAdded { get; } = 1;
+    [field: SerializeField, FoldoutGroup("Modifier")]
     public bool PerPlayer { get; }
-    public bool Temporary { get; }
-    [field: ShowIf("@Temporary"), ReadOnly]
+    [field: SerializeField, FoldoutGroup("Modifier")]
     public int TickDuration { get; }
-    [field: ShowIf("@Temporary"), ReadOnly]
+    [field: ShowInInspector, FoldoutGroup("Modifier"), ReadOnly]
     public bool RefreshDuration { get; }
 
     public NumericalModifier() { }
@@ -22,13 +25,12 @@ public class NumericalModifier : NumericalSolver, IModifier<float>
         bool temporary = false, int tickDuration = 0, bool refreshDuration = false)
     {
         _value = value;
-        Step = step;
+        base.step = step;
         Tag = tag;
         Alignment = alignment;
         MaxStacks = maxStacks;
         StacksAdded = stacksAdded;
         PerPlayer = perPlayer;
-        Temporary = temporary;
         TickDuration = tickDuration;
         RefreshDuration = refreshDuration;
     }

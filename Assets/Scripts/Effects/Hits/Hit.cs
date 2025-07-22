@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[Serializable]
 public class Hit : Effect
 {
     [FoldoutGroup("@GetType()")]
@@ -11,35 +13,30 @@ public class Hit : Effect
     [FoldoutGroup("@GetType()")]
     public List<Rune> runes = new();
     [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<TriggerTask> onHitEffects = new();
+    public Trigger_PreHit preHit = new Trigger_PreHit();
     [SerializeReference, FoldoutGroup("@GetType()")]
+    public Trigger_PostHit postHit = new Trigger_PostHit();
+    public List<TriggerTask> preOnHitEffects = new();
     public List<TriggerTask> postOnHitEffects = new();
 
     public void PreHitTriggers()
     {
-        new Trigger_PreHit(this, this, Source, Owner, Target);
-        foreach (TriggerTask task in onHitEffects)
-        {
-            if (!task.DoTask(null, Owner)) break;
-        }
-        
+        System.Action cleanup = preHit.AddTaskOwner(Owner, preOnHitEffects);
+        Trigger_PreHit.Invoke(this, this, Source, Owner, Target);
+        cleanup.Invoke();
     }
 
     public void PostHitTriggers()
     {
-        new Trigger_Hit(this, this, Source, Owner, Target);
-        foreach (TriggerTask task in postOnHitEffects)
-        {
-            if (!task.DoTask(null, Owner)) break;
-        }
+        System.Action cleanup = postHit.AddTaskOwner(Owner, postOnHitEffects);
+        Trigger_PostHit.Invoke(this, this, Source, Owner, Target);
+        cleanup.Invoke();
     }
 
     public Hit Clone()
     {
         Hit clone = (Hit)MemberwiseClone();
         clone.runes = new List<Rune>(runes);
-        clone.onHitEffects = new List<TriggerTask>(onHitEffects);
-        clone.postOnHitEffects = new List<TriggerTask>(postOnHitEffects);
         return clone;
     }
 }

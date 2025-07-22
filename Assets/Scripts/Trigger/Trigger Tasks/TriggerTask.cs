@@ -1,57 +1,39 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
 using Skritty.Tools.Utilities;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
+using static UnityEngine.Rendering.DebugUI;
 
 [Serializable]
 public abstract class TriggerTask
 {
     public bool incompatableTriggerBehavior = true;
-    public abstract bool DoTask(IDataContainer data, Entity Owner);
+    public abstract bool DoTaskNoData(Entity Owner);
 }
 
+[Serializable]
 public abstract class TriggerTask<T> : TriggerTask
 {
-    public override bool DoTask(IDataContainer data, Entity Owner)
+    /// <summary>
+    /// WARNING: the data input WILL be null (or default I guess)
+    /// </summary>
+    public override bool DoTaskNoData(Entity Owner)
     {
-        if (data.Get(out T value)) return DoTask(value, Owner); // TODO YOU WERE HERE
-        return incompatableTriggerBehavior;
+        return DoTask(default, Owner);
     }
     public abstract bool DoTask(T data, Entity Owner);
-    public TriggerTask Clone()
-    {
-        TriggerTask clone = (TriggerTask)MemberwiseClone();
-        return clone;
-    }
 }
 
-// Source + Owner on effect, immutable
-// Multiplier + Target carried through chain and can change
-// Effect (2x)
-// |-> Trigger<Effect>
-//      |-> Effect (2x -> 4x)
-
-// Task
-// EffectInfo: source, owner, target, multiplier, task
-
+[Serializable]
 public abstract class EffectTask : TriggerTask<Effect>
 {
-    [SerializeField, FoldoutGroup("@GetType()")]
-    private float effectMultiplier = 1;
+    [FoldoutGroup("@GetType()")]
+    public float effectMultiplier = 1;
     [FoldoutGroup("@GetType()")]
     public int ignoreFrames;
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
-
-    public override bool DoTask(IDataContainer data, Entity owner)
-    {
-        data.Get(out Effect value);
-        return DoTask(value, owner);
-    }
 
     public override bool DoTask(Effect data, Entity owner)
     {
@@ -68,9 +50,8 @@ public abstract class EffectTask : TriggerTask<Effect>
         {
             if (ignoreFrames > 0)
             {
-                target.AddModifier<Stat_Untargetable>(new DummyModifier<(Entity, object)>(
-                        value: (owner, this),
-                        temporary: true, tickDuration: ignoreFrames
+                target.AddModifier(new DummyModifier<(Entity, object)>(
+                        value: (owner, this), tickDuration: ignoreFrames
                         ));
             }
             DoEffect(owner, target, effectMultiplier * (data == null ? 1 : data.EffectMultiplier), data != null);
@@ -80,9 +61,9 @@ public abstract class EffectTask : TriggerTask<Effect>
 
     public abstract void DoEffect(Entity owner, Entity target, float multiplier, bool triggered);
 
-    public new EffectTask Clone()
+    public EffectTask Clone()
     {
-        EffectTask clone = base.Clone() as EffectTask;
+        EffectTask clone = (EffectTask)MemberwiseClone();
         clone.targetSelector = targetSelector.Clone();
         return clone;
     }
@@ -91,13 +72,15 @@ public abstract class EffectTask : TriggerTask<Effect>
 [LabelText("Task: Grant Buff")]
 public class Effect_GrantModifer : EffectTask
 {
+    [SerializeReference, FoldoutGroup("@GetType()")]
+    public IModifier modifier;
+
     public Effect_GrantModifer() { }
     public Effect_GrantModifer(IModifier modifier) 
     {
         this.modifier = modifier;
     }
 
-    public IModifier modifier;
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
         Target.AddModifier(modifier);
@@ -137,7 +120,7 @@ public class Task_DoRandomEffect : EffectTask
         }
         else
         {
-            random.GetRandomEntry().DoTask(this, owner);
+            random.GetRandomEntry().DoTask(null, owner);
         }
     }
 }

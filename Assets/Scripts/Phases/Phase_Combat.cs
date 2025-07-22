@@ -37,7 +37,7 @@ public abstract class Phase_Combat : Phase
     {
         foreach (Viewer player in GameManager.Viewers)
         {
-            new Trigger_RoundEnd(player, player);
+            Trigger_RoundEnd.Invoke(player, player);
         }
         base.OnExit();
     }
@@ -52,10 +52,10 @@ public abstract class Phase_Combat : Phase
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawn.position, Quaternion.identity);
             entity.GetMechanic<Mechanic_PlayerOwner>().SetPlayer(spawn.owner, entity);
             spawn.owner.roundPoints = 0;
-            entity.GetMechanic<Mechanic_Team>().team = spawn.team;
-            entity.Stat<Stat_Initiative>().Value = (int)(GameManager.Instance.timePerTurn * 50);
+            entity.Stat<Stat_Team>().AddModifier(spawn.team);
+            entity.Stat<Stat_Initiative>().AddModifier((int)(GameManager.Instance.timePerTurn * 50));
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
-            entity.GetMechanic<Stat_Targeting>().targetingType = spawn.owner.targetType;
+            entity.Stat<Stat_TargetingMethod>().AddModifier(spawn.owner.targetType);
             cleanup += Trigger_Die.Subscribe(TrackKill, entity);
             foreach (Item item in spawn.owner.items)
             {
@@ -77,7 +77,7 @@ public abstract class Phase_Combat : Phase
     private void TrackKill(DamageInstance damage)
     {
         Entity dead = damage.Target;
-        int team = dead.GetMechanic<Mechanic_Team>().team;
+        int team = dead.Stat<Stat_Team>().Value;
         if (!remainingPlayers.ContainsKey(team)) return;
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);

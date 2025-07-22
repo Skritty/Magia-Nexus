@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BooleanPrioritySolver : PrioritySolver<bool>
 {
-    protected override bool HandleSamePriorityModifiers(List<Stat<bool>> modifiers)
+    protected override bool HandleSamePriorityModifiers(List<IDataContainer<bool>> modifiers)
     {
         bool value = false;
         foreach (Stat<bool> modifier in modifiers)

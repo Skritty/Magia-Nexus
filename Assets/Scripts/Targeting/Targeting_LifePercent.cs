@@ -9,8 +9,8 @@ public class Targeting_LifePercent : MultiTargeting
         int comparison = 0;
         float e1hp = e1.Stat<Stat_CurrentLife>().Value / e2.Stat<Stat_MaxLife>().Value;
         float e2hp = e2.Stat<Stat_CurrentLife>().Value / e2.Stat<Stat_MaxLife>().Value;
-        float e1Enmity = e1.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
-        float e2Enmity = e2.GetMechanic<Stat_EffectModifiers>().CalculateModifier(EffectTag.Enmity);
+        float e1Enmity = e1.Stat<Stat_Enmity>().Value;
+        float e2Enmity = e2.Stat<Stat_Enmity>().Value;
         switch (sortingMethod)
         {
             case TargetSorting.Highest:

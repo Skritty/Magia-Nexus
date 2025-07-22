@@ -2,7 +2,7 @@ public class Effect_Accelerate : EffectTask
 {
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        for(int i = 0; i < effectMultiplier; i++)
+        for(int i = 0; i < multiplier; i++)
         {
             Target.GetMechanic<Mechanic_Actions>().Tick();
         }

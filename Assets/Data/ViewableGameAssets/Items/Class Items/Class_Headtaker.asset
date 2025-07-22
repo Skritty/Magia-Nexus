@@ -26,74 +26,43 @@ MonoBehaviour:
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 7867064604153348097
+  - rid: 1083524128524730482
   references:
     version: 2
     RefIds:
-    - rid: 5286389777395876405
-      type: {class: Trigger_ActionEnd, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5286389933263290467
-      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
+    - rid: 1083524128524730482
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
-    - rid: 7867064604153348097
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
-      data:
         effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348098
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
+          rid: 1083524128524730483
+        duration: 0
         triggerOrder: 0
         trigger:
-          rid: 5286389777395876405
-        tasks:
-        - rid: 5286389933263290467
-        - rid: 7867064604153348107
-    - rid: 7867064604153348098
+          rid: 1083524128524730485
+    - rid: 1083524128524730483
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 7867064604153348107
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+    - rid: 1083524128524730485
+      type: {class: Trigger_ActionEnd, ns: , asm: Assembly-CSharp}
+      data:
+        filterTasks: []
+        nullDataAddendumTasks:
+        - rid: 1083524128524730486
+    - rid: 1083524128524730486
+      type: {class: Effect_DealDamage, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
-        proxy: 0
-        useProxyAsOwner: 0
-        effect:
-          rid: 7867064604153348108
-    - rid: 7867064604153348108
-      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 0.6
+        effectMultiplier: 1.6
         ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348110
-        calculatedDamage: 0
-        damageModifiers:
-        - mainStat: 0
-          <Value>k__BackingField: 0
-          method: 0
-          appliesTo: 0
-          damageType: 8227
-        runes: []
-        skipFlatDamageReduction: 0
-        triggerPlayerOwner: 0
-        preventTriggers: 0
-        ownerEffects: []
-        targetEffects: []
-        onHitEffects: []
-        postOnHitEffects: []
-    - rid: 7867064604153348110
+          rid: 1083524128524730488
+        hit:
+          rid: 1083524128524730497
+    - rid: 1083524128524730488
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
@@ -102,5 +71,32 @@ MonoBehaviour:
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-        radius: 1.75
-        angle: 60
+        radius: 1.5
+        angle: 30
+    - rid: 1083524128524730497
+      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
+      data:
+        preventTriggers: 0
+        triggerPlayerOwner: 0
+        runes: []
+        preHit:
+          rid: 1083524128524730498
+        postHit:
+          rid: 1083524128524730499
+        finalDamage: 0
+        damageModifiers:
+        - _value: 100
+          step: 0
+          appliesTo: 0
+          damageType: 139299
+        skipFlatDamageReduction: 0
+    - rid: 1083524128524730498
+      type: {class: Trigger_PreHit, ns: , asm: Assembly-CSharp}
+      data:
+        filterTasks: []
+        nullDataAddendumTasks: []
+    - rid: 1083524128524730499
+      type: {class: Trigger_PostHit, ns: , asm: Assembly-CSharp}
+      data:
+        filterTasks: []
+        nullDataAddendumTasks: []

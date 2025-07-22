@@ -10,6 +10,7 @@ public class Rune_Order : Rune
     public EffectTask buff;
     [SerializeReference]
     public EffectTask debuff;
+    public Effect_RemoveModifier effectModifier;
 
     [Header("Spell Shape")]
     public Effect_CreateEntity createSummons;
@@ -27,9 +28,7 @@ public class Rune_Order : Rune
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        /*RemovePersistantEffect removeEffect = new RemovePersistantEffect();
-        removeEffect.alignmentRemoved = damage.Owner.Stat<Stat_Team>().team == damage.Target.Stat<Stat_Team>().team ? PersistentEffect.Alignment.Debuff : PersistentEffect.Alignment.Buff;
-        damage.onHitEffects.Add(removeEffect);*/
+        damage.postOnHitEffects.Add(effectModifier);
     }
 
     public override void Shape(Spell spell, int currentRuneIndex)
@@ -40,7 +39,7 @@ public class Rune_Order : Rune
         float lMult = lifeMultiplier;
         float dMult = damageMultiplier;
         if(owner.GetMechanic<Mechanic_PlayerOwner>().player != null)
-            while (!owner.GetMechanic<Mechanic_PlayerOwner>().playerCharacter)
+            while (!owner.Stat<Stat_PlayerCharacter>().Value)
             {
                 lMult *= lifeMultiplier;
                 dMult *= damageMultiplier;
@@ -68,11 +67,8 @@ public class Rune_Order : Rune
             case RuneElement.Earth:
             case RuneElement.Order:
                 {
-                    meleeOverride.Create(meleeOverride, spell.Owner, entity);
-                    for (int i = 1; i < spell.runes.Count; i++)
-                    {
-                        entity.GetMechanic<Mechanic_Magic>().runes.Add(spell.runes[i]);
-                    }
+                    meleeOverride.DoTaskNoData(entity);
+                    entity.Stat<Stat_Runes>().AddModifiers(spell.runes);
                     break;
                 }
         }
@@ -82,7 +78,7 @@ public class Rune_Order : Rune
 
     private void SummonDeath(Spell spell, Entity entity)
     {
-        spell.Owner.GetMechanic<Mechanic_Team>().summons.Remove(entity);
+        spell.Owner.Stat<Stat_Summons>().Remove(entity);
         spell.Stage++;
     }
 

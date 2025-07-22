@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public enum CalculationStep
@@ -16,14 +17,15 @@ public enum CalculationStep
 [Serializable]
 public class NumericalSolver : Stat<float>
 {
-    public CalculationStep Step { get; set; }
+    [FoldoutGroup("@GetType()")]
+    public CalculationStep step;
 
     public NumericalSolver() { }
 
     public NumericalSolver(float value, CalculationStep method)
     { 
         _value = value;
-        Step = method;
+        step = method;
     }
 
     public override void Solve()
@@ -36,7 +38,7 @@ public class NumericalSolver : Stat<float>
                 (modifier as Stat<float>).Solve();
             }
 
-            switch (Step)
+            switch (step)
             {
                 case CalculationStep.Flat:
                 case CalculationStep.Additive:

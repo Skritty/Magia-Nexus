@@ -1,5 +1,8 @@
+using Sirenix.OdinInspector;
+
 public class DamageTypeCalculationSolver : NumericalStepCalculationSolver
 {
+    [FoldoutGroup("@GetType()")]
     public DamageType damageType;
 
     /// <summary>
@@ -7,7 +10,7 @@ public class DamageTypeCalculationSolver : NumericalStepCalculationSolver
     /// </summary>
     public DamageTypeCalculationSolver()
     {
-        Step = CalculationStep.Flat;
+        step = CalculationStep.Flat;
     }
 
     /// <summary>
@@ -28,14 +31,14 @@ public class DamageTypeCalculationSolver : NumericalStepCalculationSolver
         return subcalculation;
     }
 
-    public override void AddModifier(IDataContainer modifier)
+    public override void AddModifier<Data>(Data modifier)
     {
         Stat<float> calcStep = this;
         DamageType appliesTo = DamageType.True;
         CalculationStep step = CalculationStep.Multiplicative;
         if (modifier is NumericalSolver)
         {
-            step = (modifier as NumericalSolver).Step;
+            step = (modifier as NumericalSolver).step;
             if (modifier is DamageSolver)
             {
                 appliesTo = (modifier as DamageSolver).appliesTo;

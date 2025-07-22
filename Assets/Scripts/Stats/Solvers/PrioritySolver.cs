@@ -1,19 +1,24 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 /// <summary>
 /// A modifier with priority tiers. Lower tiers will be ignored.
 /// </summary>
-public abstract class PrioritySolver<T> : Stat<T>
+public class PrioritySolver<T> : Stat<T>
 {
+    [field: SerializeField, FoldoutGroup("@GetType()")]
     public byte Priority { get; set; }
-    public void AddModifier(IModifier modifier, byte priority = 0)
+
+    public System.Action AddModifier(T modifier, byte priority)
     {
-        AddModifier(modifier);
-        this.Priority = priority;
+        PrioritySolver<T> data = new PrioritySolver<T>();
+        data._value = modifier;
+        data.Priority = priority;
+        Modifiers.Add(data);
+        changed = true;
+        OnChange?.Invoke(Value);
+        return () => Modifiers.Remove(data);
     }
 
     public override void Solve()
@@ -24,11 +29,15 @@ public abstract class PrioritySolver<T> : Stat<T>
             if (modifier == null) continue;
             if (modifier.Priority > highestPriority) highestPriority = modifier.Priority;
         }
-        List<Stat<T>> priorityModifiers = new List<Stat<T>>();
-        foreach (PrioritySolver<T> modifier in Modifiers)
+        List<IDataContainer<T>> priorityModifiers = new List<IDataContainer<T>>();
+        foreach (IDataContainer<T> modifier in Modifiers)
         {
-            if (modifier == null) continue;
-            if (modifier.Priority == highestPriority)
+            if (modifier is not PrioritySolver<T>)
+            {
+                if (highestPriority == 0) priorityModifiers.Add(modifier);
+                else continue;
+            }
+            if ((modifier as PrioritySolver<T>).Priority == highestPriority)
             {
                 priorityModifiers.Add(modifier);
             }
@@ -37,7 +46,7 @@ public abstract class PrioritySolver<T> : Stat<T>
         _value = HandleSamePriorityModifiers(priorityModifiers);
     }
 
-    protected virtual T HandleSamePriorityModifiers(List<Stat<T>> modifiers)
+    protected virtual T HandleSamePriorityModifiers(List<IDataContainer<T>> modifiers)
     {
         return modifiers[0].Value;
     }

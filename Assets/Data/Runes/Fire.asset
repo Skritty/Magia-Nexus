@@ -14,128 +14,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 1
   magicEffectFlatDamage: 40
-  damageType: 133
-  opposite: {fileID: 11400000, guid: 7edd61f7988e6bb44ab77fdf410f20c5, type: 2}
+  damageType: 0
+  opposite: {fileID: 0}
   buff:
     rid: -2
   debuff:
-    rid: 5286389775129641021
+    rid: 1083524128524730437
   magicEffectModifier:
-    rid: 5286389775129641023
-  circleEffect:
-    effectMultiplier: 0.8
-    ignoreFrames: 1
-    targetSelector:
-      rid: 5286389775129641025
-    calculatedDamage: 0
-    damageModifiers: []
-    runes: []
-    skipFlatDamageReduction: 0
-    triggerPlayerOwner: 0
-    preventTriggers: 0
-    ownerEffects: []
-    targetEffects: []
-    onHitEffects: []
-    postOnHitEffects: []
-  circleProxy: {fileID: 4300648619749440453, guid: 1b5a9dd3aeef568429994bd7f63261b9, type: 3}
-  maxStages: 2
-  multiplierPerStage: 0.4
-  circleModMultiplierPerStage: 0.2
-  multiplierPerConjureUse: 0.5
-  lineMulti: 1
-  curseExplosion:
-    effectMultiplier: 0.6
-    ignoreFrames: 0
-    targetSelector:
-      rid: 5286389775129641026
-    calculatedDamage: 0
-    damageModifiers: []
-    runes: []
-    skipFlatDamageReduction: 0
-    triggerPlayerOwner: 0
-    preventTriggers: 0
-    ownerEffects: []
-    targetEffects: []
-    onHitEffects: []
-    postOnHitEffects: []
+    rid: -2
+  explosionMultiplierPerStack: 0
+  explosionRadiusPerStack: 0
+  circleProxy: {fileID: 0}
+  maxStages: 0
+  multiplierPerStage: 0
+  circleModMultiplierPerStage: 0
+  multiplierPerConjureUse: 0
+  lineMulti: 0
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 5286389775129641021
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+    - rid: 1083524128524730437
+      type: {class: Effect_GrantModifer, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 118.599335
+        incompatableTriggerBehavior: 1
+        effectMultiplier: 0.02
         ignoreFrames: 0
         targetSelector:
-          rid: 5286389775129641022
-        tick: 0
-        tickDuration: 125
-        maxStacks: -1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 0
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        effectModifiers:
-        - value: 0.02
-          tag: 2
-          method: 1
-          appliesTo: 0
-          damageType: 1
-    - rid: 5286389775129641022
+          rid: 1083524128524730438
+        modifier:
+          rid: 1083524128524730440
+    - rid: 1083524128524730438
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 5286389775129641023
-      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
+    - rid: 1083524128524730440
+      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 0.2
-        ignoreFrames: 0
-        targetSelector:
-          rid: 5286389775129641024
-        calculatedDamage: 0
-        damageModifiers: []
-        runes: []
-        skipFlatDamageReduction: 0
-        triggerPlayerOwner: 0
-        preventTriggers: 0
-        ownerEffects: []
-        targetEffects: []
-        onHitEffects: []
-        postOnHitEffects: []
-    - rid: 5286389775129641024
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1
-        angle: 180
-    - rid: 5286389775129641025
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1.5
-        angle: 180
-    - rid: 5286389775129641026
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1.5
-        angle: 180
+        step: 1
+        appliesTo: 2147483647
+        damageType: 0
+        <Tag>k__BackingField:
+          rid: 1083524128524730463
+        <Alignment>k__BackingField: 2
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 125
+    - rid: 1083524128524730463
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data: 

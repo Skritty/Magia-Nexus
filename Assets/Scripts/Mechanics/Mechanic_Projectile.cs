@@ -35,11 +35,13 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
 
     private void OnHit(Entity entity)
     {
-        foreach (TriggerTask task in tasks)
+        foreach (EffectTask task in tasks)
         {
             if (!task.DoTask(null, entity)) break;
         }
-        if (--Owner.Stat<Stat_SplitsRemaining>().Value >= 0)
+
+        Owner.Stat<Stat_SplitsRemaining>().AddModifier(-1);
+        if (Owner.Stat<Stat_SplitsRemaining>().Value >= 0)
         {
             Effect_CreateEntity split = new Effect_CreateEntity(); // TODO: make effect have a static create
             /*Targeting_Exclude exclude = splitTargeting.Clone<Targeting_Exclude>();
@@ -49,13 +51,15 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
             split.entity = Owner;
             split.Create(Owner.Stat<Stat_PlayerOwner>().playerEntity);*/
         }
-        if (--Owner.Stat<Stat_PiercesRemaining>().Value < 0)
+
+        Owner.Stat<Stat_PiercesRemaining>().AddModifier(-1);
+        if (Owner.Stat<Stat_PiercesRemaining>().Value < 0)
         {
-            new Trigger_Expire(Owner, Owner);
+            Trigger_Expire.Invoke(Owner, Owner);
         }
         else
         {
-            new Trigger_ProjectilePierce(Owner, Owner);
+            Trigger_ProjectilePierce.Invoke(Owner, Owner);
         }
     }
 }

@@ -4,20 +4,20 @@ using UnityEngine;
 public class DamageModifier : DamageSolver, IModifier<float>
 {
     public EffectTask Source { get; set; }
-    [field: SerializeReference]
-    public IStatTag Tag { get; set; }
-    public Alignment Alignment { get; set; }
-    public int MaxStacks { get; set; }
-    public int StacksAdded { get; set; } = 1;
-    public int Stacks { get; set; } = 1;
-    public bool PerPlayer { get; set; }
-    public bool Temporary { get; set; }
-    [field: ShowIf("@Temporary"), ReadOnly]
-    public int CurrentTick { get; set; }
-    [field: ShowIf("@Temporary"), ReadOnly]
-    public int TickDuration { get; set; } = -1;
-    [field: ShowIf("@Temporary"), ReadOnly]
-    public bool RefreshDuration { get; set; }
+    [field: SerializeReference, FoldoutGroup("Modifier")]
+    public IStatTag Tag { get; private set; }
+    [field: SerializeField, FoldoutGroup("Modifier")]
+    public Alignment Alignment { get; private set; }
+    [field: SerializeField, FoldoutGroup("Modifier")]
+    public int MaxStacks { get; private set; }
+    [field: SerializeField, FoldoutGroup("Modifier")]
+    public int StacksAdded { get; private set; } = 1;
+    [field: SerializeField, FoldoutGroup("Modifier")]
+    public bool PerPlayer { get; private set; }
+    [field: SerializeField, FoldoutGroup("Modifier")]
+    public int TickDuration { get; private set; }
+    [field: ShowInInspector, FoldoutGroup("Modifier"), ReadOnly]
+    public bool RefreshDuration { get; private set; }
 
     public DamageModifier() { }
 

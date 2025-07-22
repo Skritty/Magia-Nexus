@@ -31,57 +31,38 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 9031231777024770052
+  - rid: 1083524128524730508
   references:
     version: 2
     RefIds:
-    - rid: 1083523807942279377
-      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+    - rid: 1083524128524730508
+      type: {class: Effect_GrantModifer, ns: , asm: Assembly-CSharp}
       data:
-        mainStat: 0
-        <Value>k__BackingField: 0
-        modifiers: []
-    - rid: 9031231777024770052
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
+        incompatableTriggerBehavior: 1
         effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 9031231777024770072
-        tick: 0
-        tickDuration: 500
-        maxStacks: 20
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 0
-        contributeToAssists: 0
-        alignment: 1
-        vfx: {fileID: 0}
-        effectModifiers:
-        - mainStat: 0
-          <Value>k__BackingField: 0.05
-          modifiers: []
-          <Tag>k__BackingField:
-            rid: 1083523807942279377
-          maxStacks: 20
-          stacks: 1
-          perPlayer: 0
-          alignment: 1
-          temporary: 1
-          tick: 0
-          tickDuration: 500
-          refreshDuration: 0
-          method: 1
-          appliesTo: 8192
-          damageType: 8192
-    - rid: 9031231777024770072
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+          rid: 1083524128524730509
+        modifier:
+          rid: 1083524128524730510
+    - rid: 1083524128524730509
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-        entitiesAffected: 7
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 4
-        angle: 180
+    - rid: 1083524128524730510
+      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
+      data:
+        _value: 0.05
+        step: 1
+        appliesTo: 8192
+        damageType: 0
+        <Tag>k__BackingField:
+          rid: 1083524128524730518
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 20
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+    - rid: 1083524128524730518
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data: 

@@ -23,9 +23,9 @@ public class Rune_Earth : Rune
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        Effect_GrantModifer crystal = new Effect_GrantModifer();
-        crystal.modifier = new Stat<Rune>();
-        damage.postOnHitEffects.Add(crystal);
+        Trigger_PostHit.Subscribe(x => 
+        x.Target.Stat<Stat_RuneCrystals>().
+        AddModifier(damage.runes[(currentRuneIndex + 1) % damage.runes.Count]));
     }
 
     public override void Shape(Spell spell, int currentRuneIndex)
