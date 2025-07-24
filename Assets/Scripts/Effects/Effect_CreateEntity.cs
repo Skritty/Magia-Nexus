@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[Serializable]
-public class Effect_CreateEntity : EffectTask // TODO: split into multiple child classes
+public class Effect_CreateEntity : Effect_CreateEntity<Effect> { }
+
+public class Effect_CreateEntity<T> : EffectTask<T> // TODO: split into multiple child classes
 {
     public enum EntityType { Basic, Projectile, Summon }
     public enum ProjectileFanType

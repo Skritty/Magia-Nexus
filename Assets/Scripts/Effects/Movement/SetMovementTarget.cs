@@ -1,6 +1,6 @@
 using Sirenix.OdinInspector;
 
-public class SetMovementTarget : EffectTask
+public class SetMovementTarget<T> : EffectTask<T>
 {
     [FoldoutGroup("@GetType()")]
     public EffectTargetSelector movementTarget = EffectTargetSelector.Target;

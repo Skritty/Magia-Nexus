@@ -1,23 +1,23 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class NumericalModifier : NumericalSolver, IModifier<float>
 {
-    public EffectTask Source { get; set; }
     [field: SerializeReference, FoldoutGroup("Modifier")]
-    public IStatTag Tag { get; }
+    public IStatTag Tag { get; private set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
-    public Alignment Alignment { get; }
+    public Alignment Alignment { get; private set; }
     [field: SerializeField, FoldoutGroup("@Modifier")]
-    public int MaxStacks { get; }
+    public int MaxStacks { get; private set; }
     [field: SerializeField, FoldoutGroup("@Modifier")]
-    public int StacksAdded { get; } = 1;
+    public int StacksAdded { get; private set; } = 1;
     [field: SerializeField, FoldoutGroup("Modifier")]
-    public bool PerPlayer { get; }
+    public bool PerPlayer { get; private set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
-    public int TickDuration { get; }
-    [field: ShowInInspector, FoldoutGroup("Modifier"), ReadOnly]
-    public bool RefreshDuration { get; }
+    public int TickDuration { get; private set; }
+    [field: ShowInInspector, FoldoutGroup("Modifier")]
+    public bool RefreshDuration { get; private set; }
 
     public NumericalModifier() { }
     public NumericalModifier(float value = default, CalculationStep step = CalculationStep.Flat, IStatTag tag = default, Alignment alignment = Alignment.Neutral,
@@ -33,5 +33,18 @@ public class NumericalModifier : NumericalSolver, IModifier<float>
         PerPlayer = perPlayer;
         TickDuration = tickDuration;
         RefreshDuration = refreshDuration;
+    }
+
+    public override Stat Clone()
+    {
+        NumericalModifier clone = (NumericalModifier)base.Clone();
+        clone.Tag = Tag;
+        clone.Alignment = Alignment;
+        clone.MaxStacks = MaxStacks;
+        clone.StacksAdded = StacksAdded;
+        clone.PerPlayer = PerPlayer;
+        clone.TickDuration = TickDuration;
+        clone.RefreshDuration = RefreshDuration;
+        return clone;
     }
 }

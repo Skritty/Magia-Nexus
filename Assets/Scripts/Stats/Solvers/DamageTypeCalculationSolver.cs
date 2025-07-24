@@ -1,9 +1,32 @@
+using System;
 using Sirenix.OdinInspector;
 
+[Serializable]
 public class DamageTypeCalculationSolver : NumericalStepCalculationSolver
 {
     [FoldoutGroup("@GetType()")]
     public DamageType damageType;
+
+    [ShowInInspector, FoldoutGroup("@GetType()")]
+    public override float Value
+    {
+        get
+        {
+            if (changed)
+            {
+                Solve();
+                changed = false;
+            }
+            return _value;
+        }
+        protected set
+        {
+            Modifiers.Clear();
+            Modifiers.Add(new NumericalSolver(0, CalculationStep.Flat));
+            Modifiers.Add(new NumericalSolver(1, CalculationStep.Additive));
+            (Modifiers[0] as Stat<float>)?.AddModifier(new DataContainer<float>(value));
+        }
+    }
 
     /// <summary>
     /// Root calculation

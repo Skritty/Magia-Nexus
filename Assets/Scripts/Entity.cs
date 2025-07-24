@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityCommon;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Entity : MonoBehaviour
 {
@@ -24,7 +24,9 @@ public class Entity : MonoBehaviour
                 return (T)stat;
             }
         }
-        return default;
+        T s = (T)Activator.CreateInstance(typeof(T));
+        stats.Add(s);
+        return s;
     }
 
     public bool HasStat<T>() where T : IStatTag

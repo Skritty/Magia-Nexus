@@ -2,4 +2,4 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MovementDirectionSelector : EffectTask { }
+public abstract class MovementDirectionSelector<T> : EffectTask<T> { }

@@ -12,9 +12,7 @@ public abstract class Trigger
 public abstract class Trigger<Endpoint, T> : Trigger
 {
     [SerializeReference]
-    public List<TriggerTask<T>> filterTasks = new();
-    [SerializeReference]
-    public List<TriggerTask> nullDataAddendumTasks = new();
+    public List<TriggerTask<T>> tasks = new();
     protected static Dictionary<object, List<TriggerSubscription>> bindings = new();
     protected class TriggerSubscription
     {
@@ -37,21 +35,9 @@ public abstract class Trigger<Endpoint, T> : Trigger
 
     private void DoTriggerTasks(T data, ICollection<TriggerTask> additionalTasks, Entity owner)
     {
-        foreach (TriggerTask<T> task in filterTasks)
+        foreach (TriggerTask<T> task in tasks)
         {
             if (!task.DoTask(data, owner)) return;
-        }
-
-        foreach (TriggerTask task in nullDataAddendumTasks)
-        {
-            try
-            {
-                task.DoTaskNoData(owner);
-            }
-            catch
-            {
-                Debug.LogError($"{task.GetType().Name} on {owner.gameObject.name} is invalid for null data input!!");
-            }
         }
 
         if (additionalTasks == null) return;

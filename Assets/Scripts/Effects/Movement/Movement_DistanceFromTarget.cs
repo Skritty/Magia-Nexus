@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Movement_DistanceFromTarget : MovementDirectionSelector
+public class Movement_DistanceFromTarget<T> : MovementDirectionSelector<T>
 {
     [FoldoutGroup("@GetType()")]
     public float distanceFromTarget;

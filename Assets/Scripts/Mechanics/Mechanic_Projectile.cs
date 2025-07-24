@@ -8,7 +8,7 @@ public class Stat_SplitsRemaining : NumericalSolver, IStatTag { }
 public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
 {
     [FoldoutGroup("Projectile"), SerializeReference]
-    public List<EffectTask> tasks = new();
+    public List<EffectTask<Effect>> tasks = new();
     [FoldoutGroup("Projectile"), SerializeReference]
     public Targeting aoe;
     [FoldoutGroup("Projectile")]
@@ -35,7 +35,7 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
 
     private void OnHit(Entity entity)
     {
-        foreach (EffectTask task in tasks)
+        foreach (EffectTask<Effect> task in tasks)
         {
             if (!task.DoTask(null, entity)) break;
         }

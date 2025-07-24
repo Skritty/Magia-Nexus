@@ -16,4 +16,12 @@ public class DamageSolver : NumericalSolver
         this.damageType = damageType;
         this.appliesTo = appliesTo;
     }
+
+    public override Stat Clone()
+    {
+        DamageSolver clone = (DamageSolver)base.Clone();
+        clone.damageType = damageType;
+        clone.appliesTo = appliesTo;
+        return clone;
+    }
 }

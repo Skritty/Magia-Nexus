@@ -8,9 +8,9 @@ public class Rune_Earth : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public EffectTask buff;
+    public EffectTask<Effect> buff;
     [SerializeReference]
-    public EffectTask debuff;
+    public EffectTask<Effect> debuff;
 
     [Header("Spell Shape")]
     [SerializeReference]

@@ -1,3 +1,6 @@
+
+// IMPORTANT NOTE: If you want a trigger to work with Effect_AddTrigger, it MUST pass in "Entity owner" as a binding object
+
 public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCalc, Entity> { }
 public class Trigger_PreHit : Trigger<Trigger_PreHit, Hit> { }
 public class Trigger_PostHit : Trigger<Trigger_PostHit, Hit> { }

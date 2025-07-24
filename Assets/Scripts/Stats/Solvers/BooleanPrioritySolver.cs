@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BooleanPrioritySolver : PrioritySolver<bool>
@@ -13,4 +14,6 @@ public class BooleanPrioritySolver : PrioritySolver<bool>
         }
         return value;
     }
+
+    public override Stat Clone() => base.Clone();
 }

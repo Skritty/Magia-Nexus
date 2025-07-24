@@ -1,4 +1,4 @@
-public class Effect_RemoveModifier : EffectTask
+public class Effect_RemoveModifier<T> : EffectTask<T>
 {
     public int stacksRemoved = 1;
     public Alignment alignmentRemoved;

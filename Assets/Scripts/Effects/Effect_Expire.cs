@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Effect_Expire : EffectTask
+public class Effect_Expire<T> : EffectTask<T>
 {
     [FoldoutGroup("@GetType()")]
     public bool disable;

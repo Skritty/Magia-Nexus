@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Effect_GrantRunes : EffectTask
+public class Effect_GrantRunes<T> : EffectTask<T>
 {
     public List<Rune> runes;
 

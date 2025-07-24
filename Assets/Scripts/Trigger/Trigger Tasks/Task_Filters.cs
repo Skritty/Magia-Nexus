@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+// These filters are for use primarily with Effect_AddTrigger in the inspector, but can be used in code as well
+
+#region Entity Filters
 [LabelText("Is: Player Character?")]
-public class Task_Filter_PlayerOwned : TriggerTask<Entity>
+public class Task_Filter_IsPlayerCharacter : TriggerTask<Entity>
 {
     public override bool DoTask(Entity entity, Entity Owner)
     {
@@ -13,110 +16,11 @@ public class Task_Filter_PlayerOwned : TriggerTask<Entity>
 }
 
 [LabelText("Is: Player Proxy?")]
-public class Task_Filter_PlayerProxy : TriggerTask<Entity>
+public class Task_Filter_IsPlayerProxy : TriggerTask<Entity>
 {
     public override bool DoTask(Entity entity, Entity Owner)
     {
         return entity.GetMechanic<Mechanic_PlayerOwner>().playerEntity == Owner.GetMechanic<Mechanic_PlayerOwner>().playerEntity;
-    }
-}
-
-[LabelText("Is: Owner of Entity?")]
-public class Task_Filter_OwnerOfEntity : TriggerTask<Entity>
-{
-    public override bool DoTask(Entity entity, Entity Owner)
-    {
-        return entity == Owner;
-    }
-}
-
-[LabelText("Is: Owner of Effect?")]
-public class Task_Filter_OwnerOfEffect : TriggerTask<Effect>
-{
-    public override bool DoTask(Effect effect, Entity Owner)
-    {
-        return effect.Owner == Owner;
-    }
-}
-
-[LabelText("Is: Target?")]
-public class Task_Filter_Target : TriggerTask<Effect>
-{
-    public override bool DoTask(Effect effect, Entity Owner)
-    {
-        return effect.Target == Owner;
-    }
-}
-
-[LabelText("Is: Specific Action?")]
-public class Task_Filter_Action : TriggerTask<Action>
-{
-    public Action comparison;
-    public override bool DoTask(Action action, Entity Owner)
-    {
-        return comparison == action;
-    }
-}
-
-[LabelText("Is: Specific Spell?")]
-public class Task_Filter_Spell : TriggerTask<Spell>
-{
-    public List<RuneElement> runes;
-    public bool containsPartOf;
-    public bool ignoreOrderOfModifiers;
-    public override bool DoTask(Spell spell, Entity Owner)
-    {
-        if (!containsPartOf && spell.runes.Count == runes.Count) return false;
-        if (runes[0] != spell.runes[0].element) return false;
-        if (ignoreOrderOfModifiers)
-        {
-            List<RuneElement> runesLeft = new List<RuneElement>();
-            runesLeft.AddRange(runes);
-            foreach (Rune rune in spell.runes)
-            {
-                runesLeft.Remove(rune.element);
-            }
-            if (runesLeft.Count == 0) return true;
-            else return false;
-        }
-        else
-        {
-            for (int i = 1; i < runes.Count; i++)
-            {
-                if (spell.runes.Count == i)
-                {
-                    if (containsPartOf) break;
-                    return false;
-                }
-                if (spell.runes[i].element != runes[i]) return false;
-            }
-            return true;
-        }
-    }
-}
-
-[LabelText("Filter: Damage Types")]
-public class Task_Filter_DamageType : TriggerTask<DamageInstance>
-{
-    public DamageType damageTypes;
-    public override bool DoTask(DamageInstance damage, Entity Owner)
-    {
-        foreach (DamageSolver modifier in damage.damageModifiers)
-        {
-            if (modifier.damageType.HasFlag(damageTypes)) return true;
-        }
-        return false;
-    }
-}
-
-[LabelText("Filter: Damage Threshold")]
-public class Task_Filter_DamageTreshold : TriggerTask<DamageInstance>
-{
-    public float damageThreshold;
-    public override bool DoTask(DamageInstance damage, Entity Owner)
-    {
-        if (damage.finalDamage >= damageThreshold) return true;
-        else return false;
     }
 }
 
@@ -150,19 +54,6 @@ public class Task_Filter_HasItems : TriggerTask<Entity>
     }
 }
 
-[LabelText("Filter: Targetable")]
-public class Task_Filter_Targetable : TriggerTask<Effect>
-{
-    public EffectTargetingSelector selector;
-    [SerializeReference]
-    public Targeting targeting;
-    public override bool DoTask(Effect effect, Entity Owner)
-    {
-        return targeting.GetTargets(effect, effect.Owner)
-            .Contains(selector == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
-    }
-}
-
 [LabelText("Filter: Threshold")]
 public class Task_Filter_ActivationThreshold : TriggerTask<Entity>
 {
@@ -183,7 +74,67 @@ public class Task_Filter_ActivationThreshold : TriggerTask<Entity>
         }
     }
 }
+#endregion
 
+#region Effect Filters
+[LabelText("Is: Owner?")]
+public class Task_Filter_IsOwner<T> : TriggerTask<T> where T : Effect
+{
+    public override bool DoTask(T effect, Entity Owner)
+    {
+        return effect.Owner == Owner;
+    }
+}
+
+[LabelText("Is: Target?")]
+public class Task_Filter_IsTarget<T> : TriggerTask<T> where T : Effect
+{
+    public override bool DoTask(T effect, Entity Owner)
+    {
+        return effect.Target == Owner;
+    }
+}
+
+[LabelText("Filter: Is Targetable By")]
+public class Task_Filter_IsTargetableBy<T> : TriggerTask<T> where T : Effect
+{
+    public EffectTargetingSelector selector;
+    [SerializeReference]
+    public Targeting targeting;
+    public override bool DoTask(T effect, Entity Owner)
+    {
+        return targeting.GetTargets(effect, effect.Owner)
+            .Contains(selector == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
+    }
+}
+
+[LabelText("Filter: Damage Types")]
+public class Task_Filter_DamageType : TriggerTask<DamageInstance>
+{
+    public DamageType damageTypes;
+    public override bool DoTask(DamageInstance damage, Entity Owner)
+    {
+        foreach (DamageSolver modifier in damage.damageModifiers)
+        {
+            if (modifier.damageType.HasFlag(damageTypes)) return true;
+        }
+        return false;
+    }
+}
+
+[LabelText("Filter: Damage Threshold")]
+public class Task_Filter_DamageTreshold : TriggerTask<DamageInstance>
+{
+    public float damageThreshold;
+    public override bool DoTask(DamageInstance damage, Entity Owner)
+    {
+        if (damage.finalDamage >= damageThreshold) return true;
+        else return false;
+    }
+}
+#endregion
+
+#region Player Filters
 [LabelText("Filter: Player Threshold")]
 public class Task_Filter_PlayerActivationThreshold : TriggerTask<Viewer>
 {
@@ -229,7 +180,7 @@ public class Task_Filter_LeadboardPosition : TriggerTask<Viewer>
 
 [LabelText("Filter: Winstreak")]
 public class Task_Filter_Winstreak : TriggerTask<Viewer>
-    {
+{
     public int threshold;
     public override bool DoTask(Viewer viewer, Entity Owner)
     {
@@ -316,3 +267,60 @@ public class Task_Filter_GoldSpent : TriggerTask<Viewer>
         }
     }
 }
+#endregion
+
+#region Other Filters
+[LabelText("Is: Specific Action?")]
+public class Task_Filter_IsSpecificAction : TriggerTask<Action>
+{
+    public Action comparison;
+    public override bool DoTask(Action action, Entity Owner)
+    {
+        return comparison == action;
+    }
+}
+
+[LabelText("Is: Specific Spell?")]
+public class Task_Filter_Spell : TriggerTask<Spell>
+{
+    public List<RuneElement> runes;
+    public bool containsPartOf;
+    public bool ignoreOrderOfModifiers;
+    public override bool DoTask(Spell spell, Entity Owner)
+    {
+        if (!containsPartOf && spell.runes.Count == runes.Count) return false;
+        if (runes[0] != spell.runes[0].element) return false;
+        if (ignoreOrderOfModifiers)
+        {
+            List<RuneElement> runesLeft = new List<RuneElement>();
+            runesLeft.AddRange(runes);
+            foreach (Rune rune in spell.runes)
+            {
+                runesLeft.Remove(rune.element);
+            }
+            if (runesLeft.Count == 0) return true;
+            else return false;
+        }
+        else
+        {
+            for (int i = 1; i < runes.Count; i++)
+            {
+                if (spell.runes.Count == i)
+                {
+                    if (containsPartOf) break;
+                    return false;
+                }
+                if (spell.runes[i].element != runes[i]) return false;
+            }
+            return true;
+        }
+    }
+}
+#endregion
+
+
+
+
+
+
+

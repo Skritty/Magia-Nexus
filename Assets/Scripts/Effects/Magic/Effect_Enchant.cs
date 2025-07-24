@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Effect_Enchant : EffectTask
+public class Effect_Enchant<T> : EffectTask<T>
 {
     [FoldoutGroup("@GetType()")]
     public bool consumeRunes;

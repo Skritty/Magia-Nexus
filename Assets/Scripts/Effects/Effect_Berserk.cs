@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Effect_Berserk : EffectTask
+public class Effect_Berserk : Effect_Berserk<Effect> { }
+public class Effect_Berserk<T> : EffectTask<T>
 {
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {

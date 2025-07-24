@@ -44,7 +44,7 @@ public class Hit : Effect
 public class Effect
 {
     public float EffectMultiplier { get; set; }
-    public EffectTask Source { get; set; }
+    public EffectTask<Effect> Source { get; set; }
     public Entity Owner { get; set; }
     public Entity Target { get; set; }
 }

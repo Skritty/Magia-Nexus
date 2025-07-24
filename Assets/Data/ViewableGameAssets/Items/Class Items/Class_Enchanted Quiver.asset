@@ -34,8 +34,6 @@ MonoBehaviour:
     - rid: 1083524128524730471
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
-        effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
           rid: 1083524128524730472
@@ -50,46 +48,35 @@ MonoBehaviour:
     - rid: 1083524128524730475
       type: {class: Trigger_ProjectileCreated, ns: , asm: Assembly-CSharp}
       data:
-        filterTasks:
-        - rid: 1083524128524730476
-        nullDataAddendumTasks:
-        - rid: 1083524128524730477
-    - rid: 1083524128524730476
-      type: {class: Task_Filter_PlayerOwned, ns: , asm: Assembly-CSharp}
+        tasks:
+        - rid: 1083524168107688003
+    - rid: 1083524168107688003
+      type: {class: 'Effect_AddTrigger`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
-    - rid: 1083524128524730477
-      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 1083524128524730478
+          rid: 1083524168107688004
         duration: 0
         triggerOrder: 0
         trigger:
-          rid: 1083524128524730479
-    - rid: 1083524128524730478
+          rid: 1083524168107688005
+    - rid: 1083524168107688004
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 1083524128524730479
-      type: {class: Trigger_MovementDirectionCalc, ns: , asm: Assembly-CSharp}
+    - rid: 1083524168107688005
+      type: {class: Trigger_SummonCreated, ns: , asm: Assembly-CSharp}
       data:
-        filterTasks: []
-        nullDataAddendumTasks:
-        - rid: 1083524128524730480
-    - rid: 1083524128524730480
-      type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
+        tasks:
+        - rid: 1083524168107688006
+    - rid: 1083524168107688006
+      type: {class: 'Movement_HomeToTarget`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
-        effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 1083524128524730481
+          rid: 1083524168107688009
         homingRateDegreesPerSecond: 60
-    - rid: 1083524128524730481
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+    - rid: 1083524168107688009
+      type: {class: Targeting_TriggeredEntity, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0

@@ -21,102 +21,76 @@ MonoBehaviour:
   cost: 25
   craftingRecipe: []
   grantedActions: []
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 7867064604153348117
+  - rid: 1083524154633486536
   references:
     version: 2
     RefIds:
-    - rid: 1130977516618514437
-      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
+    - rid: 1083524154633486536
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
-    - rid: 1130977675299520559
-      type: {class: Task_Filter_DamageType, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        damageTypes: 8192
-    - rid: 1130977675299520578
-      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 7867064604153348117
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
-      data:
         effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348118
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
+          rid: 1083524154633486537
+        duration: 0
         triggerOrder: 0
         trigger:
-          rid: 1130977675299520578
-        tasks:
-        - rid: 1130977516618514437
-        - rid: 1130977675299520559
-        - rid: 7867064604153348121
-    - rid: 7867064604153348118
+          rid: 1083524154633486538
+    - rid: 1083524154633486537
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
-    - rid: 7867064604153348121
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
+    - rid: 1083524154633486538
+      type: {class: Trigger_PostHit, ns: , asm: Assembly-CSharp}
+      data:
+        filterTasks:
+        - rid: 1083524154633486553
+        nullDataAddendumTasks:
+        - rid: 1083524154633486539
+    - rid: 1083524154633486539
+      type: {class: Effect_GrantModifer, ns: , asm: Assembly-CSharp}
       data:
         incompatableTriggerBehavior: 1
-        proxy: 0
-        useProxyAsOwner: 0
-        effect:
-          rid: 7867064604153348125
-    - rid: 7867064604153348125
-      type: {class: PE_DamageOverTime, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
+        effectMultiplier: 0.016
         ignoreFrames: 0
         targetSelector:
-          rid: 7867064604153348184
-        tick: 0
-        tickDuration: 125
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 1
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 2
-        vfx: {fileID: 0}
-        damage:
-          effectMultiplier: 0.008
-          ignoreFrames: 0
-          targetSelector:
-            rid: 7867064604153348127
-          calculatedDamage: 0
-          damageModifiers:
-          - value: 100
-            tag: 1
-            method: 0
-            appliesTo: 0
-            damageType: 32901
-          runes: []
-          skipFlatDamageReduction: 1
-          triggerPlayerOwner: 0
-          preventTriggers: 1
-          ownerEffects: []
-          targetEffects: []
-          onHitEffects: []
-          postOnHitEffects: []
-    - rid: 7867064604153348127
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+          rid: 1083524154633486546
+        modifier:
+          rid: 1083524154633486541
+    - rid: 1083524154633486541
+      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 7867064604153348184
+        _value: 100
+        <Modifiers>k__BackingField:
+        - rid: 1083524154633486545
+        step: 0
+        appliesTo: 0
+        damageType: 133
+        <Tag>k__BackingField:
+          rid: 1083524154633486542
+        <Alignment>k__BackingField: 2
+        <MaxStacks>k__BackingField: 1
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 1
+        <TickDuration>k__BackingField: 125
+    - rid: 1083524154633486542
+      type: {class: Stat_DamageOverTime, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+    - rid: 1083524154633486545
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 100
+    - rid: 1083524154633486546
       type: {class: Targeting_TriggeredEffect, ns: , asm: Assembly-CSharp}
       data:
         lockTarget: 0
         selector: 1
+    - rid: 1083524154633486553
+      type: {class: 'Task_Filter_IsOwner`1[[Hit, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        incompatableTriggerBehavior: 1

@@ -52,7 +52,7 @@ MonoBehaviour:
     - rid: 1083524128524730510
       type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
       data:
-        _value: 0.05
+        _value: 0
         step: 1
         appliesTo: 8192
         damageType: 0

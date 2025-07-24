@@ -20,7 +20,7 @@ public class Rune_Extend : Rune
             runes.Add(damage.runes[(i + currentRuneIndex) % damage.runes.Count]);
         }
 
-        Effect_Invoke invoke = new Effect_Invoke();
+        Effect_Invoke<Effect> invoke = new Effect_Invoke<Effect>();
         invoke.runes = runes.ToArray();
 
         damage.postOnHitEffects.Add(invoke);// TODO: Proxy from hit target

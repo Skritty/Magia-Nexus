@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Effect_AddTrigger : EffectTask
+public class Effect_AddTrigger : Effect_AddTrigger<Effect> { }
+public class Effect_AddTrigger<T> : EffectTask<T>
 {
     [FoldoutGroup("@GetType()")]
     public int duration;

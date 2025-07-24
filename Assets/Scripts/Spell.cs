@@ -6,7 +6,7 @@ using UnityEngine;
 public class Spell : Effect
 {
     public List<Rune> runes = new List<Rune>(); // Rune formula
-    public EffectTask effect; // The effect of the spell (generated)
+    public EffectTask<Effect> effect; // The effect of the spell (generated)
     public List<Entity> proxies = new List<Entity>(); // Entities that use the spell effect
     public System.Action cleanup; // Clean up any trigger subscriptions when the spell is finished
     public int maxStages;
@@ -26,7 +26,6 @@ public class Spell : Effect
     }
 
     // Spell Generating Info
-    public EffectTask spellcast;
     public SpellShape shape;
     public bool channeled;
     public bool addRunesToHit = true;
@@ -52,9 +51,8 @@ public class Spell : Effect
         entity.Stat<Stat_Runes>().AddModifiers(runes);
     }
 
-    public void GenerateSpell(EffectTask spellcast, Spell chainCast)
+    public void GenerateSpell(Spell chainCast)
     {
-        this.spellcast = spellcast;
         GenerateShape();
         SubscribeOnHit(x => x.EffectMultiplier = EffectMultiplier);
         if (addRunesToHit) SubscribeOnHit(x => x.runes.AddRange(runes));

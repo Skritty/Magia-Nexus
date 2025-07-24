@@ -1,7 +1,8 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Effect_DoHit : EffectTask
+public class Effect_DoHit : Effect_DoHit<Effect> { }
+public class Effect_DoHit<T> : EffectTask<T>
 {
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Hit hit;
@@ -9,7 +10,6 @@ public class Effect_DoHit : EffectTask
     {
         Hit clone = hit.Clone();
         clone.EffectMultiplier = multiplier;
-        clone.Source = this;
         clone.Owner = Owner;
         clone.Target = Target;
 

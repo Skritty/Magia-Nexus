@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Skritty.Tools.Utilities;
+using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 [Serializable]
 public abstract class TriggerTask
 {
-    public bool incompatableTriggerBehavior = true;
     public abstract bool DoTaskNoData(Entity Owner);
 }
 
@@ -26,25 +25,24 @@ public abstract class TriggerTask<T> : TriggerTask
 }
 
 [Serializable]
-public abstract class EffectTask : TriggerTask<Effect>
+public abstract class EffectTask<T> : TriggerTask<T>
 {
-    [FoldoutGroup("@GetType()")]
-    public float effectMultiplier = 1;
     [FoldoutGroup("@GetType()")]
     public int ignoreFrames;
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
 
-    public override bool DoTask(Effect data, Entity owner)
+    public override bool DoTask(T data, Entity owner)
     {
+        Effect effect = data as Effect;
         List<Entity> targets = null;
-        if(data == null)
+        if(effect == null)
         {
             targets = targetSelector.GetTargets(this, owner);
         }
         else
         {
-            targets = targetSelector.GetTargets(this, data, owner);
+            targets = targetSelector.GetTargets(this, effect, owner);
         }
         foreach (Entity target in targets)
         {
@@ -54,23 +52,23 @@ public abstract class EffectTask : TriggerTask<Effect>
                         value: (owner, this), tickDuration: ignoreFrames
                         ));
             }
-            DoEffect(owner, target, effectMultiplier * (data == null ? 1 : data.EffectMultiplier), data != null);
+            DoEffect(owner, target, effect == null ? 1 : effect.EffectMultiplier, data != null);
         }
         return true;
     }
 
     public abstract void DoEffect(Entity owner, Entity target, float multiplier, bool triggered);
 
-    public EffectTask Clone()
+    public EffectTask<T> Clone()
     {
-        EffectTask clone = (EffectTask)MemberwiseClone();
+        EffectTask<T> clone = (EffectTask<T>)MemberwiseClone();
         clone.targetSelector = targetSelector.Clone();
         return clone;
     }
 }
 
 [LabelText("Task: Grant Buff")]
-public class Effect_GrantModifer : EffectTask
+public class Effect_GrantModifer<T> : EffectTask<T>
 {
     [SerializeReference, FoldoutGroup("@GetType()")]
     public IModifier modifier;
@@ -83,22 +81,33 @@ public class Effect_GrantModifer : EffectTask
 
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        Target.AddModifier(modifier);
+        if(multiplier != 1 && modifier is NumericalModifier)
+        {
+            NumericalModifier clone = (NumericalModifier)(modifier as Stat).Clone();
+            Target.AddModifier(clone);
+            clone.step = CalculationStep.Multiplicative;
+            clone.AddModifier(multiplier);
+            return;
+        }
+        else
+        {
+            Target.AddModifier(modifier);
+        }
     }
 }
 
 [LabelText("Task: Do Random Effect")]
-public class Task_DoRandomEffect : EffectTask
+public class Task_DoRandomEffect<T> : EffectTask<T>
 {
     public EffectTargetSelector proxy;
     public bool useProxyAsOwner;
     [SerializeReference]
-    public List<EffectTask> effects;
+    public List<EffectTask<Effect>> effects;
     public List<Action> actions; // TODO: actions should NOT be a source of truth
 
     public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
-        WeightedChance<EffectTask> random = new WeightedChance<EffectTask>();
+        WeightedChance<EffectTask<Effect>> random = new WeightedChance<EffectTask<Effect>>();
         if (actions.Count > 0)
         {
             foreach (Action action in actions)
@@ -108,7 +117,7 @@ public class Task_DoRandomEffect : EffectTask
         }
         else
         {
-            foreach (EffectTask e in effects)
+            foreach (EffectTask<Effect> e in effects)
             {
                 random.Add(e, 1);
             }
@@ -120,7 +129,7 @@ public class Task_DoRandomEffect : EffectTask
         }
         else
         {
-            random.GetRandomEntry().DoTask(null, owner);
+            random.GetRandomEntry().DoTask(default, owner);
         }
     }
 }

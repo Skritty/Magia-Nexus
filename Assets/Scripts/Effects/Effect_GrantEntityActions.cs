@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Effect_GrantEntityActions : EffectTask
+public class Effect_GrantEntityActions<T> : EffectTask<T>
 {
     [SerializeReference, FoldoutGroup("@GetType()")]
     public List<Action> actions = new();

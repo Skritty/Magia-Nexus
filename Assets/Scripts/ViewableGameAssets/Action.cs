@@ -15,7 +15,7 @@ public class Action : ViewableGameAsset
     public float timing = 0;
     public float effectMultiplier = 1;
     [SerializeReference]
-    public List<EffectTask> effects = new List<EffectTask>();
+    public List<EffectTask<Effect>> effects = new List<EffectTask<Effect>>();
     public virtual void OnStart(Entity owner) 
     {
         owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
@@ -36,7 +36,7 @@ public class Action : ViewableGameAsset
     }
     public void DoEffects(Entity owner)
     {
-        foreach (EffectTask effect in effects)
+        foreach (EffectTask<Effect> effect in effects)
         {
             effect.DoTask(null, owner);
         }

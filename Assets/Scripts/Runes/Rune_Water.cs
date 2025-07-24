@@ -5,15 +5,15 @@ public class Rune_Water : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public EffectTask buff;
+    public EffectTask<Effect> buff;
     [SerializeReference]
-    public EffectTask debuff;
+    public EffectTask<Effect> debuff;
 
     [Header("Spell Shape")]
     [SerializeReference]
-    public EffectTask actionOverride;
+    public EffectTask<Effect> actionOverride;
     [SerializeReference]
-    public EffectTask enchantAttack;
+    public EffectTask<Effect> enchantAttack;
     [SerializeReference]
     public Targeting multicastConeTargeting;
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using TwitchLib.Api.Helix.Models.Search;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
@@ -14,7 +15,7 @@ public abstract class Stat : IDataContainer, IEqualityComparer<Stat>
     public abstract void AddModifier<Data>(Data modifier) where Data : IDataContainer;
     public abstract void RemoveModifier(IDataContainer modifier);
     public abstract bool ContainsModifier(IDataContainer modifier, out int count);
-    public virtual void Solve() { }
+    public virtual void Solve() { Debug.Log("default solve"); }
     //public virtual void InverseSolve() { }
 
     public bool Equals(Stat x, Stat y)
@@ -26,14 +27,16 @@ public abstract class Stat : IDataContainer, IEqualityComparer<Stat>
     {
         return GetType().GetHashCode();
     }
+    public abstract Stat Clone();
 }
 
 public abstract class Stat<T> : Stat, IDataContainer<T>
 {
     public Action<T> OnChange;
-    [SerializeField, FoldoutGroup("@GetType()")]
+    [SerializeField, HideInInspector]
     protected T _value;
     protected bool changed;
+    [ShowInInspector, FoldoutGroup("@GetType()")]
     public virtual T Value
     {
         get
@@ -45,10 +48,15 @@ public abstract class Stat<T> : Stat, IDataContainer<T>
             }
             return _value;
         }
+        protected set
+        {
+            Modifiers.Clear();
+            AddModifier(value);
+        }
     }
 
-    [field: SerializeReference, FoldoutGroup("@GetType()")]
-    public List<IDataContainer<T>> Modifiers { get; } = new();
+    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
+    public List<IDataContainer<T>> Modifiers { get; set; } = new();
 
     public override bool Get<Type>(out Type data)
     {
@@ -97,6 +105,13 @@ public abstract class Stat<T> : Stat, IDataContainer<T>
             return true;
         }
         return false;
+    }
+
+    public override Stat Clone()
+    {
+        Stat<T> clone = (Stat<T>)MemberwiseClone();
+        clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
+        return clone;
     }
 }
 
@@ -196,7 +211,6 @@ public class DummyModifier<T> : IDataContainer<T>, IModifier
 {
     [SerializeField, FoldoutGroup("@GetType()")]
     public T Value { get; }
-    public EffectTask Source { get; set; }
     [field: SerializeReference, FoldoutGroup("Modifier")]
     public IStatTag Tag { get; }
     [field: SerializeField, FoldoutGroup("Modifier")]

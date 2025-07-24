@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-public class Effect_UseActions : EffectTask
+public class Effect_UseActions<T> : EffectTask<T>
 {
     [FoldoutGroup("@GetType()")]
     public List<Action> actions = new List<Action>();

@@ -7,9 +7,9 @@ public class Rune_Fire : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public EffectTask buff;
+    public EffectTask<Effect> buff;
     [SerializeReference]
-    public EffectTask debuff;
+    public EffectTask<Effect> debuff;
     [SerializeReference]
     public Effect_DealDamage magicEffectModifier;
     public float explosionMultiplierPerStack;
@@ -60,7 +60,7 @@ public class Rune_Fire : Rune
         }
         else
         {
-            (damage.postOnHitEffects[0] as Effect_DealDamage).effectMultiplier += explosionMultiplierPerStack;
+            (damage.postOnHitEffects[0] as Effect_DealDamage).hit.EffectMultiplier += explosionMultiplierPerStack;
             ((damage.postOnHitEffects[0] as Effect_DealDamage).targetSelector as Targeting_Radial).radius += explosionRadiusPerStack;
         }
         
@@ -84,7 +84,7 @@ public class Rune_Fire : Rune
 
     private void SpellMultiPerStageFire(Spell spell)
     {
-        spell.effect.effectMultiplier += multiplierPerStage;
+        spell.EffectMultiplier += multiplierPerStage;
     }
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
@@ -93,7 +93,7 @@ public class Rune_Fire : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(_ => spell.effect.effectMultiplier += circleModMultiplierPerStage, spell);
+                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(_ => spell.EffectMultiplier += circleModMultiplierPerStage, spell);
                     break;
                 }
             case SpellShape.Conjuration:
@@ -103,7 +103,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Line:
                 {
-                    spell.effect.effectMultiplier += lineMulti;
+                    spell.EffectMultiplier += lineMulti;
                     (spell.effect.targetSelector as Targeting_Line).width /= 2;
                     break;
                 }

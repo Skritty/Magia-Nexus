@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum CalculationStep
@@ -17,26 +19,42 @@ public enum CalculationStep
 [Serializable]
 public class NumericalSolver : Stat<float>
 {
-    [FoldoutGroup("@GetType()")]
+    [FoldoutGroup("@GetType()"), HideIf("@this is IStatTag")]
     public CalculationStep step;
 
     public NumericalSolver() { }
 
+    public NumericalSolver(CalculationStep method)
+    {
+        step = method;
+    }
+
     public NumericalSolver(float value, CalculationStep method)
-    { 
-        _value = value;
+    {
+        Modifiers.Add(new DataContainer<float>(value));
         step = method;
     }
 
     public override void Solve()
     {
-        _value = 0;
+        switch (step)
+        {
+            case CalculationStep.Flat:
+                {
+                    _value = 0;
+                    break;
+                }
+            case CalculationStep.Additive:
+            case CalculationStep.Multiplicative:
+                {
+                    _value = 1;
+                    break;
+                }
+        }
+        
         foreach (IDataContainer<float> modifier in Modifiers)
         {
-            if(modifier is Stat<float>)
-            {
-                (modifier as Stat<float>).Solve();
-            }
+            (modifier as Stat<float>)?.Solve();
 
             switch (step)
             {
@@ -53,5 +71,12 @@ public class NumericalSolver : Stat<float>
                     }
             }
         }
+    }
+
+    public override Stat Clone()
+    {
+        NumericalSolver clone = (NumericalSolver)base.Clone();
+        clone.step = step;
+        return clone;
     }
 }

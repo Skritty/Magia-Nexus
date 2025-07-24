@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -49,5 +50,12 @@ public class PrioritySolver<T> : Stat<T>
     protected virtual T HandleSamePriorityModifiers(List<IDataContainer<T>> modifiers)
     {
         return modifiers[0].Value;
+    }
+
+    public override Stat Clone()
+    {
+        PrioritySolver<T> clone = (PrioritySolver<T>)base.Clone();
+        clone.Priority = Priority;
+        return clone;
     }
 }

@@ -8,17 +8,17 @@ public class Rune_Chaos : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public EffectTask buff;
+    public EffectTask<Effect> buff;
     [SerializeReference]
-    public EffectTask debuff;
+    public EffectTask<Effect> debuff;
 
     [Header("Spell Shape")]
     [FoldoutGroup("Circle")]
     public float multiplierPerStage;
     [FoldoutGroup("Projectile")]
-    public Movement_HomeToTarget homing;
+    public Movement_HomeToTarget<Effect> homing;
     [FoldoutGroup("Curse")]
-    public Effect_DoHit curseHit;
+    public Effect_DoHit<Effect> curseHit;
     [FoldoutGroup("Curse")]
     public float baseChanneledCurseEffect;
 
@@ -64,7 +64,7 @@ public class Rune_Chaos : Rune
         {
             case SpellShape.Circle:
                 {
-                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(_ => spell.effect.effectMultiplier -= multiplierPerStage);
+                    spell.cleanup += Trigger_SpellStageIncrement.Subscribe(_ => spell.EffectMultiplier -= multiplierPerStage);
                     spell.SetCastOnStageGained();
                     break;
                 }
@@ -102,10 +102,10 @@ public class Rune_Chaos : Rune
 
     private void AddHomingToProjectile(Spell spell, Entity entity)
     {
-        if (entity.Stat<Stat_MovementSelector>().Value == null || !(entity.Stat<Stat_MovementSelector>().Value is Movement_HomeToTarget))
+        if (entity.Stat<Stat_MovementSelector>().Value == null || !(entity.Stat<Stat_MovementSelector>().Value is Movement_HomeToTarget<Effect>))
         {
-            spell.cleanup += entity.Stat<Stat_MovementSelector>().AddModifier(new Movement_HomeToTarget(), 1);
+            spell.cleanup += entity.Stat<Stat_MovementSelector>().AddModifier(new Movement_HomeToTarget<Effect>(), 1);
         }
-        (entity.Stat<Stat_MovementSelector>().Value as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
+        (entity.Stat<Stat_MovementSelector>().Value as Movement_HomeToTarget<Effect>).homingRateDegreesPerSecond += 30f;
     }
 }

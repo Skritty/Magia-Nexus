@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Stat_MovementSpeed : NumericalSolver, IStatTag { }
 public class Stat_MovementTarget : PrioritySolver<Entity>, IStatTag { }
-public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector>, IStatTag { }
+public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector<Effect>>, IStatTag { }
 //public class Stat_MovementDirection : NumericalSolver, IStatTag { } TODO: make vector3 solver
 public class Mechanic_Movement : Mechanic<Mechanic_Movement>
 {
@@ -13,14 +13,6 @@ public class Mechanic_Movement : Mechanic<Mechanic_Movement>
     public bool rotate = false;
     [FoldoutGroup("Movement")]
     public bool obeyMapEdge = false;
-
-    protected override void Initialize()
-    {
-        if(Owner.Stat<Stat_MovementSpeed>().Modifiers.Count < 2)
-        {
-            Debug.LogError("The movement mechanic requires a base movement speed [0] and a movement speed multiplier [1]");
-        }
-    }
 
     public override void Tick()
     {

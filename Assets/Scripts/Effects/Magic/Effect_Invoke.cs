@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class Effect_Invoke : EffectTask
+public class Effect_Invoke<T> : EffectTask<T>
 {
     public bool useOwnerRunes;
     public Rune[] runes = new Rune[0];
@@ -18,13 +18,14 @@ public class Effect_Invoke : EffectTask
             if (runes.Length == 0) return;
             spell = new Spell(Owner, runes);
         }
-        spell.GenerateSpell(this, null);
+        spell.GenerateSpell(null);
         Owner.Stat<Stat_Runes>().Clear();
     }
 
-    public new void Clone()
+    public new Effect_Invoke<T> Clone()
     {
-        Effect_Invoke clone = (Effect_Invoke)base.Clone();
+        Effect_Invoke<T> clone = (Effect_Invoke<T>)base.Clone();
         clone.runes = new Rune[runes.Length];
+        return clone;
     }
 }

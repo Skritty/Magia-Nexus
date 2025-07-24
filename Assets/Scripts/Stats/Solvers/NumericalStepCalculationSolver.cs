@@ -1,8 +1,32 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine.Rendering;
 
+[Serializable]
 public class NumericalStepCalculationSolver : NumericalSolver
 {
+    [ShowInInspector, FoldoutGroup("@GetType()")]
+    public override float Value
+    {
+        get
+        {
+            if (changed)
+            {
+                Solve();
+                changed = false;
+            }
+            return _value;
+        }
+        protected set
+        {
+            Modifiers.Clear();
+            Modifiers.Add(new NumericalSolver(CalculationStep.Flat));
+            Modifiers.Add(new NumericalSolver(CalculationStep.Additive));
+            (Modifiers[0] as Stat<float>)?.AddModifier(new DataContainer<float>(value));
+            changed = true;
+        }
+    }
+
     /// <summary>
     /// Creates a modifier calculation that accepts flat, increased, and more modifiers
     /// </summary>
@@ -10,9 +34,9 @@ public class NumericalStepCalculationSolver : NumericalSolver
     {
         step = CalculationStep.Multiplicative;
         // Flat
-        Modifiers.Add(new NumericalSolver(0, CalculationStep.Flat));
+        Modifiers.Add(new NumericalSolver(CalculationStep.Flat));
         // Increased
-        Modifiers.Add(new NumericalSolver(1, CalculationStep.Additive));
+        Modifiers.Add(new NumericalSolver(CalculationStep.Additive));
         // More
         /*if (source != null) TODO: add source
         {

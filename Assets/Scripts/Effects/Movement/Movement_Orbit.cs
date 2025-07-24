@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class Movement_Orbit : MovementDirectionSelector
+public class Movement_Orbit<T> : MovementDirectionSelector<T>
 {
     [FoldoutGroup("@GetType()")]
     public float orbitDistance;

@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using UnityEngine;
-
-public class Effect_DealDamage : Effect_DoHit
+public class Effect_DealDamage : Effect_DealDamage<Effect> { }
+public class Effect_DealDamage<T> : Effect_DoHit<T>
 {
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
@@ -15,7 +12,6 @@ public class Effect_DealDamage : Effect_DoHit
         DamageInstance damageInstance = (hit as DamageInstance)?.Clone();
         if (damageInstance == null) return;
         damageInstance.EffectMultiplier = multiplier;
-        damageInstance.Source = this;
         damageInstance.Owner = Owner;
         damageInstance.Target = Target;
 
@@ -29,7 +25,7 @@ public class Effect_DealDamage : Effect_DoHit
     public new Effect_DealDamage Clone()
     {
         Effect_DealDamage clone = base.Clone() as Effect_DealDamage;
-        clone.hit = hit;
+        clone.hit = hit.Clone();
         return clone;
     }
 }
