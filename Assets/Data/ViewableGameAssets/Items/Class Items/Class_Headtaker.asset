@@ -42,8 +42,7 @@ MonoBehaviour:
           rid: 1083524128524730485
     - rid: 1083524128524730483
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
+      data: 
     - rid: 1083524128524730485
       type: {class: Trigger_ActionEnd, ns: , asm: Assembly-CSharp}
       data:
@@ -54,23 +53,18 @@ MonoBehaviour:
       data:
         ignoreFrames: 0
         targetSelector:
-          rid: 1083524168107688011
+          rid: 1083524217111576656
         hit:
           rid: 1083524168107688012
-    - rid: 1083524168107688011
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
     - rid: 1083524168107688012
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        preventTriggers: 0
-        triggerPlayerOwner: 0
-        runes: []
+        triggerPlayerCharacter: 0
         preHit:
-          rid: 1083524168107688013
+          tasks: []
         postHit:
-          rid: 1083524168107688014
+          tasks: []
+        runes: []
         finalDamage: 0
         damageModifiers:
         - _value: 100
@@ -79,16 +73,17 @@ MonoBehaviour:
           step: 0
           appliesTo: 0
           damageType: 8227
-        skipFlatDamageReduction: 0
-    - rid: 1083524168107688013
-      type: {class: Trigger_PreHit, ns: , asm: Assembly-CSharp}
-      data:
-        tasks: []
-    - rid: 1083524168107688014
-      type: {class: Trigger_PostHit, ns: , asm: Assembly-CSharp}
-      data:
-        tasks: []
     - rid: 1083524168107688017
       type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 100
+    - rid: 1083524217111576656
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        radius: 1.5
+        angle: 30

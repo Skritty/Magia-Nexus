@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class ListPrioritySolver<T> : PrioritySolver<IList<T>>
+public class ListPrioritySolver<T> : PrioritySolver<List<T>>
 {
     public override void Solve()
     {
-        Value.Clear();
+        _value = new List<T>();
 
         var ordered = Modifiers.OrderByDescending(x =>
         {
@@ -19,12 +19,12 @@ public class ListPrioritySolver<T> : PrioritySolver<IList<T>>
             }
         }).Reverse();
 
-        foreach (IDataContainer<IList<T>> modifier in ordered)
+        foreach (IDataContainer<List<T>> modifier in ordered)
         {
             for (int i = 0; i < modifier.Value.Count; i++)
             {
-                if (Value.Count <= i) Value.Add(modifier.Value[i]);
-                else Value[i] = modifier.Value[i];
+                if (_value.Count <= i) _value.Add(modifier.Value[i]);
+                else _value[i] = modifier.Value[i];
             }
         }
     }

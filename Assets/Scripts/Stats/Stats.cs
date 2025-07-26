@@ -43,9 +43,13 @@ public abstract class Stat<T> : Stat, IDataContainer<T>
         {
             if (changed)
             {
-                Solve();
                 changed = false;
+                Solve();
             }
+            /*if(_value == null)
+            {
+                Debug.LogError($"{GetType()} is null!");
+            }*/
             return _value;
         }
         protected set
@@ -190,6 +194,13 @@ public class ListStat<T> : Stat<T>, IEnumerable<T>
 
 public class QueueStat<T> : Stat<Queue<T>> { }
 
+public interface IModifiable
+{
+    public void AddModifier<Data>(Data modifier) where Data : IDataContainer;
+    public void RemoveModifier(IDataContainer modifier);
+    public bool ContainsModifier(IDataContainer modifier, out int count);
+}
+
 public interface IModifier : IDataContainer
 {
     public IStatTag Tag { get; }
@@ -201,39 +212,42 @@ public interface IModifier : IDataContainer
     public bool RefreshDuration { get; }
 }
 
-public interface IModifier<T> : IModifier, IDataContainer<T>
+public interface IModifier<T> : IModifier, IModifiable, IDataContainer<T>
 {
+    public IStatTag<T> StatTag { get; }
     public List<IDataContainer<T>> Modifiers { get; }
-    public void AddModifier<Data>(Data modifier) where Data : IDataContainer;
 }
 
-public class DummyModifier<T> : IDataContainer<T>, IModifier
+public class DummyModifier<T> : IDataContainer<T>, IModifier<T>
 {
-    [SerializeField, FoldoutGroup("@GetType()")]
-    public T Value { get; }
+    [field: SerializeReference, FoldoutGroup("@GetType()")]
+    public virtual T Value { get; protected set; }
+    public IStatTag Tag => StatTag;
     [field: SerializeReference, FoldoutGroup("Modifier")]
-    public IStatTag Tag { get; }
+    public IStatTag<T> StatTag { get; protected set; }
+    public List<IDataContainer<T>> Modifiers => null;
     [field: SerializeField, FoldoutGroup("Modifier")]
-    public Alignment Alignment { get; }
+    public Alignment Alignment { get; protected set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
-    public int MaxStacks { get; }
+    public int MaxStacks { get; protected set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
-    public int StacksAdded { get; } = 1;
+    public int StacksAdded { get; protected set; } = 1;
     [field: SerializeField, FoldoutGroup("Modifier")]
-    public bool PerPlayer { get; }
+    public bool PerPlayer { get; protected set; }
     [field: ShowInInspector, FoldoutGroup("Modifier")]
-    public int TickDuration { get; }
+    public int TickDuration { get; protected set; }
     [field: ShowInInspector, FoldoutGroup("Modifier"), ReadOnly]
-    public bool RefreshDuration { get; }
+    public bool RefreshDuration { get; protected set; }
+    
 
     public DummyModifier() { }
 
-    public DummyModifier(T value = default, IStatTag tag = default, Alignment alignment = Alignment.Neutral,
+    public DummyModifier(T value = default, IStatTag<T> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false, 
         int tickDuration = 0, bool refreshDuration = false)
     {
         Value = value;
-        Tag = tag;
+        StatTag = tag;
         Alignment = alignment;
         MaxStacks = maxStacks;
         StacksAdded = stacksAdded;
@@ -249,7 +263,24 @@ public class DummyModifier<T> : IDataContainer<T>, IModifier
         else data = container.Value;
         return container != null;
     }
+
+    public void AddModifier<Data>(Data modifier) where Data : IDataContainer
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RemoveModifier(IDataContainer modifier)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool ContainsModifier(IDataContainer modifier, out int count)
+    {
+        throw new NotImplementedException();
+    }
 }
+
+public class RuneModifier : DummyModifier<Rune> { }
 
 [Flags]
 public enum Alignment 
@@ -259,26 +290,24 @@ public enum Alignment
     Debuff = 2 
 }
 
-public interface IStatTag : IDataContainer 
-{
-    public void AddModifier<Data>(Data modifier) where Data : IDataContainer;
-}
-public class Stat_Triggers : Stat<Alignment>, IStatTag { }
-public class Stat_PreventExpire : EnumPrioritySolver<Alignment>, IStatTag { }
-public class Stat_AoESize : NumericalSolver, IStatTag { }
-public class Stat_Projectiles : NumericalSolver, IStatTag { }
-public class Stat_Targets : NumericalSolver, IStatTag { }
-public class Stat_CastTargets : NumericalSolver, IStatTag { }
-public class Stat_Removeable : NumericalSolver, IStatTag { }
-public class Stat_Knockback : NumericalSolver, IStatTag { }
-public class Stat_Enmity : NumericalSolver, IStatTag { }
-public class Stat_Untargetable : ListStat<(Entity, object)>, IStatTag { }
-public class Stat_Team : PrioritySolver<int>, IStatTag { }
-public class Stat_SummonCount : NumericalSolver, IStatTag { }
-public class Stat_Summons : ListStat<Entity>, IStatTag { }
-public class Stat_Proxies : ListStat<Entity>, IStatTag { }
-public class Stat_RuneCrystals : ListStat<Rune>, IStatTag { }
-public class Stat_TeamPlayers : NumericalSolver, IStatTag { }
-public class Stat_MaxSummons : NumericalSolver, IStatTag { }
-public class Stat_TargetingMethod : PrioritySolver<Targeting>, IStatTag { }
-public class Stat_MovementTargetingMethod : PrioritySolver<Targeting>, IStatTag { }
+public interface IStatTag : IModifiable, IDataContainer { }
+public interface IStatTag<T> : IStatTag { }
+public class Stat_Triggers : Stat<Alignment>, IStatTag<Alignment> { }
+public class Stat_PreventExpire : EnumPrioritySolver<Alignment>, IStatTag<Alignment> { }
+public class Stat_AoESize : NumericalSolver, IStatTag<float> { }
+public class Stat_Projectiles : NumericalSolver, IStatTag<float> { }
+public class Stat_AdditionalTargets : NumericalSolver, IStatTag<float> { }
+public class Stat_CastTargets : NumericalSolver, IStatTag<float> { }
+public class Stat_Removeable : NumericalSolver, IStatTag<float> { }
+public class Stat_Knockback : NumericalSolver, IStatTag<float> { }
+public class Stat_Enmity : NumericalSolver, IStatTag<float> { }
+public class Stat_Untargetable : ListStat<(Entity, object)>, IStatTag<(Entity, object)> { }
+public class Stat_Team : PrioritySolver<int>, IStatTag<int> { }
+public class Stat_SummonCount : NumericalSolver, IStatTag<float> { }
+public class Stat_Summons : ListStat<Entity>, IStatTag<Entity> { }
+public class Stat_Proxies : ListStat<Entity>, IStatTag<Entity> { }
+public class Stat_RuneCrystals : ListStat<Rune>, IStatTag<Rune> { }
+public class Stat_TeamPlayers : NumericalSolver, IStatTag<float> { }
+public class Stat_MaxSummons : NumericalSolver, IStatTag<float> { }
+public class Stat_TargetingMethod : PrioritySolver<Targeting>, IStatTag<Targeting> { }
+public class Stat_MovementTargetingMethod : PrioritySolver<Targeting>, IStatTag<Targeting> { }

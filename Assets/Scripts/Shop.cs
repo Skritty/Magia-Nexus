@@ -566,7 +566,7 @@ public class Shop : MonoBehaviour
         {
             message = $"{targeting.name} is {(targetLock ? "locked" : "unlocked")}";
             viewer.targetType = targeting.targeting.Clone();
-            viewer.targetType.lockTarget = targetLock;
+            viewer.lockTargeting = targetLock;
             return true;
         }
     }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Stat_PlayerCharacter : Stat<Entity>, IStatTag { } // TODO: make this the end all be all for referencing the player character
+public class Stat_PlayerCharacter : Stat<Entity>, IStatTag<Entity> { } // TODO: make this the end all be all for referencing the player character
 public class Mechanic_PlayerOwner : Mechanic<Mechanic_PlayerOwner>
 {
     [FoldoutGroup("Player Owned")]

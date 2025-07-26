@@ -128,7 +128,7 @@ public class Spell : Effect
         targets = Mathf.Clamp(targets, 1, int.MaxValue);
         for (int t = 0; t < targets; t++)
         {
-            effect.DoTask(null, Owner);
+            effect.DoTask(null, Owner, proxy);
         }
     }
 

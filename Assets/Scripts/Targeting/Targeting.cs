@@ -25,14 +25,11 @@ public enum EffectTargetingSelector { Owner, Target }
 [Serializable]
 public abstract class Targeting
 {
-    protected Entity Owner;
-    protected Entity proxy;
-    [ShowInInspector]
-    protected Entity primaryTarget;
-    public bool lockTarget;
-    
     public abstract List<Entity> GetTargets(object source, Entity owner, Entity proxy = null);
-    public abstract List<Entity> GetTargets(object source, Effect effect, Entity owner, Entity proxy = null);
+    public virtual List<Entity> GetTargets<T>(object source, T triggerData, Entity owner, Entity proxy = null)
+    {
+        return GetTargets(source, owner, proxy);
+    }
     public virtual void OnDrawGizmos(Transform owner) { }
     public virtual Targeting Clone()
     {
@@ -49,16 +46,16 @@ public abstract class MultiTargeting : Targeting
     public int numberOfTargets = -1;
     public Vector3 offset;
     public VFX vfx;
-    protected List<Entity> targets;
-    protected Vector3 GetCenter()
+
+    protected Vector3 GetCenter(Entity owner, Entity proxy)
     {
         if(proxy != null)
         {
-            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Mechanic_Movement>().facingDir) * offset; // Direction still determined by owner
+            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, owner.GetMechanic<Mechanic_Movement>().facingDir) * offset; // Direction still determined by owner
         }
         else
         {
-            return Owner.transform.position + Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Mechanic_Movement>().facingDir) * offset;
+            return owner.transform.position + Quaternion.FromToRotation(Vector3.up, owner.GetMechanic<Mechanic_Movement>().facingDir) * offset;
         }
         
     }
@@ -70,13 +67,8 @@ public abstract class MultiTargeting : Targeting
             Debug.LogWarning($"Owner of Targeting is null for {source}!");
             return new List<Entity>();
         }
-        if(lockTarget && !(primaryTarget == null || !primaryTarget.gameObject.activeSelf))
-        {
-            return targets;
-        }
-        this.Owner = owner;
-        this.proxy = proxy;
-        targets = new List<Entity>();
+
+        List<Entity> targets = new List<Entity>();
         TargetFilter targetType;
         bool firstTarget = true;
         foreach (Entity entity in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
@@ -102,7 +94,7 @@ public abstract class MultiTargeting : Targeting
                 targetType = TargetFilter.Allies;
             }
             if (!entitiesAffected.HasFlag(targetType)) continue;
-            if (!IsValidTarget(entity, firstTarget)) continue;
+            if (!IsValidTarget(owner, proxy, entity, firstTarget)) continue;
             if (firstTarget) firstTarget = false;
 
             // Is it within the targeting range?
@@ -114,33 +106,23 @@ public abstract class MultiTargeting : Targeting
         }
 
         if(sortingMethod != TargetSorting.Unsorted)
-            targets.Sort(SortTargets);
+            targets.Sort((x, y) => SortTargets(owner, x, y));
 
         if(numberOfTargets >= 0)
         {
-            int actualNumberOfTargets = numberOfTargets + (int)owner.Stat<Stat_Targets>().Value;
+            int actualNumberOfTargets = numberOfTargets + (int)owner.Stat<Stat_AdditionalTargets>().Value;
             if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
                 targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
         }
 
         if(targets.Count > 0)
         {
-            DoFX(source, owner, targets);
-            primaryTarget = targets[0];
+            DoFX(source, owner, proxy, targets);
         }
             
         return targets;
     }
-    public override List<Entity> GetTargets(object source, Effect effect, Entity owner, Entity proxy = null)
-    {
-        GetTargets(source, owner, proxy);
-        /*if (conditionalOnTrigger && trigger.effect != null && targets.Contains(trigger.effect.Owner))
-        {
-            targets = conditionalTarget.GetTargets(source, owner);
-        }*/
-        return targets;
-    }
-    protected virtual void DoFX(object source, Entity owner, List<Entity> targets)
+    protected virtual void DoFX(object source, Entity owner, Entity proxy, List<Entity> targets)
     {
         if (vfx == null) return;
         foreach(Entity target in targets)
@@ -149,8 +131,8 @@ public abstract class MultiTargeting : Targeting
             damage.ApplyDamage(source as Effect_DealDamage);
         }
     }
-    protected virtual bool IsValidTarget(Entity target, bool firstTarget) => true;
-    protected virtual int SortTargets(Entity e1, Entity e2) 
+    protected virtual bool IsValidTarget(Entity owner, Entity proxy, Entity target, bool firstTarget) => true;
+    protected virtual int SortTargets(Entity owner, Entity e1, Entity e2) 
     {  
         if(sortingMethod == TargetSorting.Unsorted) return UnityEngine.Random.Range(-1, 2);
         return 0; 

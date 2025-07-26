@@ -102,10 +102,10 @@ public class Rune_Chaos : Rune
 
     private void AddHomingToProjectile(Spell spell, Entity entity)
     {
-        if (entity.Stat<Stat_MovementSelector>().Value == null || !(entity.Stat<Stat_MovementSelector>().Value is Movement_HomeToTarget<Effect>))
+        if (entity.Stat<Stat_MovementSelector>().Value == null || !(entity.Stat<Stat_MovementSelector>().Value is Movement_HomeToTarget<Entity>))
         {
-            spell.cleanup += entity.Stat<Stat_MovementSelector>().AddModifier(new Movement_HomeToTarget<Effect>(), 1);
+            spell.cleanup += entity.Stat<Stat_MovementSelector>().AddModifier(new Movement_HomeToTarget<Entity>(), 1);
         }
-        (entity.Stat<Stat_MovementSelector>().Value as Movement_HomeToTarget<Effect>).homingRateDegreesPerSecond += 30f;
+        (entity.Stat<Stat_MovementSelector>().Value as Movement_HomeToTarget<Entity>).homingRateDegreesPerSecond += 30f;
     }
 }

@@ -7,8 +7,9 @@ using UnityEngine;
 public class BooleanModifier : BooleanPrioritySolver, IModifier<bool>
 {
     public BooleanModifier() { }
-    [field: SerializeReference, FoldoutGroup("Modifier")]
-    public IStatTag Tag { get; private set; }
+    public IStatTag Tag => StatTag;
+    [field: SerializeReference, FoldoutGroup("Modifier"), HideInInlineEditors]
+    public IStatTag<bool> StatTag { get; protected set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
     public Alignment Alignment { get; private set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
@@ -22,12 +23,12 @@ public class BooleanModifier : BooleanPrioritySolver, IModifier<bool>
     [field: ShowInInspector, FoldoutGroup("Modifier")]
     public bool RefreshDuration { get; private set; }
 
-    public BooleanModifier(bool value = default, CalculationStep step = CalculationStep.Flat, IStatTag tag = default, Alignment alignment = Alignment.Neutral,
+    public BooleanModifier(bool value = default, CalculationStep step = CalculationStep.Flat, IStatTag<bool> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false,
         bool temporary = false, int tickDuration = 0, bool refreshDuration = false)
     {
         _value = value;
-        Tag = tag;
+        StatTag = tag;
         Alignment = alignment;
         MaxStacks = maxStacks;
         StacksAdded = stacksAdded;
@@ -39,7 +40,7 @@ public class BooleanModifier : BooleanPrioritySolver, IModifier<bool>
     public override Stat Clone()
     {
         BooleanModifier clone = (BooleanModifier)base.Clone();
-        clone.Tag = Tag;
+        clone.StatTag = StatTag;
         clone.Alignment = Alignment;
         clone.MaxStacks = MaxStacks;
         clone.StacksAdded = StacksAdded;

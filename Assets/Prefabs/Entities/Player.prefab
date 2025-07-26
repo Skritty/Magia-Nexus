@@ -316,18 +316,17 @@ MonoBehaviour:
       type: {class: 'ReferenceSerializableHashSet`1[[IStatTag, Assembly-CSharp]]', ns: UnityCommon, asm: Assembly-CSharp}
       data:
         values:
-        - rid: 1083524154633486525
-        - rid: 1083524144729161806
-        - rid: 1083524154633486529
+        - rid: 1083524217111576925
         - rid: 1083524154633486336
+        - rid: 1083524144729161806
     - rid: 1083524128524730529
       type: {class: Mechanic_Damageable, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        healthBar: {fileID: 0}
-        damagePopup: {fileID: 0}
+        healthBar: {fileID: 9101917831146373091}
+        damagePopup: {fileID: 1206888003998408235, guid: ddaf2cdb81fa36d40ac1e933ecce4c05, type: 3}
     - rid: 1083524128524730530
       type: {class: Mechanic_Actions, ns: , asm: Assembly-CSharp}
       data:
@@ -336,6 +335,7 @@ MonoBehaviour:
         mergeBehavior: 0
         tick: -1
         actionsPerTurn: 0
+        actions: []
     - rid: 1083524128524730534
       type: {class: Mechanic_PlayerOwner, ns: , asm: Assembly-CSharp}
       data:
@@ -363,10 +363,10 @@ MonoBehaviour:
           wins: 0
           losses: 0
           winstreak: 0
+          lockTargeting: 0
     - rid: 1083524128524730535
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
         entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
@@ -379,21 +379,21 @@ MonoBehaviour:
         baseStat: 0
         mergeBehavior: 0
         animator: {fileID: 3663811516769054534}
-        animationSkin: {fileID: 0}
+        animationSkin: {fileID: 22100000, guid: f95a19e226fca6e4291ad4a4a16f4b86, type: 2}
     - rid: 1083524128524730537
       type: {class: Mechanic_Magic, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        vfx: {fileID: 0}
+        vfx: {fileID: -836890817849390660, guid: 5335b7fd561477d4db43b51b4db65725, type: 3}
     - rid: 1083524128524730538
       type: {class: Mechanic_Movement, ns: , asm: Assembly-CSharp}
       data:
         Owner: {fileID: 4300648619749440453}
         baseStat: 0
         mergeBehavior: 0
-        facingDir: {x: 1, y: 0, z: 0}
+        facingDir: {x: 0, y: 0, z: 0}
         rotate: 0
         obeyMapEdge: 0
     - rid: 1083524144729161806
@@ -432,28 +432,15 @@ MonoBehaviour:
       type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 10
-    - rid: 1083524154633486525
-      type: {class: Stat_Projectiles, ns: , asm: Assembly-CSharp}
+    - rid: 1083524217111576925
+      type: {class: Stat_MovementTargetingMethod, ns: , asm: Assembly-CSharp}
       data:
-        _value: 1
         <Modifiers>k__BackingField:
-        - rid: 1083524154633486527
-        step: 0
-    - rid: 1083524154633486527
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 1
-    - rid: 1083524154633486529
-      type: {class: Stat_Targets, ns: , asm: Assembly-CSharp}
-      data:
-        _value: 1
-        <Modifiers>k__BackingField:
-        - rid: 1083524154633486531
-        step: 0
-    - rid: 1083524154633486531
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 1
+        - rid: 1083524217111576930
+        <Priority>k__BackingField: 0
+    - rid: 1083524217111576930
+      type: {class: 'DataContainer`1[[Targeting, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0

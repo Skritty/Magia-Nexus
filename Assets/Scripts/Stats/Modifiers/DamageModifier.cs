@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class DamageModifier : DamageSolver, IModifier<float>
 {
-    [field: SerializeReference, FoldoutGroup("Modifier")]
-    public IStatTag Tag { get; private set; }
+    public IStatTag Tag => StatTag;
+    [field: SerializeReference, FoldoutGroup("Modifier"), HideInInlineEditors]
+    public IStatTag<float> StatTag { get; protected set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
     public Alignment Alignment { get; private set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
@@ -30,7 +31,7 @@ public class DamageModifier : DamageSolver, IModifier<float>
     public override Stat Clone()
     {
         DamageModifier clone = (DamageModifier)base.Clone();
-        clone.Tag = Tag;
+        clone.StatTag = StatTag;
         clone.Alignment = Alignment;
         clone.MaxStacks = MaxStacks;
         clone.StacksAdded = StacksAdded;

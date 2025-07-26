@@ -19,7 +19,7 @@ public class Effect_DealDamage<T> : Effect_DoHit<T>
         damageInstance.GenerateMagicEffect();
         if (!triggered) damageInstance.PostHitTriggers();
         damageInstance.CalculateDamageType();
-        Target.GetMechanic<Mechanic_Damageable>().TakeDamage(damageInstance);
+        Target.GetMechanic<Mechanic_Damageable>().TakeDamage(damageInstance, triggered);
     }
 
     public new Effect_DealDamage Clone()

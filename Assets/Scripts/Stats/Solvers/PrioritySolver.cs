@@ -25,10 +25,10 @@ public class PrioritySolver<T> : Stat<T>
     public override void Solve()
     {
         byte highestPriority = 0;
-        foreach (PrioritySolver<T> modifier in Modifiers)
+        foreach (IDataContainer<T> modifier in Modifiers)
         {
-            if (modifier == null) continue;
-            if (modifier.Priority > highestPriority) highestPriority = modifier.Priority;
+            if (modifier is not PrioritySolver<T>) continue;
+            if ((modifier as PrioritySolver<T>).Priority > highestPriority) highestPriority = (modifier as PrioritySolver<T>).Priority;
         }
         List<IDataContainer<T>> priorityModifiers = new List<IDataContainer<T>>();
         foreach (IDataContainer<T> modifier in Modifiers)
@@ -38,7 +38,7 @@ public class PrioritySolver<T> : Stat<T>
                 if (highestPriority == 0) priorityModifiers.Add(modifier);
                 else continue;
             }
-            if ((modifier as PrioritySolver<T>).Priority == highestPriority)
+            else if ((modifier as PrioritySolver<T>).Priority == highestPriority)
             {
                 priorityModifiers.Add(modifier);
             }

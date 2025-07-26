@@ -28,7 +28,7 @@ public class Rune_Fire : Rune
     public float circleModMultiplierPerStage;
 
     [FoldoutGroup("Conjuration")]
-    public float multiplierPerConjureUse;
+    public DamageSolver multiplierPerConjureUse;
 
     [FoldoutGroup("Line")]
     public float lineMulti;
@@ -98,7 +98,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Conjuration:
                 {
-                    spell.cleanup += Trigger_ActionStart.Subscribe(x => spell.cleanup += spell.Owner.Stat<Stat_DamageDealt>().AddModifier(new DataContainer<float>(multiplierPerConjureUse)), spell.Owner);
+                    spell.cleanup += Trigger_ActionStart.Subscribe(x => spell.cleanup += spell.Owner.Stat<Stat_DamageDealt>().AddModifier(multiplierPerConjureUse), spell.Owner);
                     break;
                 }
             case SpellShape.Line:

@@ -1,7 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Effect_AddTrigger : Effect_AddTrigger<Effect> { }
 public class Effect_AddTrigger<T> : EffectTask<T>
 {
     [FoldoutGroup("@GetType()")]

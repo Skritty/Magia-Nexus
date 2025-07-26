@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_DamageOverTime : ListStat<IDataContainer<float>>, IStatTag { }
-public class Stat_DamageDealt : ListStat<IDataContainer<float>>, IStatTag { }
-public class Stat_DamageTaken : ListStat<IDataContainer<float>>, IStatTag { }
-public class Stat_Invulnerable : BooleanPrioritySolver, IStatTag { }
-public class Stat_CurrentLife : NumericalStepCalculationSolver, IStatTag { }
-public class Stat_MaxLife : NumericalStepCalculationSolver, IStatTag { }
+public class Stat_DamageOverTime : ListStat<DamageSolver>, IStatTag<DamageSolver> { }
+public class Stat_DamageDealt : ListStat<DamageSolver>, IStatTag<DamageSolver> { }
+public class Stat_DamageTaken : ListStat<DamageSolver>, IStatTag<DamageSolver> { }
+public class Stat_Invulnerable : BooleanPrioritySolver, IStatTag<bool> { }
+public class Stat_CurrentLife : NumericalStepCalculationSolver, IStatTag<float> { }
+public class Stat_MaxLife : NumericalStepCalculationSolver, IStatTag<float> { }
 public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 {
     #region Internal Variables
@@ -29,7 +29,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         Owner.cleanup += Trigger_Die.Subscribe(x => Debug.Log($"{x.Target} DIED"), Owner);
     }
 
-    public void TakeDamage(DamageInstance damage)
+    public void TakeDamage(DamageInstance damage, bool triggered = false)
     {
         if (Owner.Stat<Stat_CurrentLife>().Value == 0 || damage.EffectMultiplier == 0)
         {
@@ -58,8 +58,8 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
         baseLife.Value = Mathf.Clamp(baseLife.Value - damage.finalDamage, float.MinValue, Owner.Stat<Stat_MaxLife>().Value);
 
-        Entity triggerOwner = damage.triggerPlayerOwner ? damage.Owner.GetMechanic<Mechanic_PlayerOwner>().Owner : damage.Owner;
-        if (!damage.preventTriggers || damage.finalDamage == 0)
+        Entity triggerOwner = damage.triggerPlayerCharacter ? damage.Owner.GetMechanic<Mechanic_PlayerOwner>().Owner : damage.Owner;
+        if (!triggered && damage.finalDamage != 0)
         {
             damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, false)
             ?.ApplyPopupInfo(Mathf.Round(damage.finalDamage).ToString("0"), new Color(.9f, .2f, .2f));

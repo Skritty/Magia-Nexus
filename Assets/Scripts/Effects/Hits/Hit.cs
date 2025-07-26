@@ -7,17 +7,15 @@ using UnityEngine;
 public class Hit : Effect
 {
     [FoldoutGroup("@GetType()")]
-    public bool preventTriggers;
+    public bool triggerPlayerCharacter;
     [FoldoutGroup("@GetType()")]
-    public bool triggerPlayerOwner;
-    [FoldoutGroup("@GetType()")]
-    public List<Rune> runes = new();
-    [SerializeReference, FoldoutGroup("@GetType()")]
     public Trigger_PreHit preHit = new Trigger_PreHit();
-    [SerializeReference, FoldoutGroup("@GetType()")]
+    [FoldoutGroup("@GetType()")]
     public Trigger_PostHit postHit = new Trigger_PostHit();
     public List<TriggerTask> preOnHitEffects = new();
     public List<TriggerTask> postOnHitEffects = new();
+    [FoldoutGroup("@GetType()")]
+    public List<Rune> runes = new();
 
     public void PreHitTriggers()
     {

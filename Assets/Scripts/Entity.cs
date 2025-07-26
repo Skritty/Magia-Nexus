@@ -29,6 +29,21 @@ public class Entity : MonoBehaviour
         return s;
     }
 
+    public IStatTag Stat(IModifier modifier)
+    {
+        IStatTag stat;
+        if (stats.TryGetValue(modifier.Tag, out IStatTag tag))
+        {
+            stat = tag;
+        }
+        else
+        {
+            stats.Add(modifier.Tag);
+            stat = modifier.Tag;
+        }
+        return stat;
+    }
+
     public bool HasStat<T>() where T : IStatTag
     {
         foreach (IStatTag stat in stats)
@@ -42,24 +57,26 @@ public class Entity : MonoBehaviour
         
     }
 
-    public void AddModifier(IModifier modifier)
+    public void AddModifier(IModifier modifier) => AddModifier(modifier, Stat(modifier));
+
+    public void AddModifier<StatTag>(IDataContainer modifier) where StatTag : IStatTag
     {
-        // Get stat
-        Stat stat;
-        if (stats.TryGetValue(modifier.Tag, out IStatTag tag))
+        if (modifier is IModifier)
         {
-            stat = tag as Stat;
+            AddModifier((IModifier)modifier, Stat<StatTag>());
         }
         else
         {
-            stats.Add(modifier.Tag);
-            stat = modifier.Tag as Stat;
+            Stat<StatTag>().AddModifier(modifier);
         }
-
-        AddModifier(modifier, stat);
     }
 
-    private void AddModifier(IModifier modifier, Stat stat)
+    public void AddModifier<StatTag, T>(T value, int duration) where StatTag : class, IStatTag
+    {
+        AddModifier(new DummyModifier<T>(value, tickDuration: duration), Stat<StatTag>());
+    }
+
+    private void AddModifier(IModifier modifier, IStatTag stat)
     {
         // For each stack being added
         for(int s = 0; s < modifier.StacksAdded; s++)
@@ -101,20 +118,10 @@ public class Entity : MonoBehaviour
     public void RemoveModifier(IModifier modifier)
     {
         if (modifier == null) return;
-        Stat stat;
-        if (stats.TryGetValue(modifier.Tag, out IStatTag tag))
-        {
-            stat = tag as Stat;
-        }
-        else
-        {
-            stats.Add(modifier.Tag);
-            stat = modifier.Tag as Stat;
-        }
-        RemoveModifier(modifier, stat);
+        RemoveModifier(modifier, Stat(modifier));
     }
 
-    private void RemoveModifier(IModifier modifier, Stat stat)
+    private void RemoveModifier(IModifier modifier, IStatTag stat)
     {
         if (!stat.ContainsModifier(modifier, out _)) return;
         stat.RemoveModifier(modifier);
@@ -153,68 +160,15 @@ public class Entity : MonoBehaviour
         RemoveModifier(modifier);
     }
 
-    public void AddModifier<STAT>(IDataContainer modifier) where STAT : IStatTag
+    public void RemoveModifier<StatTag>(IDataContainer modifier) where StatTag : IStatTag
     {
-        Stat stat = null;
-        foreach (IStatTag s in stats)
-        {
-            if(s.GetType() == typeof(STAT))
-            {
-                stat = (Stat)s;
-            }
-        }
-        if(stat == null)
-        {
-            stat = default;
-            stats.Add((IStatTag)stat);
-        }
-        if(modifier is IModifier)
-        {
-            AddModifier((IModifier)modifier, stat);
-        }
-        else
-        {
-            stat.AddModifier(modifier);
-        }
-    }
-
-    public void AddModifier<STAT, T>(T value, int duration) where STAT : IStatTag
-    {
-        Stat stat = null;
-        foreach (IStatTag s in stats)
-        {
-            if (s.GetType() == typeof(STAT))
-            {
-                stat = (Stat)s;
-            }
-        }
-        if (stat == null)
-        {
-            stat = default;
-            stats.Add((IStatTag)stat);
-        }
-
-        AddModifier(new DummyModifier<T>(value, tickDuration: duration), stat);
-    }
-
-    public void RemoveModifier<STAT>(IDataContainer modifier) where STAT : IStatTag
-    {
-        Stat stat = null;
-        foreach (IStatTag s in stats)
-        {
-            if (s.GetType() == typeof(STAT))
-            {
-                stat = (Stat)s;
-            }
-        }
-        if (stat == null) return;
         if (modifier is IModifier)
         {
-            RemoveModifier((IModifier)modifier, stat);
+            RemoveModifier((IModifier)modifier, Stat<StatTag>());
         }
         else
         {
-            stat.RemoveModifier(modifier);
+            Stat<StatTag>().RemoveModifier(modifier);
         }
     }
 

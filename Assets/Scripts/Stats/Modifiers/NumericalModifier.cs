@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class NumericalModifier : NumericalSolver, IModifier<float>
 {
-    [field: SerializeReference, FoldoutGroup("Modifier")]
-    public IStatTag Tag { get; private set; }
+    public IStatTag Tag => StatTag;
+    [field: SerializeReference, FoldoutGroup("Modifier"), HideInInlineEditors]
+    public IStatTag<float> StatTag { get; protected set; }
     [field: SerializeField, FoldoutGroup("Modifier")]
     public Alignment Alignment { get; private set; }
     [field: SerializeField, FoldoutGroup("@Modifier")]
@@ -20,13 +21,13 @@ public class NumericalModifier : NumericalSolver, IModifier<float>
     public bool RefreshDuration { get; private set; }
 
     public NumericalModifier() { }
-    public NumericalModifier(float value = default, CalculationStep step = CalculationStep.Flat, IStatTag tag = default, Alignment alignment = Alignment.Neutral,
+    public NumericalModifier(float value = default, CalculationStep step = CalculationStep.Flat, IStatTag<float> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false,
         bool temporary = false, int tickDuration = 0, bool refreshDuration = false)
     {
         _value = value;
         base.step = step;
-        Tag = tag;
+        StatTag = tag;
         Alignment = alignment;
         MaxStacks = maxStacks;
         StacksAdded = stacksAdded;
@@ -38,7 +39,7 @@ public class NumericalModifier : NumericalSolver, IModifier<float>
     public override Stat Clone()
     {
         NumericalModifier clone = (NumericalModifier)base.Clone();
-        clone.Tag = Tag;
+        clone.StatTag = StatTag;
         clone.Alignment = Alignment;
         clone.MaxStacks = MaxStacks;
         clone.StacksAdded = StacksAdded;

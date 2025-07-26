@@ -13,11 +13,4 @@ public class Targeting_Exclude : Targeting
         targets.RemoveAll(x => ignoredEntities.Contains(x));
         return targets;
     }
-
-    public override List<Entity> GetTargets(object source, Effect effect, Entity owner, Entity proxy = null)
-    {
-        List<Entity> targets = targeting.GetTargets(source, owner);
-        targets.RemoveAll(x => ignoredEntities.Contains(x));
-        return targets;
-    }
 }

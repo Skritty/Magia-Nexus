@@ -38,6 +38,11 @@ public class Action : ViewableGameAsset
     {
         foreach (EffectTask<Effect> effect in effects)
         {
+            if(effect == null)
+            {
+                Debug.LogWarning($"{name} has null effects!");
+                continue;
+            }
             effect.DoTask(null, owner);
         }
     }

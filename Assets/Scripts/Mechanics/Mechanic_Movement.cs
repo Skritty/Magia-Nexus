@@ -1,9 +1,9 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_MovementSpeed : NumericalSolver, IStatTag { }
-public class Stat_MovementTarget : PrioritySolver<Entity>, IStatTag { }
-public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector<Effect>>, IStatTag { }
+public class Stat_MovementSpeed : NumericalSolver, IStatTag<float> { }
+public class Stat_MovementTarget : PrioritySolver<Entity>, IStatTag<float> { }
+public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector<Entity>>, IStatTag<MovementDirectionSelector<Entity>> { }
 //public class Stat_MovementDirection : NumericalSolver, IStatTag { } TODO: make vector3 solver
 public class Mechanic_Movement : Mechanic<Mechanic_Movement>
 {
@@ -22,7 +22,7 @@ public class Mechanic_Movement : Mechanic<Mechanic_Movement>
 
     public void Move()
     {
-        Owner.Stat<Stat_MovementSelector>().Value.DoTask(null, Owner);
+        Owner.Stat<Stat_MovementSelector>().Value?.DoTask(null, Owner);
         Trigger_MovementDirectionCalc.Invoke(Owner, Owner);
 
         if (rotate)

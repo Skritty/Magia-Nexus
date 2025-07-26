@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class Stat_Stunned : BooleanPrioritySolver, IStatTag { }
-public class Stat_Channeling : BooleanPrioritySolver, IStatTag { }
-public class Stat_Actions : ListPrioritySolver<Action>, IStatTag { }
-public class Stat_Initiative : NumericalSolver, IStatTag { }
+public class Stat_Stunned : BooleanPrioritySolver, IStatTag<bool> { }
+public class Stat_Channeling : BooleanPrioritySolver, IStatTag<bool> { }
+public class Stat_Actions : ListPrioritySolver<Action>, IStatTag<List<Action>> { }
+public class Stat_Initiative : NumericalSolver, IStatTag<float> { }
 public class Mechanic_Actions : Mechanic<Mechanic_Actions>
 {
     [FoldoutGroup("Actions")]
@@ -19,6 +19,8 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
     private int phase;
     [FoldoutGroup("Actions"), ShowInInspector]
     private Action currentAction;
+    [FoldoutGroup("Actions")]
+    public List<Action> actions = new List<Action>();
 
     public override void Tick()
     {
@@ -33,6 +35,7 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
     /// </summary>
     public void AddAction(Action action)
     {
+        CheckActionList();
         Owner.Stat<Stat_Actions>().Value.Add(action);
         actionsPerTurn = Owner.Stat<Stat_Actions>().Value.Count;
     }
@@ -72,22 +75,24 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
 
     private void CheckActionList()
     {
-        if (Owner.Stat<Stat_Actions>().Value.Count != actionsPerTurn)
+        if(Owner.Stat<Stat_Actions>().Value == null)
         {
-            List<Action> newList = new List<Action>();
-            List<Action> newOverrideList = new List<Action>();
+            Owner.Stat<Stat_Actions>().AddModifier(actions);
+        }
+        if (actions.Count != actionsPerTurn)
+        {
+            actions.Clear();
             for (int i = 0; i < actionsPerTurn; i++)
             {
                 if (Owner.Stat<Stat_Actions>().Value.Count > i)
                 {
-                    newList.Add(Owner.Stat<Stat_Actions>().Value[i]);
+                    actions.Add(Owner.Stat<Stat_Actions>().Value[i]);
                 }
                 else
                 {
-                    newList.Add(null);
+                    actions.Add(null);
                 }
             }
-            Owner.AddModifier<Stat_Actions, IList<Action>>(newList, 1);
         }
     }
 

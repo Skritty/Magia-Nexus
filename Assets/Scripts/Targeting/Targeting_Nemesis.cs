@@ -6,12 +6,7 @@ public class Targeting_Nemesis : MultiTargeting
 {
     public override List<Entity> GetTargets(object source, Entity owner, Entity proxy = null)
     {
-        lockTarget = true;
-        if (lockTarget && !(primaryTarget == null || !primaryTarget.gameObject.activeSelf))
-        {
-            return targets;
-        }
-        targets = new List<Entity>();
+        List<Entity> targets = new List<Entity>();
         foreach (KeyValuePair<Viewer, float> player in owner.GetMechanic<Mechanic_PlayerOwner>().player.killedBy)
         {
             if (!(player.Key.character == null || !player.Key.character.gameObject.activeSelf))
@@ -23,22 +18,23 @@ public class Targeting_Nemesis : MultiTargeting
         }
 
         if (sortingMethod != TargetSorting.Unsorted)
-            targets.Sort(SortTargets);
+            targets.Sort((x, y) => SortTargets(owner, x, y));
 
-        int actualNumberOfTargets = numberOfTargets + (int)owner.Stat<Stat_Targets>().Value;
-        if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
-            targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
+        if (numberOfTargets >= 0)
+        {
+            int actualNumberOfTargets = numberOfTargets + (int)owner.Stat<Stat_AdditionalTargets>().Value;
+            if (targets.Count > actualNumberOfTargets)
+                targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
+        }
 
-        if (targets.Count > 0)
-            primaryTarget = targets[0];
         return targets;
     }
 
-    protected override int SortTargets(Entity e1, Entity e2)
+    protected override int SortTargets(Entity owner, Entity e1, Entity e2)
     {
         int comparison = 0;
-        float e1Assist = Owner.GetMechanic<Mechanic_PlayerOwner>().player.killedBy[e1.GetMechanic<Mechanic_PlayerOwner>().player];
-        float e2Assist = Owner.GetMechanic<Mechanic_PlayerOwner>().player.killedBy[e2.GetMechanic<Mechanic_PlayerOwner>().player];
+        float e1Assist = owner.GetMechanic<Mechanic_PlayerOwner>().player.killedBy[e1.GetMechanic<Mechanic_PlayerOwner>().player];
+        float e2Assist = owner.GetMechanic<Mechanic_PlayerOwner>().player.killedBy[e2.GetMechanic<Mechanic_PlayerOwner>().player];
         switch (sortingMethod)
         {
             case TargetSorting.Highest:

@@ -32,18 +32,15 @@ public abstract class EffectTask<T> : TriggerTask<T>
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
 
-    public override bool DoTask(T data, Entity owner)
+    public override bool DoTask(T data, Entity Owner)
     {
-        Effect effect = data as Effect;
+        return DoTask(default, Owner, null);
+    }
+
+    public bool DoTask(T data, Entity owner, Entity proxy)
+    {
         List<Entity> targets = null;
-        if(effect == null)
-        {
-            targets = targetSelector.GetTargets(this, owner);
-        }
-        else
-        {
-            targets = targetSelector.GetTargets(this, effect, owner);
-        }
+        targets = targetSelector.GetTargets(this, data, owner, proxy);
         foreach (Entity target in targets)
         {
             if (ignoreFrames > 0)
@@ -52,7 +49,7 @@ public abstract class EffectTask<T> : TriggerTask<T>
                         value: (owner, this), tickDuration: ignoreFrames
                         ));
             }
-            DoEffect(owner, target, effect == null ? 1 : effect.EffectMultiplier, data != null);
+            DoEffect(owner, target, data is Effect ? (data as Effect).EffectMultiplier : 1, data != null);
         }
         return true;
     }

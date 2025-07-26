@@ -31,38 +31,49 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 1083524128524730508
+  - rid: 1083524217111577240
   references:
     version: 2
     RefIds:
-    - rid: 1083524128524730508
-      type: {class: Effect_GrantModifer, ns: , asm: Assembly-CSharp}
+    - rid: 1083524217111577240
+      type: {class: 'Effect_GrantModifer`1[[Effect, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
-        effectMultiplier: 1
         ignoreFrames: 0
         targetSelector:
-          rid: 1083524128524730509
+          rid: 1083524217111577242
         modifier:
-          rid: 1083524128524730510
-    - rid: 1083524128524730509
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+          rid: 1083524217111577244
+    - rid: 1083524217111577242
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 1083524128524730510
+        entitiesAffected: 7
+        sortingMethod: 1
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        radius: 6
+        angle: 180
+    - rid: 1083524217111577244
       type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
       data:
-        _value: 0
+        _value: 1.05
+        <Modifiers>k__BackingField:
+        - rid: 1083524217111577345
         step: 1
         appliesTo: 8192
         damageType: 0
         <Tag>k__BackingField:
-          rid: 1083524128524730518
-        <Alignment>k__BackingField: 0
+          rid: 1083524217111577346
+        <Alignment>k__BackingField: 1
         <MaxStacks>k__BackingField: 20
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
-        <TickDuration>k__BackingField: 0
-    - rid: 1083524128524730518
+        <TickDuration>k__BackingField: 500
+    - rid: 1083524217111577345
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0.05
+    - rid: 1083524217111577346
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        <Modifiers>k__BackingField: []

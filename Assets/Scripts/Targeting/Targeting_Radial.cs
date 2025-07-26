@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class Targeting_Radial : MultiTargeting
 {
@@ -17,26 +14,26 @@ public class Targeting_Radial : MultiTargeting
     [Range(0, 180)]
     public float angle = 180;
 
-    protected override bool IsValidTarget(Entity target, bool firstTarget)
+    protected override bool IsValidTarget(Entity owner, Entity proxy, Entity target, bool firstTarget)
     {
-        Vector3 dirToEntity = target.transform.position - GetCenter();
-        if (dirToEntity.magnitude > radius * Owner.Stat<Stat_AoESize>().Value) return false;
+        Vector3 dirToEntity = target.transform.position - GetCenter(owner, proxy);
+        if (dirToEntity.magnitude > radius * owner.Stat<Stat_AoESize>().Value) return false;
         if (angle >= 180) return true;
 
-        Vector3 dirToTarget = Owner.GetMechanic<Mechanic_Movement>().facingDir;
+        Vector3 dirToTarget = owner.GetMechanic<Mechanic_Movement>().facingDir;
         float fromTo = Mathf.Rad2Deg * Mathf.Acos(Vector3.Dot(dirToEntity, dirToTarget) / (dirToEntity.magnitude * dirToTarget.magnitude));
         if (float.IsNaN(fromTo)) fromTo = 0;
         if (fromTo > angle) return false;
         return true;
     }
 
-    protected override void DoFX(object source, Entity owner, List<Entity> targets)
+    protected override void DoFX(object source, Entity owner, Entity proxy, List<Entity> targets)
     {
         if (vfx is not VFX_AoE) return;
         Vector3 lookDir = owner.GetMechanic<Mechanic_Movement>().facingDir;
         int ticksPerAction = owner.GetMechanic<Mechanic_Actions>().TicksPerAction;
         float timePerAction = owner.GetMechanic<Mechanic_Actions>().TimePerAction;
-        VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : Owner).transform, offset, lookDir, true, ticksPerAction);
+        VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : owner).transform, offset, lookDir, true, ticksPerAction);
         aoe.ApplyAoE(radius, angle, timePerAction);
         aoe.ApplyDamage(source as Effect_DealDamage);
     }

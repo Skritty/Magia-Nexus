@@ -1,9 +1,11 @@
 
 // IMPORTANT NOTE: If you want a trigger to work with Effect_AddTrigger, it MUST pass in "Entity owner" as a binding object
 
+using System;
+
 public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCalc, Entity> { }
-public class Trigger_PreHit : Trigger<Trigger_PreHit, Hit> { }
-public class Trigger_PostHit : Trigger<Trigger_PostHit, Hit> { }
+[Serializable] public class Trigger_PreHit : Trigger<Trigger_PreHit, Hit> { }
+[Serializable] public class Trigger_PostHit : Trigger<Trigger_PostHit, Hit> { }
 public class Trigger_Damage : Trigger<Trigger_Damage, DamageInstance> { }
 public class Trigger_Die : Trigger<Trigger_Die, DamageInstance> { }
 public class Trigger_ProjectilePierce : Trigger<Trigger_ProjectilePierce, Entity> { }

@@ -1,18 +1,22 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-public class Stat_PiercesRemaining : NumericalSolver, IStatTag { }
-public class Stat_SplitsRemaining : NumericalSolver, IStatTag { }
+public class Stat_PiercesRemaining : NumericalSolver, IStatTag<float> { }
+public class Stat_SplitsRemaining : NumericalSolver, IStatTag<float> { }
+public class Stat_AdditionalSplits : NumericalSolver, IStatTag<float> { }
 //public class Stat_ProjectileTargetingAoE : PrioritySolver<Targeting>, IStatTag { }
 public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
 {
-    [FoldoutGroup("Projectile"), SerializeReference]
-    public List<EffectTask<Effect>> tasks = new();
+    [FoldoutGroup("Projectile")]
+    public Entity prefab;
     [FoldoutGroup("Projectile"), SerializeReference]
     public Targeting aoe;
     [FoldoutGroup("Projectile")]
-    public Targeting_Exclude splitTargeting;
+    public Effect_CreateEntity splitProjectile;
+    [FoldoutGroup("Projectile"), SerializeReference]
+    public List<EffectTask<Effect>> tasks = new();
 
     protected override void Initialize()
     {
@@ -22,9 +26,9 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
     public override void Tick()
     {
         if (tasks.Count == 0) return;
-        foreach (Entity entity in aoe.GetTargets(this, Owner))
+        foreach (Entity target in aoe.GetTargets(this, Owner))
         {
-            OnHit(entity);
+            OnHit(target);
         }
     }
 
@@ -33,33 +37,33 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
         base.OnDestroy();
     }
 
-    private void OnHit(Entity entity)
+    private void OnHit(Entity target)
     {
         foreach (EffectTask<Effect> task in tasks)
         {
-            if (!task.DoTask(null, entity)) break;
+            if (!task.DoTask(null, target)) break;
         }
 
-        Owner.Stat<Stat_SplitsRemaining>().AddModifier(-1);
-        if (Owner.Stat<Stat_SplitsRemaining>().Value >= 0)
+        if (splitProjectile != null && Owner.Stat<Stat_SplitsRemaining>().Value > 0)
         {
-            Effect_CreateEntity split = new Effect_CreateEntity(); // TODO: make effect have a static create
-            /*Targeting_Exclude exclude = splitTargeting.Clone<Targeting_Exclude>();
-            exclude.ignoredEntities.Add(entity);*/
-            /*split.targetSelector = exclude;
-            split.ignoreAdditionalProjectiles = true;
-            split.entity = Owner;
-            split.Create(Owner.Stat<Stat_PlayerOwner>().playerEntity);*/
-        }
+            Owner.Stat<Stat_SplitsRemaining>().AddModifier(-1);
 
-        Owner.Stat<Stat_PiercesRemaining>().AddModifier(-1);
-        if (Owner.Stat<Stat_PiercesRemaining>().Value < 0)
-        {
+            Effect_CreateEntity split = (Effect_CreateEntity)splitProjectile.Clone();
+            (split.targetSelector as Targeting_Exclude)?.ignoredEntities.Add(target);
+            split.numberOfProjectiles += (int)Owner.Stat<Stat_PlayerCharacter>().Value.Stat<Stat_AdditionalSplits>().Value;
+            split.DoTask(null, Owner);
+
             Trigger_Expire.Invoke(Owner, Owner);
+            return;
         }
-        else
+
+        if (Owner.Stat<Stat_PiercesRemaining>().Value > 0)
         {
+            Owner.Stat<Stat_PiercesRemaining>().AddModifier(-1);
             Trigger_ProjectilePierce.Invoke(Owner, Owner);
+            return;
         }
+
+        Trigger_Expire.Invoke(Owner, Owner);
     }
 }

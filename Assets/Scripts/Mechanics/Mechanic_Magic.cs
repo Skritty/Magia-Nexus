@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_SpellPhase : NumericalSolver, IStatTag { }
-public class Stat_Runes : ListStat<Rune>, IStatTag { }
-public class Stat_Enchantments : QueueStat<List<Rune>>, IStatTag { }
+public class Stat_SpellPhase : NumericalSolver, IStatTag<float> { }
+public class Stat_Runes : ListStat<Rune>, IStatTag<Rune> { }
+public class Stat_Enchantments : QueueStat<List<Rune>>, IStatTag<Queue<List<Rune>>> { }
 public class Mechanic_Magic : Mechanic<Mechanic_Magic>
 {
     public Spell originSpell;

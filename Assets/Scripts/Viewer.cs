@@ -27,6 +27,7 @@ public class Viewer
     public int wins;
     public int losses;
     public int winstreak;
+    public bool lockTargeting;
     public Dictionary<Viewer, float> killedBy = new Dictionary<Viewer, float>();
     public HashSet<string> unlockedClasses = new HashSet<string>();
 }

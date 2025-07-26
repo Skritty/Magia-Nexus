@@ -8,9 +8,4 @@ public class Targeting_Self : Targeting
     {
         return new List<Entity>() { owner };
     }
-
-    public override List<Entity> GetTargets(object source, Effect effect, Entity owner, Entity proxy = null)
-    {
-        return new List<Entity>() { owner };
-    }
 }

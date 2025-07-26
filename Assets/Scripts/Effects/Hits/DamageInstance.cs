@@ -6,12 +6,10 @@ using UnityEngine;
 [Serializable]
 public class DamageInstance : Hit
 {
-    [FoldoutGroup("@GetType()")]
+    [HideInInspector]
     public float finalDamage;
     [FoldoutGroup("@GetType()")]
     public List<DamageSolver> damageModifiers = new();
-    [FoldoutGroup("@GetType()")]
-    public bool skipFlatDamageReduction;
 
     public void GenerateMagicEffect()
     {

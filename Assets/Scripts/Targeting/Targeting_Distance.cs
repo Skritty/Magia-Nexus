@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Targeting_Distance : MultiTargeting
 {
-    protected override int SortTargets(Entity e1, Entity e2)
+    protected override int SortTargets(Entity owner, Entity e1, Entity e2)
     {
         int comparison = 0;
-        float e1dist = Vector3.Distance(Owner.transform.position, e1.transform.position);
-        float e2dist = Vector3.Distance(Owner.transform.position, e2.transform.position);
+        float e1dist = Vector3.Distance(owner.transform.position, e1.transform.position);
+        float e2dist = Vector3.Distance(owner.transform.position, e2.transform.position);
         float e1Enmity = e1.Stat<Stat_Enmity>().Value;
         float e2Enmity = e2.Stat<Stat_Enmity>().Value;
         switch (sortingMethod)

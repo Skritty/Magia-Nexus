@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Targeting_LifePercent : MultiTargeting
 {
-    protected override int SortTargets(Entity e1, Entity e2)
+    protected override int SortTargets(Entity owner, Entity e1, Entity e2)
     {
         int comparison = 0;
         float e1hp = e1.Stat<Stat_CurrentLife>().Value / e2.Stat<Stat_MaxLife>().Value;
