@@ -30,16 +30,16 @@ public class Phase_Shop : Phase
         }
     }
 
-    private CommandError Command_GiveNewPlayerGold(string user, List<string> args)
+    private CommandResponse Command_GiveNewPlayerGold(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(true, "");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(true, "");
 
         Viewer viewer = GameManager.Instance.viewers[user];
 
-        if(viewer.gold != 0) return new CommandError(true, "");
+        if(viewer.gold != 0) return new CommandResponse(true, "");
 
         viewer.gold += baseGoldGain * roundsPast;
 
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 }

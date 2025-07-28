@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
-using static UnityEngine.UI.GridLayoutGroup;
 
 [CreateAssetMenu(menuName = "Achievement")]
 public class Achievement : ViewableGameAsset

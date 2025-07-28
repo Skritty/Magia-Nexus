@@ -112,7 +112,7 @@ public class PrepPhase : MonoBehaviour
 
     }
 
-    public CommandError Command_ListActions(string user, List<string> args)
+    public CommandResponse Command_ListActions(string user, List<string> args)
     {
         string message = $"@{user} You have: ";
         foreach (Action action in FindAvailableActions(GameManager.Instance.viewers[user]))
@@ -121,10 +121,10 @@ public class PrepPhase : MonoBehaviour
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_CreateTurn(string user, List<string> args)
+    public CommandResponse Command_CreateTurn(string user, List<string> args)
     {
         string message = "";
         string outMessage;
@@ -134,13 +134,13 @@ public class PrepPhase : MonoBehaviour
         }
         else
         {
-            return new CommandError(false, outMessage);
+            return new CommandResponse(false, outMessage);
         }
         TwitchClient.Instance.SendChatMessage($"@{user} " + message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_ListTurn(string user, List<string> args)
+    public CommandResponse Command_ListTurn(string user, List<string> args)
     {
         string message = $"@{user} Your turn will be: ";
         foreach (Action action in GameManager.Instance.viewers[user].actions)
@@ -149,7 +149,7 @@ public class PrepPhase : MonoBehaviour
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 }
 

@@ -75,7 +75,7 @@ public class Shop : MonoBehaviour
             DisplayItem display = Instantiate(shopItemDisplayPrefab, shopLayout);
             display.title.text = item.name;
             display.id.text = "i" + (ownedItems.IndexOf(item) + 1);
-            display.cost.text = item.cost + "g";
+            display.cost.text = item.Cost + "g";
         }
 
         // Basic Targeting
@@ -178,7 +178,7 @@ public class Shop : MonoBehaviour
             return false;
         }
         // Buy item if enough gold
-        if(viewer.gold < item.cost)
+        if(viewer.gold < item.Cost)
         {
             message = $"You don't have enough gold to purchase {toPurchase}!";
             return false;
@@ -186,7 +186,7 @@ public class Shop : MonoBehaviour
         if (!shopItems.Contains(item))
         {
             // check if can craft
-            int totalGoldCost = item.cost;
+            int totalGoldCost = item.Cost;
             List<Item> itemsHeld = new List<Item>();
             Queue<Item> components = new Queue<Item>();
             foreach (Item i in item.craftingRecipe)
@@ -201,7 +201,7 @@ public class Shop : MonoBehaviour
                     itemsHeld.Add(component);
                     continue;
                 }
-                totalGoldCost += component.cost;
+                totalGoldCost += component.Cost;
                 foreach (Item i in component.craftingRecipe)
                 {
                     components.Enqueue(i);
@@ -221,7 +221,7 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            viewer.gold -= item.cost;
+            viewer.gold -= item.Cost;
             viewer.items.Add(item);
             message = $"{item.name}, ";
         }
@@ -242,7 +242,7 @@ public class Shop : MonoBehaviour
             message = $"Cannot sell an item you do not have!";
             return false;
         }
-        if(item.craftingRecipe.Count == 0 && item.cost == 0)
+        if(item.craftingRecipe.Count == 0 && item.Cost == 0)
         {
             message = $"{item.name} is unsellable!";
             return false;
@@ -257,7 +257,7 @@ public class Shop : MonoBehaviour
         while(components.Count > 0)
         {
             Item component = components.Dequeue();
-            totalGoldCost += component.cost;
+            totalGoldCost += component.Cost;
             foreach (Item i in component.craftingRecipe)
             {
                 components.Enqueue(i);
@@ -565,7 +565,7 @@ public class Shop : MonoBehaviour
         else
         {
             message = $"{targeting.name} is {(targetLock ? "locked" : "unlocked")}";
-            viewer.targetType = targeting.targeting.Clone();
+            //viewer.targetType = targeting.targeting.Clone();
             viewer.lockTargeting = targetLock;
             return true;
         }
@@ -573,14 +573,14 @@ public class Shop : MonoBehaviour
 
     public void NextPhase() => GameManager.Instance.NextPhase();
 
-    public CommandError Command_BuyItems(string user, List<string> args)
+    public CommandResponse Command_BuyItems(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You purchased: ";
         string outMessage;
         if(args.Count == 0)
         {
-            return new CommandError(false, "Please enter items to buy");
+            return new CommandResponse(false, "Please enter items to buy");
         }
         if(args.Count == 2 && int.TryParse(args[0], out int amt) && amt > 0)
         {
@@ -605,7 +605,7 @@ public class Shop : MonoBehaviour
                         message = message.Remove(message.Length - 2, 2);
                         message += $"! Failed to purchase {amt - (i - 1)}";
                     }
-                    return new CommandError(false, message);
+                    return new CommandResponse(false, message);
                 }
             }
             message += m2;
@@ -621,7 +621,7 @@ public class Shop : MonoBehaviour
                 }
                 else if(args.Count == 1)
                 {
-                    return new CommandError(false, outMessage);
+                    return new CommandResponse(false, outMessage);
                 }
                 else
                 {
@@ -642,12 +642,12 @@ public class Shop : MonoBehaviour
         message = message.Remove(message.Length - 2, 2);
         message += $"! You now have {GameManager.Instance.viewers[user].gold}g";
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_SellItems(string user, List<string> args)
+    public CommandResponse Command_SellItems(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} Sold ";
         string outMessage;
         bool turnInvalidated = false;
@@ -655,7 +655,7 @@ public class Shop : MonoBehaviour
 
         if (args.Count == 0)
         {
-            return new CommandError(false, "Please enter items to sell");
+            return new CommandResponse(false, "Please enter items to sell");
         }
         if (args.Count == 2 && int.TryParse(args[0], out int amt) && amt > 0)
         {
@@ -669,7 +669,7 @@ public class Shop : MonoBehaviour
                 }
                 else if (args.Count == 1)
                 {
-                    return new CommandError(false, outMessage);
+                    return new CommandResponse(false, outMessage);
                 }
             }
             message += m2;
@@ -684,7 +684,7 @@ public class Shop : MonoBehaviour
                 }
                 else if (args.Count == 1)
                 {
-                    return new CommandError(false, outMessage);
+                    return new CommandResponse(false, outMessage);
                 }
             }
             
@@ -697,12 +697,12 @@ public class Shop : MonoBehaviour
             message += $"Your turn is no longer valid! Please remake your turn!";
         }
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_CraftItem(string user, List<string> args)
+    public CommandResponse Command_CraftItem(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You crafted: ";
         string outMessage;
         if (args.Count == 1)
@@ -713,7 +713,7 @@ public class Shop : MonoBehaviour
             }
             else
             {
-                return new CommandError(false, outMessage);
+                return new CommandResponse(false, outMessage);
             }
         }
         else if(args.Count > 0)
@@ -724,18 +724,18 @@ public class Shop : MonoBehaviour
             }
             else
             {
-                return new CommandError(false, outMessage);
+                return new CommandResponse(false, outMessage);
             }
         }
         message += '!';
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_CreateTurn(string user, List<string> args)
+    public CommandResponse Command_CreateTurn(string user, List<string> args)
     {
-        if (args.Count == 0) return new CommandError(true, "");
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (args.Count == 0) return new CommandResponse(true, "");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = "";
         string outMessage;
         if (CreateTurn(GameManager.Instance.viewers[user], args, out outMessage))
@@ -744,18 +744,18 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            return new CommandError(false, outMessage);
+            return new CommandResponse(false, outMessage);
         }
         TwitchClient.Instance.SendChatMessage($"@{user} " + message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_SetTargeting(string user, List<string> args)
+    public CommandResponse Command_SetTargeting(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         if (args.Count == 0)
         {
-            return new CommandError(false, $"{@GameManager.Instance.viewers[user].viewerName} Please provide a targeting type.");
+            return new CommandResponse(false, $"{@GameManager.Instance.viewers[user].viewerName} Please provide a targeting type.");
         }
 
         string message = $"@{user} Your targeting behavior is now: ";
@@ -772,15 +772,15 @@ public class Shop : MonoBehaviour
         }
         else
         {
-            return new CommandError(false, outMessage);
+            return new CommandResponse(false, outMessage);
         }
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_NewPlayerJoined(string user, List<string> args)
+    public CommandResponse Command_NewPlayerJoined(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(true, "");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(true, "");
 
         UpdatePlayerList();
         Viewer viewer = GameManager.Instance.viewers[user];
@@ -803,7 +803,7 @@ public class Shop : MonoBehaviour
             }*/
         }
 
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 }
 

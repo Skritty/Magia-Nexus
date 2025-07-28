@@ -15,16 +15,17 @@ public class GameManager : Singleton<GameManager>
     public int ticksPerTurn => (int)(timePerTurn * 50);
     public int defaultActionsPerTurn;
     public Phase initialPhase;
+    [ShowInInspector, ReadOnly]
     private Phase currentPhase;
     private Coroutine phaseTimer;
     public TextMeshProUGUI timer;
-    [ReadOnly, SerializeReference]
-    public List<ViewableGameAsset> viewableGameAssets;
+    public List<ViewableGameAsset> viewableGameAssets = new();
+    public List<ViewableGameAsset> allGameAssets = new();
 
     public Entity defaultPlayer;
     public List<string> defaultUnlockedClasses = new List<string>();
     [SerializeReference]
-    public Targeting defaultTargeting;
+    public Personality defaultPersonality;
     public SerializedDictionary<string, List<Item>> startingClasses;
     public SerializedDictionary<string, Viewer> viewers = new SerializedDictionary<string, Viewer>();
     public SerializedDictionary<string, Viewer> allViewers = new SerializedDictionary<string, Viewer>();
@@ -59,7 +60,7 @@ public class GameManager : Singleton<GameManager>
         TwitchClient.Instance.RemoveCommand("info", Command_Info);
     }
 
-    private CommandError Command_JoinGame(string user, List<string> args)
+    private CommandResponse Command_JoinGame(string user, List<string> args)
     {
         Viewer viewer;
         if (allViewers.ContainsKey(user))
@@ -75,7 +76,7 @@ public class GameManager : Singleton<GameManager>
             // New player (this game)
             viewer = new Viewer();
             viewer.viewerName = user;
-            viewer.targetType = defaultTargeting;
+            viewer.personality = defaultPersonality;
             foreach (string c in defaultUnlockedClasses) viewer.unlockedClasses.Add(c);
             allViewers.Add(user, viewer);
         }
@@ -90,21 +91,21 @@ public class GameManager : Singleton<GameManager>
                 classes += $"{c}, ";
             }
             classes = classes.Remove(classes.Length -2, 2);
-            return new CommandError(false, $"Please pick a valid class out of: {classes}");
+            return new CommandResponse(false, $"Please pick a valid class out of: {classes}");
         }
         else if(!viewer.unlockedClasses.Contains(args[0]))
         {
-            return new CommandError(false, $"You do not have {args[0]} unlocked");
+            return new CommandResponse(false, $"You do not have {args[0]} unlocked");
         }
         
         viewer.items.AddRange(startingClasses[args[0]]);
         viewers.Add(viewer.viewerName, viewer);
 
         TwitchClient.Instance.SendChatMessage($"@{user} joined as {args[0]}");
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    private CommandError Command_LeaveGame(string user, List<string> args)
+    private CommandResponse Command_LeaveGame(string user, List<string> args)
     {
         if (viewers.ContainsKey(user))
         {
@@ -113,7 +114,7 @@ public class GameManager : Singleton<GameManager>
         }
         
         TwitchClient.Instance.SendChatMessage($"@{user} left the game");
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
     private void Start()
@@ -157,9 +158,9 @@ public class GameManager : Singleton<GameManager>
         StartPhase(phase.nextPhase);
     }
 
-    public CommandError Command_ListHeldItems(string user, List<string> args)
+    public CommandResponse Command_ListHeldItems(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
 
         string message = $"@{user} You have: ";
         Dictionary<string, int> itemAmounts = new();
@@ -186,13 +187,13 @@ public class GameManager : Singleton<GameManager>
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
 
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_ListTurn(string user, List<string> args)
+    public CommandResponse Command_ListTurn(string user, List<string> args)
     {
-        if(args.Count > 0) return new CommandError(true, "");
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if(args.Count > 0) return new CommandResponse(true, "");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} Your turn will be: ";
         foreach (Action action in GameManager.Instance.viewers[user].actions)
         {
@@ -200,28 +201,28 @@ public class GameManager : Singleton<GameManager>
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_CurrentGold(string user, List<string> args)
+    public CommandResponse Command_CurrentGold(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You have {GameManager.Instance.viewers[user].gold} gold";
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_CurrentPoints(string user, List<string> args)
+    public CommandResponse Command_CurrentPoints(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You have {GameManager.Instance.viewers[user].points} points. You gained {GameManager.Instance.viewers[user].roundPoints} last round.";
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_ListActions(string user, List<string> args)
+    public CommandResponse Command_ListActions(string user, List<string> args)
     {
-        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandError(false, "Use \'!join\" to join the game!");
+        if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You have: ";
         HashSet<Action> actions = new HashSet<Action>();
         foreach (Item item in GameManager.Instance.viewers[user].items)
@@ -235,12 +236,12 @@ public class GameManager : Singleton<GameManager>
         }
         message = message.Remove(message.Length - 2, 2);
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
-    public CommandError Command_Info(string user, List<string> args)
+    public CommandResponse Command_Info(string user, List<string> args)
     {
-        if (args.Count == 0) return new CommandError(true, "");
+        if (args.Count == 0) return new CommandResponse(true, "");
         string message = $"@{user} ";
         HashSet<Action> actions = new HashSet<Action>();
 
@@ -255,20 +256,23 @@ public class GameManager : Singleton<GameManager>
         }
         if (!found)
         {
-            return new CommandError(true, "");
+            return new CommandResponse(true, "");
         }
 
         TwitchClient.Instance.SendChatMessage(message);
-        return new CommandError(true, "");
+        return new CommandResponse(true, "");
     }
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
         viewableGameAssets.Clear();
+        allGameAssets.Clear();
         foreach (string guid in AssetDatabase.FindAssets("t:ViewableGameAsset", new string[] { "Assets/Data/ViewableGameAssets" }))
         {
-            viewableGameAssets.Add((ViewableGameAsset)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guid), typeof(ViewableGameAsset)));
+            ViewableGameAsset asset = (ViewableGameAsset)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guid), typeof(ViewableGameAsset));
+            if(!asset.hidden) viewableGameAssets.Add(asset);
+            allGameAssets.Add(asset);
         }
     }
 #endif

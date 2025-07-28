@@ -12,7 +12,7 @@ public class Viewer
     
     // Character Info
     [SerializeReference]
-    public Targeting targetType = new Targeting_Distance();
+    public Personality personality;
     public List<Item> items = new List<Item>();
     public List<Action> actions = new List<Action>();
     public Entity character;

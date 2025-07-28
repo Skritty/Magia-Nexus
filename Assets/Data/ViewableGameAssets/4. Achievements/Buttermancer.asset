@@ -10,25 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fabcf0d7157231741aa6999c905595e7, type: 3}
-  m_Name: No Deaths
+  m_Name: Buttermancer
   m_EditorClassIdentifier: 
+  aliases: []
+  info: 
+  image: {fileID: 0}
+  hidden: 1
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  description: 
+  activationTrigger:
+    rid: -2
   rewardTask:
     rid: -2
-  activationTriggers:
-  - rid: 8583327136231194660
-  tasks:
-  - rid: 8583327136231194732
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 8583327136231194660
-      type: {class: Trigger_GameEnd, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 8583327136231194732
-      type: {class: Task_Filter_Deaths, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        threshold: 1
-        invert: 1

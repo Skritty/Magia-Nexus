@@ -12,25 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabcf0d7157231741aa6999c905595e7, type: 3}
   m_Name: Die 50 times
   m_EditorClassIdentifier: 
+  aliases: []
+  info: 
+  image: {fileID: 0}
+  hidden: 1
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  description: 
+  activationTrigger:
+    rid: -2
   rewardTask:
     rid: 8583327136231194731
-  activationTriggers:
-  - rid: 8583327136231194712
-  tasks:
-  - rid: 8583327136231194713
   references:
     version: 2
     RefIds:
-    - rid: 8583327136231194712
-      type: {class: Trigger_RoundEnd, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 8583327136231194713
-      type: {class: Task_Filter_Deaths, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 0
-        threshold: 50
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 8583327136231194731
       type: {class: Task_UnlockClass, ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 0
         classUnlock: necromancer

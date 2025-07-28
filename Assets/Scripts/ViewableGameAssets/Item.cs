@@ -4,7 +4,20 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ViewableGameAsset/Item")]
 public class Item : ViewableGameAsset
 {
-    public int cost;
+    [SerializeField]
+    private int cost;
+    public int Cost
+    {
+        get
+        {
+            int c = cost;
+            foreach (Item item in craftingRecipe)
+            {
+                c += item.Cost;
+            }
+            return c;
+        }
+    }
     public List<Item> craftingRecipe = new List<Item>();
     public List<Action> grantedActions = new List<Action>();
     public List<Personality> grantedPersonalities = new List<Personality>();

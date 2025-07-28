@@ -17,7 +17,7 @@ public class TwitchClient : MonoBehaviour
     public Client client;
     public Api api;
     private string channelName = "skritty";
-    private List<(string, Func<string, List<string>, CommandError>)> commands = new();
+    private List<(string, Func<string, List<string>, CommandResponse>)> commands = new();
 
     private void Awake()
     {
@@ -79,12 +79,12 @@ public class TwitchClient : MonoBehaviour
         client.SendReplyAsync(client.JoinedChannels[0], user, message);
     }
 
-    public void AddCommand(string commandName, Func<string, List<string>, CommandError> method)
+    public void AddCommand(string commandName, Func<string, List<string>, CommandResponse> method)
     {
         commands.Add((commandName, method));
     }
 
-    public void RemoveCommand(string commandName, Func<string, List<string>, CommandError> method)
+    public void RemoveCommand(string commandName, Func<string, List<string>, CommandResponse> method)
     {
         commands.Remove((commandName, method));
     }
@@ -101,43 +101,43 @@ public class TwitchClient : MonoBehaviour
 
         string commandName = command[0];
         command.RemoveAt(0);
-        foreach((string, Func<string, List<string>, CommandError>) c in commands)
+        foreach((string, Func<string, List<string>, CommandResponse>) c in commands)
         {
             if (c.Item1 != commandName) continue;
-            CommandError error = c.Item2.Invoke(args.ChatMessage.Username, command);
-            if (!error.successful)
+            CommandResponse response = c.Item2.Invoke(args.ChatMessage.Username, command);
+            if (!string.IsNullOrEmpty(response.responseMessage))
             {
-                SendChatMessage($"@{args.ChatMessage.Username} " + error.errorMessage);
+                SendChatMessage($"@{args.ChatMessage.Username} " + response.responseMessage);
             }
         }
 
         return null;
     }
 
-    private CommandError Test(string[] args)
+    private CommandResponse Test(string[] args)
     {
 
         if(args.Length > 1)
         {
             Debug.Log("!test failed");
-            return new CommandError(false, "Too many arguments!");
+            return new CommandResponse(false, "Too many arguments!");
         }
         else
         {
             Debug.Log("!test succeeded");
-            return new CommandError(true, "All good here");
+            return new CommandResponse(true, "All good here");
         }
     }
 }
 
-public struct CommandError
+public struct CommandResponse
 {
     public bool successful;
-    public string errorMessage;
+    public string responseMessage;
 
-    public CommandError(bool successful, string errorMessage)
+    public CommandResponse(bool successful, string errorMessage)
     {
         this.successful = successful;
-        this.errorMessage = errorMessage;
+        this.responseMessage = errorMessage;
     }
 }

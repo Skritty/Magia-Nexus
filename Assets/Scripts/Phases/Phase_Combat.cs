@@ -55,7 +55,8 @@ public abstract class Phase_Combat : Phase
             entity.Stat<Stat_Team>().AddModifier(spawn.team);
             entity.Stat<Stat_Initiative>().AddModifier((int)(GameManager.Instance.timePerTurn * 50));
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
-            entity.Stat<Stat_TargetingMethod>().AddModifier(spawn.owner.targetType);
+            entity.Stat<Stat_TargetingMethod>().AddModifier(spawn.owner.personality.targeting);
+            entity.Stat<Stat_MovementTargetingMethod>().AddModifier(spawn.owner.personality.targeting);
             cleanup += Trigger_Die.Subscribe(TrackKill, entity);
             foreach (Item item in spawn.owner.items)
             {

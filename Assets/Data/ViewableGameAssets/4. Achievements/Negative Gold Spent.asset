@@ -12,26 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabcf0d7157231741aa6999c905595e7, type: 3}
   m_Name: Negative Gold Spent
   m_EditorClassIdentifier: 
+  aliases: []
+  info: 
+  image: {fileID: 0}
+  hidden: 1
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  description: 
+  activationTrigger:
+    rid: -2
   rewardTask:
     rid: 5286389302403793285
-  activationTriggers:
-  - rid: 8583327136231194751
-  tasks:
-  - rid: 8583327136231194752
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 5286389302403793285
       type: {class: Task_UnlockClass, ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
         classUnlock: wretch
-    - rid: 8583327136231194751
-      type: {class: Trigger_RoundEnd, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 8583327136231194752
-      type: {class: Task_Filter_GoldSpent, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        threshold: -1
-        invert: 1

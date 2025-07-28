@@ -7,4 +7,6 @@ public class Personality : ViewableGameAsset
 {
     [SerializeReference]
     public Targeting targeting;
+    [SerializeReference]
+    public Targeting movement;
 }
