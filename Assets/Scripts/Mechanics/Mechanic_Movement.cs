@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Stat_MovementSpeed : NumericalSolver, IStatTag<float> { }
 public class Stat_MovementTarget : PrioritySolver<Entity>, IStatTag<float> { }
-public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector<Entity>>, IStatTag<MovementDirectionSelector<Entity>> { }
+public class Stat_MovementTargetingMethod : PrioritySolver<Targeting>, IStatTag<Targeting> { }
+public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector>, IStatTag<MovementDirectionSelector> { }
 //public class Stat_MovementDirection : NumericalSolver, IStatTag { } TODO: make vector3 solver
 public class Mechanic_Movement : Mechanic<Mechanic_Movement>
 {

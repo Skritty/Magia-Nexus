@@ -8,23 +8,23 @@ public class Rune_Wind : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public TriggerTask buff;
+    public EffectTask buff;
     [SerializeReference]
-    public TriggerTask debuff;
+    public EffectTask debuff;
     [SerializeReference]
-    public TriggerTask magicEffectModifier;
+    public EffectTask magicEffectModifier;
 
     [Header("Spell Shape")]
-    public Effect_DealDamage lineEffect;
+    public Effect_Damage lineEffect;
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
-        damage.postOnHitEffects.Add(debuff);
+        //damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        damage.postOnHitEffects.Add(magicEffectModifier);
+        //damage.postOnHitEffects.Add(magicEffectModifier);
     }
 
     public override void Shape(Spell spell, int currentRuneIndex)

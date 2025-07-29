@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Targeting_Nemesis : MultiTargeting
 {
-    public override List<Entity> GetTargets(object source, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(Entity owner, Entity proxy = null)
     {
         List<Entity> targets = new List<Entity>();
         foreach (KeyValuePair<Viewer, float> player in owner.GetMechanic<Mechanic_PlayerOwner>().player.killedBy)
@@ -14,7 +14,7 @@ public class Targeting_Nemesis : MultiTargeting
         }
         if (targets.Count == 0)
         {
-            return base.GetTargets(source, owner);
+            return base.GetTargets(owner);
         }
 
         if (sortingMethod != TargetSorting.Unsorted)

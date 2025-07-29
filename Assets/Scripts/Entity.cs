@@ -73,7 +73,8 @@ public class Entity : MonoBehaviour
 
     public void AddModifier<StatTag, T>(T value, int duration) where StatTag : class, IStatTag
     {
-        AddModifier(new DummyModifier<T>(value, tickDuration: duration), Stat<StatTag>());
+        IStatTag<T> tag = (IStatTag<T>)Stat<StatTag>();
+        AddModifier(new DummyModifier<T>(value, tag, tickDuration: duration), tag);
     }
 
     private void AddModifier(IModifier modifier, IStatTag stat)
@@ -118,7 +119,10 @@ public class Entity : MonoBehaviour
     public void RemoveModifier(IModifier modifier)
     {
         if (modifier == null) return;
-        RemoveModifier(modifier, Stat(modifier));
+        foreach(IStatTag stat in stats)
+        {
+            stat.RemoveModifier(modifier);
+        }
     }
 
     private void RemoveModifier(IModifier modifier, IStatTag stat)

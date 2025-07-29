@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 [CreateAssetMenu(menuName = "Achievement")]
 public class Achievement : ViewableGameAsset
@@ -7,30 +8,20 @@ public class Achievement : ViewableGameAsset
     [SerializeReference]
     public Trigger activationTrigger;
     [SerializeReference]
-    public TriggerTask rewardTask;
+    public ITaskOwned<Viewer, dynamic> rewardTask;
 
     public System.Action Load(Viewer player)
     {
-        return activationTrigger.AddTaskOwner(player.character, new []{ new AchievementComplete(this) });
+        return activationTrigger.SubscribeMethodToTasks(player.character, x => CompleteAchivement(player), 0);
     }
 
-    public class AchievementComplete : TriggerTask<Entity>
+    public void CompleteAchivement(Viewer player)
     {
-        public AchievementComplete(Achievement achievement)
-        {
-            this.achievement = achievement;
-        }
-
-        public Achievement achievement;
-        public override bool DoTask(Entity data, Entity Owner)
-        {
-            AchievementManager.Instance.GrantAchievement(achievement, Owner);
-            return true;
-        }
+        AchievementManager.Instance.GrantAchievement(this, player);
     }
 
     public void GrantReward(Viewer player)
     {
-        rewardTask?.DoTaskNoData(null);
+        rewardTask?.DoTask(player, null);
     }
 }

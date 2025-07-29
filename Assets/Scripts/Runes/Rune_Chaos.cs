@@ -8,23 +8,23 @@ public class Rune_Chaos : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public EffectTask<Effect> buff;
+    public EffectTask buff;
     [SerializeReference]
-    public EffectTask<Effect> debuff;
+    public EffectTask debuff;
 
     [Header("Spell Shape")]
     [FoldoutGroup("Circle")]
     public float multiplierPerStage;
     [FoldoutGroup("Projectile")]
-    public Movement_HomeToTarget<Effect> homing;
+    public Movement_HomeToTarget homing;
     [FoldoutGroup("Curse")]
-    public Effect_DoHit<Effect> curseHit;
+    public Effect_Hit curseHit;
     [FoldoutGroup("Curse")]
     public float baseChanneledCurseEffect;
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
-        damage.postOnHitEffects.Add(debuff);
+        //damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
@@ -102,10 +102,10 @@ public class Rune_Chaos : Rune
 
     private void AddHomingToProjectile(Spell spell, Entity entity)
     {
-        if (entity.Stat<Stat_MovementSelector>().Value == null || !(entity.Stat<Stat_MovementSelector>().Value is Movement_HomeToTarget<Entity>))
+        if (entity.Stat<Stat_MovementSelector>().Value == null || !(entity.Stat<Stat_MovementSelector>().Value is Movement_HomeToTarget))
         {
-            spell.cleanup += entity.Stat<Stat_MovementSelector>().AddModifier(new Movement_HomeToTarget<Entity>(), 1);
+            spell.cleanup += entity.Stat<Stat_MovementSelector>().AddModifier(new Movement_HomeToTarget(), 1);
         }
-        (entity.Stat<Stat_MovementSelector>().Value as Movement_HomeToTarget<Entity>).homingRateDegreesPerSecond += 30f;
+        (entity.Stat<Stat_MovementSelector>().Value as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
     }
 }

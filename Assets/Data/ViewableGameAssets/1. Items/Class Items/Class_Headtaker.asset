@@ -30,35 +30,52 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 1083524128524730482
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
+        useTargetAsProxy: 0
         targetSelector:
           rid: 1083524128524730483
         duration: 0
         triggerOrder: 0
+        bindingObject: 1
         trigger:
-          rid: 1083524128524730485
+          rid: 1083524283774009970
+        tasks: []
     - rid: 1083524128524730483
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1083524128524730485
-      type: {class: Trigger_ActionEnd, ns: , asm: Assembly-CSharp}
-      data:
-        tasks:
-        - rid: 1083524168107688010
-    - rid: 1083524168107688010
-      type: {class: 'Effect_DealDamage`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
+    - rid: 1083524283774009970
+      type: {class: Trigger_ActionStart, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 1083524283774009971
+    - rid: 1083524283774009971
+      type: {class: Effect_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
         targetSelector:
-          rid: 1083524217111576656
+          rid: 1083524283774009972
         hit:
-          rid: 1083524168107688012
-    - rid: 1083524168107688012
+          rid: 1083524283774009973
+    - rid: 1083524283774009972
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        radius: 1.5
+        angle: 30
+    - rid: 1083524283774009973
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
+        <EffectMultiplier>k__BackingField: 1.6
         triggerPlayerCharacter: 0
         preHit:
           tasks: []
@@ -69,21 +86,18 @@ MonoBehaviour:
         damageModifiers:
         - _value: 100
           <Modifiers>k__BackingField:
-          - rid: 1083524168107688017
-          step: 0
-          appliesTo: 0
-          damageType: 8227
-    - rid: 1083524168107688017
+          - rid: 1083524283774009974
+          <StatTag>k__BackingField:
+            rid: -2
+          <Alignment>k__BackingField: 0
+          <MaxStacks>k__BackingField: 0
+          <StacksAdded>k__BackingField: 1
+          <PerPlayer>k__BackingField: 0
+          <TickDuration>k__BackingField: 0
+          <RefreshDuration>k__BackingField: 0
+          <AppliesTo>k__BackingField: 0
+          <DamageType>k__BackingField: 8227
+    - rid: 1083524283774009974
       type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 100
-    - rid: 1083524217111576656
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1.5
-        angle: 30

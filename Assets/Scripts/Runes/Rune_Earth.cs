@@ -8,9 +8,9 @@ public class Rune_Earth : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public EffectTask<Effect> buff;
+    public EffectTask buff;
     [SerializeReference]
-    public EffectTask<Effect> debuff;
+    public EffectTask debuff;
 
     [Header("Spell Shape")]
     [SerializeReference]
@@ -18,7 +18,7 @@ public class Rune_Earth : Rune
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
-        damage.postOnHitEffects.Add(debuff);
+        //damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)

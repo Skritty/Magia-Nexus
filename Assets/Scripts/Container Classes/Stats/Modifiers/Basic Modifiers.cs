@@ -1,0 +1,1 @@
+public class RuneModifier : DummyModifier<Rune> { }

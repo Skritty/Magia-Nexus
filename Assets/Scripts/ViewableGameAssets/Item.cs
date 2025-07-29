@@ -23,18 +23,18 @@ public class Item : ViewableGameAsset
     public List<Personality> grantedPersonalities = new List<Personality>();
     public int actionCountModifier;
     [SerializeReference]
-    public List<EffectTask<Effect>> itemEffects = new();
+    public List<EffectTask> itemEffects = new();
 
     public void OnGained(Entity entity)
     {
-        foreach(EffectTask<Effect> effect in itemEffects)
+        foreach(EffectTask effect in itemEffects)
         {
             if(effect == null)
             {
                 Debug.LogWarning($"{name} has a null effect!");
                 continue;
             }
-            effect.DoTask(null, entity);
+            effect.DoTaskNoData(entity);
         }
     }
 }

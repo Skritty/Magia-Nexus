@@ -7,17 +7,17 @@ public class Rune_Fire : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public EffectTask<Effect> buff;
+    public EffectTask buff;
     [SerializeReference]
-    public EffectTask<Effect> debuff;
+    public EffectTask debuff;
     [SerializeReference]
-    public Effect_DealDamage magicEffectModifier;
+    public Effect_Damage magicEffectModifier;
     public float explosionMultiplierPerStack;
     public float explosionRadiusPerStack;
 
     [Header("Spell Shape")]
     [FoldoutGroup("Circle")]
-    public Effect_DealDamage circleEffect;
+    public Effect_Damage circleEffect;
     [FoldoutGroup("Circle")]
     public Entity circleProxy;
     [FoldoutGroup("Circle")]
@@ -28,26 +28,26 @@ public class Rune_Fire : Rune
     public float circleModMultiplierPerStage;
 
     [FoldoutGroup("Conjuration")]
-    public DamageSolver multiplierPerConjureUse;
+    public DamageModifier multiplierPerConjureUse;
 
     [FoldoutGroup("Line")]
     public float lineMulti;
 
     [FoldoutGroup("Curse")]
-    public Effect_DealDamage curseExplosion;
+    public Effect_Damage curseExplosion;
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
-        damage.postOnHitEffects.Add(debuff);
+        //damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        if (damage.postOnHitEffects.Count == 0)
+        if (damage.postOnHitEffects.Length == 0)
         {
             if (damage.runes.Count <= 1) return;
 
-            Effect_DealDamage explosion = magicEffectModifier.Clone();
+            Effect_Damage explosion = magicEffectModifier.Clone();
             
             Trigger_PostHit.Subscribe(x =>
             {
@@ -56,12 +56,12 @@ public class Rune_Fire : Rune
                 x.runes.RemoveAt(i);
             }, explosion);
 
-            damage.postOnHitEffects.Add(explosion);
+            //damage.postOnHitEffects.Add(explosion);
         }
         else
         {
-            (damage.postOnHitEffects[0] as Effect_DealDamage).hit.EffectMultiplier += explosionMultiplierPerStack;
-            ((damage.postOnHitEffects[0] as Effect_DealDamage).targetSelector as Targeting_Radial).radius += explosionRadiusPerStack;
+            (damage.postOnHitEffects[0] as Effect_Damage).hit.EffectMultiplier += explosionMultiplierPerStack;
+            ((damage.postOnHitEffects[0] as Effect_Damage).targetSelector as Targeting_Radial).radius += explosionRadiusPerStack;
         }
         
         // TODO: Add delay, add debuffs/other effects?
@@ -126,7 +126,7 @@ public class Rune_Fire : Rune
 
     private void CurseExplode(Spell spell, IModifier modifier)
     {
-        Effect_DealDamage explosion = curseExplosion.Clone();
+        Effect_Damage explosion = curseExplosion.Clone();
         spell.cleanup += Trigger_PreHit.Subscribe(x => x.runes.AddRange(spell.runes), explosion);
         explosion.DoTask(null, spell.Owner); // TODO: WHERE IS EFFECT IN THESE HOW AM I SUPPOSED TO CHAIN EFFECT MULTIPLIERS
     }

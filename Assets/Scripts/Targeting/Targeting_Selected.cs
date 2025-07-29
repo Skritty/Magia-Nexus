@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 public class Stat_LockedTargets : Stat<List<Entity>>, IStatTag<List<Entity>> { }
 public class Targeting_Selected : Targeting
 {
-    public override List<Entity> GetTargets(object source, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(Entity owner, Entity proxy = null)
     {
         if (owner.GetMechanic<Mechanic_PlayerOwner>().player.lockTargeting)
         {
@@ -16,15 +16,15 @@ public class Targeting_Selected : Targeting
             lockedTargets.RemoveAll(x => x == null || x.gameObject.activeSelf == false);
             if(lockedTargets.Count == 0)
             {
-                lockedTargets.AddRange(owner.Stat<Stat_TargetingMethod>().Value.GetTargets(source, owner));
+                lockedTargets.AddRange(owner.Stat<Stat_TargetingMethod>().Value.GetTargets(owner));
             }
             return lockedTargets;
         }
         
-        return owner.Stat<Stat_TargetingMethod>().Value.GetTargets(source, owner, proxy);
+        return owner.Stat<Stat_TargetingMethod>().Value.GetTargets(owner, proxy);
     }
 
-    public override List<Entity> GetTargets<T>(object source, T triggerData, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets<T>(T triggerData, Entity owner, Entity proxy = null)
     {
         if (owner.GetMechanic<Mechanic_PlayerOwner>().player.lockTargeting)
         {
@@ -37,11 +37,11 @@ public class Targeting_Selected : Targeting
             lockedTargets.RemoveAll(x => x == null || x.gameObject.activeSelf == false);
             if (lockedTargets.Count == 0)
             {
-                lockedTargets.AddRange(owner.Stat<Stat_TargetingMethod>().Value.GetTargets(source, owner));
+                lockedTargets.AddRange(owner.Stat<Stat_TargetingMethod>().Value.GetTargets(owner));
             }
             return lockedTargets;
         }
 
-        return owner.Stat<Stat_TargetingMethod>().Value.GetTargets(source, triggerData, owner, proxy);
+        return owner.Stat<Stat_TargetingMethod>().Value.GetTargets(triggerData, owner, proxy);
     }
 }

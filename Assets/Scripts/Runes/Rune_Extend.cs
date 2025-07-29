@@ -20,10 +20,10 @@ public class Rune_Extend : Rune
             runes.Add(damage.runes[(i + currentRuneIndex) % damage.runes.Count]);
         }
 
-        Effect_Invoke<Effect> invoke = new Effect_Invoke<Effect>();
+        Effect_Invoke invoke = new Effect_Invoke();
         invoke.runes = runes.ToArray();
 
-        damage.postOnHitEffects.Add(invoke);// TODO: Proxy from hit target
+        //damage.postOnHitEffects.Add(invoke);// TODO: Proxy from hit target
     }
 
     public override void Shape(Spell spell, int currentRuneIndex)

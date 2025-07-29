@@ -42,9 +42,8 @@ public class AchievementManager : Singleton<AchievementManager>
         // Save to database or something
     }
 
-    public void GrantAchievement(Achievement achievement, Entity entity)
+    public void GrantAchievement(Achievement achievement, Viewer player)
     {
-        Viewer player = entity.GetMechanic<Mechanic_PlayerOwner>().player;
         completedAchievements.TryAdd(player, new List<string>());
         if (completedAchievements[player].Contains(achievement.name)) return;
         completedAchievements[player].Add(achievement.name);

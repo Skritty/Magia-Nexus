@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [Flags]
 public enum TargetFilter
@@ -25,10 +27,19 @@ public enum EffectTargetingSelector { Owner, Target }
 [Serializable]
 public abstract class Targeting
 {
-    public abstract List<Entity> GetTargets(object source, Entity owner, Entity proxy = null);
-    public virtual List<Entity> GetTargets<T>(object source, T triggerData, Entity owner, Entity proxy = null)
+    public int ignoreFrames;
+    public abstract List<Entity> GetTargets(Entity owner, Entity proxy = null);
+    public virtual List<Entity> GetTargets<T>(T triggerData, Entity owner, Entity proxy = null)
     {
-        return GetTargets(source, owner, proxy);
+        return GetTargets(owner, proxy);
+    }
+    protected void AddToIgnored(Entity owner, Entity target)
+    {
+        if (ignoreFrames > 0)
+        {
+            target.AddModifier(new DummyModifier<(Entity, object)>(
+                    value: (owner, this), tickDuration: ignoreFrames));
+        }
     }
     public virtual void OnDrawGizmos(Transform owner) { }
     public virtual Targeting Clone()
@@ -60,13 +71,9 @@ public abstract class MultiTargeting : Targeting
         
     }
 
-    public override List<Entity> GetTargets(object source, Entity owner, Entity proxy = null)
+    public override List<Entity> GetTargets(Entity owner, Entity proxy = null)
     {
-        if(owner == null)
-        {
-            Debug.LogWarning($"Owner of Targeting is null for {source}!");
-            return new List<Entity>();
-        }
+        if(owner == null) return new List<Entity>();
 
         List<Entity> targets = new List<Entity>();
         TargetFilter targetType;
@@ -74,7 +81,7 @@ public abstract class MultiTargeting : Targeting
         foreach (Entity entity in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
         {
             // Can it be targeted?
-            if (!entity.Stat<Stat_Untargetable>().Contains((owner, source))) continue;
+            if (entity.Stat<Stat_Untargetable>().Contains((owner, this))) continue;
 
             // Is it in the affected entities?
             if(entity.Stat<Stat_Team>().Value != owner.Stat<Stat_Team>().Value)
@@ -103,6 +110,7 @@ public abstract class MultiTargeting : Targeting
             //if (distance > targetingRange.y * owner.Stat<Stat_Effect>().aoeMultiplier) continue;
 
             targets.Add(entity);
+            AddToIgnored(owner, entity);
         }
 
         if(sortingMethod != TargetSorting.Unsorted)
@@ -117,19 +125,19 @@ public abstract class MultiTargeting : Targeting
 
         if(targets.Count > 0)
         {
-            DoFX(source, owner, proxy, targets);
+            DoFX(owner, proxy, targets);
         }
             
         return targets;
     }
-    protected virtual void DoFX(object source, Entity owner, Entity proxy, List<Entity> targets)
+    protected virtual void DoFX(Entity owner, Entity proxy, List<Entity> targets)
     {
-        if (vfx == null) return;
+        /*if (vfx == null) return;
         foreach(Entity target in targets)
         {
             VFX_Damage damage = vfx.PlayVFX<VFX_Damage>(target.transform, offset, Vector3.up, true);
-            damage.ApplyDamage(source as Effect_DealDamage);
-        }
+            damage.ApplyDamage(source as Effect_Damage<Effect>);
+        }*/
     }
     protected virtual bool IsValidTarget(Entity owner, Entity proxy, Entity target, bool firstTarget) => true;
     protected virtual int SortTargets(Entity owner, Entity e1, Entity e2) 

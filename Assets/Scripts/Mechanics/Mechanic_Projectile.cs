@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Rendering;
 
+public class Stat_Projectiles : NumericalSolver, IStatTag<float> { }
 public class Stat_PiercesRemaining : NumericalSolver, IStatTag<float> { }
 public class Stat_SplitsRemaining : NumericalSolver, IStatTag<float> { }
 public class Stat_AdditionalSplits : NumericalSolver, IStatTag<float> { }
@@ -16,7 +16,7 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
     [FoldoutGroup("Projectile")]
     public Effect_CreateEntity splitProjectile;
     [FoldoutGroup("Projectile"), SerializeReference]
-    public List<EffectTask<Effect>> tasks = new();
+    public List<EffectTask> tasks = new();
 
     protected override void Initialize()
     {
@@ -39,7 +39,7 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
 
     private void OnHit(Entity target)
     {
-        foreach (EffectTask<Effect> task in tasks)
+        foreach (EffectTask task in tasks)
         {
             if (!task.DoTask(null, target)) break;
         }

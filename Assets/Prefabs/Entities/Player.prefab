@@ -317,8 +317,11 @@ MonoBehaviour:
       data:
         values:
         - rid: 1083524217111576925
+        - rid: 1083524289637384981
         - rid: 1083524154633486336
-        - rid: 1083524144729161806
+        - rid: 1083524285642571940
+        - rid: 1083524285642571936
+        - rid: 1083524285642571944
     - rid: 1083524128524730529
       type: {class: Mechanic_Damageable, ns: , asm: Assembly-CSharp}
       data:
@@ -349,8 +352,7 @@ MonoBehaviour:
         player:
           viewerID: 0
           viewerName: 
-          targetType:
-            rid: 1083524128524730535
+          personality: {fileID: 0}
           items: []
           actions: []
           character: {fileID: 0}
@@ -364,14 +366,6 @@ MonoBehaviour:
           losses: 0
           winstreak: 0
           lockTargeting: 0
-    - rid: 1083524128524730535
-      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
-      data:
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
     - rid: 1083524128524730536
       type: {class: Mechanic_AnimationStates, ns: , asm: Assembly-CSharp}
       data:
@@ -396,38 +390,13 @@ MonoBehaviour:
         facingDir: {x: 0, y: 0, z: 0}
         rotate: 0
         obeyMapEdge: 0
-    - rid: 1083524144729161806
-      type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
-      data:
-        _value: 10000
-        <Modifiers>k__BackingField:
-        - rid: 1083524144729162452
-        - rid: 1083524144729162453
-        step: 2
-    - rid: 1083524144729162452
-      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
-      data:
-        _value: 10000
-        <Modifiers>k__BackingField:
-        - rid: 1083524144729162454
-        step: 0
-    - rid: 1083524144729162453
-      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
-      data:
-        _value: 1
-        <Modifiers>k__BackingField: []
-        step: 1
-    - rid: 1083524144729162454
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 10000
     - rid: 1083524154633486336
       type: {class: Stat_MovementSpeed, ns: , asm: Assembly-CSharp}
       data:
         _value: 10
         <Modifiers>k__BackingField:
         - rid: 1083524154633486459
-        step: 0
+        <Step>k__BackingField: 0
     - rid: 1083524154633486459
       type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
@@ -436,11 +405,69 @@ MonoBehaviour:
       type: {class: Stat_MovementTargetingMethod, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField:
-        - rid: 1083524217111576930
+        - rid: 1083524285642571948
         <Priority>k__BackingField: 0
-    - rid: 1083524217111576930
+    - rid: 1083524285642571936
+      type: {class: Stat_AoESize, ns: , asm: Assembly-CSharp}
+      data:
+        _value: 1
+        <Modifiers>k__BackingField:
+        - rid: 1083524285642571938
+        <Step>k__BackingField: 0
+    - rid: 1083524285642571938
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1
+    - rid: 1083524285642571940
+      type: {class: Stat_Enmity, ns: , asm: Assembly-CSharp}
+      data:
+        _value: 1
+        <Modifiers>k__BackingField:
+        - rid: 1083524285642571942
+        <Step>k__BackingField: 0
+    - rid: 1083524285642571942
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1
+    - rid: 1083524285642571944
+      type: {class: Stat_MaxSummons, ns: , asm: Assembly-CSharp}
+      data:
+        _value: 5
+        <Modifiers>k__BackingField:
+        - rid: 1083524285642571946
+        <Step>k__BackingField: 0
+    - rid: 1083524285642571946
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 5
+    - rid: 1083524285642571948
       type: {class: 'DataContainer`1[[Targeting, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 1083524289637384981
+      type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
+      data:
+        _value: 10001
+        <Modifiers>k__BackingField:
+        - rid: 1083524289848148409
+        - rid: 1083524289848148410
+        <Step>k__BackingField: 0
+    - rid: 1083524289848148409
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        _value: 10000
+        <Modifiers>k__BackingField:
+        - rid: 1083524289848148411
+        <Step>k__BackingField: 0
+    - rid: 1083524289848148410
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        _value: 1
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 1
+    - rid: 1083524289848148411
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 10000
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public class Stat_Team : PrioritySolver<int>, IStatTag<int> { }
+public class Stat_SummonCount : NumericalSolver, IStatTag<float> { }
+public class Stat_Summons : ListStat<Entity>, IStatTag<Entity> { }
+public class Stat_Proxies : ListStat<Entity>, IStatTag<Entity> { }
+public class Stat_TeamPlayers : NumericalSolver, IStatTag<float> { }
+public class Stat_MaxSummons : NumericalSolver, IStatTag<float> { }
 public class Stat_PlayerCharacter : Stat<Entity>, IStatTag<Entity> { } // TODO: make this the end all be all for referencing the player character
 public class Mechanic_PlayerOwner : Mechanic<Mechanic_PlayerOwner>
 {

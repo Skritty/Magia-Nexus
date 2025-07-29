@@ -20,51 +20,37 @@ MonoBehaviour:
   info: Grants global additional projectiles and projectile homing.
   image: {fileID: 0}
   hidden: 1
-  UIColor:
-    r: 0.49217427
-    g: 0.7610062
-    b: 0.35657206
-    a: 1
+  UIColor: {r: 0.49217427, g: 0.7610062, b: 0.35657206, a: 1}
   cost: 0
   craftingRecipe: []
   grantedActions: []
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 1083524217111577355
+  - rid: 1083524283774009411
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1083524217111577355
-      type: {class: 'Effect_AddTrigger`1[[Effect, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+    - rid: 1083524283774009411
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
+        useTargetAsProxy: 0
         targetSelector:
-          rid: 1083524217111577356
+          rid: 1083524283774009412
         duration: 0
         triggerOrder: 0
         trigger:
-          rid: 1083524217111577357
-    - rid: 1083524217111577356
+          rid: 1083524283774009414
+        tasks: []
+    - rid: 1083524283774009412
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: {}
-    - rid: 1083524217111577357
+      data:
+        ignoreFrames: 0
+    - rid: 1083524283774009414
       type: {class: Trigger_ProjectileCreated, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 1083524217111577366
-    - rid: 1083524217111577366
-      type: {class: 'Effect_AddTrigger`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        targetSelector:
-          rid: 1083524217111577368
-        duration: 0
-        triggerOrder: 0
-        trigger:
-          rid: -2
-    - rid: 1083524217111577368
-      type: {class: Targeting_TriggeredEntity, ns: , asm: Assembly-CSharp}
-      data: {}
+        - rid: 1083524283774009425
+    - rid: 1083524283774009425
+      type: {class: Task_Filter_IsOwner, ns: , asm: Assembly-CSharp}
+      data: 

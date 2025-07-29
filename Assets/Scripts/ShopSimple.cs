@@ -68,7 +68,6 @@ public class ShopSimple : MonoBehaviour
         {
             Vector3 offset = personalityDisplayLayout.offsetMax;
             offset.y += scrollSpeed * Time.deltaTime;
-            Debug.Log($"{offset.y} > {personalityDisplayPrefab.GetComponent<RectTransform>().rect.y}");
             if (offset.y > 54)
             {
                 offset.y = 0;

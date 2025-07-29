@@ -28,12 +28,12 @@ public class Targeting_Line : MultiTargeting
         return true;
     }
 
-    protected override void DoFX(object source, Entity owner, Entity proxy, List<Entity> targets)
+    protected override void DoFX(Entity owner, Entity proxy, List<Entity> targets)
     {
         if (vfx is not VFX_Line) return;
         VFX_Line line = vfx.PlayVFX<VFX_Line>((proxy != null ? proxy : owner).transform, offset, Vector3.up, true);
         line.ApplyLine(length, width);
-        line.ApplyDamage(source as Effect_DealDamage);
+        //line.ApplyDamage(source as Effect_Damage<Effect>);
     }
 
     public override void OnDrawGizmos(Transform source)

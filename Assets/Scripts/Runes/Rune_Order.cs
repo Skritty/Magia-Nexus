@@ -7,28 +7,28 @@ public class Rune_Order : Rune
 {
     [Header("Magic Effects")]
     [SerializeReference]
-    public EffectTask<Effect> buff;
+    public EffectTask buff;
     [SerializeReference]
-    public EffectTask<Effect> debuff;
-    public Effect_RemoveModifier<Effect> effectModifier;
+    public EffectTask debuff;
+    public Effect_RemoveModifier effectModifier;
 
     [Header("Spell Shape")]
-    public Effect_CreateEntity<Effect> createSummons;
+    public Effect_CreateEntity createSummons;
     public SerializedDictionary<RuneElement, Action> summonRunes = new();
     public Action invoke;
     public Action move;
-    public EffectTask<Effect> meleeOverride;
+    public EffectTask meleeOverride;
     public float lifeMultiplier;
     public float damageMultiplier;
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
-        damage.postOnHitEffects.Add(debuff);
+        //damage.postOnHitEffects.Add(debuff);
     }
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        damage.postOnHitEffects.Add(effectModifier);
+        //damage.postOnHitEffects.Add(effectModifier);
     }
 
     public override void Shape(Spell spell, int currentRuneIndex)
@@ -45,8 +45,8 @@ public class Rune_Order : Rune
                 dMult *= damageMultiplier;
                 owner = owner.GetMechanic<Mechanic_PlayerOwner>().proxyOwner;
             }
-        (spell.effect as Effect_CreateEntity<Effect>).lifeMultiplier = lMult;
-        (spell.effect as Effect_CreateEntity<Effect>).damageMultiplier = dMult;
+        (spell.effect as Effect_CreateEntity).lifeMultiplier = lMult;
+        (spell.effect as Effect_CreateEntity).damageMultiplier = dMult;
         spell.cleanup += Trigger_SummonCreated.Subscribe(x => SetupSummon(spell, x), spell.effect);
         spell.proxies.Add(spell.Owner);
         spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.StopSpell(), spell);
@@ -67,7 +67,7 @@ public class Rune_Order : Rune
             case RuneElement.Earth:
             case RuneElement.Order:
                 {
-                    meleeOverride.DoTaskNoData(entity);
+                    meleeOverride.DoEffect(spell.Owner, entity, 1, false);
                     entity.Stat<Stat_Runes>().AddModifiers(spell.runes);
                     break;
                 }

@@ -27,7 +27,7 @@ public class Targeting_Radial : MultiTargeting
         return true;
     }
 
-    protected override void DoFX(object source, Entity owner, Entity proxy, List<Entity> targets)
+    protected override void DoFX(Entity owner, Entity proxy, List<Entity> targets)
     {
         if (vfx is not VFX_AoE) return;
         Vector3 lookDir = owner.GetMechanic<Mechanic_Movement>().facingDir;
@@ -35,7 +35,7 @@ public class Targeting_Radial : MultiTargeting
         float timePerAction = owner.GetMechanic<Mechanic_Actions>().TimePerAction;
         VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : owner).transform, offset, lookDir, true, ticksPerAction);
         aoe.ApplyAoE(radius, angle, timePerAction);
-        aoe.ApplyDamage(source as Effect_DealDamage);
+        //aoe.ApplyDamage(source as Effect_Damage<Effect>);
     }
 
     public override void OnDrawGizmos(Transform source)

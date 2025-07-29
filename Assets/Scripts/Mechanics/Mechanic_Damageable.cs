@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_DamageOverTime : ListStat<DamageSolver>, IStatTag<DamageSolver> { }
-public class Stat_DamageDealt : ListStat<DamageSolver>, IStatTag<DamageSolver> { }
-public class Stat_DamageTaken : ListStat<DamageSolver>, IStatTag<DamageSolver> { }
+public class Stat_DamageOverTime : ListStat<DamageModifier>, IStatTag<DamageModifier> { }
+public class Stat_DamageDealt : ListStat<DamageModifier>, IStatTag<DamageModifier> { }
+public class Stat_DamageTaken : ListStat<DamageModifier>, IStatTag<DamageModifier> { }
 public class Stat_Invulnerable : BooleanPrioritySolver, IStatTag<bool> { }
-public class Stat_CurrentLife : NumericalStepCalculationSolver, IStatTag<float> { }
-public class Stat_MaxLife : NumericalStepCalculationSolver, IStatTag<float> { }
+public class Stat_CurrentLife : StepCalculation, IStatTag<float> { }
+public class Stat_MaxLife : StepCalculation, IStatTag<float> { }
 public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 {
     #region Internal Variables
@@ -36,9 +36,10 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
             return;
         }
 
-        DamageTypeCalculationSolver calculation = new DamageTypeCalculationSolver();
-        foreach(DamageSolver d in damage.damageModifiers)
+        DamageCalculation calculation = new DamageCalculation();
+        foreach(DamageModifier d in damage.damageModifiers)
         {
+            Debug.Log($"{d.Step}: {d.Value} {d.AppliesTo}/{d.DamageType}");
             calculation.AddModifier(d);
         }
         foreach (IDataContainer d in damage.Owner.Stat<Stat_DamageDealt>().Modifiers)
@@ -50,7 +51,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
             calculation.AddModifier(d);
         }
         damage.finalDamage = calculation.Value;
-        //Debug.Log($"Dealing {totalDamage} damage from {damage.Owner} to {damage.Target} ({Owner})");
+        //Debug.Log($"Dealing {damage.finalDamage} damage from {damage.Owner} to {damage.Target} ({Owner}). Moving from {baseLife.Value}hp to {baseLife.Value-damage.finalDamage}");
 
         /*// Apply tank contribution
         if (damage.finalDamage > 0)

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+public class Stat_CastTargets : NumericalSolver, IStatTag<float> { }
 public class Stat_SpellPhase : NumericalSolver, IStatTag<float> { }
 public class Stat_Runes : ListStat<Rune>, IStatTag<Rune> { }
+public class Stat_RuneCrystals : ListStat<Rune>, IStatTag<Rune> { }
 public class Stat_Enchantments : QueueStat<List<Rune>>, IStatTag<Queue<List<Rune>>> { }
 public class Mechanic_Magic : Mechanic<Mechanic_Magic>
 {
