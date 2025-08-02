@@ -34,8 +34,8 @@ public class Effect_AddTrigger : EffectTask
         }
 
         System.Action cleanup = trigger.SubscribeMethodToTasks(target, x => DoTasks(target, x), binding, triggerOrder);
-        DummyModifier<Entity> dummy = new DummyModifier<Entity>(value: target, tickDuration: duration);
-        target.AddModifier<Stat_Triggers>(dummy);
+        Modifier<Entity> dummy = new Modifier<Entity>(value: target, tickDuration: duration);
+        target.AddModifier<Entity, Stat_Triggers>(dummy);
         Trigger_ModifierLost.Subscribe(_ => cleanup?.Invoke(), dummy, 0, true);
     }
 

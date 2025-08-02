@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
-public class Stat_LockedTargets : Stat<List<Entity>>, IStatTag<List<Entity>> { }
+public class Stat_LockedTargets : ListPrioritySolver<Entity>, IStat<List<Entity>> { }
 public class Targeting_Selected : Targeting
 {
     public override List<Entity> GetTargets(Entity owner, Entity proxy = null)
@@ -11,7 +11,7 @@ public class Targeting_Selected : Targeting
             if(lockedTargets == null)
             {
                 lockedTargets = new List<Entity>();
-                owner.Stat<Stat_LockedTargets>().AddModifier(lockedTargets);
+                owner.Stat<Stat_LockedTargets>().Add(lockedTargets);
             }
             lockedTargets.RemoveAll(x => x == null || x.gameObject.activeSelf == false);
             if(lockedTargets.Count == 0)
@@ -32,7 +32,7 @@ public class Targeting_Selected : Targeting
             if (lockedTargets == null)
             {
                 lockedTargets = new List<Entity>();
-                owner.Stat<Stat_LockedTargets>().AddModifier(lockedTargets);
+                owner.Stat<Stat_LockedTargets>().Add(lockedTargets);
             }
             lockedTargets.RemoveAll(x => x == null || x.gameObject.activeSelf == false);
             if (lockedTargets.Count == 0)

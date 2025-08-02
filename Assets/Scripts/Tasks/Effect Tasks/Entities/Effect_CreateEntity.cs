@@ -106,11 +106,11 @@ public class Effect_CreateEntity : EffectTask // TODO: split into multiple child
                     int maxSummons = overcapSummons + (int)Owner.Stat<Stat_MaxSummons>().Value;
                     for (int i = 0; i < summonCount; i++)
                     {
-                        if (Owner.Stat<Stat_Summons>().Modifiers.Count >= maxSummons) break;
+                        if (Owner.Stat<Stat_Summons>().Count >= maxSummons) break;
                         Entity spawnedEntity = Create(Owner, Target, multiplier, triggered, i);
-                        spawnedEntity.Stat<Stat_MaxLife>().AddModifier(new NumericalSolver(lifeMultiplier, CalculationStep.Multiplicative));
+                        spawnedEntity.Stat<Stat_MaxLife>().Add(new NumericalSolver(lifeMultiplier, CalculationStep.Multiplicative));
                         // TODO: summon position
-                        Owner.Stat<Stat_Summons>().AddModifier(spawnedEntity);
+                        Owner.Stat<Stat_Summons>().Add(spawnedEntity);
                         Trigger_Expire.Subscribe(x => Owner.Stat<Stat_Summons>().Remove(spawnedEntity), spawnedEntity);
                         Trigger_SummonCreated.Invoke(spawnedEntity, spawnedEntity, entity, this);
                         spawnedEntity.GetMechanic<Mechanic_Actions>().Tick();
@@ -127,14 +127,14 @@ public class Effect_CreateEntity : EffectTask // TODO: split into multiple child
         spawnedEntity.gameObject.name = ""+id;
         spawnedEntity.GetMechanic<Mechanic_PlayerOwner>().SetPlayer(Owner.GetMechanic<Mechanic_PlayerOwner>());
         spawnedEntity.GetMechanic<Mechanic_PlayerOwner>().proxyOwner = Owner;
-        spawnedEntity.Stat<Stat_Team>().AddModifier(Owner.Stat<Stat_Team>().Value);
+        spawnedEntity.Stat<Stat_Team>().Add(Owner.Stat<Stat_Team>().Value);
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                spawnedEntity.Stat<Stat_MovementTarget>().AddModifier(Owner);
+                spawnedEntity.Stat<Stat_MovementTarget>().Add(Owner);
                 break;
             case EffectTargetSelector.Target:
-                spawnedEntity.Stat<Stat_MovementTarget>().AddModifier(Target);
+                spawnedEntity.Stat<Stat_MovementTarget>().Add(Target);
                 break;
         }
         spawnedEntity.GetMechanic<Mechanic_Movement>().facingDir = (Target.transform.position - Owner.transform.position).normalized;

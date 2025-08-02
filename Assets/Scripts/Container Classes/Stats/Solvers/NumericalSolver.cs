@@ -20,9 +20,9 @@ public interface ICalculationComponent
 /// (flat + flat + ...) * (1 + increased + increased + ...) * more * more * ...
 /// </summary>
 [Serializable]
-public class NumericalSolver : Stat<float>, ICalculationComponent
+public class NumericalSolver : Solver<float>, ICalculationComponent
 {
-    [field: SerializeField, FoldoutGroup("@GetType()"), HideIf("@this is IStatTag")]
+    [field: SerializeField, FoldoutGroup("@GetType()"), HideIf("@this is IStat")]
     public CalculationStep Step { get; protected set; }
 
     public NumericalSolver() { }
@@ -57,7 +57,7 @@ public class NumericalSolver : Stat<float>, ICalculationComponent
         
         foreach (IDataContainer<float> modifier in Modifiers)
         {
-            (modifier as Stat<float>)?.Solve();
+            (modifier as Solver<float>)?.Solve();
 
             switch (Step)
             {
@@ -76,7 +76,7 @@ public class NumericalSolver : Stat<float>, ICalculationComponent
         }
     }
 
-    public override Stat Clone()
+    public new NumericalSolver Clone()
     {
         NumericalSolver clone = (NumericalSolver)base.Clone();
         clone.Step = Step;

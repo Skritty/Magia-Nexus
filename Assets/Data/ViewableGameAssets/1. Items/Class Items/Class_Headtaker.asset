@@ -84,9 +84,7 @@ MonoBehaviour:
         runes: []
         finalDamage: 0
         damageModifiers:
-        - _value: 100
-          <Modifiers>k__BackingField:
-          - rid: 1083524283774009974
+        - <Value>k__BackingField: 100
           <StatTag>k__BackingField:
             rid: -2
           <Alignment>k__BackingField: 0
@@ -95,9 +93,6 @@ MonoBehaviour:
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
+          <Step>k__BackingField: 0
           <AppliesTo>k__BackingField: 0
           <DamageType>k__BackingField: 8227
-    - rid: 1083524283774009974
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 100

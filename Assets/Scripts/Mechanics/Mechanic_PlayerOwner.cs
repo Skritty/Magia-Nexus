@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Stat_Team : PrioritySolver<int>, IStatTag<int> { }
-public class Stat_SummonCount : NumericalSolver, IStatTag<float> { }
-public class Stat_Summons : ListStat<Entity>, IStatTag<Entity> { }
-public class Stat_Proxies : ListStat<Entity>, IStatTag<Entity> { }
-public class Stat_TeamPlayers : NumericalSolver, IStatTag<float> { }
-public class Stat_MaxSummons : NumericalSolver, IStatTag<float> { }
-public class Stat_PlayerCharacter : Stat<Entity>, IStatTag<Entity> { } // TODO: make this the end all be all for referencing the player character
+public class Stat_Team : PrioritySolver<int>, IStat<int> { }
+public class Stat_SummonCount : NumericalSolver, IStat<float> { }
+public class Stat_Summons : ListStat<Entity>, IStat<Entity> { }
+public class Stat_Proxies : ListStat<Entity>, IStat<Entity> { }
+public class Stat_TeamPlayers : NumericalSolver, IStat<float> { }
+public class Stat_MaxSummons : NumericalSolver, IStat<float> { }
+public class Stat_PlayerCharacter : Stat<Entity>, IStat<Entity> { } // TODO: make this the end all be all for referencing the player character
 public class Mechanic_PlayerOwner : Mechanic<Mechanic_PlayerOwner>
 {
     [FoldoutGroup("Player Owned")]
@@ -26,17 +26,14 @@ public class Mechanic_PlayerOwner : Mechanic<Mechanic_PlayerOwner>
     [FoldoutGroup("Player Owned"), ShowInInspector, ReadOnly]
     public Dictionary<Viewer, float> assists = new Dictionary<Viewer, float>();
 
-    public void SetPlayer(Viewer player, Entity playerCharacter)
+    public void SetPlayer(Viewer player)
     {
         this.player = player;
         player.character = Owner;
-        playerEntity = playerCharacter;
-        if (playerCharacter)
-        {
-            Owner.name = player.viewerName;
-            if (characterNamePlate != null)
-                characterNamePlate.text = player.viewerName;
-        }
+        playerEntity = Owner;
+        Owner.name = player.viewerName;
+        if (characterNamePlate != null)
+            characterNamePlate.text = player.viewerName;
     }
 
     public void SetPlayer(Mechanic_PlayerOwner inherit)

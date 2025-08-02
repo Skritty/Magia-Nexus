@@ -1,55 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
+using Sirenix.OdinInspector;
+using TwitchLib.Api.Helix.Models.Search;
+using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
-public class QueueStat<T> : Stat<T>, IEnumerable<T>
+public class QueueStat<T> : IModifiable<T>, IEnumerable<T>
 {
+    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
+    public List<IDataContainer<T>> Modifiers { get; protected set; } = new();
     public int Count => Modifiers.Count;
-
-    public bool Contains(T value)
-    {
-        return Modifiers.Exists(x => x.Value.Equals(value));
-    }
-
-    public void Enqueue(T value)
-    {
-        AddModifier(value);
-    }
-
-    public T Dequeue()
-    {
-        if (Count == 0) return default;
-        T value = Modifiers[0].Value;
-        Modifiers.RemoveAt(0);
-        return value;
-    }
-
-    public void Clear()
-    {
-        Modifiers.Clear();
-        changed = true;
-        OnChange?.Invoke(Value);
-    }
-
-    public void AddModifiers(ICollection<T> values)
-    {
-        foreach (T value in values)
-        {
-            AddModifier(value);
-        }
-    }
 
     public IEnumerator<T> GetEnumerator()
     {
-        List<T> array = new();
+        Queue<T> queue = new Queue<T>();
         foreach (IDataContainer<T> data in Modifiers)
         {
-            array.Add(data.Value);
+            queue.Enqueue(data.Value);
         }
-        return array.GetEnumerator();
+        return queue.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    public void Enqueue(T value)
+    {
+        DataContainer<T> data = new DataContainer<T>(value);
+        Modifiers.Add(data);
+    }
+
+    public T Dequeue()
+    {
+        if (Modifiers.Count == 0) return default; 
+        IDataContainer<T> data = Modifiers[0];
+        Modifiers.RemoveAt(0);
+        return data.Value;
+    }
+
+    public bool TryAdd(IDataContainer modifier)
+    {
+        IDataContainer<T> cast = (IDataContainer<T>)modifier;
+        if (cast == null) return false;
+        Modifiers.Add(cast);
+        return true;
+    }
+    public void Add(IDataContainer<T> modifier)
+    {
+        Modifiers.Add(modifier);
+    }
+
+    public void Remove(IDataContainer modifier)
+    {
+        Modifiers.Remove(modifier as IDataContainer<T>);
+    }
+
+    public bool Contains(IDataContainer modifier, out int count)
+    {
+        count = 0;
+        foreach (IDataContainer m in Modifiers)
+        {
+            if (m.Equals(modifier)) count++;
+        }
+        if (count > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

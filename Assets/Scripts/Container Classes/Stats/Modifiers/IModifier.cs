@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-
 public interface IModifier : IDataContainer
 {
-    public IStatTag Tag { get; }
+    public IStat Tag { get; }
     public Alignment Alignment { get; }
     public int MaxStacks { get; }
     public int StacksAdded { get; }
@@ -11,8 +9,7 @@ public interface IModifier : IDataContainer
     public bool RefreshDuration { get; }
 }
 
-public interface IModifier<T> : IModifier, IModifiable, IDataContainer<T>
+public interface IModifier<T> : IModifier, IDataContainer<T>
 {
-    public IStatTag<T> StatTag { get; }
-    public List<IDataContainer<T>> Modifiers { get; }
+    public IStat<T> StatTag { get; }
 }

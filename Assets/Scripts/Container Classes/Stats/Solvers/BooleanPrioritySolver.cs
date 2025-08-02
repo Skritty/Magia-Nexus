@@ -1,19 +1,15 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 
 public class BooleanPrioritySolver : PrioritySolver<bool>
 {
     protected override bool HandleSamePriorityModifiers(List<IDataContainer<bool>> modifiers)
     {
         bool value = false;
-        foreach (Stat<bool> modifier in modifiers)
+        foreach (IDataContainer<bool> modifier in modifiers)
         {
-            modifier.Solve();
+            (modifier as ISolver<bool>)?.Solve();
             return value |= modifier.Value;
         }
         return value;
     }
-
-    public override Stat Clone() => base.Clone();
 }

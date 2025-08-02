@@ -1,33 +1,17 @@
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class NumericalModifier : Stat<float>, ICalculationComponent, IModifier<float>
+public class NumericalModifier : Modifier<float>, ICalculationComponent
 {
-    public IStatTag Tag => StatTag;
-    [field: SerializeReference, FoldoutGroup("Modifier"), HideInInlineEditors]
-    public IStatTag<float> StatTag { get; protected set; }
-    [field: SerializeField, FoldoutGroup("Modifier")]
-    public Alignment Alignment { get; private set; }
-    [field: SerializeField, FoldoutGroup("Modifier")]
-    public int MaxStacks { get; private set; }
-    [field: SerializeField, FoldoutGroup("Modifier")]
-    public int StacksAdded { get; private set; } = 1;
-    [field: SerializeField, FoldoutGroup("Modifier")]
-    public bool PerPlayer { get; private set; }
-    [field: SerializeField, FoldoutGroup("Modifier")]
-    public int TickDuration { get; private set; }
-    [field: SerializeField, FoldoutGroup("Modifier")]
-    public bool RefreshDuration { get; private set; }
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public CalculationStep Step { get; set; }
-
+    
     public NumericalModifier() { }
-    public NumericalModifier(float value = default, CalculationStep step = CalculationStep.Flat, IStatTag<float> tag = default, Alignment alignment = Alignment.Neutral,
+    public NumericalModifier(float value = default, CalculationStep step = CalculationStep.Flat, IStat<float> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false,
         int tickDuration = 0, bool refreshDuration = false)
     {
-        _value = value;
+        Value = value;
         Step = step;
         StatTag = tag;
         Alignment = alignment;
@@ -38,9 +22,10 @@ public class NumericalModifier : Stat<float>, ICalculationComponent, IModifier<f
         RefreshDuration = refreshDuration;
     }
 
-    public override Stat Clone()
+    public NumericalModifier Clone()
     {
-        NumericalModifier clone = (NumericalModifier)base.Clone();
+        NumericalModifier clone = (NumericalModifier)MemberwiseClone();
+        clone.Value = Value;
         clone.StatTag = StatTag;
         clone.Alignment = Alignment;
         clone.MaxStacks = MaxStacks;

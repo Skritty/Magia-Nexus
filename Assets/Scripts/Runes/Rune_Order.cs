@@ -68,7 +68,7 @@ public class Rune_Order : Rune
             case RuneElement.Order:
                 {
                     meleeOverride.DoEffect(spell.Owner, entity, 1, false);
-                    entity.Stat<Stat_Runes>().AddModifiers(spell.runes);
+                    entity.Stat<Stat_Runes>().AddRange(spell.runes);
                     break;
                 }
         }

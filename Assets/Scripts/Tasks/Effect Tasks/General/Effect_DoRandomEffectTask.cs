@@ -33,10 +33,11 @@ public class Effect_DoRandomEffectTask<T> : EffectTask
         if (proxy != EffectTargetSelector.None)
         {
             Entity proxyEntity = proxy == EffectTargetSelector.Owner ? owner : target;
+            random.GetRandomEntry().DoTask(owner, null, proxyEntity);
         }
         else
         {
-            random.GetRandomEntry().DoTask(default, owner);
+            random.GetRandomEntry().DoTask(owner);
         }
     }
 }

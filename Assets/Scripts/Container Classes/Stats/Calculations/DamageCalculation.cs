@@ -30,7 +30,7 @@ public class DamageCalculation : NumericalSolver
         return subcalculation;
     }
 
-    public override void AddModifier<Data>(Data modifier)
+    public override void Add(IDataContainer<float> modifier)
     {
         CalculationStep step = CalculationStep.Flat;
         DamageType appliesTo = DamageType.True;
@@ -57,7 +57,7 @@ public class DamageCalculation : NumericalSolver
                             {
                                 if (subcalculation.DamageType == appliesTo)
                                 {
-                                    (subcalculation.Modifiers[0] as Stat<float>).Modifiers.Add(modifier as IDataContainer<float>);
+                                    (subcalculation.Modifiers[0] as Solver<float>).Modifiers.Add(modifier as IDataContainer<float>);
                                     validModifier = false;
                                     break; // Applies to the first valid flat damage only
                                 }
@@ -69,7 +69,7 @@ public class DamageCalculation : NumericalSolver
 
                     if (validModifier)
                     {
-                        AddSubcalculation(damageType).AddModifier(modifier);
+                        AddSubcalculation(damageType).Add(modifier);
                     }
                     break;
                 }
@@ -79,7 +79,7 @@ public class DamageCalculation : NumericalSolver
                     {
                         if (appliesTo == DamageType.All || subcalculation.DamageType.HasFlag(appliesTo))
                         {
-                            (subcalculation.Modifiers[1] as Stat<float>).Modifiers.Add(modifier as IDataContainer<float>);
+                            (subcalculation.Modifiers[1] as Solver<float>).Modifiers.Add(modifier as IDataContainer<float>);
                         }
                     }
                     break;
@@ -98,6 +98,5 @@ public class DamageCalculation : NumericalSolver
         }
 
         changed = true;
-        OnChange?.Invoke(Value);
     }
 }

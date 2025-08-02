@@ -1,11 +1,11 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_MovementSpeed : NumericalSolver, IStatTag<float> { }
-public class Stat_MovementTarget : PrioritySolver<Entity>, IStatTag<float> { }
-public class Stat_MovementTargetingMethod : PrioritySolver<Targeting>, IStatTag<Targeting> { }
-public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector>, IStatTag<MovementDirectionSelector> { }
-//public class Stat_MovementDirection : NumericalSolver, IStatTag { } TODO: make vector3 solver
+public class Stat_MovementSpeed : NumericalSolver, IStat<float> { }
+public class Stat_MovementTarget : PrioritySolver<Entity>, IStat<Entity> { }
+public class Stat_MovementTargetingMethod : PrioritySolver<Targeting>, IStat<Targeting> { }
+public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector>, IStat<MovementDirectionSelector> { }
+//public class Stat_MovementDirection : NumericalSolver, IStat { } TODO: make vector3 solver
 public class Mechanic_Movement : Mechanic<Mechanic_Movement>
 {
     [FoldoutGroup("Movement")]
@@ -17,13 +17,19 @@ public class Mechanic_Movement : Mechanic<Mechanic_Movement>
 
     public override void Tick()
     {
-        base.Tick();
+        if (Owner.Stat<Stat_Stunned>().Value) return;
         Move();
     }
 
     public void Move()
     {
-        Owner.Stat<Stat_MovementSelector>().Value?.DoTask(null, Owner);
+        foreach (Entity entity in Owner.Stat<Stat_MovementTargetingMethod>().Value?.GetTargets(Owner))
+        {
+            // TODO: don't do this every frame
+            Owner.AddModifier<Entity, Stat_MovementTarget>(entity, 1);
+            break;
+        }
+        Owner.Stat<Stat_MovementSelector>().Value?.DoTask(Owner);
         Trigger_MovementDirectionCalc.Invoke(Owner, Owner);
 
         if (rotate)
@@ -34,7 +40,7 @@ public class Mechanic_Movement : Mechanic<Mechanic_Movement>
         Owner.transform.position +=
             Owner.Stat<Stat_MovementSpeed>().Value
             * Time.fixedDeltaTime
-            * Owner.GetMechanic<Mechanic_Movement>().facingDir.normalized;
+            * facingDir.normalized;
         if (obeyMapEdge)
         {
             Owner.transform.position = Vector3.ClampMagnitude(Owner.transform.position, 15f);// TODO: Change this to pathing

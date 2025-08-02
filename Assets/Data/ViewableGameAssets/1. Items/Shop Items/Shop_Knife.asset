@@ -21,36 +21,42 @@ MonoBehaviour:
   cost: 15
   craftingRecipe: []
   grantedActions: []
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 9031231937507230429
+  - rid: 4023383574376350583
   references:
     version: 2
     RefIds:
-    - rid: 7133257989892341834
+    - rid: 4023383574376350583
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        targetSelector:
+          rid: 4023383574376350584
+        modifier:
+          rid: 4023383574376350585
+    - rid: 4023383574376350584
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 9031231937507230429
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
         ignoreFrames: 0
-        targetSelector:
-          rid: 7133257989892341834
-        tick: 0
-        tickDuration: -1
-        maxStacks: 10
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        effectModifiers:
-        - value: 10
-          tag: 1
-          method: 0
-          appliesTo: 2
-          damageType: 115
+    - rid: 4023383574376350585
+      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 10
+        <StatTag>k__BackingField:
+          rid: 4023383574376350592
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 10
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 0
+        <AppliesTo>k__BackingField: 2
+        <DamageType>k__BackingField: 3
+    - rid: 4023383574376350592
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

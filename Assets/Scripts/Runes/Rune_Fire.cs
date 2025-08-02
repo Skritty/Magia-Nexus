@@ -98,7 +98,11 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Conjuration:
                 {
-                    spell.cleanup += Trigger_ActionStart.Subscribe(x => spell.cleanup += spell.Owner.Stat<Stat_DamageDealt>().AddModifier(multiplierPerConjureUse), spell.Owner);
+                    spell.cleanup += Trigger_ActionStart.Subscribe(x =>
+                    {
+                        spell.Owner.Stat<Stat_DamageDealt>().Add(multiplierPerConjureUse);
+                        spell.cleanup += () => spell.Owner.Stat<Stat_DamageDealt>().Remove(multiplierPerConjureUse);
+                    }, spell.Owner);
                     break;
                 }
             case SpellShape.Line:
@@ -109,7 +113,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(projectile => projectile.Stat<Stat_PiercesRemaining>().AddModifier(2), spell.effect);
+                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(projectile => projectile.Stat<Stat_PiercesRemaining>().Add(2), spell.effect);
                     break;
                 }
             case SpellShape.Summon:
@@ -128,6 +132,6 @@ public class Rune_Fire : Rune
     {
         Effect_Damage explosion = curseExplosion.Clone();
         spell.cleanup += Trigger_PreHit.Subscribe(x => x.runes.AddRange(spell.runes), explosion);
-        explosion.DoTask(null, spell.Owner); // TODO: WHERE IS EFFECT IN THESE HOW AM I SUPPOSED TO CHAIN EFFECT MULTIPLIERS
+        explosion.DoTask(spell.Owner); // TODO: WHERE IS EFFECT IN THESE HOW AM I SUPPOSED TO CHAIN EFFECT MULTIPLIERS
     }
 }

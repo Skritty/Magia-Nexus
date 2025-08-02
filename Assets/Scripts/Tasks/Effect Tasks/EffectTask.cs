@@ -20,15 +20,17 @@ public abstract class EffectTask :
     public abstract void DoEffect(Entity owner, Entity target, float multiplier, bool triggered);
 
     public bool DoTaskNoData(Entity owner) => DoTask(owner, null, null);
-    public bool DoTask(Entity owner, Entity data)
+    public bool DoTask(Entity owner, Entity target)
     {
-        DoEffect(owner, data, 1, true);
+        DoEffect(owner, target, 1, true);
         return true;
     }
     public bool DoTask(Entity owner, Effect data)
     {
         return DoTask(owner, data, useTargetAsProxy ? data.Target : null);
     }
+
+    public bool DoTask(Entity owner) => DoTask(owner, null, null);
     public bool DoTask(Entity owner, Effect data, Entity proxy)
     {
         List<Entity> targets = null;

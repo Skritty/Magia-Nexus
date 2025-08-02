@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
-public class Stat_Stunned : BooleanPrioritySolver, IStatTag<bool> { }
-public class Stat_Channeling : BooleanPrioritySolver, IStatTag<bool> { }
-public class Stat_Actions : ListPrioritySolver<Action>, IStatTag<List<Action>> { }
-public class Stat_Initiative : NumericalSolver, IStatTag<float> { }
+public class Stat_Stunned : BooleanPrioritySolver, IStat<bool> { }
+public class Stat_Channeling : BooleanPrioritySolver, IStat<bool> { }
+public class Stat_Actions : ListPrioritySolver<Action>, IStat<List<Action>> { }
+public class Stat_Initiative : NumericalSolver, IStat<float> { }
 public class Mechanic_Actions : Mechanic<Mechanic_Actions>
 {
     [FoldoutGroup("Actions")]
@@ -24,8 +24,12 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
 
     public override void Tick()
     {
-        if (Owner.Stat<Stat_Stunned>().Value) return;
         tick++;
+        if (tick < (TicksPerAction * actionsPerTurn) - Owner.Stat<Stat_Initiative>().Value)
+        {
+            Owner.AddModifier<bool, Stat_Stunned>(true, 1);
+        }
+        if (Owner.Stat<Stat_Stunned>().Value) return;
         FetchNextAction();
         DoCurrentAction();
     }
@@ -77,7 +81,7 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
     {
         if(Owner.Stat<Stat_Actions>().Value == null)
         {
-            Owner.Stat<Stat_Actions>().AddModifier(actions);
+            Owner.Stat<Stat_Actions>().Add(actions);
         }
         if (actions.Count != actionsPerTurn)
         {
@@ -99,7 +103,7 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
     private void FetchNextAction()
     {
         List<Action> actions = Owner.Stat<Stat_Actions>().Value as List<Action>;
-        if (actions.Count == 0 || tick < Owner.Stat<Stat_Initiative>().Value) return;
+        if (actions.Count == 0) return;
         if (tick % TicksPerAction == 0)
         {
             currentAction?.OnEnd(Owner);

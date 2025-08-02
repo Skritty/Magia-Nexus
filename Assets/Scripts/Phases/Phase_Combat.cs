@@ -47,13 +47,12 @@ public abstract class Phase_Combat : Phase
         {
             spawn.owner.killGainMultiplier = killPointGain;
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawn.position, Quaternion.identity);
-            entity.GetMechanic<Mechanic_PlayerOwner>().SetPlayer(spawn.owner, entity);
+            entity.GetMechanic<Mechanic_PlayerOwner>().SetPlayer(spawn.owner);
             spawn.owner.roundPoints = 0;
-            entity.Stat<Stat_Team>().AddModifier(spawn.team);
-            entity.Stat<Stat_Initiative>().AddModifier((int)(GameManager.Instance.timePerTurn * 50));
+            entity.Stat<Stat_Team>().Add(spawn.team);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
-            entity.Stat<Stat_TargetingMethod>().AddModifier(spawn.owner.personality.targeting);
-            entity.Stat<Stat_MovementTargetingMethod>().AddModifier(spawn.owner.personality.targeting);
+            entity.Stat<Stat_TargetingMethod>().Add(spawn.owner.personality.targeting);
+            entity.Stat<Stat_MovementTargetingMethod>().Add(spawn.owner.personality.targeting);
             cleanup += Trigger_Die.Subscribe(TrackKill, entity);
             foreach (Item item in spawn.owner.items)
             {

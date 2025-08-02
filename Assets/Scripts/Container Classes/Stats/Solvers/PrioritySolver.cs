@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// A modifier with priority tiers. Lower tiers will be ignored.
 /// </summary>
-public class PrioritySolver<T> : Stat<T>
+public class PrioritySolver<T> : Solver<T>
 {
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public byte Priority { get; set; }
@@ -18,12 +18,16 @@ public class PrioritySolver<T> : Stat<T>
         data.Priority = priority;
         Modifiers.Add(data);
         changed = true;
-        OnChange?.Invoke(Value);
         return () => Modifiers.Remove(data);
     }
 
     public override void Solve()
     {
+        if (Modifiers.Count == 0)
+        {
+            _value = default;
+            return;
+        }
         byte highestPriority = 0;
         foreach (IDataContainer<T> modifier in Modifiers)
         {
@@ -52,7 +56,7 @@ public class PrioritySolver<T> : Stat<T>
         return modifiers[0].Value;
     }
 
-    public override Stat Clone()
+    public new PrioritySolver<T> Clone()
     {
         PrioritySolver<T> clone = (PrioritySolver<T>)base.Clone();
         clone.Priority = Priority;

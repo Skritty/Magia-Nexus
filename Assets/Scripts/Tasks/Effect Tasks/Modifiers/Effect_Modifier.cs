@@ -17,15 +17,15 @@ public class Effect_Modifer : EffectTask
     {
         if (multiplier != 1 && modifier is NumericalModifier)
         {
-            NumericalModifier clone = (NumericalModifier)(modifier as Stat).Clone();
+            NumericalModifier clone = (modifier as NumericalModifier).Clone();
             Target.AddModifier(clone);
             clone.Step = CalculationStep.Multiplicative;
-            clone.AddModifier(multiplier);
+            clone.Value *= multiplier;
             return;
         }
         else
         {
-            Target.AddModifier(modifier);
+            Target.TryAddModifier(modifier);
         }
     }
 }

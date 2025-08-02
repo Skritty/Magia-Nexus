@@ -37,8 +37,7 @@ public abstract class Targeting
     {
         if (ignoreFrames > 0)
         {
-            target.AddModifier(new DummyModifier<(Entity, object)>(
-                    value: (owner, this), tickDuration: ignoreFrames));
+            target.AddModifier<(Entity, object), Stat_Untargetable>((owner, this), ignoreFrames);
         }
     }
     public virtual void OnDrawGizmos(Transform owner) { }

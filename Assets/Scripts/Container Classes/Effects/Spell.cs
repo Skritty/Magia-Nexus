@@ -34,7 +34,7 @@ public class Spell : Effect
     public int additionalCastTargets;
     public int proxyLifetime;
 
-    public Spell(Entity owner, Rune[] runes)
+    public Spell(Entity owner, List<Rune> runes)
     {
         this.Owner = owner;
         this.runes.AddRange(runes);
@@ -47,7 +47,7 @@ public class Spell : Effect
 
     private void SetUpProjectile(Entity entity)
     {
-        entity.Stat<Stat_Runes>().AddModifiers(runes);
+        entity.Stat<Stat_Runes>().AddRange(runes);
     }
 
     public void GenerateSpell(Spell chainCast)
@@ -92,7 +92,7 @@ public class Spell : Effect
     {
         this.maxStages = maxStages;
         channeled = true;
-        System.Action removeChanneling = Owner.Stat<Stat_Channeling>().AddModifier(true);
+        System.Action removeChanneling = Owner.Stat<Stat_Channeling>().Add(true);
         cleanup += Trigger_Channel.Subscribe(ChannelSpell, Owner);
         cleanup += Trigger_SpellMaxStage.Subscribe(_ => FinishChanneling(removeChanneling), this);
     }

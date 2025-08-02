@@ -23,7 +23,7 @@ public class Action : ViewableGameAsset
     }
     public virtual void Tick(Entity owner, int tickLength, int tick)
     {
-        owner.AddModifier<Stat_MovementSpeed>(new NumericalModifier(value:movementSpeedOverDuration.Evaluate((tick % tickLength) * 1f / tickLength), step: CalculationStep.Multiplicative, tickDuration: 1));
+        owner.AddModifier<float, Stat_MovementSpeed>(new NumericalModifier(value:movementSpeedOverDuration.Evaluate((tick % tickLength) * 1f / tickLength), step: CalculationStep.Multiplicative, tickDuration: 1));
         if (onTick || tick % tickLength == (int)(tickLength * timing))
         {
             owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
@@ -43,7 +43,7 @@ public class Action : ViewableGameAsset
                 Debug.LogWarning($"{name} has null effects!");
                 continue;
             }
-            effect.DoTask(owner, owner);
+            effect.DoTask(owner);
         }
     }
 }

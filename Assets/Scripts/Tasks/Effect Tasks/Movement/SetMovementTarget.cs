@@ -11,10 +11,10 @@ public class SetMovementTarget : EffectTask
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                owner.AddModifier<Stat_MovementTarget, Entity>(owner, 1);
+                owner.AddModifier<Entity, Stat_MovementTarget>(owner, 1);
                 break;
             case EffectTargetSelector.Target:
-                owner.AddModifier<Stat_MovementTarget, Entity>(target, 1);
+                owner.AddModifier<Entity, Stat_MovementTarget>(target, 1);
                 break;
         }
     }

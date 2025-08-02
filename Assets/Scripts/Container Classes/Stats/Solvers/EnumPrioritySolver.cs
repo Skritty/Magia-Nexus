@@ -8,7 +8,7 @@ public class EnumPrioritySolver<T> : PrioritySolver<T> where T : struct, Enum
         T value = default;
         foreach (IDataContainer<T> modifier in modifiers)
         {
-            (modifier as Stat)?.Solve();
+            (modifier as ISolver<T>)?.Solve();
             return value = (T)Enum.ToObject(typeof(T), Convert.ToInt32(value) | Convert.ToInt32(modifier.Value));
         }
         return value;

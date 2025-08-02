@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_CastTargets : NumericalSolver, IStatTag<float> { }
-public class Stat_SpellPhase : NumericalSolver, IStatTag<float> { }
-public class Stat_Runes : ListStat<Rune>, IStatTag<Rune> { }
-public class Stat_RuneCrystals : ListStat<Rune>, IStatTag<Rune> { }
-public class Stat_Enchantments : QueueStat<List<Rune>>, IStatTag<Queue<List<Rune>>> { }
+public class Stat_CastTargets : NumericalSolver, IStat<float> { }
+public class Stat_SpellPhase : NumericalSolver, IStat<float> { }
+public class Stat_Runes : ListStat<Rune>, IStat<Rune> { }
+public class Stat_RuneCrystals : ListStat<Rune>, IStat<Rune> { }
+public class Stat_Enchantments : QueueStat<List<Rune>>, IStat<List<Rune>> { }
 public class Mechanic_Magic : Mechanic<Mechanic_Magic>
 {
     public Spell originSpell;
@@ -41,14 +41,14 @@ public class Mechanic_Magic : Mechanic<Mechanic_Magic>
         {
             vfx.visualEffect.enabled = true;
         }
-        Owner.Stat<Stat_Runes>().AddModifier(rune);
-        Rune[] runes = Owner.Stat<Stat_Runes>().ToArray;
+        Owner.Stat<Stat_Runes>().Add(rune);
+        List<Rune> runes = Owner.Stat<Stat_Runes>().ToList;
         Trigger_RuneGained.Invoke(rune, Owner, rune);
-        vfx.visualEffect.SetInt("RuneCount", runes.Length);
+        vfx.visualEffect.SetInt("RuneCount", runes.Count);
         runeInfo?.Dispose();
-        runeInfo = new GraphicsBuffer(GraphicsBuffer.Target.Structured, runes.Length, 4);
-        float[] runeIndex = new float[runes.Length];
-        for(int i = 0; i < runes.Length; i++)
+        runeInfo = new GraphicsBuffer(GraphicsBuffer.Target.Structured, runes.Count, 4);
+        float[] runeIndex = new float[runes.Count];
+        for(int i = 0; i < runes.Count; i++)
         {
             runeIndex[i] = 1f * Array.IndexOf(Enum.GetValues(typeof(RuneElement)), runes[i].element);
         }

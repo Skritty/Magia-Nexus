@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class DummyModifier<T> : IDataContainer<T>, IModifier<T>
+public class Modifier<T> : IModifier<T>
 {
     [field: SerializeReference, FoldoutGroup("@GetType()")]
-    public virtual T Value { get; protected set; }
-    public IStatTag Tag => StatTag;
-    [field: SerializeReference, FoldoutGroup("Modifier")]
-    public IStatTag<T> StatTag { get; protected set; }
+    public virtual T Value { get; set; }
+    public IStat Tag => StatTag;
+    [field: SerializeReference, FoldoutGroup("@GetType()")]
+    public IStat<T> StatTag { get; protected set; }
     public List<IDataContainer<T>> Modifiers => null;
-    [field: SerializeField, FoldoutGroup("Modifier")]
+    [field: SerializeField, FoldoutGroup("@GetType()")]
     public Alignment Alignment { get; protected set; }
-    [field: SerializeField, FoldoutGroup("Modifier")]
+    [field: SerializeField, FoldoutGroup("@GetType()")]
     public int MaxStacks { get; protected set; }
-    [field: SerializeField, FoldoutGroup("Modifier")]
+    [field: SerializeField, FoldoutGroup("@GetType()")]
     public int StacksAdded { get; protected set; } = 1;
-    [field: SerializeField, FoldoutGroup("Modifier")]
+    [field: SerializeField, FoldoutGroup("@GetType()")]
     public bool PerPlayer { get; protected set; }
-    [field: SerializeField, FoldoutGroup("Modifier")]
+    [field: SerializeField, FoldoutGroup("@GetType()")]
     public int TickDuration { get; protected set; }
-    [field: SerializeField, FoldoutGroup("Modifier"), ReadOnly]
+    [field: SerializeField, FoldoutGroup("@GetType()")]
     public bool RefreshDuration { get; protected set; }
 
 
-    public DummyModifier() { }
+    public Modifier() { }
 
-    public DummyModifier(T value = default, IStatTag<T> tag = default, Alignment alignment = Alignment.Neutral,
+    public Modifier(T value = default, IStat<T> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false,
         int tickDuration = 0, bool refreshDuration = false)
     {
@@ -47,20 +47,5 @@ public class DummyModifier<T> : IDataContainer<T>, IModifier<T>
         if (container == null) data = default;
         else data = container.Value;
         return container != null;
-    }
-
-    public void AddModifier<Data>(Data modifier) where Data : IDataContainer
-    {
-        throw new NotImplementedException();
-    }
-
-    public void RemoveModifier(IDataContainer modifier)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool ContainsModifier(IDataContainer modifier, out int count)
-    {
-        throw new NotImplementedException();
     }
 }

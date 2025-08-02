@@ -24,41 +24,36 @@ MonoBehaviour:
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 1083524267128389695
+  - rid: 4023383574376350566
   references:
     version: 2
     RefIds:
-    - rid: 1083524267128389695
-      type: {class: 'Effect_GrantModifer`1[[Effect, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+    - rid: 4023383574376350566
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
+        useTargetAsProxy: 0
         targetSelector:
-          rid: 1083524267128389696
+          rid: 4023383574376350567
         modifier:
-          rid: 1083524267128389697
-    - rid: 1083524267128389696
+          rid: 4023383574376350578
+    - rid: 4023383574376350567
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1083524267128389697
-      type: {class: NumericalModifier, ns: , asm: Assembly-CSharp}
       data:
-        _value: 1
-        <Modifiers>k__BackingField:
-        - rid: 1083524267128389699
-        step: 0
+        ignoreFrames: 0
+    - rid: 4023383574376350578
+      type: {class: FloatModifier, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1
         <StatTag>k__BackingField:
-          rid: 1083524267128389698
-        <Alignment>k__BackingField: 1
+          rid: 4023383574376350579
+        <Alignment>k__BackingField: 0
         <MaxStacks>k__BackingField: 0
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
         <TickDuration>k__BackingField: 0
-    - rid: 1083524267128389698
+        <RefreshDuration>k__BackingField: 0
+    - rid: 4023383574376350579
       type: {class: Stat_Initiative, ns: , asm: Assembly-CSharp}
       data:
-        _value: 0
         <Modifiers>k__BackingField: []
-        step: 0
-    - rid: 1083524267128389699
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 1
+        <Step>k__BackingField: 0

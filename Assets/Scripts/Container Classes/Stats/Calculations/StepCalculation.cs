@@ -44,24 +44,24 @@ public class StepCalculation : NumericalSolver
 
     public void AddModifier<Data>(Data modifier, CalculationStep step)
     {
-        Stat<float> calcStep = this;
+        Solver<float> calcStep = this;
         switch (step)
         {
             case CalculationStep.Flat:
                 {
-                    calcStep = Modifiers[0] as Stat<float>;
+                    calcStep = Modifiers[0] as Solver<float>;
                     break;
                 }
             case CalculationStep.Additive:
                 {
-                    calcStep = Modifiers[1] as Stat<float>;
+                    calcStep = Modifiers[1] as Solver<float>;
                     break;
                 }
         }
         calcStep.Modifiers.Add(modifier as IDataContainer<float>);
         changed = true;
     }
-    public override void AddModifier<Data>(Data modifier)
+    public override void Add(IDataContainer<float> modifier)
     {
         if(modifier is ICalculationComponent) AddModifier(modifier, (modifier as ICalculationComponent).Step);
         else AddModifier(modifier, CalculationStep.Flat);

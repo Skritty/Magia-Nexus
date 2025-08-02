@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -22,7 +21,7 @@ public abstract class DataContainer : IDataContainer
 [Serializable]
 public class DataContainer<T> : DataContainer, IDataContainer<T>
 {
-    [field: SerializeField, FoldoutGroup("@GetType()")]
+    [field: SerializeReference, FoldoutGroup("@GetType()")]
     public T Value { get; set; }
     public DataContainer() { }
     public DataContainer(T value)

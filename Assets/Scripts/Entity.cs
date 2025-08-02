@@ -9,15 +9,15 @@ public class Entity : MonoBehaviour
     public System.Action cleanup;
 
     [SerializeReference]
-    private ReferenceSerializableHashSet<IStatTag> stats = new(); // TODO: make a backing fancy type dictionary for runtime
+    private List<IStat> stats = new(); // TODO: make a backing fancy type dictionary for runtime
     private List<(IModifier, int)> durationModifiers = new();
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
     private List<Mechanic> mechanics = new();
     public T GetMechanic<T>() where T : Mechanic => IBoundInstances<Entity, T>.GetInstance(this);
 
-    public T Stat<T>() where T : IStatTag
+    public T Stat<T>() where T : IStat
     {
-        foreach (IStatTag stat in stats)
+        foreach (IStat stat in stats)
         {
             if (stat is T)
             {
@@ -29,24 +29,22 @@ public class Entity : MonoBehaviour
         return s;
     }
 
-    public IStatTag Stat(IModifier modifier)
+    public IStat Stat(IModifier modifier)
     {
-        IStatTag stat;
-        if (stats.TryGetValue(modifier.Tag, out IStatTag tag))
+        foreach(IStat s in stats)
         {
-            stat = tag;
+            if (s.GetType() == modifier.Tag.GetType())
+            {
+                return s;
+            }
         }
-        else
-        {
-            stats.Add(modifier.Tag);
-            stat = modifier.Tag;
-        }
-        return stat;
+        stats.Add(modifier.Tag);
+        return modifier.Tag;
     }
 
-    public bool HasStat<T>() where T : IStatTag
+    public bool HasStat<T>() where T : IStat
     {
-        foreach (IStatTag stat in stats)
+        foreach (IStat stat in stats)
         {
             if (stat is T)
             {
@@ -57,33 +55,38 @@ public class Entity : MonoBehaviour
         
     }
 
-    public void AddModifier(IModifier modifier) => AddModifier(modifier, Stat(modifier));
-
-    public void AddModifier<StatTag>(IDataContainer modifier) where StatTag : IStatTag
+    public void TryAddModifier(IModifier modifier)
     {
-        if (modifier is IModifier)
+        AddModifier(modifier, Stat(modifier));
+    }
+
+    public void AddModifier<T>(IModifier<T> modifier) => AddModifier(modifier, Stat(modifier));
+
+    public void AddModifier<T, StatTag>(IDataContainer<T> modifier) where StatTag : IStat<T>
+    {
+        if (modifier is IModifier<T>)
         {
-            AddModifier((IModifier)modifier, Stat<StatTag>());
+            AddModifier((IModifier<T>)modifier, Stat<StatTag>());
         }
         else
         {
-            Stat<StatTag>().AddModifier(modifier);
+            Stat<StatTag>().Add(modifier);
         }
     }
 
-    public void AddModifier<StatTag, T>(T value, int duration) where StatTag : class, IStatTag
+    public void AddModifier<T, StatTag>(T value, int duration) where StatTag : class, IStat<T>
     {
-        IStatTag<T> tag = (IStatTag<T>)Stat<StatTag>();
-        AddModifier(new DummyModifier<T>(value, tag, tickDuration: duration), tag);
+        IStat<T> tag = Stat<StatTag>();
+        AddModifier(new Modifier<T>(value, tag, tickDuration: duration), tag);
     }
 
-    private void AddModifier(IModifier modifier, IStatTag stat)
+    private void AddModifier(IModifier modifier, IStat stat)
     {
         // For each stack being added
         for(int s = 0; s < modifier.StacksAdded; s++)
         {
             // Check if at max stacks
-            if (modifier.MaxStacks > 0 && stat.ContainsModifier(modifier, out int count))
+            if (modifier.MaxStacks > 0 && stat.Contains(modifier, out int count))
             {
                 if (modifier.RefreshDuration)
                 {
@@ -98,7 +101,7 @@ public class Entity : MonoBehaviour
             }
 
             // Add new stack
-            stat.AddModifier(modifier);
+            stat.TryAdd(modifier);
             if (modifier.TickDuration > 0)
             {
                 durationModifiers.Add((modifier, modifier.TickDuration));
@@ -119,16 +122,16 @@ public class Entity : MonoBehaviour
     public void RemoveModifier(IModifier modifier)
     {
         if (modifier == null) return;
-        foreach(IStatTag stat in stats)
+        foreach(IStat stat in stats)
         {
-            stat.RemoveModifier(modifier);
+            stat.Remove(modifier);
         }
     }
 
-    private void RemoveModifier(IModifier modifier, IStatTag stat)
+    private void RemoveModifier(IModifier modifier, IStat stat)
     {
-        if (!stat.ContainsModifier(modifier, out _)) return;
-        stat.RemoveModifier(modifier);
+        if (!stat.Contains(modifier, out _)) return;
+        stat.Remove(modifier);
         foreach ((IModifier, int) mod in durationModifiers.ToArray())
         {
             if(mod.Item1 == modifier)
@@ -164,7 +167,7 @@ public class Entity : MonoBehaviour
         RemoveModifier(modifier);
     }
 
-    public void RemoveModifier<StatTag>(IDataContainer modifier) where StatTag : IStatTag
+    public void RemoveModifier<StatTag>(IDataContainer modifier) where StatTag : IStat
     {
         if (modifier is IModifier)
         {
@@ -172,7 +175,7 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            Stat<StatTag>().RemoveModifier(modifier);
+            Stat<StatTag>().Remove(modifier);
         }
     }
 

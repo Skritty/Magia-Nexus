@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_DamageOverTime : ListStat<DamageModifier>, IStatTag<DamageModifier> { }
-public class Stat_DamageDealt : ListStat<DamageModifier>, IStatTag<DamageModifier> { }
-public class Stat_DamageTaken : ListStat<DamageModifier>, IStatTag<DamageModifier> { }
-public class Stat_Invulnerable : BooleanPrioritySolver, IStatTag<bool> { }
-public class Stat_CurrentLife : StepCalculation, IStatTag<float> { }
-public class Stat_MaxLife : StepCalculation, IStatTag<float> { }
+public class Stat_DamageOverTime : DamageCalculation, IStat<float> { }
+public class Stat_DamageDealt : DamageCalculation, IStat<float> { }
+public class Stat_DamageTaken : DamageCalculation, IStat<float> { }
+public class Stat_Invulnerable : BooleanPrioritySolver, IStat<bool> { }
+public class Stat_CurrentLife : StepCalculation, IStat<float> { }
+public class Stat_MaxLife : StepCalculation, IStat<float> { }
 public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 {
     #region Internal Variables
@@ -25,7 +25,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         base.Initialize();
         baseLife = new DataContainer<float>();
         baseLife.Value = Owner.Stat<Stat_MaxLife>().Value;
-        Owner.Stat<Stat_CurrentLife>().AddModifier(baseLife);
+        Owner.Stat<Stat_CurrentLife>().Add(baseLife);
         Owner.cleanup += Trigger_Die.Subscribe(x => Debug.Log($"{x.Target} DIED"), Owner);
     }
 
@@ -40,15 +40,15 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         foreach(DamageModifier d in damage.damageModifiers)
         {
             Debug.Log($"{d.Step}: {d.Value} {d.AppliesTo}/{d.DamageType}");
-            calculation.AddModifier(d);
+            calculation.Add(d);
         }
-        foreach (IDataContainer d in damage.Owner.Stat<Stat_DamageDealt>().Modifiers)
+        foreach (DamageModifier d in damage.Owner.Stat<Stat_DamageDealt>().Modifiers)
         {
-            calculation.AddModifier(d);
+            calculation.Add(d);
         }
-        foreach (IDataContainer d in damage.Target.Stat<Stat_DamageTaken>().Modifiers)
+        foreach (DamageModifier d in damage.Target.Stat<Stat_DamageTaken>().Modifiers)
         {
-            calculation.AddModifier(d);
+            calculation.Add(d);
         }
         damage.finalDamage = calculation.Value;
         //Debug.Log($"Dealing {damage.finalDamage} damage from {damage.Owner} to {damage.Target} ({Owner}). Moving from {baseLife.Value}hp to {baseLife.Value-damage.finalDamage}");

@@ -46,6 +46,6 @@ public class Movement_Orbit : MovementDirectionSelector
         }
         
         target.GetMechanic<Mechanic_Movement>().facingDir = perpendicularVector;
-        target.AddModifier<Stat_MovementSpeed>(new NumericalModifier(value: multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
+        target.AddModifier<float, Stat_MovementSpeed>(new NumericalModifier(value: multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
     }
 }

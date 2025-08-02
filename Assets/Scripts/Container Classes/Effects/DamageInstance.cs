@@ -29,7 +29,7 @@ public class DamageInstance : Hit
         }
 
         // Check rune crystals on the target
-        foreach (Rune rune in Target.Stat<Stat_RuneCrystals>().ToArray)
+        foreach (Rune rune in Target.Stat<Stat_RuneCrystals>())
         {
             runes.Add(rune);
         }

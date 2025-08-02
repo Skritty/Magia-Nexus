@@ -30,7 +30,7 @@ public class Movement_HomeToTarget : MovementDirectionSelector
             0, negative ? -(angleChange.eulerAngles.z - 360) : angleChange.eulerAngles.z))
             * target.GetMechanic<Mechanic_Movement>().facingDir;
         target.GetMechanic<Mechanic_Movement>().facingDir = dirToTarget;
-        target.AddModifier<Stat_MovementSpeed>(new NumericalModifier(multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
+        target.AddModifier<float, Stat_MovementSpeed>(new NumericalModifier(multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
         target.transform.localRotation = Quaternion.FromToRotation(Vector3.up, dirToTarget);
     }
 }
