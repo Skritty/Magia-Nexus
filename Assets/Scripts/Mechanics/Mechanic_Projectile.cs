@@ -14,7 +14,7 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
     [FoldoutGroup("Projectile"), SerializeReference]
     public Targeting aoe;
     [FoldoutGroup("Projectile")]
-    public Effect_CreateEntity splitProjectile;
+    public Effect_Projectile splitProjectile;
     [FoldoutGroup("Projectile"), SerializeReference]
     public List<EffectTask> tasks = new();
 
@@ -26,7 +26,7 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
     public override void Tick()
     {
         if (tasks.Count == 0) return;
-        foreach (Entity target in aoe.GetTargets(this, Owner))
+        foreach (Entity target in aoe.GetTargets(Owner))
         {
             OnHit(target);
         }
@@ -41,14 +41,14 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
     {
         foreach (EffectTask task in tasks)
         {
-            if (!task.DoTask(Owner, target)) break;
+            if (!task.DoTask(Owner, target, null, false)) break;
         }
 
         if (splitProjectile != null && Owner.Stat<Stat_SplitsRemaining>().Value > 0)
         {
             Owner.Stat<Stat_SplitsRemaining>().Add(-1);
 
-            Effect_CreateEntity split = (Effect_CreateEntity)splitProjectile.Clone();
+            Effect_Projectile split = (Effect_Projectile)splitProjectile.Clone();
             (split.targetSelector as Targeting_Exclude)?.ignoredEntities.Add(target);
             split.numberOfProjectiles += (int)Owner.Stat<Stat_PlayerCharacter>().Value.Stat<Stat_AdditionalSplits>().Value;
             split.DoTask(Owner);

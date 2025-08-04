@@ -23,12 +23,17 @@ public class Mechanic_Movement : Mechanic<Mechanic_Movement>
 
     public void Move()
     {
-        foreach (Entity entity in Owner.Stat<Stat_MovementTargetingMethod>().Value?.GetTargets(Owner))
-        {
-            // TODO: don't do this every frame
-            Owner.AddModifier<Entity, Stat_MovementTarget>(entity, 1);
-            break;
-        }
+        Targeting targeting = Owner.Stat<Stat_MovementTargetingMethod>().Value;
+        if(targeting != null)
+            foreach (Entity entity in Owner.Stat<Stat_MovementTargetingMethod>().Value.GetTargets(Owner))
+            {
+                // TODO: don't do this every frame
+                Owner.AddModifier<Entity, Stat_MovementTarget>(entity, 1);
+                break;
+            }
+
+        if (Owner.Stat<Stat_MovementTarget>().Value == null) return;
+
         Owner.Stat<Stat_MovementSelector>().Value?.DoTask(Owner);
         Trigger_MovementDirectionCalc.Invoke(Owner, Owner);
 

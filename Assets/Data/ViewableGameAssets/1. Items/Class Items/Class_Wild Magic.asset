@@ -31,57 +31,131 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
   - {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
   - {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 5286389754395361301
+  - rid: 4023383619086057540
   references:
     version: 2
     RefIds:
-    - rid: 5286389754395361301
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
+    - rid: 4023383619086057540
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 5286389754395361302
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
+          rid: 4023383619086057541
+        triggerOnce: 0
+        duration: 0
         triggerOrder: 0
+        bindingObject: 2
         trigger:
-          rid: 5286389754395361306
-        tasks:
-        - rid: 5286389754395361307
-        - rid: 5286389754395361309
-    - rid: 5286389754395361302
+          rid: 4023383619086057542
+    - rid: 4023383619086057541
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 5286389754395361306
+        ignoreFrames: 0
+    - rid: 4023383619086057542
       type: {class: Trigger_TurnStart, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5286389754395361307
-      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
-    - rid: 5286389754395361309
-      type: {class: Task_DoRandomEffect, ns: , asm: Assembly-CSharp}
+        tasks:
+        - rid: 4023383619086057543
+    - rid: 4023383619086057543
+      type: {class: 'Effect_DoRandomEffectTask`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383619086057544
         proxy: 0
         useProxyAsOwner: 0
-        effects: []
-        actions:
-        - {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
-        - {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
-        - {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
-        - {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
-        - {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
-        - {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
+        effects:
+        - rid: 4023383619086057545
+        - rid: 4023383619086057547
+        - rid: 4023383619086057557
+        - rid: 4023383619086057553
+        - rid: 4023383619086057555
+        - rid: 4023383619086057559
+        actions: []
+    - rid: 4023383619086057544
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383619086057545
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383619086057546
+        runes:
+        - {fileID: 11400000, guid: 54d6cdf6409fccd4fb28715fa3d368e2, type: 2}
+    - rid: 4023383619086057546
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383619086057547
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383619086057548
+        runes:
+        - {fileID: 11400000, guid: cb1d38f2fe546d3499f0e7ca27095158, type: 2}
+    - rid: 4023383619086057548
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383619086057553
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383619086057554
+        runes:
+        - {fileID: 11400000, guid: 6ed6aa2f5fca719449b9833a0bb1e527, type: 2}
+    - rid: 4023383619086057554
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383619086057555
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383619086057556
+        runes:
+        - {fileID: 11400000, guid: 7edd61f7988e6bb44ab77fdf410f20c5, type: 2}
+    - rid: 4023383619086057556
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383619086057557
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383619086057558
+        runes:
+        - {fileID: 11400000, guid: 4435eab1899c3e64383e7acc806da571, type: 2}
+    - rid: 4023383619086057558
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383619086057559
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383619086057560
+        runes:
+        - {fileID: 11400000, guid: b9e7ba8a99d59f84481757bf8a004b91, type: 2}
+    - rid: 4023383619086057560
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0

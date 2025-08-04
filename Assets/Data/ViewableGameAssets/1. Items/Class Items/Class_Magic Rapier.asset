@@ -28,115 +28,86 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
   - {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
   - {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 1130977835028054034
+  - rid: 4023383616259883186
+  - rid: 4023383616259883194
   references:
     version: 2
     RefIds:
-    - rid: 1130977835028054034
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883186
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1130977835028054035
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
+          rid: 4023383616259883187
+        triggerOnce: 0
+        duration: 0
         triggerOrder: 0
+        bindingObject: 2
         trigger:
-          rid: 1130977835028054036
-        tasks:
-        - rid: 1130977835028054037
-        - rid: 5286389459233538410
-        - rid: 5286389459233538407
-        - rid: 5286389459233538411
-        - rid: 5286389775129641444
-    - rid: 1130977835028054035
+          rid: 4023383616259883189
+    - rid: 4023383616259883187
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 1130977835028054036
-      type: {class: Trigger_PreHit, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1130977835028054037
-      type: {class: Task_Filter_Owner, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-    - rid: 5286389459233538407
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        proxy: 1
-        useProxyAsOwner: 1
-        effect:
-          rid: 5286389459233538408
-    - rid: 5286389459233538408
-      type: {class: Enchant, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
         ignoreFrames: 0
+    - rid: 4023383616259883189
+      type: {class: Trigger_PreHit, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383616259883190
+    - rid: 4023383616259883190
+      type: {class: Effect_Enchant, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 5286389459233538409
+          rid: 4023383616259883191
         consumeRunes: 0
         attacksEnchanted: 1
-    - rid: 5286389459233538409
+    - rid: 4023383616259883191
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 5286389459233538410
-      type: {class: Task_Filter_DamageType, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        damageTypes: 8192
-    - rid: 5286389459233538411
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        proxy: 1
-        useProxyAsOwner: 0
-        effect:
-          rid: 5286389459233538412
-    - rid: 5286389459233538412
-      type: {class: Invoke, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
         ignoreFrames: 0
+    - rid: 4023383616259883194
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 5286389459233538414
+          rid: 4023383616259883195
+        triggerOnce: 0
+        duration: 0
+        triggerOrder: 0
+        bindingObject: 2
+        trigger:
+          rid: 4023383616259883196
+    - rid: 4023383616259883195
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383616259883196
+      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383616259883199
+        - rid: 4023383616259883197
+    - rid: 4023383616259883197
+      type: {class: Effect_Invoke, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383616259883198
         useOwnerRunes: 1
         runes: []
-    - rid: 5286389459233538414
-      type: {class: Targeting_TriggeredEffect, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        selector: 1
-    - rid: 5286389775129641444
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        proxy: 0
-        useProxyAsOwner: 0
-        effect:
-          rid: 5286389775129641445
-    - rid: 5286389775129641445
-      type: {class: Enchant, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 5286389775129641446
-        consumeRunes: 1
-        attacksEnchanted: 0
-    - rid: 5286389775129641446
+    - rid: 4023383616259883198
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
+        ignoreFrames: 0
+    - rid: 4023383616259883199
+      type: {class: Task_Filter_DamageType, ns: , asm: Assembly-CSharp}
+      data:
+        damageTypes: 8192

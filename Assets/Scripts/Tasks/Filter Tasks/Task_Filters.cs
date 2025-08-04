@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 // These filters are for use primarily with Effect_AddTrigger in the inspector, but can be used in code as well
 
@@ -118,7 +120,7 @@ public class Task_Filter_DamageType : ITask<DamageInstance>
     public DamageType damageTypes;
     public bool DoTask(DamageInstance damage)
     {
-        foreach (DamageModifier modifier in damage.damageModifiers)
+        foreach (Modifier_Damage modifier in damage.damageModifiers)
         {
             if (modifier.DamageType.HasFlag(damageTypes)) return true;
         }
@@ -318,6 +320,17 @@ public class Task_Filter_Spell : ITask<Spell>
             }
             return true;
         }
+    }
+}
+
+[LabelText("Is: Matching?")]
+public class Task_Filter_Matching<T> : ITask<T>
+{
+    [SerializeReference]
+    public T comparison;
+    public bool DoTask(T data)
+    {
+        return data.Equals(comparison);
     }
 }
 #endregion

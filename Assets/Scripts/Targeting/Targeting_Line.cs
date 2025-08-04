@@ -24,7 +24,7 @@ public class Targeting_Line : MultiTargeting
         Vector3 projectedDir = Vector3.Project(dirToEntity, dirToTarget);
         if (Vector3.Dot(dirToEntity, dirToTarget) < 0) return false;
         if (projectedDir.magnitude > length * owner.Stat<Stat_AoESize>().Value) return false;
-        if ((dirToEntity - projectedDir).magnitude > width * owner.Stat<Stat_AoESize>().Value) return false;
+        if ((dirToEntity - projectedDir).magnitude > width / 2 * owner.Stat<Stat_AoESize>().Value) return false;
         return true;
     }
 

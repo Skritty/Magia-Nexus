@@ -13,7 +13,7 @@ public class Entity : MonoBehaviour
     private List<(IModifier, int)> durationModifiers = new();
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
     private List<Mechanic> mechanics = new();
-    public T GetMechanic<T>() where T : Mechanic => IBoundInstances<Entity, T>.GetInstance(this);
+    public T GetMechanic<T>() where T : Mechanic => IBoundInstances<Entity, T>.GetInstance(this, false);
 
     public T Stat<T>() where T : IStat
     {
@@ -55,18 +55,18 @@ public class Entity : MonoBehaviour
         
     }
 
-    public void TryAddModifier(IModifier modifier)
+    public void TryAddModifier(IModifier modifier, int overrideTickDuration = -1)
     {
-        AddModifier(modifier, Stat(modifier));
+        AddModifier(modifier, Stat(modifier), overrideTickDuration);
     }
 
-    public void AddModifier<T>(IModifier<T> modifier) => AddModifier(modifier, Stat(modifier));
+    public void AddModifier<T>(IModifier<T> modifier, int overrideTickDuration = -1) => AddModifier(modifier, Stat(modifier), overrideTickDuration);
 
-    public void AddModifier<T, StatTag>(IDataContainer<T> modifier) where StatTag : IStat<T>
+    public void AddModifier<T, StatTag>(IDataContainer<T> modifier, int overrideTickDuration = -1) where StatTag : IStat<T>
     {
         if (modifier is IModifier<T>)
         {
-            AddModifier((IModifier<T>)modifier, Stat<StatTag>());
+            AddModifier((IModifier<T>)modifier, Stat<StatTag>(), overrideTickDuration);
         }
         else
         {
@@ -80,7 +80,7 @@ public class Entity : MonoBehaviour
         AddModifier(new Modifier<T>(value, tag, tickDuration: duration), tag);
     }
 
-    private void AddModifier(IModifier modifier, IStat stat)
+    private void AddModifier(IModifier modifier, IStat stat, int overrideTickDuration = -1)
     {
         // For each stack being added
         for(int s = 0; s < modifier.StacksAdded; s++)
@@ -102,7 +102,11 @@ public class Entity : MonoBehaviour
 
             // Add new stack
             stat.TryAdd(modifier);
-            if (modifier.TickDuration > 0)
+            if(overrideTickDuration > 0)
+            {
+                durationModifiers.Add((modifier, overrideTickDuration));
+            }
+            else if (modifier.TickDuration > 0)
             {
                 durationModifiers.Add((modifier, modifier.TickDuration));
             }
@@ -189,6 +193,15 @@ public class Entity : MonoBehaviour
         foreach (Mechanic stat in mechanics)
         {
             stat.AddInstance(this);
+        }
+        foreach(IDataContainer<Trigger> trigger in Stat<Stat_Triggers>().Modifiers)
+        {
+            trigger.Value.SubscribeToTasks(this, this);
+            IModifier durationTrigger = trigger as IModifier;
+            if (durationTrigger != null && durationTrigger.TickDuration > 0)
+            {
+                durationModifiers.Add((durationTrigger, durationTrigger.TickDuration));
+            }
         }
     }
 

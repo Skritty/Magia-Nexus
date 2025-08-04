@@ -14,7 +14,7 @@ public class Rune_Earth : Rune
 
     [Header("Spell Shape")]
     [SerializeReference]
-    public Effect_CreateEntity createProjectiles;
+    public Effect_Projectile createProjectiles;
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
     {
@@ -33,7 +33,7 @@ public class Rune_Earth : Rune
         spell.shape = SpellShape.Projectile;
         spell.effect = createProjectiles.Clone();
         spell.SetToProjectile();
-        (spell.effect as Effect_CreateEntity).projectileFanAngle = 30f;
+        (spell.effect as Effect_Projectile).projectileFanAngle = 30f;
         spell.proxies.Add(spell.Owner);
         spell.maxStages = 1;
         spell.cleanup += Trigger_ProjectileCreated.Subscribe(
@@ -65,7 +65,7 @@ public class Rune_Earth : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    (spell.effect as Effect_CreateEntity).numberOfProjectiles += 2;
+                    (spell.effect as Effect_Projectile).numberOfProjectiles += 2;
                     spell.maxStages += 2;
                     break;
                 }

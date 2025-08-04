@@ -37,16 +37,15 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         }
 
         DamageCalculation calculation = new DamageCalculation();
-        foreach(DamageModifier d in damage.damageModifiers)
-        {
-            Debug.Log($"{d.Step}: {d.Value} {d.AppliesTo}/{d.DamageType}");
-            calculation.Add(d);
-        }
-        foreach (DamageModifier d in damage.Owner.Stat<Stat_DamageDealt>().Modifiers)
+        foreach(Modifier_Damage d in damage.damageModifiers)
         {
             calculation.Add(d);
         }
-        foreach (DamageModifier d in damage.Target.Stat<Stat_DamageTaken>().Modifiers)
+        foreach (Modifier_Damage d in damage.Owner.Stat<Stat_DamageDealt>().Modifiers)
+        {
+            calculation.Add(d);
+        }
+        foreach (Modifier_Damage d in damage.Target.Stat<Stat_DamageTaken>().Modifiers)
         {
             calculation.Add(d);
         }
@@ -72,6 +71,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         {
             Owner.GetMechanic<Mechanic_PlayerOwner>().DistributeRewards();
             Trigger_Die.Invoke(damage, damage, damage.Owner, triggerOwner, Owner);
+            Trigger_Expire.Invoke(Owner, Owner);
         }
 
         healthBar.localScale = new Vector3(Owner.Stat<Stat_CurrentLife>().Value / Owner.Stat<Stat_MaxLife>().Value, 1, 1);

@@ -31,32 +31,25 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 9031231527144652829
+  - rid: 4023383589043568711
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 9031231527144652829
-      type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
+    - rid: 4023383589043568711
+      type: {class: Effect_Projectile, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 9031231527144652831
-        entityType: 1
-        entity: {fileID: 6345354840142092050, guid: d5ac2c4bb3ee1ff429d0da7e0753d3c2, type: 3}
+          rid: 4023383589043568713
+        entity: {fileID: 3105557191549090370, guid: 2abb8c28b28f4c345bdce1e3965b6c02, type: 3}
         spawnOnTarget: 0
         movementTarget: 2
         numberOfProjectiles: 1
         ignoreAdditionalProjectiles: 0
         projectileFanType: 1
-        projectileFanAngle: 30
-        numberOfSummons: 1
-        overcapSummons: 0
-        damageMultiplier: 1
-        lifeMultiplier: 1
-        ignoreAdditionalSummons: 0
-    - rid: 9031231527144652831
+        projectileFanAngle: 45
+    - rid: 4023383589043568713
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        ignoreFrames: 0

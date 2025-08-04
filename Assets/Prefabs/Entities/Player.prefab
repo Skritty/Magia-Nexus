@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
+  - rid: 4023383612992520267
   - rid: 4023383574052864072
   - rid: 4023383574052864071
   - rid: 4023383574052864075
@@ -484,6 +485,26 @@ MonoBehaviour:
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
+    - rid: 4023383612992520267
+      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 4023383612992520268
+    - rid: 4023383612992520268
+      type: {class: 'DataContainer`1[[Trigger, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField:
+          rid: 4023383612992520269
+    - rid: 4023383612992520269
+      type: {class: Trigger_Expire, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383612992520270
+    - rid: 4023383612992520270
+      type: {class: 'Task_Expire`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        disable: 1
+        delay: 0
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0

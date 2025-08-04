@@ -32,33 +32,20 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 1083524221238248104
+  - rid: 4023383616259883132
   references:
     version: 2
     RefIds:
-    - rid: 1083524221238248104
-      type: {class: 'Effect_GrantModifer`1[[Effect, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883132
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383616259883133
+        runes:
+        - {fileID: 11400000, guid: 54d6cdf6409fccd4fb28715fa3d368e2, type: 2}
+    - rid: 4023383616259883133
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-        targetSelector:
-          rid: 1083524221238248105
-        modifier:
-          rid: 1083524221238248106
-    - rid: 1083524221238248105
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1083524221238248106
-      type: {class: RuneModifier, ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: {fileID: 11400000, guid: 54d6cdf6409fccd4fb28715fa3d368e2, type: 2}
-        <StatTag>k__BackingField:
-          rid: 1083524221238248115
-        <Alignment>k__BackingField: 0
-        <MaxStacks>k__BackingField: 0
-        <StacksAdded>k__BackingField: 1
-        <PerPlayer>k__BackingField: 0
-    - rid: 1083524221238248115
-      type: {class: Stat_Runes, ns: , asm: Assembly-CSharp}
-      data:
-        _value: {fileID: 0}
-        <Modifiers>k__BackingField: []

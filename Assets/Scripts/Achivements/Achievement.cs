@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 [CreateAssetMenu(menuName = "Achievement")]
 public class Achievement : ViewableGameAsset
@@ -12,7 +11,8 @@ public class Achievement : ViewableGameAsset
 
     public System.Action Load(Viewer player)
     {
-        return activationTrigger.SubscribeMethodToTasks(player.character, x => CompleteAchivement(player), 0);
+        // TODO
+        return activationTrigger.SubscribeToTasks(player.character, 0);
     }
 
     public void CompleteAchivement(Viewer player)

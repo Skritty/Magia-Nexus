@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Conjuration_ChaosArmor
   m_EditorClassIdentifier: 
-  actionAliases: []
-  actionDescription: 
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
+  aliases: []
+  info: 'Gain 3 stacks of 10% less damage taken (max 12, 2.5s duration). When hit:
+    lose a stack and a fire a shotgun of short ranged projectiles in all directions.'
+  image: {fileID: 0}
   hidden: 0
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   initialAnimationState: 0
   activateAnimationState: 0
@@ -30,86 +31,103 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 1130977519447834633
+  - rid: 4023383621439586308
+  - rid: 4023383621439586310
   references:
     version: 2
     RefIds:
-    - rid: 1130977519447834633
-      type: {class: FlipFlopPersistentEffect, ns: , asm: Assembly-CSharp}
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 4023383621439586308
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1130977519447834634
-        persistentEffect:
-          rid: 1130977519447834635
-    - rid: 1130977519447834634
+          rid: 4023383621439586309
+        modifier:
+          rid: 4023383621462392842
+    - rid: 4023383621439586309
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 1130977519447834635
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
         ignoreFrames: 0
+    - rid: 4023383621439586310
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1130977519447834636
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        triggerOrder: -5
+          rid: 4023383621439586311
+        triggerOnce: 0
+        duration: 0
+        triggerOrder: 0
+        bindingObject: 2
         trigger:
-          rid: 1130977675299520579
-        tasks:
-        - rid: 1130977519447834873
-        - rid: 1130977519447834639
-    - rid: 1130977519447834636
+          rid: 4023383621462392836
+    - rid: 4023383621439586311
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 1130977519447834639
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        proxy: 0
-        useProxyAsOwner: 0
-        effect:
-          rid: 1130977519447834643
-    - rid: 1130977519447834643
-      type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
         ignoreFrames: 0
+    - rid: 4023383621462392836
+      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383621462392837
+        - rid: 4023383621462392838
+        - rid: 4023383621462392840
+    - rid: 4023383621462392837
+      type: {class: 'Task_Filter_IsTarget`1[[DamageInstance, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4023383621462392838
+      type: {class: Effect_RemoveModifier, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1130977519447834646
-        entityType: 2
-        entity: {fileID: 6345354840142092050, guid: 368bff7622e1f3b449b9a0e1743298ea, type: 3}
+          rid: 4023383621462392839
+        modifier:
+          rid: -2
+        stacksRemoved: 1
+        alignmentRemoved: 0
+    - rid: 4023383621462392839
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383621462392840
+      type: {class: Effect_Projectile, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383621462392841
+        entity: {fileID: 0}
         spawnOnTarget: 0
         movementTarget: 2
-        numberOfProjectiles: 5
+        numberOfProjectiles: 1
         ignoreAdditionalProjectiles: 0
-        projectileFanType: 1
-        projectileFanAngle: 144
-        numberOfSummons: 1
-        overcapSummons: 0
-        damageMultiplier: 1
-        lifeMultiplier: 1
-        ignoreAdditionalSummons: 0
-    - rid: 1130977519447834646
-      type: {class: Targeting_TriggeredEffect, ns: , asm: Assembly-CSharp}
+        projectileFanType: 2
+        projectileFanAngle: 45
+    - rid: 4023383621462392841
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-        selector: 0
-    - rid: 1130977519447834873
-      type: {class: Task_Filter_Target, ns: , asm: Assembly-CSharp}
+        ignoreFrames: 0
+    - rid: 4023383621462392842
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
-    - rid: 1130977675299520579
-      type: {class: Trigger_Hit, ns: , asm: Assembly-CSharp}
-      data: 
+        <Value>k__BackingField: 0.9
+        <StatTag>k__BackingField:
+          rid: 4023383621462392843
+        <Alignment>k__BackingField: 1
+        <MaxStacks>k__BackingField: 3
+        <StacksAdded>k__BackingField: 12
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 125
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 2
+        <AppliesTo>k__BackingField: 0
+        <DamageType>k__BackingField: 0
+    - rid: 4023383621462392843
+      type: {class: Stat_DamageTaken, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

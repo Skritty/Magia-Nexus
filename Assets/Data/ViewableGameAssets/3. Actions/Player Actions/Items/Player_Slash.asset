@@ -67,20 +67,53 @@ MonoBehaviour:
   timing: 0.3
   effectMultiplier: 1
   effects:
-  - rid: 1083524217111577353
+  - rid: 4023383589043568720
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1083524217111577353
-      type: {class: 'Effect_DealDamage`1[[Effect, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+    - rid: 4023383589043568720
+      type: {class: Effect_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383614162207232
+        hit:
+          rid: 4023383589043568722
+    - rid: 4023383589043568722
+      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
+      data:
+        <EffectMultiplier>k__BackingField: 1.6
+        triggerPlayerCharacter: 0
+        preHit:
+          tasks: []
+        postHit:
+          tasks: []
+        runes: []
+        finalDamage: 0
+        damageModifiers:
+        - <Value>k__BackingField: 100
+          <StatTag>k__BackingField:
+            rid: -2
+          <Alignment>k__BackingField: 0
+          <MaxStacks>k__BackingField: 0
+          <StacksAdded>k__BackingField: 1
+          <PerPlayer>k__BackingField: 0
+          <TickDuration>k__BackingField: 0
+          <RefreshDuration>k__BackingField: 0
+          <Step>k__BackingField: 0
+          <AppliesTo>k__BackingField: 0
+          <DamageType>k__BackingField: 139299
+    - rid: 4023383614162207232
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-        targetSelector:
-          rid: 1083524217111577354
-        hit:
-          rid: -2
-    - rid: 1083524217111577354
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+        entitiesAffected: 8
+        sortingMethod: 1
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        radius: 1.75
+        angle: 30

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ListStat<T> : IModifiable<T>, IEnumerable<T>
 {
-    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
+    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()")]
     public List<IDataContainer<T>> Modifiers { get; protected set; } = new();
     public int Count => Modifiers.Count;
 

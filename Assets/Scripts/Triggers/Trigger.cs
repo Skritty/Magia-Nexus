@@ -13,7 +13,7 @@ public abstract class Trigger
     /// <param name="order">Lower numbers will happen earlier in trigger order</param>
     /// <returns>Unsubscribe action</returns>
     public abstract System.Action Subscribe(Action<dynamic> method, object bindingObject, int order = 0, bool triggerOnce = false);
-    public abstract System.Action SubscribeMethodToTasks<Owner>(Owner owner, Action<dynamic> method, object bindingObject, int order = 0, bool triggerOnce = false);
+    public abstract System.Action SubscribeToTasks<Owner>(Owner owner, object bindingObject, int order = 0, bool triggerOnce = false);
 }
 
 public abstract class Trigger<Endpoint, T> : Trigger
@@ -35,9 +35,9 @@ public abstract class Trigger<Endpoint, T> : Trigger
         }
     }
 
-    public override System.Action SubscribeMethodToTasks<Owner>(Owner owner, Action<dynamic> method, object bindingObject, int order = 0, bool triggerOnce = false)
+    public override System.Action SubscribeToTasks<Owner>(Owner owner, object bindingObject, int order = 0, bool triggerOnce = false)
     {
-        return SubscribeToTasks(owner, bindingObject, order, triggerOnce, new Task_Script<T>(x => { method.Invoke(x); return true; }));
+        return SubscribeToTasks(owner, bindingObject, order, triggerOnce);
     }
 
     public System.Action SubscribeToTasks<Owner>(Owner owner, object bindingObject, int order, bool triggerOnce, params ITask<T>[] additionalTasks)

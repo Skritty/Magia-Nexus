@@ -36,14 +36,15 @@ MonoBehaviour:
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
           rid: 1083524128524730483
+        triggerOnce: 0
         duration: 0
         triggerOrder: 0
         bindingObject: 1
         trigger:
           rid: 1083524283774009970
-        tasks: []
     - rid: 1083524128524730483
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -57,6 +58,7 @@ MonoBehaviour:
       type: {class: Effect_Damage, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
           rid: 1083524283774009972
         hit:
@@ -95,4 +97,4 @@ MonoBehaviour:
           <RefreshDuration>k__BackingField: 0
           <Step>k__BackingField: 0
           <AppliesTo>k__BackingField: 0
-          <DamageType>k__BackingField: 8227
+          <DamageType>k__BackingField: 139299

@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
+  m_Name: Movement_Dash
+  m_EditorClassIdentifier: 
+  aliases: []
+  info: 
+  image: {fileID: 0}
+  hidden: 0
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  maxUses: 0
+  initialAnimationState: 1
+  activateAnimationState: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  onTick: 1
+  timing: 0
+  effectMultiplier: 1
+  effects:
+  - rid: 4023383616259883153
+  references:
+    version: 2
+    RefIds:
+    - rid: 4023383616259883153
+      type: {class: Effect_ModifierActionDuration, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383616259883154
+        modifier:
+          rid: 4023383616259883166
+    - rid: 4023383616259883154
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383616259883166
+      type: {class: Modifier_MovementDirectionSelector, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField:
+          rid: 4023383616259883167
+        <Priority>k__BackingField: 1
+        <StatTag>k__BackingField:
+          rid: 4023383616259883169
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 1
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+    - rid: 4023383616259883167
+      type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383616259883168
+        movementSpeedMultiplier: 1.5
+        distanceFromTarget: 1
+        threshold: 0.25
+    - rid: 4023383616259883168
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383616259883169
+      type: {class: Stat_MovementSelector, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Priority>k__BackingField: 0

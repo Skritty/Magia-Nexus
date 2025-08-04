@@ -25,31 +25,45 @@ MonoBehaviour:
   cost: 0
   craftingRecipe: []
   grantedActions: []
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 3963142589493018955
+  - rid: 4023383616259883180
   references:
     version: 2
     RefIds:
-    - rid: 3963142589493018955
-      type: {class: PE_StartingDelay, ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883180
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 3963142589493018956
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        tickDelay: -50
-    - rid: 3963142589493018956
+          rid: 4023383616259883181
+        triggerOnce: 0
+        duration: 0
+        triggerOrder: 0
+        bindingObject: 2
+        trigger:
+          rid: 4023383616259883182
+    - rid: 4023383616259883181
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
+        ignoreFrames: 0
+    - rid: 4023383616259883182
+      type: {class: Trigger_RuneGained, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383616259883184
+    - rid: 4023383616259883184
+      type: {class: Effect_Invoke, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383616259883185
+        useOwnerRunes: 1
+        runes: []
+    - rid: 4023383616259883185
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0

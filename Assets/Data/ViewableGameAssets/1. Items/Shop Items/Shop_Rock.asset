@@ -22,36 +22,41 @@ MonoBehaviour:
   craftingRecipe: []
   grantedActions:
   - {fileID: 11400000, guid: afeb5202ca45b1d49a3f786ea88977e4, type: 2}
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 3963142721972731912
+  - rid: 4023383621529763857
   references:
     version: 2
     RefIds:
-    - rid: 3963142721972731912
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+    - rid: 4023383621529763857
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 3963142721972731913
-        tick: 0
-        tickDuration: -1
-        maxStacks: 99
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        effectModifiers:
-        - value: -0.05
-          tag: 9
-          method: 1
-          appliesTo: 0
-          damageType: 0
-    - rid: 3963142721972731913
+          rid: 4023383621529763858
+        modifier:
+          rid: 4023383621529763859
+    - rid: 4023383621529763858
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
+        ignoreFrames: 0
+    - rid: 4023383621529763859
+      type: {class: Modifier_Numerical, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: -0.02
+        <StatTag>k__BackingField:
+          rid: 4023383621529763860
+        <Alignment>k__BackingField: 2
+        <MaxStacks>k__BackingField: 50
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 1
+    - rid: 4023383621529763860
+      type: {class: Stat_MovementSpeed, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

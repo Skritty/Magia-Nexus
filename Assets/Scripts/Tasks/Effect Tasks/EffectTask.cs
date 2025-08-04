@@ -10,48 +10,79 @@ public abstract class EffectTask :
     ITaskOwned<Entity, Hit>,
     ITaskOwned<Entity, Spell>,
     ITaskOwned<Entity, Entity>,
-    ITaskOwned<Entity, Action>
+    ITaskOwned<Entity, Action>,
+    ITaskOwned<Entity, Rune>
 {
     [FoldoutGroup("@GetType()")]
     public bool useTargetAsProxy;
+    [FoldoutGroup("@GetType()")]
+    public bool propagateTarget;
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Targeting targetSelector = new Targeting_Self();
 
     public abstract void DoEffect(Entity owner, Entity target, float multiplier, bool triggered);
-
-    public bool DoTaskNoData(Entity owner) => DoTask(owner, null, null);
-    public bool DoTask(Entity owner, Entity target)
+    public bool DoTaskNoData(Entity owner, Entity proxy = null) => DoTaskTargetSelector(owner, null, false, proxy);
+    public bool DoTask(Entity owner, Entity target, Entity proxy = null)
     {
-        DoEffect(owner, target, 1, true);
+        if (propagateTarget)
+        {
+            return DoTask(owner, target, null, true, useTargetAsProxy ? target : proxy);
+        }
+        else
+        {
+            return DoTaskTargetSelector(owner, null, true, useTargetAsProxy ? target : proxy);
+        }
+    }
+    public virtual bool DoTask(Entity owner, Entity target, Effect data, bool triggered, Entity proxy = null)
+    {
+        DoEffect(owner, target, data != null ? data.EffectMultiplier : 1, data != null);
         return true;
     }
-    public bool DoTask(Entity owner, Effect data)
-    {
-        return DoTask(owner, data, useTargetAsProxy ? data.Target : null);
-    }
-
-    public bool DoTask(Entity owner) => DoTask(owner, null, null);
-    public bool DoTask(Entity owner, Effect data, Entity proxy)
+    public bool DoTaskTargetSelector(Entity owner, Effect data, bool triggered, Entity proxy = null)
     {
         List<Entity> targets = null;
         targets = targetSelector.GetTargets(data, owner, proxy);
         foreach (Entity target in targets)
         {
-            DoEffect(owner, target, data != null ? data.EffectMultiplier : 1, data != null);
+            DoTask(owner, target, data, triggered, proxy);
         }
         return true;
     }
+    
+    #region Triggered
+    public bool DoTask(Entity owner, Effect data)
+    {
+        if (propagateTarget)
+        {
+            return DoTask(owner, data.Target, data, true, useTargetAsProxy ? data.Target : null);
+        }
+        else
+        {
+            return DoTaskTargetSelector(owner, data, true, useTargetAsProxy ? data.Target : null);
+        }
+    }
+    public bool DoTask(Entity owner, Entity target)
+    {
+        if (propagateTarget)
+        {
+            return DoTask(owner, target, null, true, useTargetAsProxy ? target : null);
+        }
+        else
+        {
+            return DoTaskTargetSelector(owner, null, true, useTargetAsProxy ? target : null);
+        }
+    }
+    public bool DoTask(Entity owner) => DoTaskTargetSelector(owner, null, true);
     public bool DoTask(Entity owner, DamageInstance data) => DoTask(owner, data as Effect);
     public bool DoTask(Entity owner, Hit data) => DoTask(owner, data as Effect);
     public bool DoTask(Entity owner, Spell data) => DoTask(owner, data as Effect);
-    public bool DoTask(Entity owner, Action data) => DoTask(owner, null, null);
-
+    public bool DoTask(Entity owner, Action data) => DoTaskTargetSelector(owner, null, true);
+    public bool DoTask(Entity owner, Rune data) => DoTaskTargetSelector(owner, null, true);
+    #endregion
     public EffectTask Clone()
     {
         EffectTask clone = (EffectTask)MemberwiseClone();
         clone.targetSelector = targetSelector.Clone();
         return clone;
     }
-
-    
 }

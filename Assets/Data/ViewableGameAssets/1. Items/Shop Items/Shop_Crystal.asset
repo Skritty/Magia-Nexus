@@ -24,19 +24,40 @@ MonoBehaviour:
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 1083524267128389700
+  - rid: 4023383621529763840
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1083524267128389700
-      type: {class: 'Effect_GrantModifer`1[[Effect, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+    - rid: 4023383621529763840
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1083524267128389701
+          rid: 4023383621529763841
         modifier:
-          rid: -2
-    - rid: 1083524267128389701
+          rid: 4023383621529763843
+    - rid: 4023383621529763841
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        ignoreFrames: 0
+    - rid: 4023383621529763843
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0.05
+        <StatTag>k__BackingField:
+          rid: 4023383621529763844
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 1
+        <AppliesTo>k__BackingField: 16384
+        <DamageType>k__BackingField: 0
+    - rid: 4023383621529763844
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

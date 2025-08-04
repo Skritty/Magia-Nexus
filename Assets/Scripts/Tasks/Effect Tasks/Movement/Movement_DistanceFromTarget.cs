@@ -5,6 +5,8 @@ using UnityEngine;
 public class Movement_DistanceFromTarget : MovementDirectionSelector
 {
     [FoldoutGroup("@GetType()")]
+    public float movementSpeedMultiplier = 1;
+    [FoldoutGroup("@GetType()")]
     public float distanceFromTarget;
     [FoldoutGroup("@GetType()")]
     public float threshold = 0.25f;
@@ -13,7 +15,7 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
     {
         if (target.Stat<Stat_MovementTarget>().Value == null)
         {
-            target.AddModifier<float, Stat_MovementSpeed>(new NumericalModifier(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
+            target.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
         }
         else
         {
@@ -21,12 +23,12 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
             dirFromTarget = dirFromTarget.normalized * distanceFromTarget - dirFromTarget;
             if (dirFromTarget.magnitude <= threshold)
             {
-                target.AddModifier<float, Stat_MovementSpeed>(new NumericalModifier(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
+                target.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
             }
             else
             {
                 target.GetMechanic<Mechanic_Movement>().facingDir = dirFromTarget.normalized;
-                target.AddModifier<float, Stat_MovementSpeed>(new NumericalModifier(value: multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
+                target.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value: movementSpeedMultiplier * multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
             }
         }
     }

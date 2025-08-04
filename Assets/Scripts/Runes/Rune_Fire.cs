@@ -28,7 +28,7 @@ public class Rune_Fire : Rune
     public float circleModMultiplierPerStage;
 
     [FoldoutGroup("Conjuration")]
-    public DamageModifier multiplierPerConjureUse;
+    public Modifier_Damage multiplierPerConjureUse;
 
     [FoldoutGroup("Line")]
     public float lineMulti;

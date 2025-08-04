@@ -19,7 +19,9 @@ public class GameManager : Singleton<GameManager>
     private Phase currentPhase;
     private Coroutine phaseTimer;
     public TextMeshProUGUI timer;
+    [ShowInInspector]
     public List<ViewableGameAsset> viewableGameAssets = new();
+    [ShowInInspector]
     public List<ViewableGameAsset> allGameAssets = new();
 
     public Entity defaultPlayer;

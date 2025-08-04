@@ -19,12 +19,6 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.5442267, g: 0.25649688, b: 0.8238993, a: 1}
-  actionAliases:
-  - Invoke
-  - skritt3Invoke
-  actionDescription: 
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 0.5442267, g: 0.25649688, b: 0.8238993, a: 1}
   maxUses: 0
   initialAnimationState: 5
   activateAnimationState: 6
@@ -56,20 +50,19 @@ MonoBehaviour:
   timing: 0.8
   effectMultiplier: 1
   effects:
-  - rid: 9031231527144652824
+  - rid: 4023383614162207385
   references:
     version: 2
     RefIds:
-    - rid: 2626413410273722614
-      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+    - rid: 4023383614162207385
+      type: {class: Effect_Invoke, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 9031231527144652824
-      type: {class: Invoke, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
         targetSelector:
-          rid: 2626413410273722614
+          rid: 4023383614162207387
         useOwnerRunes: 1
         runes: []
+    - rid: 4023383614162207387
+      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0

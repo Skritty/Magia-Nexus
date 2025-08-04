@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Conjuration_WaterBow
   m_EditorClassIdentifier: 
-  actionAliases: []
-  actionDescription: 
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
+  aliases: []
+  info: 
+  image: {fileID: 0}
   hidden: 0
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   initialAnimationState: 0
   activateAnimationState: 0
@@ -30,31 +30,25 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 7867064581498077186
+  - rid: 4023383616259883008
   references:
     version: 2
     RefIds:
-    - rid: 1130977517639303807
-      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883008
+      type: {class: Effect_Projectile, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 7867064581498077186
-      type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1130977517639303807
-        entityType: 1
-        entity: {fileID: 6345354840142092050, guid: 37041b86674f7cc43894f99981954b11, type: 3}
+          rid: 4023383616259883009
+        entity: {fileID: 5435922511141186121, guid: 02a6fe76b7c47934292835d6caec0c78, type: 3}
         spawnOnTarget: 0
         movementTarget: 2
         numberOfProjectiles: 1
         ignoreAdditionalProjectiles: 0
-        projectileFanType: 2
+        projectileFanType: 1
         projectileFanAngle: 45
-        numberOfSummons: 1
-        overcapSummons: 0
-        damageMultiplier: 1
-        lifeMultiplier: 1
-        ignoreAdditionalSummons: 0
+    - rid: 4023383616259883009
+      type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0

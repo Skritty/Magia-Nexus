@@ -23,110 +23,43 @@ MonoBehaviour:
   UIColor: {r: 0.27216086, g: 0.5650549, b: 0.6226415, a: 1}
   cost: 0
   craftingRecipe: []
-  grantedActions: []
+  grantedActions:
+  - {fileID: 11400000, guid: 466834eb724f57849b90d40e6e2673b1, type: 2}
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 1083523944868479106
-  - rid: 1083523944868479113
-  - rid: 1083523944868479115
-  - rid: 1083523944868479117
+  - rid: 4023383616259883176
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1083523944868479106
-      type: {class: PE_TriggerEffect, ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883176
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1083523944868479107
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        triggerOrder: 0
-        trigger:
-          rid: -2
-        tasks: []
-        trigger2:
-          rid: 1083523944868479108
-        tasks2:
-        - rid: 1083523944868479112
-    - rid: 1083523944868479107
+          rid: 4023383616259883177
+        modifier:
+          rid: 4023383616259883178
+    - rid: 4023383616259883177
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 1083523944868479108
-      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1083523944868479112
-      type: {class: Task_TestDamage, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-    - rid: 1083523944868479113
-      type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
         ignoreFrames: 0
-        targetSelector:
-          rid: 1083523944868479114
-        entityType: 0
-        entity: {fileID: 0}
-        spawnOnTarget: 0
-        movementTarget: 2
-        numberOfProjectiles: 1
-        ignoreAdditionalProjectiles: 0
-        projectileFanType: 2
-        projectileFanAngle: 45
-        numberOfSummons: 1
-        overcapSummons: 0
-        damageMultiplier: 1
-        lifeMultiplier: 1
-        ignoreAdditionalSummons: 0
-    - rid: 1083523944868479114
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883178
+      type: {class: Modifier_Numerical, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 1083523944868479115
-      type: {class: Invoke, ns: , asm: Assembly-CSharp}
+        <Value>k__BackingField: 0.5
+        <StatTag>k__BackingField:
+          rid: 4023383616259883179
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 2
+    - rid: 4023383616259883179
+      type: {class: Stat_Enmity, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 1083523944868479116
-        useOwnerRunes: 0
-        runes: []
-    - rid: 1083523944868479116
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 1083523944868479117
-      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 1083523944868479118
-        stats: []
-        calculatedDamage: 0
-        damageModifiers: []
-        runes: []
-        skipFlatDamageReduction: 0
-        triggerPlayerOwner: 0
-        preventTriggers: 0
-        ownerEffects: []
-        targetEffects: []
-        onHitEffects: []
-        postOnHitEffects: []
-    - rid: 1083523944868479118
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

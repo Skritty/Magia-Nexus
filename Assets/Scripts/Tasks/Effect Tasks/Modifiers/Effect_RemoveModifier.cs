@@ -1,13 +1,26 @@
+using Sirenix.OdinInspector;
+using UnityEngine;
+
 public class Effect_RemoveModifier : EffectTask
 {
+    [SerializeReference]
+    public IModifier modifier;
     public int stacksRemoved = 1;
+    [ShowIf("@modifier == null")]
     public Alignment alignmentRemoved;
 
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
         for(int i = 0; i < stacksRemoved; i++)
         {
-            Target.RemoveOldestDurationModifier(alignmentRemoved);
+            if(modifier == null)
+            {
+                Target.RemoveOldestDurationModifier(alignmentRemoved);
+            }
+            else
+            {
+                Target.RemoveModifier(modifier);
+            }
         }
     }
 }

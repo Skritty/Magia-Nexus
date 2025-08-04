@@ -19,12 +19,6 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.735849, g: 0.10412948, b: 0.10412948, a: 1}
-  actionAliases:
-  - Fire
-  - skritt3Fire
-  actionDescription: Add fire to your spell
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 0.735849, g: 0.10412948, b: 0.10412948, a: 1}
   maxUses: 0
   initialAnimationState: 0
   activateAnimationState: 0
@@ -38,20 +32,20 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 5286389775129641049
+  - rid: 4023383616259883136
   references:
     version: 2
     RefIds:
-    - rid: 5286389775129641049
-      type: {class: GrantRunes, ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883136
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 5286389775129641050
+          rid: 4023383616259883137
         runes:
         - {fileID: 11400000, guid: 4435eab1899c3e64383e7acc806da571, type: 2}
-    - rid: 5286389775129641050
+    - rid: 4023383616259883137
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
+        ignoreFrames: 0

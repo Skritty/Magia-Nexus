@@ -13,7 +13,7 @@ public class Rune_Order : Rune
     public Effect_RemoveModifier effectModifier;
 
     [Header("Spell Shape")]
-    public Effect_CreateEntity createSummons;
+    public Effect_Summon createSummons;
     public SerializedDictionary<RuneElement, Action> summonRunes = new();
     public Action invoke;
     public Action move;
@@ -45,8 +45,8 @@ public class Rune_Order : Rune
                 dMult *= damageMultiplier;
                 owner = owner.GetMechanic<Mechanic_PlayerOwner>().proxyOwner;
             }
-        (spell.effect as Effect_CreateEntity).lifeMultiplier = lMult;
-        (spell.effect as Effect_CreateEntity).damageMultiplier = dMult;
+        (spell.effect as Effect_Summon).lifeMultiplier = lMult;
+        (spell.effect as Effect_Summon).damageMultiplier = dMult;
         spell.cleanup += Trigger_SummonCreated.Subscribe(x => SetupSummon(spell, x), spell.effect);
         spell.proxies.Add(spell.Owner);
         spell.cleanup += Trigger_SpellMaxStage.Subscribe(x => x.StopSpell(), spell);

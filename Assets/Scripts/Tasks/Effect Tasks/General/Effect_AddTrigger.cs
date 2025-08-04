@@ -5,15 +5,15 @@ using UnityEngine;
 public class Effect_AddTrigger : EffectTask
 {
     [FoldoutGroup("@GetType()")]
+    public bool triggerOnce;
+    [FoldoutGroup("@GetType()")]
     public int duration;
     [FoldoutGroup("@GetType()")]
     public int triggerOrder;
     [FoldoutGroup("@GetType()")]
-    public EffectTargetSelector bindingObject;
+    public EffectTargetSelector bindingObject = EffectTargetSelector.Target;
     [SerializeReference, FoldoutGroup("@GetType()")]
     public Trigger trigger;
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public List<ITaskOwned<Entity, dynamic>> tasks;
 
     public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
@@ -33,17 +33,9 @@ public class Effect_AddTrigger : EffectTask
                 break;
         }
 
-        System.Action cleanup = trigger.SubscribeMethodToTasks(target, x => DoTasks(target, x), binding, triggerOrder);
-        Modifier<Entity> dummy = new Modifier<Entity>(value: target, tickDuration: duration);
-        target.AddModifier<Entity, Stat_Triggers>(dummy);
-        Trigger_ModifierLost.Subscribe(_ => cleanup?.Invoke(), dummy, 0, true);
-    }
-
-    private void DoTasks(Entity owner, dynamic data)
-    {
-        foreach(ITaskOwned<Entity, dynamic> task in tasks)
-        {
-            task.DoTask(owner, data);
-        }
+        System.Action cleanup = trigger.SubscribeToTasks(target, binding, triggerOrder, triggerOnce);
+        Modifier<Trigger> dummy = new Modifier<Trigger>(value: trigger, tickDuration: duration);
+        target.AddModifier<Trigger, Stat_Triggers>(dummy);
+        Trigger_ModifierLost.Subscribe(_ => cleanup?.Invoke(), dummy, 9999, true);
     }
 }

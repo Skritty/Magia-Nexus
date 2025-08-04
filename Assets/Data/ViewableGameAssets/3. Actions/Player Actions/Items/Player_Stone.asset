@@ -19,15 +19,6 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
-  actionAliases:
-  - Stone
-  actionDescription: 'Throws a rock at your target, dealing 1.5 bludgeoning damage
-    and stunning for 0.5s
-
-    Each rock item grants 1 ammo, and this action grants
-    1 if you are out'
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   initialAnimationState: 0
   activateAnimationState: 0
@@ -41,52 +32,61 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 3963142721972731916
+  - rid: 4023383614162207422
+  - rid: 4023383614162207417
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 3963142721972731916
-      type: {class: PersistentEffectGate, ns: , asm: Assembly-CSharp}
+    - rid: 4023383614162207417
+      type: {class: Effect_Projectile, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 3963142721972731917
-        persistentEffect:
-          rid: -2
-        requiredAmount: 1
-        stacksAddedOnSuccess: -1
-        stacksAddedOnFailure: 1
-        effectsOnSuccess:
-        - rid: 3963142721972731920
-        effectsOnFailure: []
-    - rid: 3963142721972731917
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 3963142721972731920
-      type: {class: CreateEntity, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 3963142723388571648
-        entityType: 2
-        entity: {fileID: 6345354840142092050, guid: 85043b1ac81df9d42877ce23329d4fc4, type: 3}
+          rid: 4023383614162207419
+        entity: {fileID: 669004793766482979, guid: 1cc671513fd3fb84c86ae242d0d703d6, type: 3}
         spawnOnTarget: 0
         movementTarget: 2
         numberOfProjectiles: 1
         ignoreAdditionalProjectiles: 0
         projectileFanType: 4
         projectileFanAngle: 45
-        numberOfSummons: 1
-        overcapSummons: 0
-        damageMultiplier: 1
-        lifeMultiplier: 1
-        ignoreAdditionalSummons: 0
-    - rid: 3963142723388571648
+    - rid: 4023383614162207419
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
+        ignoreFrames: 0
+    - rid: 4023383614162207422
+      type: {class: FilterTask_ModifierGate, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383614162207423
+        modifier:
+          rid: 4023383621529763869
+        requiredAmount: 1
+        stacksAddedOnSuccess: -1
+        stacksAddedOnFailure: 1
+        invert: 0
+    - rid: 4023383614162207423
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383621529763869
+      type: {class: Modifier_Numerical, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: -0.02
+        <StatTag>k__BackingField:
+          rid: 4023383621529763870
+        <Alignment>k__BackingField: 2
+        <MaxStacks>k__BackingField: 50
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 1
+    - rid: 4023383621529763870
+      type: {class: Stat_MovementSpeed, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

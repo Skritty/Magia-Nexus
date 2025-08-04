@@ -9,13 +9,13 @@ public class DamageInstance : Hit
     [HideInInspector]
     public float finalDamage;
     [FoldoutGroup("@GetType()")]
-    public List<DamageModifier> damageModifiers = new();
+    public List<Modifier_Damage> damageModifiers = new();
 
     public void GenerateMagicEffect()
     {
         // Check enchanted attack queue of the owner
         bool isAttack = false;
-        foreach (DamageModifier damage in damageModifiers)
+        foreach (Modifier_Damage damage in damageModifiers)
         {
             if (damage.DamageType.HasFlag(DamageType.Attack))
             {
@@ -48,14 +48,14 @@ public class DamageInstance : Hit
 
     private void AddToDamage(float damage, DamageType tag)
     {
-        damageModifiers.Add(new DamageModifier(value: damage, step: CalculationStep.Flat, damageType: tag));
+        damageModifiers.Add(new Modifier_Damage(value: damage, step: CalculationStep.Flat, damageType: tag));
         // TODO: contributing effect
     }
 
     public void CalculateDamageType()
     {
         // Add effect multiplier
-        damageModifiers.Add(new DamageModifier(value: EffectMultiplier, step: CalculationStep.Multiplicative, appliesTo: DamageType.All));
+        damageModifiers.Add(new Modifier_Damage(value: EffectMultiplier, step: CalculationStep.Multiplicative, appliesTo: DamageType.All));
 
         if (runes.Count == 0) return;
         float addedFlatDamage = 0;
@@ -114,7 +114,7 @@ public class DamageInstance : Hit
     public new DamageInstance Clone()
     {
         DamageInstance clone = (DamageInstance)base.Clone();
-        clone.damageModifiers = new List<DamageModifier>(damageModifiers);
+        clone.damageModifiers = new List<Modifier_Damage>(damageModifiers);
         return clone;
     }
 }

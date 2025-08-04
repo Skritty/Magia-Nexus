@@ -75,7 +75,7 @@ public class Stat<T> : IDataContainer<T>, IModifiable<T>
         return false;
     }
 }
-public class Stat_Triggers : ListStat<Entity>, IStat<Entity> { }
+public class Stat_Triggers : ListStat<Trigger>, IStat<Trigger> { }
 public class Stat_PreventExpire : EnumPrioritySolver<Alignment>, IStat<Alignment> { }
 public class Stat_AoESize : NumericalSolver, IStat<float> { }
 public class Stat_AdditionalTargets : NumericalSolver, IStat<float> { }
@@ -84,3 +84,4 @@ public class Stat_Knockback : NumericalSolver, IStat<float> { }
 public class Stat_Enmity : NumericalSolver, IStat<float> { }
 public class Stat_Untargetable : ListStat<(Entity, object)>, IStat<(Entity, object)> { }
 public class Stat_TargetingMethod : PrioritySolver<Targeting>, IStat<Targeting> { }
+public class Stat_Dummy : ListStat<bool>, IStat<bool> { }

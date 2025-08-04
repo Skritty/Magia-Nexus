@@ -14,15 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Turtle
-  info: Block 80% of damage and destroy all projectiles hitting from the front.
+  info: Gain 1 block stack that prevents 80% of damage from a single hit. (Max 3
+    stacks, 2.5s duration)
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 1, g: 1, b: 1, a: 1}
-  actionAliases:
-  - Turtle
-  actionDescription: 
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   initialAnimationState: 3
   activateAnimationState: 0
@@ -36,106 +32,82 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 1130977517639303281
+  - rid: 4023383616259883101
+  - rid: 4023383616259883090
   references:
     version: 2
     RefIds:
-    - rid: 1130977517639303281
-      type: {class: FlipFlopPersistentEffect, ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883090
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1130977517639303282
-        persistentEffect:
-          rid: 1130977517639303283
-    - rid: 1130977517639303282
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 1130977517639303283
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 1130977517639303284
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        triggerOrder: -5
+          rid: 4023383616259883091
+        triggerOnce: 1
+        duration: 0
+        triggerOrder: 0
+        bindingObject: 1
         trigger:
-          rid: 1130977675299520576
-        tasks:
-        - rid: 1130977675299520577
-        - rid: 1130977517639303286
-        - rid: 1130977517639303287
-    - rid: 1130977517639303284
+          rid: 4023383616259883094
+    - rid: 4023383616259883091
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 1130977517639303286
-      type: {class: Task_Filter_Targetable, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        selector: 0
-        targeting:
-          rid: 1130977517639303288
-    - rid: 1130977517639303287
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        proxy: 0
-        useProxyAsOwner: 0
-        effect:
-          rid: 1130977517639303289
-    - rid: 1130977517639303288
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 9999
-        angle: 90
-    - rid: 1130977517639303289
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
         ignoreFrames: 0
+    - rid: 4023383616259883094
+      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383616259883095
+        - rid: 4023383616259883096
+    - rid: 4023383616259883095
+      type: {class: 'Task_Filter_IsTarget`1[[DamageInstance, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4023383616259883096
+      type: {class: Effect_RemoveModifier, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 1130977517639303290
-        tick: 0
-        tickDuration: 1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        effectModifiers:
-        - value: 0.2
-          tag: 2
-          method: 2
-          appliesTo: 24576
-          damageType: 0
-    - rid: 1130977517639303290
+          rid: 4023383616259883097
+        modifier:
+          rid: 4023383619086057561
+        stacksRemoved: 1
+        alignmentRemoved: 0
+    - rid: 4023383616259883097
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-    - rid: 1130977675299520576
-      type: {class: Trigger_Hit, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1130977675299520577
-      type: {class: Task_Filter_Target, ns: , asm: Assembly-CSharp}
+        ignoreFrames: 0
+    - rid: 4023383616259883101
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
-        incompatableTriggerBehavior: 1
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383616259883102
+        modifier:
+          rid: 4023383619086057561
+    - rid: 4023383616259883102
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383619086057561
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0.2
+        <StatTag>k__BackingField:
+          rid: 4023383619086057562
+        <Alignment>k__BackingField: 1
+        <MaxStacks>k__BackingField: 3
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 125
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 2
+        <AppliesTo>k__BackingField: 0
+        <DamageType>k__BackingField: 0
+    - rid: 4023383619086057562
+      type: {class: Stat_DamageTaken, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

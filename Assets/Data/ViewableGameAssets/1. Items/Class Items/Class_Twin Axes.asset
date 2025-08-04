@@ -25,84 +25,80 @@ MonoBehaviour:
   cost: 0
   craftingRecipe: []
   grantedActions: []
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 1
   itemEffects:
-  - rid: 5286389459233538373
-  - rid: 5286389754395361658
+  - rid: 4023383616259883216
+  - rid: 4023383616259883210
   references:
     version: 2
     RefIds:
-    - rid: 5286389459233538373
-      type: {class: PE_Trigger, ns: , asm: Assembly-CSharp}
+    - rid: 4023383616259883210
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 5286389459233538374
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
+          rid: 4023383616259883211
+        triggerOnce: 0
+        duration: 0
         triggerOrder: 0
+        bindingObject: 2
         trigger:
-          rid: 5286389775129641280
+          rid: 4023383616259883212
+    - rid: 4023383616259883211
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383616259883212
+      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
+      data:
         tasks:
-        - rid: 5286389459233538377
-    - rid: 5286389459233538374
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 5286389459233538377
-      type: {class: Task_DoEffect, ns: , asm: Assembly-CSharp}
-      data:
-        incompatableTriggerBehavior: 1
-        proxy: 0
-        useProxyAsOwner: 0
-        effect:
-          rid: 5286389459233538379
-    - rid: 5286389459233538379
-      type: {class: Berserk, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 5286389459233538380
-    - rid: 5286389459233538380
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 5286389754395361658
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 1
-        ignoreFrames: 0
-        targetSelector:
-          rid: 5286389754395361659
-        tick: 0
-        tickDuration: -1
-        maxStacks: 1
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        effectModifiers:
-        - value: 2
-          tag: 11
-          method: 2
-          appliesTo: 0
-          damageType: 0
-    - rid: 5286389754395361659
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-    - rid: 5286389775129641280
-      type: {class: Trigger_Die, ns: , asm: Assembly-CSharp}
+        - rid: 4023383616259883213
+        - rid: 4023383616259883214
+    - rid: 4023383616259883213
+      type: {class: 'Task_Filter_IsTarget`1[[DamageInstance, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 4023383616259883214
+      type: {class: Effect_Accelerate, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383616259883215
+        ticks: 3
+    - rid: 4023383616259883215
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383616259883216
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383616259883217
+        modifier:
+          rid: 4023383616259883218
+    - rid: 4023383616259883217
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383616259883218
+      type: {class: Modifier_Numerical, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 2
+        <StatTag>k__BackingField:
+          rid: 4023383616259883219
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 2
+    - rid: 4023383616259883219
+      type: {class: Stat_Enmity, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

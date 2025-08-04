@@ -21,12 +21,6 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 1, g: 1, b: 1, a: 1}
-  actionAliases:
-  - Blade Barrier
-  - BB
-  actionDescription: 
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   initialAnimationState: 0
   activateAnimationState: 0
@@ -40,40 +34,46 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 9031231777024770050
+  - rid: 4023383614162207379
   references:
     version: 2
     RefIds:
-    - rid: 9031231777024770050
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+    - rid: 4023383614162207379
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
         targetSelector:
-          rid: 9031231777024770073
-        tick: 0
-        tickDuration: 125
-        maxStacks: 1
-        stacks: 10
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 1
-        vfx: {fileID: 0}
-        effectModifiers:
-        - value: 0.92
-          tag: 2
-          method: 2
-          appliesTo: 3
-          damageType: 2
-    - rid: 9031231777024770073
+          rid: 4023383614162207381
+        modifier:
+          rid: 4023383614162207382
+    - rid: 4023383614162207381
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
-        entitiesAffected: 7
+        ignoreFrames: 0
+        entitiesAffected: 8
         sortingMethod: 1
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-        radius: 8
+        radius: 6
         angle: 180
+    - rid: 4023383614162207382
+      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0.92
+        <StatTag>k__BackingField:
+          rid: 4023383614162207383
+        <Alignment>k__BackingField: 1
+        <MaxStacks>k__BackingField: 20
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 250
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 2
+        <AppliesTo>k__BackingField: 2
+        <DamageType>k__BackingField: 0
+    - rid: 4023383614162207383
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

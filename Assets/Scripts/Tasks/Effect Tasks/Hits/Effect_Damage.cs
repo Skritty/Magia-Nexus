@@ -18,6 +18,7 @@ public class Effect_Damage : Effect_Hit
         damageInstance.GenerateMagicEffect();
         if (!triggered) damageInstance.PostHitTriggers();
         damageInstance.CalculateDamageType();
+        UnityEngine.Debug.Log($"{Target.gameObject.name}: {Target.GetMechanic<Mechanic_Damageable>()}");
         Target.GetMechanic<Mechanic_Damageable>().TakeDamage(damageInstance, triggered);
     }
 
