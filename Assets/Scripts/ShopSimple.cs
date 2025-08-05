@@ -15,7 +15,7 @@ public class ShopSimple : MonoBehaviour
         TwitchClient.Instance.AddCommand("sell", Command_SellItems);
 
         TwitchClient.Instance.AddCommand("turn", Command_CreateTurn);
-        TwitchClient.Instance.AddCommand("target", Command_SetPersonality);
+        TwitchClient.Instance.AddCommand("personality", Command_SetPersonality);
     }
 
     private void OnDisable()
@@ -24,7 +24,7 @@ public class ShopSimple : MonoBehaviour
         TwitchClient.Instance.RemoveCommand("sell", Command_SellItems);
 
         TwitchClient.Instance.RemoveCommand("turn", Command_CreateTurn);
-        TwitchClient.Instance.RemoveCommand("target", Command_SetPersonality);
+        TwitchClient.Instance.RemoveCommand("personality", Command_SetPersonality);
     }
 
     public void Start()
@@ -51,7 +51,7 @@ public class ShopSimple : MonoBehaviour
 
     private void UpdateUI()
     {
-        if(itemDisplayLayout.childCount > 2)
+        if(itemDisplayLayout.childCount >= 18)
         {
             Vector3 offset = itemDisplayLayout.offsetMax;
             offset.y += scrollSpeed / 2 * Time.deltaTime;
@@ -64,7 +64,7 @@ public class ShopSimple : MonoBehaviour
             itemDisplayLayout.offsetMax = offset;
         }
 
-        if (personalityDisplayLayout.childCount > 2)
+        if (personalityDisplayLayout.childCount >= 36)
         {
             Vector3 offset = personalityDisplayLayout.offsetMax;
             offset.y += scrollSpeed * Time.deltaTime;
@@ -182,15 +182,15 @@ public class ShopSimple : MonoBehaviour
         string message = "";
         if(purchasedItems.Count > 0)
         {
-            message += "Purchased: " + string.Join(",", purchasedItems) + " | ";
+            message += "Purchased: " + string.Join(", ", purchasedItems) + " | ";
         }
         if (failedItems.Count > 0)
         {
-            message += "Too expensive: " + string.Join(",", failedItems) + " | ";
+            message += "Too expensive: " + string.Join(", ", failedItems) + " | ";
         }
         if (invalidItems.Count > 0)
         {
-            message += "Invalid: " + string.Join(",", invalidItems) + " | ";
+            message += "Invalid: " + string.Join(", ", invalidItems) + " | ";
         }
         message += $"You now have {GameManager.Instance.viewers[user].gold}g";
         return new CommandResponse(true, message);
@@ -302,10 +302,10 @@ public class ShopSimple : MonoBehaviour
 
         player.actions = actions;
 
-        string message = $"Your new turn is: " + string.Join(",", actions);
+        string message = $"Your new turn is: " + string.Join(", ", actions);
         if (invalidActions.Count > 0)
         {
-            message += " | Invalid: " + string.Join(",", invalidActions);
+            message += " | Invalid: " + string.Join(", ", invalidActions);
         }
         if (notAtMaxActions)
         {
@@ -326,10 +326,10 @@ public class ShopSimple : MonoBehaviour
             return new CommandResponse(false, "Please provide a personality!");
         }
 
-        string name = string.Join(",", args);
+        string name = string.Join(" ", args);
         Personality personality = (Personality)GetViewableAssetFromNameOrID(name);
         
-        if(personality = null)
+        if(personality == null)
         {
             return new CommandResponse(false, "Invalid personality!");
         }

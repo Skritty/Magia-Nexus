@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Movement_Retreat
   m_EditorClassIdentifier: 
-  aliases: []
+  aliases:
+  - Retreat
   info: 
   image: {fileID: 0}
   hidden: 0
@@ -52,7 +53,6 @@ MonoBehaviour:
       data:
         <Value>k__BackingField:
           rid: 4023383616259883173
-        <Priority>k__BackingField: 1
         <StatTag>k__BackingField:
           rid: 4023383616259883174
         <Alignment>k__BackingField: 0
@@ -61,6 +61,7 @@ MonoBehaviour:
         <PerPlayer>k__BackingField: 0
         <TickDuration>k__BackingField: 0
         <RefreshDuration>k__BackingField: 0
+        <Priority>k__BackingField: 1
     - rid: 4023383616259883173
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:

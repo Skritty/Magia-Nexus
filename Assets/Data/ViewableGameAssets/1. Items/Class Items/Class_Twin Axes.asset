@@ -17,8 +17,8 @@ MonoBehaviour:
   - TwinAxes
   - TA
   - Berserker
-  info: Go berserk whenever a player dies, adding a random action in your turn to
-    the end of your turn.
+  info: Go berserk when hit, accelerating your turn slightly. You are much more likely
+    to be targeted.
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.6855345, g: 0.3426424, b: 0.20910947, a: 1}
@@ -41,33 +41,20 @@ MonoBehaviour:
         targetSelector:
           rid: 4023383616259883211
         triggerOnce: 0
-        duration: 0
         triggerOrder: 0
         bindingObject: 2
-        trigger:
-          rid: 4023383616259883212
+        triggerModifier:
+          <Value>k__BackingField:
+            rid: 4023383639793074497
+          <StatTag>k__BackingField:
+            rid: 4023383639793074501
+          <Alignment>k__BackingField: 0
+          <MaxStacks>k__BackingField: 0
+          <StacksAdded>k__BackingField: 1
+          <PerPlayer>k__BackingField: 0
+          <TickDuration>k__BackingField: 0
+          <RefreshDuration>k__BackingField: 0
     - rid: 4023383616259883211
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383616259883212
-      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
-      data:
-        tasks:
-        - rid: 4023383616259883213
-        - rid: 4023383616259883214
-    - rid: 4023383616259883213
-      type: {class: 'Task_Filter_IsTarget`1[[DamageInstance, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4023383616259883214
-      type: {class: Effect_Accelerate, ns: , asm: Assembly-CSharp}
-      data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383616259883215
-        ticks: 3
-    - rid: 4023383616259883215
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
@@ -102,3 +89,28 @@ MonoBehaviour:
       data:
         <Modifiers>k__BackingField: []
         <Step>k__BackingField: 0
+    - rid: 4023383639793074497
+      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383639793074498
+        - rid: 4023383639793074499
+    - rid: 4023383639793074498
+      type: {class: 'Task_Filter_IsTarget`1[[DamageInstance, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4023383639793074499
+      type: {class: Effect_Accelerate, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383639793074500
+        ticks: 3
+    - rid: 4023383639793074500
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074501
+      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Conjuration_FireWhip
   m_EditorClassIdentifier: 
-  actionAliases: []
-  actionDescription: 
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 1, g: 1, b: 1, a: 1}
+  aliases:
+  - Fire Whip
+  info: 
+  image: {fileID: 0}
   hidden: 0
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   initialAnimationState: 0
   activateAnimationState: 0
@@ -30,37 +31,9 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 7867064581498077207
+  - rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 7867064581498077207
-      type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
-      data:
-        effectMultiplier: 2
-        ignoreFrames: 0
-        targetSelector:
-          rid: 7867064581498077213
-        calculatedDamage: 0
-        damageModifiers:
-        - value: 100
-          tag: 0
-          method: 0
-          appliesTo: 0
-          damageType: 155781
-        skipFlatDamageReduction: 0
-        preventTriggers: 0
-        ownerEffects: []
-        targetEffects: []
-        onHitEffects: []
-    - rid: 7867064581498077213
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        numberOfTargets: 1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 6
-        angle: 180
+    - rid: -2
+      type: {class: , ns: , asm: }

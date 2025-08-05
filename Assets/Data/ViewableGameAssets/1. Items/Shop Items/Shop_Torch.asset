@@ -34,20 +34,100 @@ MonoBehaviour:
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
           rid: 1083524154633486537
-        duration: 0
+        triggerOnce: 0
         triggerOrder: 0
         bindingObject: 0
+        triggerModifier:
+          <Value>k__BackingField:
+            rid: 4023383639793074518
+          <StatTag>k__BackingField:
+            rid: 4023383639793074526
+          <Alignment>k__BackingField: 0
+          <MaxStacks>k__BackingField: 0
+          <StacksAdded>k__BackingField: 1
+          <PerPlayer>k__BackingField: 0
+          <TickDuration>k__BackingField: 0
+          <RefreshDuration>k__BackingField: 0
         trigger:
-          rid: 1083524154633486538
-        tasks: []
+          rid: -2
     - rid: 1083524154633486537
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 1083524154633486538
+    - rid: 4023383639793074518
       type: {class: Trigger_PostHit, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: -2
+        - rid: 4023383639793074519
+    - rid: 4023383639793074519
+      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383639793074520
+        triggerOnce: 0
+        triggerOrder: 0
+        bindingObject: 2
+        triggerModifier:
+          <Value>k__BackingField:
+            rid: -2
+          <StatTag>k__BackingField:
+            rid: -2
+          <Alignment>k__BackingField: 0
+          <MaxStacks>k__BackingField: 0
+          <StacksAdded>k__BackingField: 1
+          <PerPlayer>k__BackingField: 0
+          <TickDuration>k__BackingField: 0
+          <RefreshDuration>k__BackingField: 0
+        trigger:
+          rid: 4023383639793074521
+    - rid: 4023383639793074520
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074521
+      type: {class: Trigger_PostHit, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383639793074522
+    - rid: 4023383639793074522
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 1
+        targetSelector:
+          rid: 4023383639793074523
+        modifier:
+          rid: 4023383639793074524
+    - rid: 4023383639793074523
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074524
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1.6
+        <StatTag>k__BackingField:
+          rid: 4023383639793074525
+        <Alignment>k__BackingField: 2
+        <MaxStacks>k__BackingField: 1
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 1
+        <TickDuration>k__BackingField: 125
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 0
+        <AppliesTo>k__BackingField: 0
+        <DamageType>k__BackingField: 32901
+    - rid: 4023383639793074525
+      type: {class: Stat_DamageOverTime, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0
+    - rid: 4023383639793074526
+      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player_Arrow
   m_EditorClassIdentifier: 
   aliases:
-  - arrow
+  - Arrow
   info: Fires an arrow at your target, dealing 80 damage
   image: {fileID: 0}
   hidden: 0

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -7,17 +8,16 @@ public class Effect_AddTrigger : EffectTask
     [FoldoutGroup("@GetType()")]
     public bool triggerOnce;
     [FoldoutGroup("@GetType()")]
-    public int duration;
-    [FoldoutGroup("@GetType()")]
     public int triggerOrder;
     [FoldoutGroup("@GetType()")]
     public EffectTargetSelector bindingObject = EffectTargetSelector.Target;
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public Trigger trigger;
+    [FoldoutGroup("@GetType()")]
+    public Modifier<Trigger> triggerModifier;
 
     public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
-        if (trigger == null) return;
+        if (triggerModifier == null || triggerModifier.Value == null) return;
+        if (triggerModifier.Tag == null) triggerModifier.StatTag = new Stat_Triggers();
 
         object binding = null;
         switch (bindingObject)
@@ -33,9 +33,27 @@ public class Effect_AddTrigger : EffectTask
                 break;
         }
 
-        System.Action cleanup = trigger.SubscribeToTasks(target, binding, triggerOrder, triggerOnce);
-        Modifier<Trigger> dummy = new Modifier<Trigger>(value: trigger, tickDuration: duration);
-        target.AddModifier<Trigger, Stat_Triggers>(dummy);
-        Trigger_ModifierLost.Subscribe(_ => cleanup?.Invoke(), dummy, 9999, true);
+        System.Action triggerCleanup = null;
+        Trigger_ModifierGained.Subscribe(x => 
+        {
+            // Subscribe to trigger if its the first modifier
+            if(!owner.Stat<Stat_Triggers>().Contains(triggerModifier, out _))
+            {
+                triggerCleanup += triggerModifier.Value.SubscribeToTasks(target, binding, triggerOrder, triggerOnce);
+            }
+        }, triggerModifier, 9999, true);
+
+        System.Action cleanup = null;
+        cleanup = Trigger_ModifierLost.Subscribe(x =>
+        {
+            // If there are no more of this modifier, unsubscribe
+            if (!owner.Stat<Stat_Triggers>().Contains(triggerModifier, out _))
+            {
+                triggerCleanup?.Invoke();
+                cleanup?.Invoke();
+            }
+        }, triggerModifier, 9999);
+
+        target.AddModifier(triggerModifier);
     }
 }

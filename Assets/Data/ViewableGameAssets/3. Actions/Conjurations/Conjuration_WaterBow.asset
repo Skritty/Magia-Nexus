@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Conjuration_WaterBow
   m_EditorClassIdentifier: 
-  aliases: []
+  aliases:
+  - Water Bow
   info: 
   image: {fileID: 0}
   hidden: 0

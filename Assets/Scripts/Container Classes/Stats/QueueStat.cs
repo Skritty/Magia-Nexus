@@ -1,16 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
 using Sirenix.OdinInspector;
-using TwitchLib.Api.Helix.Models.Search;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class QueueStat<T> : IModifiable<T>, IEnumerable<T>
 {
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
-    public List<IDataContainer<T>> Modifiers { get; protected set; } = new();
+    public List<IDataContainer<T>> Modifiers { get; set; } = new();
     public int Count => Modifiers.Count;
 
     public IEnumerator<T> GetEnumerator()
@@ -71,5 +67,12 @@ public class QueueStat<T> : IModifiable<T>, IEnumerable<T>
             return true;
         }
         return false;
+    }
+
+    public IModifiable Clone(bool preserveModifiers)
+    {
+        IModifiable<T> clone = (IModifiable<T>)MemberwiseClone();
+        if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
+        return clone;
     }
 }

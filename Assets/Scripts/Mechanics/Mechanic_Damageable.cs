@@ -20,7 +20,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
     public static float TankContributionMultiplier = 0.3f;
 
-    protected override void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
         baseLife = new DataContainer<float>();

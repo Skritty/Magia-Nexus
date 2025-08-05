@@ -21,4 +21,9 @@ public abstract class ViewableGameAsset : ScriptableObject
         }
         return false;
     }
+
+    public override string ToString()
+    {
+        return name;
+    }
 }

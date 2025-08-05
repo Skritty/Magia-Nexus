@@ -17,7 +17,7 @@ public abstract class Mechanic
     public MergeBehavior mergeBehavior;
     public abstract void AddInstance(Entity owner);
     public abstract void RemoveInstance(Entity owner);
-    protected virtual void Initialize() { }
+    public virtual void Initialize() { }
     public virtual void Tick() { }
     public virtual void OnDestroy() { }
 
@@ -34,7 +34,6 @@ public abstract class Mechanic<T> : Mechanic, IBoundInstances<Entity, T> where T
         this.Owner = owner;
         baseStat = true;
         IBoundInstances<Entity, T>.AddInstance((T)this, owner);
-        Initialize();
     }
 
     public override void RemoveInstance(Entity owner)

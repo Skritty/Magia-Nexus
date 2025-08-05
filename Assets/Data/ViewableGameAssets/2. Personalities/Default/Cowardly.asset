@@ -10,24 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b83b8b2b42b24540a9c9956f35ef034, type: 3}
-  m_Name: Defensive
+  m_Name: Cowardly
   m_EditorClassIdentifier: 
   aliases:
-  - Defensive
-  info: Targets the closest enemy and stays near an ally.
+  - Cowardly
+  info: Always tries to keep a distance from the closest target while attacking the
+    farthest target.
   image: {fileID: 0}
   hidden: 0
-  UIColor: {r: 0.3198053, g: 0.5861843, b: 0.69182384, a: 1}
+  UIColor: {r: 1, g: 0.88491064, b: 0.44968545, a: 1}
   targeting:
-    rid: 4023383637585821769
+    rid: 5286389933263290397
   movement:
-    rid: 4023383637585821786
+    rid: 4023383637585821777
   movementSelector:
-    rid: 4023383637585821787
+    rid: 4023383637585821778
   references:
     version: 2
     RefIds:
-    - rid: 4023383637585821769
+    - rid: 4023383637585821777
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
@@ -36,26 +37,26 @@ MonoBehaviour:
         numberOfTargets: 1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-    - rid: 4023383637585821786
-      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        entitiesAffected: 4
-        sortingMethod: 2
-        numberOfTargets: 1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-    - rid: 4023383637585821787
+    - rid: 4023383637585821778
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383637585821788
-        movementSpeedMultiplier: 1
-        distanceFromTarget: 2
+          rid: 4023383637585821779
+        movementSpeedMultiplier: 1.1
+        distanceFromTarget: 5
         threshold: 0.25
-    - rid: 4023383637585821788
+    - rid: 4023383637585821779
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
+    - rid: 5286389933263290397
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}

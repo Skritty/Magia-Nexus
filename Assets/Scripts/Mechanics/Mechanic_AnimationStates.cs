@@ -12,7 +12,7 @@ public class Mechanic_AnimationStates : Mechanic<Mechanic_AnimationStates>
     public AnimatorOverrideController animationSkin;
     private AnimationState _animationState;
 
-    protected override void Initialize()
+    public override void Initialize()
     {
         base.Initialize();
         animator.runtimeAnimatorController = animationSkin;

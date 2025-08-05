@@ -25,36 +25,41 @@ MonoBehaviour:
   grantedActions:
   - {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
   - {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 3963142952671773266
+  - rid: 4023383637585821863
   references:
     version: 2
     RefIds:
-    - rid: 3963142952671773266
-      type: {class: PE_EffectModifer, ns: , asm: Assembly-CSharp}
+    - rid: 4023383637585821863
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
-        effectMultiplier: 1
-        ignoreFrames: 0
+        useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
-          rid: 3963142952671773267
-        tick: 0
-        tickDuration: -1
-        maxStacks: 10
-        stacks: 1
-        perPlayer: 0
-        refreshDuration: 1
-        contributeToAssists: 0
-        alignment: 0
-        vfx: {fileID: 0}
-        effectModifiers:
-        - value: 0.1
-          tag: 9
-          method: 1
-          appliesTo: 0
-          damageType: 0
-    - rid: 3963142952671773267
+          rid: 4023383637585821864
+        modifier:
+          rid: 4023383637585821865
+    - rid: 4023383637585821864
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
+        ignoreFrames: 0
+    - rid: 4023383637585821865
+      type: {class: Modifier_Numerical, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0.1
+        <StatTag>k__BackingField:
+          rid: 4023383637585821866
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 1
+    - rid: 4023383637585821866
+      type: {class: Stat_MovementSpeed, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0

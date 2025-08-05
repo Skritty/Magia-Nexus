@@ -44,7 +44,7 @@ MonoBehaviour:
         propagateTarget: 0
         targetSelector:
           rid: 4023383614162207419
-        entity: {fileID: 669004793766482979, guid: 1cc671513fd3fb84c86ae242d0d703d6, type: 3}
+        entity: {fileID: 8425174460789688135, guid: 1cc671513fd3fb84c86ae242d0d703d6, type: 3}
         spawnOnTarget: 0
         movementTarget: 2
         numberOfProjectiles: 1

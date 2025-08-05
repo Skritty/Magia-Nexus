@@ -12,7 +12,6 @@ public abstract class Trigger
     /// <param name="method"></param>
     /// <param name="order">Lower numbers will happen earlier in trigger order</param>
     /// <returns>Unsubscribe action</returns>
-    public abstract System.Action Subscribe(Action<dynamic> method, object bindingObject, int order = 0, bool triggerOnce = false);
     public abstract System.Action SubscribeToTasks<Owner>(Owner owner, object bindingObject, int order = 0, bool triggerOnce = false);
 }
 
@@ -64,11 +63,6 @@ public abstract class Trigger<Endpoint, T> : Trigger
             }
             else if (!task.DoTask(data)) return;
         }
-    }
-
-    public override System.Action Subscribe(Action<dynamic> method, object bindingObject, int order = 0, bool triggerOnce = false)
-    {
-        return Subscribe(x => method?.Invoke(x), bindingObject, order, triggerOnce);
     }
 
     /// <summary>

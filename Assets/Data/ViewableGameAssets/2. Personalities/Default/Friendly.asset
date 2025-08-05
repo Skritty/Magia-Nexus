@@ -16,19 +16,14 @@ MonoBehaviour:
   - Friendly
   info: Targets the closest ally.
   image: {fileID: 0}
-  hidden: 0
-  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  hidden: 1
+  UIColor: {r: 0.48129022, g: 0.98742133, b: 0.5055348, a: 1}
   targeting:
-    rid: 5286389933263290404
+    rid: -2
+  movement:
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 5286389933263290404
-      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
-      data:
-        lockTarget: 0
-        entitiesAffected: 4
-        sortingMethod: 2
-        numberOfTargets: 1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
+    - rid: -2
+      type: {class: , ns: , asm: }

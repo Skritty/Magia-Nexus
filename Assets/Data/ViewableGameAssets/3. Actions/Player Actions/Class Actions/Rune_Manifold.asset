@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Rune_Manifold
   m_EditorClassIdentifier: 
   aliases:
-  - Manifold Rune
   - Manifold
-  - ManifoldRune
-  - MR
+  - Manifold Rune
   info: 'On spell hit: trigger a new spell'
   image: {fileID: 0}
   hidden: 0

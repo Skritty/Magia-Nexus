@@ -102,8 +102,8 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
 
     private void FetchNextAction()
     {
-        List<Action> actions = Owner.Stat<Stat_Actions>().Value as List<Action>;
-        if (actions.Count == 0) return;
+        List<Action> actions = Owner.Stat<Stat_Actions>().Value;
+        if (actions == null || actions.Count == 0) return;
         if (tick % TicksPerAction == 0)
         {
             currentAction?.OnEnd(Owner);

@@ -24,7 +24,7 @@ public class Stat<T> : IDataContainer<T>, IModifiable<T>
         }
     }
 
-    public List<IDataContainer<T>> Modifiers { get; } = new();
+    public List<IDataContainer<T>> Modifiers { get; set; } = new();
 
     public Stat() { }
     public Stat(T value)
@@ -73,6 +73,13 @@ public class Stat<T> : IDataContainer<T>, IModifiable<T>
             return true;
         }
         return false;
+    }
+
+    public IModifiable Clone(bool preserveModifiers)
+    {
+        IModifiable<T> clone = (IModifiable<T>)MemberwiseClone();
+        if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
+        return clone;
     }
 }
 public class Stat_Triggers : ListStat<Trigger>, IStat<Trigger> { }

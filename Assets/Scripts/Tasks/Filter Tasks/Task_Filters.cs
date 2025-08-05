@@ -24,6 +24,8 @@ public class Task_Filter_IsProxy : ITaskOwned<Entity, Entity>
     {
         return entity.GetMechanic<Mechanic_PlayerOwner>().playerEntity == owner.GetMechanic<Mechanic_PlayerOwner>().playerEntity;
     }
+
+    public bool DoTask(Entity data) => false;
 }
 
 [LabelText("Filter: Has Items")]
@@ -82,6 +84,8 @@ public class Task_Filter_ActivationThreshold : ITask<Entity>
 [LabelText("Is: Owner?")]
 public class Task_Filter_IsOwner : ITaskOwned<Entity, Entity>, ITaskOwned<Entity, Effect>
 {
+    public bool DoTask(Entity data) => false;
+    public bool DoTask(Effect data) => false;
     public bool DoTask(Entity owner, Entity data)
     {
         return data == owner;
@@ -99,6 +103,8 @@ public class Task_Filter_IsTarget<T> : ITaskOwned<Entity, T> where T : Effect
     {
         return effect.Target.Equals(owner);
     }
+
+    public bool DoTask(T data) => false;
 }
 
 [LabelText("Filter: Is Targetable By")]
@@ -115,12 +121,21 @@ public class Task_Filter_IsTargetableBy<T> : ITask<T> where T : Effect
 }
 
 [LabelText("Filter: Damage Types")]
-public class Task_Filter_DamageType : ITask<DamageInstance>
+public class Task_Filter_DamageType : ITask<DamageInstance>, ITask<Effect>
 {
     public DamageType damageTypes;
     public bool DoTask(DamageInstance damage)
     {
         foreach (Modifier_Damage modifier in damage.damageModifiers)
+        {
+            if (modifier.DamageType.HasFlag(damageTypes)) return true;
+        }
+        return false;
+    }
+    public bool DoTask(Effect damage)
+    {
+        if (damage is not DamageInstance) return false;
+        foreach (Modifier_Damage modifier in (damage as DamageInstance).damageModifiers)
         {
             if (modifier.DamageType.HasFlag(damageTypes)) return true;
         }

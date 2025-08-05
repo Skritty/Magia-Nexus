@@ -22,10 +22,10 @@ MonoBehaviour:
   cost: 0
   craftingRecipe:
   - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
-  - {fileID: 11400000, guid: 0be1260055e34684580feff5050756b8, type: 2}
+  - {fileID: 11400000, guid: 41082f89daebd234ba4c1fb0b34e322f, type: 2}
   grantedActions:
-  - {fileID: 11400000, guid: e611dcab08914e24b9fce0e77d88ce5b, type: 2}
-  grantedTargeting: []
+  - {fileID: 11400000, guid: 093c9968ba015da4ab4611b69b4d1233, type: 2}
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects: []
   references:

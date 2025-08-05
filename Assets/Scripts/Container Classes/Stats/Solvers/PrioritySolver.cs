@@ -38,7 +38,7 @@ public class PrioritySolver<T> : Solver<T>, IPriority
         foreach (IDataContainer<T> modifier in Modifiers)
         {
             if (modifier is not IPriority) continue;
-            if ((modifier as IPriority).Priority > highestPriority) highestPriority = (modifier as PrioritySolver<T>).Priority;
+            if ((modifier as IPriority).Priority > highestPriority) highestPriority = (modifier as IPriority).Priority;
         }
         List<IDataContainer<T>> priorityModifiers = new List<IDataContainer<T>>();
         foreach (IDataContainer<T> modifier in Modifiers)
@@ -62,9 +62,9 @@ public class PrioritySolver<T> : Solver<T>, IPriority
         return modifiers[0].Value;
     }
 
-    public new PrioritySolver<T> Clone()
+    public PrioritySolver<T> Clone()
     {
-        PrioritySolver<T> clone = (PrioritySolver<T>)base.Clone();
+        PrioritySolver<T> clone = (PrioritySolver<T>)Clone(true);
         clone.Priority = Priority;
         return clone;
     }

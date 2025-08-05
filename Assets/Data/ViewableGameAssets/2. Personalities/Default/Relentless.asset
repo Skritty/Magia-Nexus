@@ -16,17 +16,23 @@ MonoBehaviour:
   - Relentless
   info: Targets the farthest enemy until they die.
   image: {fileID: 0}
-  hidden: 0
+  hidden: 1
   UIColor: {r: 1, g: 1, b: 1, a: 1}
   targeting:
     rid: 5286389933263290397
+  movement:
+    rid: -2
+  movementSelector:
+    rid: -2
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 5286389933263290397
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 1
+        ignoreFrames: 0
         entitiesAffected: 8
         sortingMethod: 4
         numberOfTargets: 1

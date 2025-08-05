@@ -34,8 +34,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 4023383616259883200
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
@@ -54,7 +52,7 @@ MonoBehaviour:
       data:
         <Value>k__BackingField: 1.5
         <StatTag>k__BackingField:
-          rid: -2
+          rid: 4023383637585822094
         <Alignment>k__BackingField: 0
         <MaxStacks>k__BackingField: 0
         <StacksAdded>k__BackingField: 1
@@ -93,3 +91,20 @@ MonoBehaviour:
       data:
         <Modifiers>k__BackingField: []
         <Step>k__BackingField: 0
+    - rid: 4023383637585822094
+      type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 4023383637585822095
+        - rid: 4023383637585822096
+        <Step>k__BackingField: 2
+    - rid: 4023383637585822095
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0
+    - rid: 4023383637585822096
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 1

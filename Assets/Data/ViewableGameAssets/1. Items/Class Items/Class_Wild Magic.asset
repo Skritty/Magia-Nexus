@@ -38,6 +38,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 4023383619086057540
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
@@ -46,116 +48,130 @@ MonoBehaviour:
         targetSelector:
           rid: 4023383619086057541
         triggerOnce: 0
-        duration: 0
         triggerOrder: 0
         bindingObject: 2
+        triggerModifier:
+          <Value>k__BackingField:
+            rid: 4023383639793074502
+          <StatTag>k__BackingField:
+            rid: 4023383639793074517
+          <Alignment>k__BackingField: 0
+          <MaxStacks>k__BackingField: 0
+          <StacksAdded>k__BackingField: 1
+          <PerPlayer>k__BackingField: 0
+          <TickDuration>k__BackingField: 0
+          <RefreshDuration>k__BackingField: 0
         trigger:
-          rid: 4023383619086057542
+          rid: -2
     - rid: 4023383619086057541
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383619086057542
+    - rid: 4023383639793074502
       type: {class: Trigger_TurnStart, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 4023383619086057543
-    - rid: 4023383619086057543
+        - rid: 4023383639793074503
+    - rid: 4023383639793074503
       type: {class: 'Effect_DoRandomEffectTask`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383619086057544
+          rid: 4023383639793074504
         proxy: 0
         useProxyAsOwner: 0
         effects:
-        - rid: 4023383619086057545
-        - rid: 4023383619086057547
-        - rid: 4023383619086057557
-        - rid: 4023383619086057553
-        - rid: 4023383619086057555
-        - rid: 4023383619086057559
+        - rid: 4023383639793074505
+        - rid: 4023383639793074506
+        - rid: 4023383639793074507
+        - rid: 4023383639793074508
+        - rid: 4023383639793074509
+        - rid: 4023383639793074510
         actions: []
-    - rid: 4023383619086057544
+    - rid: 4023383639793074504
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383619086057545
+    - rid: 4023383639793074505
       type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383619086057546
+          rid: 4023383639793074511
         runes:
         - {fileID: 11400000, guid: 54d6cdf6409fccd4fb28715fa3d368e2, type: 2}
-    - rid: 4023383619086057546
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383619086057547
+    - rid: 4023383639793074506
       type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383619086057548
+          rid: 4023383639793074512
         runes:
         - {fileID: 11400000, guid: cb1d38f2fe546d3499f0e7ca27095158, type: 2}
-    - rid: 4023383619086057548
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383619086057553
+    - rid: 4023383639793074507
       type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383619086057554
-        runes:
-        - {fileID: 11400000, guid: 6ed6aa2f5fca719449b9833a0bb1e527, type: 2}
-    - rid: 4023383619086057554
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383619086057555
-      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
-      data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383619086057556
-        runes:
-        - {fileID: 11400000, guid: 7edd61f7988e6bb44ab77fdf410f20c5, type: 2}
-    - rid: 4023383619086057556
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383619086057557
-      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
-      data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383619086057558
+          rid: 4023383639793074513
         runes:
         - {fileID: 11400000, guid: 4435eab1899c3e64383e7acc806da571, type: 2}
-    - rid: 4023383619086057558
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383619086057559
+    - rid: 4023383639793074508
       type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383619086057560
+          rid: 4023383639793074514
+        runes:
+        - {fileID: 11400000, guid: 6ed6aa2f5fca719449b9833a0bb1e527, type: 2}
+    - rid: 4023383639793074509
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383639793074515
+        runes:
+        - {fileID: 11400000, guid: 7edd61f7988e6bb44ab77fdf410f20c5, type: 2}
+    - rid: 4023383639793074510
+      type: {class: Effect_GrantRunes, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383639793074516
         runes:
         - {fileID: 11400000, guid: b9e7ba8a99d59f84481757bf8a004b91, type: 2}
-    - rid: 4023383619086057560
+    - rid: 4023383639793074511
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
+    - rid: 4023383639793074512
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074513
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074514
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074515
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074516
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074517
+      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []

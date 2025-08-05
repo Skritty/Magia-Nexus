@@ -14,19 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Keen Eyed
-  info: Targets the farthest enemy.
+  info: Targets the farthest enemy and keeps their distance from the target.
   image: {fileID: 0}
   hidden: 0
-  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  UIColor: {r: 0.6877662, g: 0.9433962, b: 0.33523193, a: 1}
   targeting:
-    rid: 5286389933263290401
+    rid: 4023383637585821770
+  movement:
+    rid: 4023383637585821776
+  movementSelector:
+    rid: 4023383637585821774
   references:
     version: 2
     RefIds:
-    - rid: 5286389933263290401
+    - rid: 4023383637585821770
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        lockTarget: 0
+        ignoreFrames: 0
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+    - rid: 4023383637585821774
+      type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383637585821775
+        movementSpeedMultiplier: 0.9
+        distanceFromTarget: 6
+        threshold: 0.25
+    - rid: 4023383637585821775
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383637585821776
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
         entitiesAffected: 8
         sortingMethod: 4
         numberOfTargets: 1

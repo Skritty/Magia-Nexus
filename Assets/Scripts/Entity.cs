@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityCommon;
 using UnityEngine;
 
@@ -31,15 +32,16 @@ public class Entity : MonoBehaviour
 
     public IStat Stat(IModifier modifier)
     {
-        foreach(IStat s in stats)
+        foreach (IStat s in stats)
         {
             if (s.GetType() == modifier.Tag.GetType())
             {
                 return s;
             }
         }
-        stats.Add(modifier.Tag);
-        return modifier.Tag;
+        IStat newStat = (IStat)Activator.CreateInstance(modifier.Tag.GetType());
+        stats.Add(newStat);
+        return newStat;
     }
 
     public bool HasStat<T>() where T : IStat
@@ -82,6 +84,7 @@ public class Entity : MonoBehaviour
 
     private void AddModifier(IModifier modifier, IStat stat, int overrideTickDuration = -1)
     {
+        if (modifier == null || stat == null) return;
         // For each stack being added
         for(int s = 0; s < modifier.StacksAdded; s++)
         {
@@ -93,15 +96,15 @@ public class Entity : MonoBehaviour
                     for (int i = 0; i < durationModifiers.Count; i++)
                     {
                         var stack = durationModifiers[i];
-                        stack.Item2 = 0;
+                        stack.Item2 = modifier.TickDuration;
                         durationModifiers[i] = stack;
                     }
                 }
-                if (count == modifier.MaxStacks) return;
+                if (count >= modifier.MaxStacks) return;
             }
 
             // Add new stack
-            stat.TryAdd(modifier);
+            if(!stat.TryAdd(modifier)) return;
             if(overrideTickDuration > 0)
             {
                 durationModifiers.Add((modifier, overrideTickDuration));
@@ -128,7 +131,7 @@ public class Entity : MonoBehaviour
         if (modifier == null) return;
         foreach(IStat stat in stats)
         {
-            stat.Remove(modifier);
+            RemoveModifier(modifier, stat);
         }
     }
 
@@ -136,14 +139,6 @@ public class Entity : MonoBehaviour
     {
         if (!stat.Contains(modifier, out _)) return;
         stat.Remove(modifier);
-        foreach ((IModifier, int) mod in durationModifiers.ToArray())
-        {
-            if(mod.Item1 == modifier)
-            {
-                durationModifiers.Remove(mod);
-                break;
-            }
-        }
         switch (modifier.Alignment)
         {
             case Alignment.Buff:
@@ -185,16 +180,11 @@ public class Entity : MonoBehaviour
 
     private void Awake()
     {
-        Initialize();
-    }
-
-    private void Initialize()
-    {
-        foreach (Mechanic stat in mechanics)
+        foreach (Mechanic mechanic in mechanics)
         {
-            stat.AddInstance(this);
+            mechanic.AddInstance(this);
         }
-        foreach(IDataContainer<Trigger> trigger in Stat<Stat_Triggers>().Modifiers)
+        foreach (IDataContainer<Trigger> trigger in Stat<Stat_Triggers>().Modifiers)
         {
             trigger.Value.SubscribeToTasks(this, this);
             IModifier durationTrigger = trigger as IModifier;
@@ -202,6 +192,14 @@ public class Entity : MonoBehaviour
             {
                 durationModifiers.Add((durationTrigger, durationTrigger.TickDuration));
             }
+        }
+    }
+
+    private void Start()
+    {
+        foreach (Mechanic mechanic in mechanics)
+        {
+            mechanic.Initialize();
         }
     }
 

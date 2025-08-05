@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Blade Barrier
-  - BB
-  - BladeBarrier
-  info: 'You and nearby allies: Take 8% less physical damage for 5 seconds (20 stacks
+  info: 'You and nearby allies: Take 8% less physical damage for 5 seconds (10 stacks
     max)'
   image: {fileID: 0}
   hidden: 0
@@ -42,38 +40,39 @@ MonoBehaviour:
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
           rid: 4023383614162207381
         modifier:
-          rid: 4023383614162207382
+          rid: 4023383637585821887
     - rid: 4023383614162207381
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-        entitiesAffected: 8
+        entitiesAffected: 5
         sortingMethod: 1
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
         radius: 6
         angle: 180
-    - rid: 4023383614162207382
-      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
+    - rid: 4023383637585821887
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 0.92
         <StatTag>k__BackingField:
-          rid: 4023383614162207383
-        <Alignment>k__BackingField: 1
-        <MaxStacks>k__BackingField: 20
+          rid: 4023383637585821888
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 10
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
-        <TickDuration>k__BackingField: 250
+        <TickDuration>k__BackingField: 0
         <RefreshDuration>k__BackingField: 0
         <Step>k__BackingField: 2
         <AppliesTo>k__BackingField: 2
         <DamageType>k__BackingField: 0
-    - rid: 4023383614162207383
-      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+    - rid: 4023383637585821888
+      type: {class: Stat_DamageTaken, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []
         <Step>k__BackingField: 0

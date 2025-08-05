@@ -33,51 +33,9 @@ MonoBehaviour:
   effectMultiplier: 1
   effects:
   - rid: 4023383616259883101
-  - rid: 4023383616259883090
   references:
     version: 2
     RefIds:
-    - rid: 4023383616259883090
-      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
-      data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383616259883091
-        triggerOnce: 1
-        duration: 0
-        triggerOrder: 0
-        bindingObject: 1
-        trigger:
-          rid: 4023383616259883094
-    - rid: 4023383616259883091
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383616259883094
-      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
-      data:
-        tasks:
-        - rid: 4023383616259883095
-        - rid: 4023383616259883096
-    - rid: 4023383616259883095
-      type: {class: 'Task_Filter_IsTarget`1[[DamageInstance, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4023383616259883096
-      type: {class: Effect_RemoveModifier, ns: , asm: Assembly-CSharp}
-      data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383616259883097
-        modifier:
-          rid: 4023383619086057561
-        stacksRemoved: 1
-        alignmentRemoved: 0
-    - rid: 4023383616259883097
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
     - rid: 4023383616259883101
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
@@ -96,9 +54,9 @@ MonoBehaviour:
       data:
         <Value>k__BackingField: 0.2
         <StatTag>k__BackingField:
-          rid: 4023383619086057562
+          rid: 4023383642805371716
         <Alignment>k__BackingField: 1
-        <MaxStacks>k__BackingField: 3
+        <MaxStacks>k__BackingField: 0
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
         <TickDuration>k__BackingField: 125
@@ -106,7 +64,7 @@ MonoBehaviour:
         <Step>k__BackingField: 2
         <AppliesTo>k__BackingField: 0
         <DamageType>k__BackingField: 0
-    - rid: 4023383619086057562
+    - rid: 4023383642805371716
       type: {class: Stat_DamageTaken, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []

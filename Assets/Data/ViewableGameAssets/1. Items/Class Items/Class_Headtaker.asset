@@ -40,30 +40,38 @@ MonoBehaviour:
         targetSelector:
           rid: 1083524128524730483
         triggerOnce: 0
-        duration: 0
         triggerOrder: 0
         bindingObject: 1
-        trigger:
-          rid: 1083524283774009970
+        triggerModifier:
+          <Value>k__BackingField:
+            rid: 4023383639793074479
+          <StatTag>k__BackingField:
+            rid: 4023383639793074483
+          <Alignment>k__BackingField: 0
+          <MaxStacks>k__BackingField: 0
+          <StacksAdded>k__BackingField: 1
+          <PerPlayer>k__BackingField: 0
+          <TickDuration>k__BackingField: 0
+          <RefreshDuration>k__BackingField: 0
     - rid: 1083524128524730483
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 1083524283774009970
+    - rid: 4023383639793074479
       type: {class: Trigger_ActionStart, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 1083524283774009971
-    - rid: 1083524283774009971
+        - rid: 4023383639793074480
+    - rid: 4023383639793074480
       type: {class: Effect_Damage, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 1083524283774009972
+          rid: 4023383639793074481
         hit:
-          rid: 1083524283774009973
-    - rid: 1083524283774009972
+          rid: 4023383639793074482
+    - rid: 4023383639793074481
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
@@ -72,9 +80,9 @@ MonoBehaviour:
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-        radius: 1.5
+        radius: 1.75
         angle: 30
-    - rid: 1083524283774009973
+    - rid: 4023383639793074482
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
         <EffectMultiplier>k__BackingField: 1.6
@@ -98,3 +106,7 @@ MonoBehaviour:
           <Step>k__BackingField: 0
           <AppliesTo>k__BackingField: 0
           <DamageType>k__BackingField: 139299
+    - rid: 4023383639793074483
+      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []

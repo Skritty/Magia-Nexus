@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Conjuration_ChaosArmor
   m_EditorClassIdentifier: 
-  aliases: []
+  aliases:
+  - Chaos Armor
   info: 'Gain 3 stacks of 10% less damage taken (max 12, 2.5s duration). When hit:
     lose a stack and a fire a shotgun of short ranged projectiles in all directions.'
   image: {fileID: 0}
@@ -36,8 +37,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 4023383621439586308
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
@@ -59,55 +58,20 @@ MonoBehaviour:
         targetSelector:
           rid: 4023383621439586311
         triggerOnce: 0
-        duration: 0
         triggerOrder: 0
         bindingObject: 2
-        trigger:
-          rid: 4023383621462392836
+        triggerModifier:
+          <Value>k__BackingField:
+            rid: 4023383639793074463
+          <StatTag>k__BackingField:
+            rid: 4023383639793074471
+          <Alignment>k__BackingField: 0
+          <MaxStacks>k__BackingField: 12
+          <StacksAdded>k__BackingField: 3
+          <PerPlayer>k__BackingField: 0
+          <TickDuration>k__BackingField: 125
+          <RefreshDuration>k__BackingField: 0
     - rid: 4023383621439586311
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383621462392836
-      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
-      data:
-        tasks:
-        - rid: 4023383621462392837
-        - rid: 4023383621462392838
-        - rid: 4023383621462392840
-    - rid: 4023383621462392837
-      type: {class: 'Task_Filter_IsTarget`1[[DamageInstance, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4023383621462392838
-      type: {class: Effect_RemoveModifier, ns: , asm: Assembly-CSharp}
-      data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383621462392839
-        modifier:
-          rid: -2
-        stacksRemoved: 1
-        alignmentRemoved: 0
-    - rid: 4023383621462392839
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383621462392840
-      type: {class: Effect_Projectile, ns: , asm: Assembly-CSharp}
-      data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383621462392841
-        entity: {fileID: 0}
-        spawnOnTarget: 0
-        movementTarget: 2
-        numberOfProjectiles: 1
-        ignoreAdditionalProjectiles: 0
-        projectileFanType: 2
-        projectileFanAngle: 45
-    - rid: 4023383621462392841
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
@@ -118,8 +82,8 @@ MonoBehaviour:
         <StatTag>k__BackingField:
           rid: 4023383621462392843
         <Alignment>k__BackingField: 1
-        <MaxStacks>k__BackingField: 3
-        <StacksAdded>k__BackingField: 12
+        <MaxStacks>k__BackingField: 12
+        <StacksAdded>k__BackingField: 3
         <PerPlayer>k__BackingField: 0
         <TickDuration>k__BackingField: 125
         <RefreshDuration>k__BackingField: 0
@@ -131,3 +95,70 @@ MonoBehaviour:
       data:
         <Modifiers>k__BackingField: []
         <Step>k__BackingField: 0
+    - rid: 4023383639793074463
+      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383639793074464
+        - rid: 4023383639793074465
+        - rid: 4023383639793074466
+    - rid: 4023383639793074464
+      type: {class: 'Task_Filter_IsTarget`1[[DamageInstance, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 4023383639793074465
+      type: {class: Effect_RemoveModifier, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383639793074467
+        modifier:
+          rid: 4023383639793074468
+        stacksRemoved: 1
+        alignmentRemoved: 0
+    - rid: 4023383639793074466
+      type: {class: Effect_Projectile, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383639793074469
+        entity: {fileID: 5725996083617350896, guid: 9bdfe9532d02e34449decffc30925788, type: 3}
+        spawnOnTarget: 0
+        movementTarget: 0
+        numberOfProjectiles: 6
+        ignoreAdditionalProjectiles: 0
+        projectileFanType: 4
+        projectileFanAngle: 180
+    - rid: 4023383639793074467
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074468
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0.9
+        <StatTag>k__BackingField:
+          rid: 4023383639793074470
+        <Alignment>k__BackingField: 1
+        <MaxStacks>k__BackingField: 3
+        <StacksAdded>k__BackingField: 12
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 125
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 2
+        <AppliesTo>k__BackingField: 0
+        <DamageType>k__BackingField: 0
+    - rid: 4023383639793074469
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383639793074470
+      type: {class: Stat_DamageTaken, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0
+    - rid: 4023383639793074471
+      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []

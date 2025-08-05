@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.UI.GridLayoutGroup;
 
 [Flags]
 public enum TargetFilter
@@ -37,7 +33,9 @@ public abstract class Targeting
     {
         if (ignoreFrames > 0)
         {
-            target.AddModifier<(Entity, object), Stat_Untargetable>((owner, this), ignoreFrames);
+            target.AddModifier<(Entity, object), Stat_Untargetable>(
+                new UnityObjectModifier<(Entity, object)>((owner, this))
+                , ignoreFrames);
         }
     }
     public virtual void OnDrawGizmos(Transform owner) { }

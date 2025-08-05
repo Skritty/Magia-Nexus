@@ -18,11 +18,6 @@ public class Mechanic_Projectile : Mechanic<Mechanic_Projectile>
     [FoldoutGroup("Projectile"), SerializeReference]
     public List<EffectTask> tasks = new();
 
-    protected override void Initialize()
-    {
-        base.Initialize();
-    }
-
     public override void Tick()
     {
         if (tasks.Count == 0) return;

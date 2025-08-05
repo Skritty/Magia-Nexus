@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
   m_Name: Chant
   m_EditorClassIdentifier: 
-  aliases: []
+  aliases:
+  - Chant
   info: Increase the rune limit of your team's ritual spell and then add your runes.
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.39088753, g: 0.2239626, b: 0.47798735, a: 1}
-  actionAliases:
-  - Chant
-  actionDescription: 
-  actionImage: {fileID: 0}
-  damageTypeColor: {r: 0.39088753, g: 0.2239626, b: 0.47798735, a: 1}
   maxUses: 0
   initialAnimationState: 0
   activateAnimationState: 0

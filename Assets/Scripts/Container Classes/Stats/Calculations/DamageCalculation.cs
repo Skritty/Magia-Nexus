@@ -57,7 +57,7 @@ public class DamageCalculation : NumericalSolver
                             {
                                 if (subcalculation.DamageType == appliesTo)
                                 {
-                                    (subcalculation.Modifiers[0] as Solver<float>).Modifiers.Add(modifier as IDataContainer<float>);
+                                    (subcalculation.Modifiers[0] as Solver<float>).Modifiers.Add(modifier);
                                     validModifier = false;
                                     break; // Applies to the first valid flat damage only
                                 }
@@ -79,7 +79,7 @@ public class DamageCalculation : NumericalSolver
                     {
                         if (appliesTo == DamageType.All || subcalculation.DamageType.HasFlag(appliesTo))
                         {
-                            (subcalculation.Modifiers[1] as Solver<float>).Modifiers.Add(modifier as IDataContainer<float>);
+                            (subcalculation.Modifiers[1] as Solver<float>).Modifiers.Add(modifier);
                         }
                     }
                     break;
@@ -90,7 +90,7 @@ public class DamageCalculation : NumericalSolver
                     {
                         if (appliesTo == DamageType.All || subcalculation.DamageType.HasFlag(appliesTo))
                         {
-                            subcalculation.Modifiers.Add(modifier as IDataContainer<float>);
+                            subcalculation.Modifiers.Add(modifier);
                         }
                     }
                     break;

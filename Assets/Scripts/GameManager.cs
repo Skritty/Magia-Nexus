@@ -249,7 +249,7 @@ public class GameManager : Singleton<GameManager>
 
         string name = string.Join(" ", args);
         bool found = false;
-        foreach (ViewableGameAsset asset in viewableGameAssets)
+        foreach (ViewableGameAsset asset in allGameAssets)
         {
             if (!asset.NameMatch(name)) continue;
             message += asset.name + ": " + asset.info;
@@ -273,6 +273,7 @@ public class GameManager : Singleton<GameManager>
         foreach (string guid in AssetDatabase.FindAssets("t:ViewableGameAsset", new string[] { "Assets/Data/ViewableGameAssets" }))
         {
             ViewableGameAsset asset = (ViewableGameAsset)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(guid), typeof(ViewableGameAsset));
+            if (asset == null) continue;
             if(!asset.hidden) viewableGameAssets.Add(asset);
             allGameAssets.Add(asset);
         }

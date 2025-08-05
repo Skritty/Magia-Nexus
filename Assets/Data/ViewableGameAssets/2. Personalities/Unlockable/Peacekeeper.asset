@@ -16,9 +16,11 @@ MonoBehaviour:
   - Peacekeeper
   info: Targets whoever has attacked the most.
   image: {fileID: 0}
-  hidden: 0
-  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  hidden: 1
+  UIColor: {r: 0.5345911, g: 0.5345911, b: 0.5345911, a: 1}
   targeting:
+    rid: -2
+  movement:
     rid: -2
   references:
     version: 2

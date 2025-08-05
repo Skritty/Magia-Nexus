@@ -76,9 +76,9 @@ public class NumericalSolver : Solver<float>, ICalculationComponent
         }
     }
 
-    public new NumericalSolver Clone()
+    public NumericalSolver Clone()
     {
-        NumericalSolver clone = (NumericalSolver)base.Clone();
+        NumericalSolver clone = (NumericalSolver)MemberwiseClone();
         clone.Step = Step;
         return clone;
     }

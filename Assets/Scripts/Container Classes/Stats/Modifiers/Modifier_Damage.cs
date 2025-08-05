@@ -12,9 +12,8 @@ public class Modifier_Damage : Modifier<float>, IHasDamageTypes, ICalculationCom
     public DamageType AppliesTo { get; private set; }
     [field: SerializeField, FoldoutGroup("@GetType()"), HideIf("@Step != CalculationStep.Flat")]
     public DamageType DamageType { get; private set; }
-    
 
-public Modifier_Damage() { }
+    public Modifier_Damage() { }
 
     public Modifier_Damage(float value = default, CalculationStep step = CalculationStep.Flat, DamageType appliesTo = DamageType.True, DamageType damageType = DamageType.True, IStat<float> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false,

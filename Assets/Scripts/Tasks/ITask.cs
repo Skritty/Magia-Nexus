@@ -2,12 +2,12 @@ using System;
 
 public interface ITask<Data>
 {
-    public bool DoTask(Data data) => false;
+    public bool DoTask(Data data);
 }
 
 public interface ITaskOwned<Owner, Data> : ITask<Data>
 {
-    public bool DoTask(Owner owner, Data data) => false;
+    public bool DoTask(Owner owner, Data data);
 }
 
 public class Task_Script<Data> : ITask<Data>

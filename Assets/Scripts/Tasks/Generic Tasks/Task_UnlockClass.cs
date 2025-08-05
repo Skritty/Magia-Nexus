@@ -9,4 +9,7 @@ public class Task_UnlockClass<T> : ITaskOwned<Viewer, T>
         viewer.unlockedClasses.Add(classUnlock);
         return true;
     }
+
+    public bool DoTask(Viewer owner, T data) => false;
+    public bool DoTask(T data) => false;
 }

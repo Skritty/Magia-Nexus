@@ -7,7 +7,7 @@ using UnityEngine;
 public class ListStat<T> : IModifiable<T>, IEnumerable<T>
 {
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()")]
-    public List<IDataContainer<T>> Modifiers { get; protected set; } = new();
+    public List<IDataContainer<T>> Modifiers { get; set; } = new();
     public int Count => Modifiers.Count;
 
     public IEnumerator<T> GetEnumerator()
@@ -102,5 +102,12 @@ public class ListStat<T> : IModifiable<T>, IEnumerable<T>
             return true;
         }
         return false;
+    }
+
+    public IModifiable Clone(bool preserveModifiers)
+    {
+        IModifiable<T> clone = (IModifiable<T>)MemberwiseClone();
+        if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
+        return clone;
     }
 }

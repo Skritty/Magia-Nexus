@@ -7,11 +7,12 @@ public interface IModifiable
     public bool TryAdd(IDataContainer modifier);
     public void Remove(IDataContainer modifier);
     public bool Contains(IDataContainer modifier, out int count);
+    public IModifiable Clone(bool preserveModifiers);
 }
 
 public interface IModifiable<T> : IModifiable
 {
-    public List<IDataContainer<T>> Modifiers { get; }
+    public List<IDataContainer<T>> Modifiers { get; set; }
     public void Add(IDataContainer<T> modifier);
 }
 
@@ -46,7 +47,7 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
     }
 
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
-    public List<IDataContainer<T>> Modifiers { get; protected set; } = new();
+    public List<IDataContainer<T>> Modifiers { get; set; } = new();
 
     public bool Get<Type>(out Type data)
     {
@@ -54,20 +55,22 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
         return data != null;
     }
 
-    public virtual System.Action Add(T value)
+    public System.Action Add(T value)
     {
         DataContainer<T> data = new DataContainer<T>(value);
-        Modifiers.Add(data);
-        changed = true;
+        Add(data);
         return () => Modifiers.Remove(data);
     }
 
     public bool TryAdd(IDataContainer modifier)
     {
-        IDataContainer<T> cast = (IDataContainer<T>)modifier;
-        if (cast == null) return false;
-        Modifiers.Add(cast);
-        changed = true;
+        IDataContainer<T> cast = modifier as IDataContainer<T>;
+        if (cast == null)
+        {
+            Debug.LogWarning($"{modifier} failed to add!");
+            return false;
+        }
+        Add(cast);
         return true;
     }
 
@@ -99,10 +102,10 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
     public abstract void Solve();
     public virtual void InverseSolve() { /* TODO: contribution via inverse solve */ }
 
-    public Solver<T> Clone()
+    public IModifiable Clone(bool preserveModifiers)
     {
-        Solver<T> clone = (Solver<T>)MemberwiseClone();
-        clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
+        IModifiable<T> clone = (IModifiable<T>)MemberwiseClone();
+        if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
         return clone;
     }
 

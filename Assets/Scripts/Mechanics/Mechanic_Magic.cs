@@ -18,7 +18,7 @@ public class Mechanic_Magic : Mechanic<Mechanic_Magic>
     public VFX vfx;
     private GraphicsBuffer runeInfo;
 
-    protected override void Initialize()
+    public override void Initialize()
     {
         if (vfx)
         {

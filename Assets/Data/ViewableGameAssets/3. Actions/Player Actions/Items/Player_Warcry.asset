@@ -40,37 +40,38 @@ MonoBehaviour:
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
           rid: 4023383614162207389
         modifier:
-          rid: 4023383614162207390
+          rid: 4023383637585821889
     - rid: 4023383614162207389
       type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-        entitiesAffected: 8
+        entitiesAffected: 5
         sortingMethod: 1
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
         radius: 6
         angle: 180
-    - rid: 4023383614162207390
-      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
+    - rid: 4023383637585821889
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 0.05
         <StatTag>k__BackingField:
-          rid: 4023383614162207391
-        <Alignment>k__BackingField: 1
+          rid: 4023383637585821890
+        <Alignment>k__BackingField: 0
         <MaxStacks>k__BackingField: 20
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
-        <TickDuration>k__BackingField: 500
+        <TickDuration>k__BackingField: 0
         <RefreshDuration>k__BackingField: 0
         <Step>k__BackingField: 1
         <AppliesTo>k__BackingField: 8192
         <DamageType>k__BackingField: 0
-    - rid: 4023383614162207391
+    - rid: 4023383637585821890
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []

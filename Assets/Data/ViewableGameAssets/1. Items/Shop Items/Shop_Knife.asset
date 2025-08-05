@@ -32,30 +32,31 @@ MonoBehaviour:
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
+        propagateTarget: 0
         targetSelector:
           rid: 4023383574376350584
         modifier:
-          rid: 4023383574376350585
+          rid: 4023383637585821883
     - rid: 4023383574376350584
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383574376350585
-      type: {class: DamageModifier, ns: , asm: Assembly-CSharp}
+    - rid: 4023383637585821883
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 10
         <StatTag>k__BackingField:
-          rid: 4023383574376350592
+          rid: 4023383637585821884
         <Alignment>k__BackingField: 0
-        <MaxStacks>k__BackingField: 10
+        <MaxStacks>k__BackingField: 0
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
         <TickDuration>k__BackingField: 0
         <RefreshDuration>k__BackingField: 0
         <Step>k__BackingField: 0
         <AppliesTo>k__BackingField: 2
-        <DamageType>k__BackingField: 3
-    - rid: 4023383574376350592
+        <DamageType>k__BackingField: 2
+    - rid: 4023383637585821884
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []
