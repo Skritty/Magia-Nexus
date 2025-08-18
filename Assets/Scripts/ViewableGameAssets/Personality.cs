@@ -9,12 +9,19 @@ public class Personality : ViewableGameAsset
     public Targeting movement;
     [SerializeReference]
     public MovementDirectionSelector movementSelector;
+    [SerializeReference]
+    public Trigger conditionalTrigger;
+
+    public void Initialize(Entity entity)
+    {
+        SetPersonality(entity);
+        conditionalTrigger?.SubscribeToTasks(entity, entity);
+    }
 
     public void SetPersonality(Entity entity)
     {
         entity.Stat<Stat_TargetingMethod>().Add(targeting);
         entity.Stat<Stat_MovementTargetingMethod>().Add(movement);
         entity.Stat<Stat_MovementSelector>().Add(movementSelector);
-        // TODO: conditional targeting
     }
 }

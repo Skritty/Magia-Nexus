@@ -14,16 +14,78 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Antimage
-  info: Targets whoever has cast the most spells recently.
+  info: Targets whoever has cast the most spells recently and approaches them.
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.5345911, g: 0.5345911, b: 0.5345911, a: 1}
   targeting:
-    rid: -2
+    rid: 4023383929818972804
   movement:
-    rid: -2
+    rid: 4023383929818972831
+  movementSelector:
+    rid: 4023383929818972824
+  conditionalTrigger:
+    rid: 4023383929818972263
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 4023383929818972263
+      type: {class: Trigger_SpellCast, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383929818972808
+    - rid: 4023383929818972804
+      type: {class: Targeting_StatSortedInt, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        stat:
+          rid: 4023383929818972826
+    - rid: 4023383929818972808
+      type: {class: 'Task_Filter_CountEffect`1[[Spell, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        counter:
+          rid: 4023383929818972819
+        threshold: 0
+        selector: 1
+    - rid: 4023383929818972819
+      type: {class: Stat_Counter_Spellcasts, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+    - rid: 4023383929818972824
+      type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383929818972825
+        movementSpeedMultiplier: 1
+        distanceFromTarget: 1.5
+        threshold: 0.25
+    - rid: 4023383929818972825
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383929818972826
+      type: {class: Stat_Counter_Spellcasts, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+    - rid: 4023383929818972831
+      type: {class: Targeting_StatSortedInt, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 8
+        sortingMethod: 4
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        stat:
+          rid: 4023383929818972832
+    - rid: 4023383929818972832
+      type: {class: Stat_Counter_Spellcasts, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []

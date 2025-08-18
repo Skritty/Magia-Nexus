@@ -22,8 +22,33 @@ MonoBehaviour:
     rid: -2
   movement:
     rid: -2
+  movementSelector:
+    rid: -2
+  conditionalTrigger:
+    rid: 4023383929818972237
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 4023383929818972237
+      type: {class: Trigger_ActionStart, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383929818972247
+    - rid: 4023383929818972247
+      type: {class: 'Task_Switch`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        filterTasks: []
+        falseTasks:
+        - rid: 4023383929818972250
+        trueTasks:
+        - rid: 4023383929818972251
+    - rid: 4023383929818972250
+      type: {class: 'Task_SetPersonality`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        personality: {fileID: 11400000}
+    - rid: 4023383929818972251
+      type: {class: 'Task_SetPersonality`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        personality: {fileID: 11400000, guid: ad2337ddf219e6443aec7379c0271a17, type: 2}

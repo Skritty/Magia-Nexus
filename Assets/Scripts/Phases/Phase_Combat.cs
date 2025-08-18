@@ -51,7 +51,7 @@ public abstract class Phase_Combat : Phase
             spawn.owner.roundPoints = 0;
             entity.Stat<Stat_Team>().Add(spawn.team);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
-            spawn.owner.personality.SetPersonality(entity);
+            spawn.owner.personality.Initialize(entity);
             cleanup += Trigger_Die.Subscribe(TrackKill, entity);
             foreach (Item item in spawn.owner.items)
             {

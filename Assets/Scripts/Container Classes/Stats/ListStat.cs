@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using TwitchLib.Api.Helix.Models.Search;
 using UnityEngine;
 
 public class ListStat<T> : IModifiable<T>, IEnumerable<T>
@@ -18,6 +17,15 @@ public class ListStat<T> : IModifiable<T>, IEnumerable<T>
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    public T this[int index]
+    {
+        get
+        {
+            if (Modifiers.Count == 0) return default;
+            return Modifiers[index].Value;
+        }
     }
 
     public List<T> ToList

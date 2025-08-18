@@ -99,7 +99,14 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
         return false;
     }
 
-    public abstract void Solve();
+    public virtual void Solve()
+    {
+        foreach(IDataContainer<T> modifier in Modifiers)
+        {
+            _value = modifier.Value;
+            return;
+        }
+    }
     public virtual void InverseSolve() { /* TODO: contribution via inverse solve */ }
 
     public IModifiable Clone(bool preserveModifiers)

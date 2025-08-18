@@ -30,16 +30,16 @@ public class Entity : MonoBehaviour
         return s;
     }
 
-    public IStat Stat(IModifier modifier)
+    public IStat Stat(IStat tag)
     {
         foreach (IStat s in stats)
         {
-            if (s.GetType() == modifier.Tag.GetType())
+            if (s.GetType() == tag.GetType())
             {
                 return s;
             }
         }
-        IStat newStat = (IStat)Activator.CreateInstance(modifier.Tag.GetType());
+        IStat newStat = (IStat)Activator.CreateInstance(tag.GetType());
         stats.Add(newStat);
         return newStat;
     }
@@ -59,10 +59,10 @@ public class Entity : MonoBehaviour
 
     public void TryAddModifier(IModifier modifier, int overrideTickDuration = -1)
     {
-        AddModifier(modifier, Stat(modifier), overrideTickDuration);
+        AddModifier(modifier, Stat(modifier.Tag), overrideTickDuration);
     }
 
-    public void AddModifier<T>(IModifier<T> modifier, int overrideTickDuration = -1) => AddModifier(modifier, Stat(modifier), overrideTickDuration);
+    public void AddModifier<T>(IModifier<T> modifier, int overrideTickDuration = -1) => AddModifier(modifier, Stat(modifier.Tag), overrideTickDuration);
 
     public void AddModifier<T, StatTag>(IDataContainer<T> modifier, int overrideTickDuration = -1) where StatTag : IStat<T>
     {
