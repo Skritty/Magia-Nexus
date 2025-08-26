@@ -16,7 +16,7 @@ public class Rune_Fire : Rune
     public float explosionRadiusPerStack;
 
     [Header("Spell Shape")]
-    [FoldoutGroup("Circle")]
+    [SerializeReference, FoldoutGroup("Circle")]
     public Effect_Damage circleEffect;
     [FoldoutGroup("Circle")]
     public Entity circleProxy;
@@ -27,7 +27,7 @@ public class Rune_Fire : Rune
     [FoldoutGroup("Circle")]
     public float circleModMultiplierPerStage;
 
-    [FoldoutGroup("Conjuration")]
+    [SerializeReference, FoldoutGroup("Conjuration")]
     public Modifier_Damage multiplierPerConjureUse;
 
     [FoldoutGroup("Line")]
@@ -89,6 +89,8 @@ public class Rune_Fire : Rune
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
+        spell.EffectMultiplier += 0.5f;
+        return;
         switch (spell.shape)
         {
             case SpellShape.Circle:

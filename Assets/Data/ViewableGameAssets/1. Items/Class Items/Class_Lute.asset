@@ -15,16 +15,19 @@ MonoBehaviour:
   aliases:
   - Lute
   - Bard
-  info: 'You have unlimited actions
-
-    Only do your next action when an ally does
-    an action (0.1s cooldown)'
+  info: Using a rune immediately invokes that rune.
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.5849056, g: 0.43794626, b: 0.27038085, a: 1}
   cost: 0
   craftingRecipe: []
-  grantedActions: []
+  grantedActions:
+  - {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
+  - {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
+  - {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
+  - {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
+  - {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
+  - {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
@@ -32,8 +35,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 4023383616259883180
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
@@ -55,8 +56,6 @@ MonoBehaviour:
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
-        trigger:
-          rid: -2
     - rid: 4023383616259883181
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

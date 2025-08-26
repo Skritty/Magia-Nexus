@@ -5,11 +5,11 @@ public class Stat_Switches : DictionaryStat<object, bool>, IStat<bool> { }
 public class Task_Switch<T> : ITaskOwned<Entity, T>
 {
     [SerializeReference]
-    public List<ITask<T>> filterTasks;
+    public List<ITask<T>> filterTasks = new List<ITask<T>>();
     [SerializeReference]
-    public List<ITask<T>> falseTasks;
+    public List<ITask<T>> falseTasks = new List<ITask<T>>();
     [SerializeReference]
-    public List<ITask<T>> trueTasks;
+    public List<ITask<T>> trueTasks = new List<ITask<T>>();
 
     public bool DoTask(T data) => false;
     public bool DoTask(Entity owner, T data)

@@ -24,7 +24,8 @@ MonoBehaviour:
   UIColor: {r: 0.6855345, g: 0.3426424, b: 0.20910947, a: 1}
   cost: 0
   craftingRecipe: []
-  grantedActions: []
+  grantedActions:
+  - {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
   grantedPersonalities: []
   actionCountModifier: 1
   itemEffects:

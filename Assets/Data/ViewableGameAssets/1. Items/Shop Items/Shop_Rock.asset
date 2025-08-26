@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Shop_Rock
   m_EditorClassIdentifier: 
-  aliases: []
+  aliases:
+  - Rock
   info: Slows you by 2% per held rock. Grants the [Stone] action, which throws the
     rock to stun enemies (the rock is expended).
   image: {fileID: 0}

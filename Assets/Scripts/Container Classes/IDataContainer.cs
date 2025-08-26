@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IDataContainer
 {
+    public bool IsDefaultValue();
     public bool Get<Type>(out Type data);
 }
 
@@ -15,6 +16,7 @@ public interface IDataContainer<T> : IDataContainer
 [Serializable]
 public abstract class DataContainer : IDataContainer
 {
+    public abstract bool IsDefaultValue();
     public abstract bool Get<Type>(out Type data);
 }
 
@@ -28,6 +30,7 @@ public class DataContainer<T> : DataContainer, IDataContainer<T>
     {
         Value = value;
     }
+    public override bool IsDefaultValue() => Value.Equals(default(T));
     public override bool Get<Type>(out Type data)
     {
         data = (Type)(Value as object);

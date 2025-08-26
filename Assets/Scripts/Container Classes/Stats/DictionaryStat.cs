@@ -23,7 +23,7 @@ public class DictionaryStat<Key, Value> : IModifiable<Value>, IEnumerable<Value>
     {
         get
         {
-            if (ModifierDictionary.Count == 0 || ModifierDictionary.ContainsKey(key)) return default;
+            if (ModifierDictionary.Count == 0 || !ModifierDictionary.ContainsKey(key)) return default;
             return ModifierDictionary[key].Value;
         }
         set

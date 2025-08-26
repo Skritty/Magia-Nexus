@@ -20,6 +20,7 @@ public interface ISolver<T>
 {
     public void Solve();
     public void InverseSolve();
+    public void MarkAsChanged();
 }
 
 public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>, ISerializationCallbackReceiver
@@ -49,10 +50,20 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
     public List<IDataContainer<T>> Modifiers { get; set; } = new();
 
+    public bool IsDefaultValue() => Value.Equals(default(T));
     public bool Get<Type>(out Type data)
     {
         data = (Type)(Value as object);
         return data != null;
+    }
+
+    public void MarkAsChanged()
+    {
+        changed = true;
+        foreach (IDataContainer<T> modifier in Modifiers)
+        {
+            (modifier as ISolver<T>)?.MarkAsChanged();
+        }
     }
 
     public System.Action Add(T value)

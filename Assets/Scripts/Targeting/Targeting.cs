@@ -19,6 +19,8 @@ public enum TargetSorting
 }
 
 public enum EffectTargetingSelector { Owner, Target }
+public class Stat_LockTarget : BooleanPrioritySolver, IStat<bool> { }
+public class Stat_LockedTargets : ListPrioritySolver<Entity>, IStat<List<Entity>> { }
 
 [Serializable]
 public abstract class Targeting
@@ -27,6 +29,21 @@ public abstract class Targeting
     public abstract List<Entity> GetTargets(Entity owner, Entity proxy = null);
     public virtual List<Entity> GetTargets<T>(T triggerData, Entity owner, Entity proxy = null)
     {
+        if (owner.Stat<Stat_LockTarget>().Value)
+        {
+            List<Entity> lockedTargets = owner.Stat<Stat_LockedTargets>().Value;
+            if (lockedTargets == null)
+            {
+                lockedTargets = new List<Entity>();
+                owner.Stat<Stat_LockedTargets>().Add(lockedTargets);
+            }
+            lockedTargets.RemoveAll(x => x == null || x.gameObject.activeSelf == false);
+            if (lockedTargets.Count == 0)
+            {
+                lockedTargets.AddRange(GetTargets(owner, proxy));
+            }
+            return lockedTargets;
+        }
         return GetTargets(owner, proxy);
     }
     protected void AddToIgnored(Entity owner, Entity target)
@@ -51,6 +68,8 @@ public abstract class MultiTargeting : Targeting
     public TargetFilter entitiesAffected = TargetFilter.Enemies;
     public TargetSorting sortingMethod = TargetSorting.Unsorted;
     //public Vector2 targetingRange;
+    public bool lineOfSight;
+    public bool ignoreIntangeable;
     public int numberOfTargets = -1;
     public Vector3 offset;
     public VFX vfx;
@@ -77,6 +96,7 @@ public abstract class MultiTargeting : Targeting
         bool firstTarget = true;
         foreach (Entity entity in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
         {
+            if (!ignoreIntangeable && entity.Stat<Stat_Intangable>().Value) continue;
             // Can it be targeted?
             if (entity.Stat<Stat_Untargetable>().Contains((owner, this))) continue;
 
@@ -98,6 +118,7 @@ public abstract class MultiTargeting : Targeting
                 targetType = TargetFilter.Allies;
             }
             if (!entitiesAffected.HasFlag(targetType)) continue;
+            if (lineOfSight) if (Physics.Raycast(owner.transform.position + offset, entity.transform.position - (owner.transform.position + offset))) continue;
             if (!IsValidTarget(owner, proxy, entity, firstTarget)) continue;
             if (firstTarget) firstTarget = false;
 

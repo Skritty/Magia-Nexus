@@ -19,10 +19,8 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.5521559, g: 0.3831335, b: 0.72955966, a: 1}
-  cost: 0
-  craftingRecipe:
-  - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
-  - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
+  cost: 30
+  craftingRecipe: []
   grantedActions: []
   grantedPersonalities: []
   actionCountModifier: 0

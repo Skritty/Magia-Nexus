@@ -14,41 +14,96 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Friendly
-  info: Targets the closest ally.
+  info: Targets the closest ally and stays near them.
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.48129022, g: 0.98742133, b: 0.5055348, a: 1}
   targeting:
-    rid: -2
+    rid: 4023383958333161477
   movement:
-    rid: -2
+    rid: 4023383958333161478
   movementSelector:
-    rid: -2
+    rid: 4023383958333161479
   conditionalTrigger:
-    rid: 4023383929818972237
+    rid: 4023383958333161505
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 4023383929818972237
-      type: {class: Trigger_ActionStart, ns: , asm: Assembly-CSharp}
+    - rid: 4023383958333161477
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 4
+        sortingMethod: 2
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+    - rid: 4023383958333161478
+      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 4
+        sortingMethod: 2
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+    - rid: 4023383958333161479
+      type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383958333161480
+        movementSpeedMultiplier: 1
+        distanceFromTarget: 1.5
+        threshold: 0.25
+    - rid: 4023383958333161480
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383958333161505
+      type: {class: Trigger_MovementDirectionCalc, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 4023383929818972247
-    - rid: 4023383929818972247
-      type: {class: 'Task_Switch`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+        - rid: 4023383958333161506
+    - rid: 4023383958333161506
+      type: {class: 'Task_Switch`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
-        filterTasks: []
+        filterTasks:
+        - rid: 4023383958333161508
         falseTasks:
-        - rid: 4023383929818972250
+        - rid: 4023383958333161511
         trueTasks:
-        - rid: 4023383929818972251
-    - rid: 4023383929818972250
-      type: {class: 'Task_SetPersonality`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+        - rid: 4023383958333161512
+    - rid: 4023383958333161508
+      type: {class: 'Task_Filter_EntityStatHasDefaultValue`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        invert: 0
+        statReferenceModifier:
+          rid: 4023383958333161509
+    - rid: 4023383958333161509
+      type: {class: Modifier_Entity, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: {fileID: 0}
+        <StatTag>k__BackingField:
+          rid: 4023383958333161510
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Priority>k__BackingField: 0
+    - rid: 4023383958333161510
+      type: {class: Stat_MovementTarget, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Priority>k__BackingField: 0
+    - rid: 4023383958333161511
+      type: {class: 'Task_SetPersonality`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
         personality: {fileID: 11400000}
-    - rid: 4023383929818972251
-      type: {class: 'Task_SetPersonality`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+    - rid: 4023383958333161512
+      type: {class: 'Task_SetPersonality`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
         personality: {fileID: 11400000, guid: ad2337ddf219e6443aec7379c0271a17, type: 2}

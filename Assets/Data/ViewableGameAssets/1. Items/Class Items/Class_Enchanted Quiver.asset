@@ -27,90 +27,117 @@ MonoBehaviour:
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 1083524283774009411
+  - rid: 4023384115454673452
+  - rid: 4023384115454673459
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1083524283774009411
+    - rid: 4023384115454673452
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023384115454673453
+        modifier:
+          rid: 4023384115454673457
+    - rid: 4023384115454673453
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023384115454673457
+      type: {class: Modifier_Numerical, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 2
+        <StatTag>k__BackingField:
+          rid: 4023384115454673458
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 1
+    - rid: 4023384115454673458
+      type: {class: Stat_Projectiles, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0
+    - rid: 4023384115454673459
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 1083524283774009412
+          rid: 4023384115454673460
         triggerOnce: 0
         triggerOrder: 0
         bindingObject: 2
         triggerModifier:
           <Value>k__BackingField:
-            rid: 4023383639793074472
+            rid: 4023384115454673461
           <StatTag>k__BackingField:
-            rid: 4023383639793074478
+            rid: 4023384115454673462
           <Alignment>k__BackingField: 0
           <MaxStacks>k__BackingField: 0
           <StacksAdded>k__BackingField: 1
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
-        trigger:
-          rid: -2
-    - rid: 1083524283774009412
+    - rid: 4023384115454673460
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383639793074472
+    - rid: 4023384115454673461
       type: {class: Trigger_ProjectileCreated, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 4023383639793074473
-    - rid: 4023383639793074473
-      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
+        - rid: 4023384115454673469
+    - rid: 4023384115454673462
+      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
       data:
-        useTargetAsProxy: 0
-        propagateTarget: 1
-        targetSelector:
-          rid: 4023383639793074474
-        triggerOnce: 0
-        triggerOrder: 1
-        bindingObject: 2
-        triggerModifier:
-          <Value>k__BackingField:
-            rid: -2
-          <StatTag>k__BackingField:
-            rid: -2
-          <Alignment>k__BackingField: 0
-          <MaxStacks>k__BackingField: 0
-          <StacksAdded>k__BackingField: 1
-          <PerPlayer>k__BackingField: 0
-          <TickDuration>k__BackingField: 0
-          <RefreshDuration>k__BackingField: 0
-        trigger:
-          rid: 4023383639793074475
-    - rid: 4023383639793074474
-      type: {class: Targeting_TriggeredInherit, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        selector: 1
-    - rid: 4023383639793074475
-      type: {class: Trigger_MovementDirectionCalc, ns: , asm: Assembly-CSharp}
-      data:
-        tasks:
-        - rid: 4023383639793074476
-    - rid: 4023383639793074476
-      type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
+        <Modifiers>k__BackingField: []
+    - rid: 4023384115454673469
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383639793074477
-        homingRateDegreesPerSecond: 60
-    - rid: 4023383639793074477
+          rid: 4023384115454673470
+        modifier:
+          rid: 4023384115454673471
+    - rid: 4023384115454673470
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383639793074478
-      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
+    - rid: 4023384115454673471
+      type: {class: Modifier_MovementDirectionSelector, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField:
+          rid: 4023384115454673472
+        <StatTag>k__BackingField:
+          rid: 4023384115454673474
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Priority>k__BackingField: 1
+    - rid: 4023384115454673472
+      type: {class: Movement_HomeToTarget, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 1
+        targetSelector:
+          rid: 4023384115454673473
+        homingRateDegreesPerSecond: 60
+    - rid: 4023384115454673473
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023384115454673474
+      type: {class: Stat_MovementSelector, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []
+        <Priority>k__BackingField: 0

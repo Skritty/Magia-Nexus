@@ -14,41 +14,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Crystal
-  info: +5% spell damage
+  info: 5% increased spell damage
   image: {fileID: 0}
   hidden: 0
-  UIColor: {r: 0.40566027, g: 0.8569824, b: 1, a: 1}
-  cost: 10
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  cost: 20
   craftingRecipe: []
   grantedActions: []
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 4023383621529763840
+  - rid: 4023384113744707776
   references:
     version: 2
     RefIds:
-    - rid: 4023383621529763840
+    - rid: 4023384113744707776
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383621529763841
+          rid: 4023384113744707777
         modifier:
-          rid: 4023383621529763843
-    - rid: 4023383621529763841
+          rid: 4023384113744707778
+    - rid: 4023384113744707777
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383621529763843
+    - rid: 4023384113744707778
       type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 0.05
         <StatTag>k__BackingField:
-          rid: 4023383621529763844
+          rid: 4023384113744707779
         <Alignment>k__BackingField: 0
-        <MaxStacks>k__BackingField: 0
+        <MaxStacks>k__BackingField: 10
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
         <TickDuration>k__BackingField: 0
@@ -56,8 +56,7 @@ MonoBehaviour:
         <Step>k__BackingField: 1
         <AppliesTo>k__BackingField: 16384
         <DamageType>k__BackingField: 0
-    - rid: 4023383621529763844
+    - rid: 4023384113744707779
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 0

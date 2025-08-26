@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Stone
+  - Rock
   info: Throws a rock at your target, dealing 50 bludgeoning damage and stunning
     for 0.5s.
   image: {fileID: 0}

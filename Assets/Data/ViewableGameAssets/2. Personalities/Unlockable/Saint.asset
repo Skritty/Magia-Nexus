@@ -18,12 +18,22 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.5345911, g: 0.5345911, b: 0.5345911, a: 1}
+  lockTarget: 0
+  lockMovementTarget: 0
   targeting:
     rid: -2
   movement:
     rid: -2
+  movementSelector:
+    rid: -2
+  conditionalTrigger:
+    rid: 4023383958333161552
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 4023383958333161552
+      type: {class: Trigger_BuffGained, ns: , asm: Assembly-CSharp}
+      data:
+        tasks: []

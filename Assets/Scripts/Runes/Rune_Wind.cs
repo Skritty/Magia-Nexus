@@ -14,7 +14,7 @@ public class Rune_Wind : Rune
     [SerializeReference]
     public EffectTask magicEffectModifier;
 
-    [Header("Spell Shape")]
+    [SerializeReference, Header("Spell Shape")]
     public Effect_Damage lineEffect;
 
     public override void MagicEffect(DamageInstance damage, int currentRuneIndex)
@@ -37,6 +37,8 @@ public class Rune_Wind : Rune
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
+        spell.EffectMultiplier += 0.5f;
+        return;
         switch (spell.shape)
         {
             case SpellShape.Circle:

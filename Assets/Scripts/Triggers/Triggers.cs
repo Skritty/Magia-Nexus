@@ -13,7 +13,39 @@ public class Trigger_ModifierGained : Trigger<Trigger_ModifierGained, IModifier>
 public class Trigger_ModifierLost : Trigger<Trigger_ModifierLost, IModifier> { }
 public class Trigger_BuffGained : Trigger<Trigger_BuffGained, IModifier> { }
 public class Trigger_BuffLost : Trigger<Trigger_BuffLost, IModifier> { }
-public class Trigger_DebuffGained : Trigger<Trigger_DebuffGained, IModifier> { }
+public class Trigger_DebuffGained : Trigger<Trigger_DebuffGained, IModifier>//, IDataContainer<IModifier>, IDataContainer<int> OR IDataContainer_Counter(<int>)
+{
+    /*IModifier _modifier;
+    IModifier IDataContainer<IModifier>.Value => _modifier;
+    int _i;
+    int IDataContainer<int>.Value => _i;
+
+    public bool Get<Type>(out Type data)
+    {
+        IDataContainer<Type> dataContainer = (IDataContainer<Type>)this;
+        if (dataContainer != null)
+        {
+            data = dataContainer.Value;
+            return true;
+        }
+        data = default;
+        return false;
+    }
+
+    public Trigger_DebuffGained(IModifier modifier = null, int i = 0, params object[] bindingObjects) 
+    {
+        _modifier = modifier;
+        _i = i;
+        Invoke(null, bindingObjects);
+    }
+
+    public bool IsDefaultValue()
+    {
+        new Trigger_DebuffGained(null, 19);
+        Trigger_DebuffGained.Invoke(null);
+        return new Trigger_DebuffGained().Get(out IModifier data);
+    }*/
+}
 public class Trigger_DebuffLost : Trigger<Trigger_DebuffLost, IModifier> { }
 public class Trigger_GameEnd : Trigger<Trigger_GameEnd, Viewer> { }
 public class Trigger_RoundEnd : Trigger<Trigger_RoundEnd, Viewer> { }

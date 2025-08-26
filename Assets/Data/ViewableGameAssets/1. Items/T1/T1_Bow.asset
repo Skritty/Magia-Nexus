@@ -18,14 +18,11 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.9559748, g: 0.8915088, b: 0.8086705, a: 1}
-  cost: 0
-  craftingRecipe:
-  - {fileID: 11400000, guid: da2ae0772fe25054fa22f8e7e1cd63e9, type: 2}
-  - {fileID: 11400000, guid: da2ae0772fe25054fa22f8e7e1cd63e9, type: 2}
-  - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
+  cost: 20
+  craftingRecipe: []
   grantedActions:
   - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects: []
   references:

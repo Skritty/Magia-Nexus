@@ -37,7 +37,7 @@ public class Effect_AddTrigger : EffectTask
         Trigger_ModifierGained.Subscribe(x => 
         {
             // Subscribe to trigger if its the first modifier
-            if(!owner.Stat<Stat_Triggers>().Contains(triggerModifier, out _))
+            if(owner.Stat<Stat_Triggers>().Contains(triggerModifier, out int count) && count == 1)
             {
                 triggerCleanup += triggerModifier.Value.SubscribeToTasks(target, binding, triggerOrder, triggerOnce);
             }

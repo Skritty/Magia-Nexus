@@ -10,13 +10,15 @@ public class Rune_Order : Rune
     public EffectTask buff;
     [SerializeReference]
     public EffectTask debuff;
+    [SerializeReference]
     public Effect_RemoveModifier effectModifier;
 
-    [Header("Spell Shape")]
+    [SerializeReference, Header("Spell Shape")]
     public Effect_Summon createSummons;
     public SerializedDictionary<RuneElement, Action> summonRunes = new();
     public Action invoke;
     public Action move;
+    [SerializeReference]
     public EffectTask meleeOverride;
     public float lifeMultiplier;
     public float damageMultiplier;
@@ -89,6 +91,8 @@ public class Rune_Order : Rune
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
+        spell.EffectMultiplier += 0.5f;
+        return;
         switch (spell.shape)
         {
             case SpellShape.Circle:

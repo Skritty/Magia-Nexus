@@ -1,16 +1,27 @@
 using UnityEngine;
-
-public abstract class Stat_Counter : DictionaryStat<object, int>, IStat<int> { }
-public class Stat_Counter_Spellcasts : Stat_Counter { }
+public class Effect_Counter : EffectTask
+{
+    [SerializeReference]
+    public Stat_Counter counter;
+    public EffectTargetSelector selector;
+    public int countIncrease;
+    public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
+    {
+        Entity entity = owner;
+        if (selector == EffectTargetSelector.Target) entity = target;
+        (owner.Stat(counter) as Stat_Counter)[entity] += countIncrease;
+    }
+}
 public class Task_Filter_Count<T> : ITaskOwned<Entity, T>
 {
     [SerializeReference]
     public Stat_Counter counter;
+    public int countIncrease;
     public int threshold;
     public bool DoTask(T data) => false;
     public bool DoTask(Entity owner, T data)
     {
-        if (++(owner.Stat(counter) as Stat_Counter)[this] >= threshold) return true;
+        if (((owner.Stat(counter) as Stat_Counter)[this] += countIncrease) >= threshold) return true;
         return false;
     }
 }
@@ -18,11 +29,12 @@ public class Task_Filter_CountData<T> : ITaskOwned<Entity, T>
 {
     [SerializeReference]
     public Stat_Counter counter;
+    public int countIncrease;
     public int threshold;
     public bool DoTask(T data) => false;
     public bool DoTask(Entity owner, T data)
     {
-        if (++(owner.Stat(counter) as Stat_Counter)[data] >= threshold) return true;
+        if (((owner.Stat(counter) as Stat_Counter)[data] += countIncrease) >= threshold) return true;
         return false;
     }
 }
@@ -35,6 +47,7 @@ public class Task_Filter_CountEffect<T> :
 {
     [SerializeReference]
     public Stat_Counter counter;
+    public int countIncrease;
     public int threshold;
     public EffectTargetSelector selector;
     
@@ -42,7 +55,7 @@ public class Task_Filter_CountEffect<T> :
     {
         Entity entity = data.Owner;
         if (selector == EffectTargetSelector.Target) entity = data.Target;
-        if (++(owner.Stat(counter) as Stat_Counter)[entity] >= threshold) return true;
+        if (((owner.Stat(counter) as Stat_Counter)[entity] += countIncrease) >= threshold) return true;
         return false;
     }
 

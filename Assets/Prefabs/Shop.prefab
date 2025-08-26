@@ -438,6 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ff2d3c99119b74ba2363d3831cfd9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: {fileID: 3802748791947466143}
   itemDisplayPrefab: {fileID: 5681345479888109855, guid: 41c874952e4c55a4a9dd28ba06cdb67d, type: 3}
   personalityDisplayPrefab: {fileID: 5681345479888109855, guid: d7d1b3bcb05e9a244b0e4b352043bd34, type: 3}
   itemDisplayLayout: {fileID: 4239878382228268123}

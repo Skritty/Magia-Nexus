@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Arrow
+  - Bow
   info: Fires an arrow at your target, dealing 80 damage
   image: {fileID: 0}
   hidden: 0
@@ -48,7 +49,7 @@ MonoBehaviour:
         numberOfProjectiles: 1
         ignoreAdditionalProjectiles: 0
         projectileFanType: 1
-        projectileFanAngle: 45
+        projectileFanAngle: 30
     - rid: 4023383589043568713
       type: {class: Targeting_Selected, ns: , asm: Assembly-CSharp}
       data:

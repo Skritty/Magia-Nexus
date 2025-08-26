@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Slash
+  - Sword
   info: Deal 160 slashing damage in a 1.75m cone.
   image: {fileID: 0}
   hidden: 0
@@ -112,6 +113,8 @@ MonoBehaviour:
         ignoreFrames: 0
         entitiesAffected: 8
         sortingMethod: 1
+        lineOfSight: 0
+        ignoreIntangeable: 0
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}

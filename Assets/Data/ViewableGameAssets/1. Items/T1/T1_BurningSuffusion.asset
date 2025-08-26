@@ -19,11 +19,8 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 1, g: 0.24823907, b: 0.009433806, a: 1}
-  cost: 0
-  craftingRecipe:
-  - {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
-  - {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
-  - {fileID: 11400000, guid: cf7cd7de6af40a84381d78a138533f34, type: 2}
+  cost: 80
+  craftingRecipe: []
   grantedActions: []
   grantedPersonalities: []
   actionCountModifier: 0
@@ -41,7 +38,7 @@ MonoBehaviour:
           rid: 4023383637585821903
         triggerOnce: 0
         triggerOrder: 0
-        bindingObject: 2
+        bindingObject: 1
         triggerModifier:
           <Value>k__BackingField:
             rid: 4023383639793074527
@@ -94,7 +91,6 @@ MonoBehaviour:
       type: {class: Stat_DamageOverTime, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 0
     - rid: 4023383639793074532
       type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
       data:

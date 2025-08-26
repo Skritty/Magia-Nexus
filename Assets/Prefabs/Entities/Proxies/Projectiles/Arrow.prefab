@@ -93,6 +93,10 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
+      propertyPath: managedReferences[4023383614162207430].rotate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
       propertyPath: managedReferences[4023383614162207435].length
       value: 0.8
       objectReference: {fileID: 0}
@@ -111,6 +115,10 @@ PrefabInstance:
     - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
       propertyPath: managedReferences[4023383614162207453].comparison
       value: 4023383614162207440
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
+      propertyPath: managedReferences[4023383614162207435].lineOfSight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
       propertyPath: managedReferences[4023383614162207438].finalDamage
@@ -186,7 +194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
       propertyPath: managedReferences[4023383614162207438].triggerPlayerCharacter
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
       propertyPath: managedReferences[4023383614162207438].preHit.tasks.Array.size
@@ -202,7 +210,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
       propertyPath: managedReferences[4023383614162207440].<TickDuration>k__BackingField
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7077477144875822046, guid: 150c3baafe90d054c8f59d7f6b9bbcd0, type: 3}
       propertyPath: managedReferences[4023383614162207438].<EffectMultiplier>k__BackingField

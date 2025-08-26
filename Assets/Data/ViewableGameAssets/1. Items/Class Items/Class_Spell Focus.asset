@@ -30,8 +30,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
   - {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
   - {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
-  grantedPersonalities:
-  - {fileID: 11400000, guid: 3e10401bb89e9654ca64c09cfa9848a3, type: 2}
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects: []
   references:

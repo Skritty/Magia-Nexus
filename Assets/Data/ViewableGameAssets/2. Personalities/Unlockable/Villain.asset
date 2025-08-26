@@ -18,12 +18,41 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.5345911, g: 0.5345911, b: 0.5345911, a: 1}
+  lockTarget: 0
+  lockMovementTarget: 0
   targeting:
     rid: -2
   movement:
     rid: -2
+  movementSelector:
+    rid: -2
+  conditionalTrigger:
+    rid: 4023383958333161561
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 4023383958333161561
+      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 4023383958333161562
+        - rid: 4023383958333161564
+    - rid: 4023383958333161562
+      type: {class: Effect_Hit, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 4023383958333161563
+        hit:
+          rid: -2
+    - rid: 4023383958333161563
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 4023383958333161564
+      type: {class: Task_Filter_DamageType, ns: , asm: Assembly-CSharp}
+      data:
+        damageTypes: 8192

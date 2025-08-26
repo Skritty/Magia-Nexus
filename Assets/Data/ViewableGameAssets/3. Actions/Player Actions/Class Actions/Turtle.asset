@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Turtle
-  info: Gain 1 block stack that prevents 80% of damage from a single hit. (Max 3
-    stacks, 2.5s duration)
+  info: 20% less damage taken. (Max 3 stacks, 1s duration)
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 1, g: 1, b: 1, a: 1}
@@ -32,40 +31,39 @@ MonoBehaviour:
   timing: 0
   effectMultiplier: 1
   effects:
-  - rid: 4023383616259883101
+  - rid: 4023384113744708261
   references:
     version: 2
     RefIds:
-    - rid: 4023383616259883101
+    - rid: 4023384113744708261
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383616259883102
+          rid: 4023384113744708262
         modifier:
-          rid: 4023383619086057561
-    - rid: 4023383616259883102
+          rid: 4023384113744708325
+    - rid: 4023384113744708262
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383619086057561
+    - rid: 4023384113744708325
       type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
-        <Value>k__BackingField: 0.2
+        <Value>k__BackingField: 0.8
         <StatTag>k__BackingField:
-          rid: 4023383642805371716
+          rid: 4023384113744708326
         <Alignment>k__BackingField: 1
-        <MaxStacks>k__BackingField: 0
+        <MaxStacks>k__BackingField: 3
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
-        <TickDuration>k__BackingField: 125
+        <TickDuration>k__BackingField: 50
         <RefreshDuration>k__BackingField: 0
         <Step>k__BackingField: 2
         <AppliesTo>k__BackingField: 0
         <DamageType>k__BackingField: 0
-    - rid: 4023383642805371716
+    - rid: 4023384113744708326
       type: {class: Stat_DamageTaken, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 0

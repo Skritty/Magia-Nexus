@@ -65,7 +65,7 @@ public abstract class Phase_Combat : Phase
             entity.GetMechanic<Mechanic_Actions>().actionsPerTurn = turnActionCount;
             for (int i = 0; i < turnActionCount; i++)
             {
-                entity.GetMechanic<Mechanic_Actions>().AddAction(spawn.owner.actions[i]);
+                entity.GetMechanic<Mechanic_Actions>().AddAction(i < spawn.owner.actions.Count ? spawn.owner.actions[i] : null);
             }
         }
     }

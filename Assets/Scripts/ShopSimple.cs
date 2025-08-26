@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
-using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
+using TMPro;
 using UnityEngine;
 
 public class ShopSimple : MonoBehaviour
 {
+    public TextMeshProUGUI players;
     public DisplayItem itemDisplayPrefab, personalityDisplayPrefab;
     public RectTransform itemDisplayLayout, personalityDisplayLayout;
     public float scrollSpeed;
@@ -51,6 +51,12 @@ public class ShopSimple : MonoBehaviour
 
     private void UpdateUI()
     {
+        players.text = "";
+        foreach (Viewer player in GameManager.Viewers)
+        {
+            players.text += player.viewerName + "\n";
+        }
+
         if(itemDisplayLayout.childCount >= 18)
         {
             Vector3 offset = itemDisplayLayout.offsetMax;
@@ -101,13 +107,13 @@ public class ShopSimple : MonoBehaviour
 
     private ViewableGameAsset GetViewableAssetFromNameOrID(string itemNameOrID)
     {
-        int.TryParse(itemNameOrID, out int id);
+        /*int.TryParse(itemNameOrID, out int id);
         if (id > 0)
         {
             if (GameManager.Instance.viewableGameAssets.Count <= id) return null;
             ViewableGameAsset item = GameManager.Instance.viewableGameAssets[id];
             return item;
-        }
+        }*/
 
         int i = -1;
         foreach (ViewableGameAsset asset in GameManager.Instance.viewableGameAssets)
@@ -155,7 +161,7 @@ public class ShopSimple : MonoBehaviour
             foreach (string arg in args)
             {
                 itemName += arg;
-                item = (Item)GetViewableAssetFromNameOrID(itemName);
+                item = GetViewableAssetFromNameOrID(itemName) as Item;
 
                 if (item == null)
                 {
@@ -215,7 +221,7 @@ public class ShopSimple : MonoBehaviour
             foreach (string arg in args)
             {
                 itemName += arg;
-                item = (Item)GetViewableAssetFromNameOrID(itemName);
+                item = GetViewableAssetFromNameOrID(itemName) as Item;
 
                 if (item == null)
                 {
@@ -224,6 +230,7 @@ public class ShopSimple : MonoBehaviour
                 }
                 else
                 {
+                    if (!player.items.Contains(item)) return new CommandResponse(false, $"You don't have {item.name}.");
                     itemName = "";
                     player.gold += item.Cost;
                     player.items.Remove(item);
@@ -258,6 +265,7 @@ public class ShopSimple : MonoBehaviour
     public CommandResponse Command_CreateTurn(string user, List<string> args)
     {
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
+        if (args.Count == 0) return new CommandResponse(true, "");
 
         Viewer player = GameManager.Instance.viewers[user];
         HashSet<Action> ownedActions = FindAvailableActions(player);
@@ -282,13 +290,14 @@ public class ShopSimple : MonoBehaviour
             }
             else
             {
-                Action action = (Action)GetViewableAssetFromNameOrID(args[i]);
+                Action action = GetViewableAssetFromNameOrID(args[i]) as Action;
                 if(action == null)
                 {
                     actions.Add(null);
                 }
                 else
                 {
+                    if(!FindAvailableActions(player).Contains(action)) return new CommandResponse(false, $"You don't have {action.name}.");
                     actions.Add(action);
                     fullyInvalid = false;
                 }
@@ -336,7 +345,7 @@ public class ShopSimple : MonoBehaviour
         else
         {
             GameManager.Instance.viewers[user].personality = personality;
-            return new CommandResponse(true, $"Personality now set to : " +personality.name);
+            return new CommandResponse(true, $"Personality now set to: " +personality.name);
         }
     }
 }

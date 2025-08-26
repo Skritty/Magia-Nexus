@@ -40,6 +40,8 @@ public class Rune_Water : Rune
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
+        spell.EffectMultiplier += 0.5f;
+        return;
         switch (spell.shape)
         {
             case SpellShape.Circle:

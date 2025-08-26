@@ -14,41 +14,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Knife
-  info: +10 flat physical damage (max 10 stacks)
+  info: +10 flat physical damage
   image: {fileID: 0}
   hidden: 0
-  UIColor: {r: 0, g: 0, b: 0, a: 0}
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
   cost: 15
   craftingRecipe: []
   grantedActions: []
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 4023383574376350583
+  - rid: 4023384113744707770
   references:
     version: 2
     RefIds:
-    - rid: 4023383574376350583
+    - rid: 4023384113744707770
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383574376350584
+          rid: 4023384113744707771
         modifier:
-          rid: 4023383637585821883
-    - rid: 4023383574376350584
+          rid: 4023384113744707772
+    - rid: 4023384113744707771
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383637585821883
+    - rid: 4023384113744707772
       type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
-        <Value>k__BackingField: 10
+        <Value>k__BackingField: 0
         <StatTag>k__BackingField:
-          rid: 4023383637585821884
+          rid: 4023384113744707775
         <Alignment>k__BackingField: 0
-        <MaxStacks>k__BackingField: 0
+        <MaxStacks>k__BackingField: 10
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
         <TickDuration>k__BackingField: 0
@@ -56,8 +56,7 @@ MonoBehaviour:
         <Step>k__BackingField: 0
         <AppliesTo>k__BackingField: 2
         <DamageType>k__BackingField: 2
-    - rid: 4023383637585821884
+    - rid: 4023384113744707775
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 0

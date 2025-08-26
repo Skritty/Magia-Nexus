@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aliases:
   - Torch
-  info: 'On hit with attacks: ignite (200 fire/2.5s) (does not stack)'
+  info: 'On damage with attacks: ignite (200 fire/2.5s) (does not stack)'
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.9559748, g: 0.7058059, b: 0.1653414, a: 0}
@@ -24,95 +24,68 @@ MonoBehaviour:
   grantedPersonalities: []
   actionCountModifier: 0
   itemEffects:
-  - rid: 1083524154633486536
+  - rid: 4023384113744707780
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1083524154633486536
+    - rid: 4023384113744707780
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 1083524154633486537
+          rid: 4023384113744707781
         triggerOnce: 0
         triggerOrder: 0
-        bindingObject: 0
+        bindingObject: 1
         triggerModifier:
           <Value>k__BackingField:
-            rid: 4023383639793074518
+            rid: 4023384113744707784
           <StatTag>k__BackingField:
-            rid: 4023383639793074526
+            rid: 4023384113744707782
           <Alignment>k__BackingField: 0
           <MaxStacks>k__BackingField: 0
           <StacksAdded>k__BackingField: 1
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
-        trigger:
-          rid: -2
-    - rid: 1083524154633486537
+    - rid: 4023384113744707781
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383639793074518
-      type: {class: Trigger_PostHit, ns: , asm: Assembly-CSharp}
+    - rid: 4023384113744707782
+      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+    - rid: 4023384113744707784
+      type: {class: Trigger_Damage, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 4023383639793074519
-    - rid: 4023383639793074519
-      type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
+        - rid: 4023384113744707785
+        - rid: 4023384113744707786
+    - rid: 4023384113744707785
+      type: {class: Task_Filter_DamageType, ns: , asm: Assembly-CSharp}
       data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383639793074520
-        triggerOnce: 0
-        triggerOrder: 0
-        bindingObject: 2
-        triggerModifier:
-          <Value>k__BackingField:
-            rid: -2
-          <StatTag>k__BackingField:
-            rid: -2
-          <Alignment>k__BackingField: 0
-          <MaxStacks>k__BackingField: 0
-          <StacksAdded>k__BackingField: 1
-          <PerPlayer>k__BackingField: 0
-          <TickDuration>k__BackingField: 0
-          <RefreshDuration>k__BackingField: 0
-        trigger:
-          rid: 4023383639793074521
-    - rid: 4023383639793074520
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383639793074521
-      type: {class: Trigger_PostHit, ns: , asm: Assembly-CSharp}
-      data:
-        tasks:
-        - rid: 4023383639793074522
-    - rid: 4023383639793074522
+        damageTypes: 8192
+    - rid: 4023384113744707786
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 1
         targetSelector:
-          rid: 4023383639793074523
+          rid: 4023384113744707787
         modifier:
-          rid: 4023383639793074524
-    - rid: 4023383639793074523
+          rid: 4023384113744707788
+    - rid: 4023384113744707787
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383639793074524
+    - rid: 4023384113744707788
       type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 1.6
         <StatTag>k__BackingField:
-          rid: 4023383639793074525
+          rid: 4023384113744707789
         <Alignment>k__BackingField: 2
         <MaxStacks>k__BackingField: 1
         <StacksAdded>k__BackingField: 1
@@ -122,12 +95,7 @@ MonoBehaviour:
         <Step>k__BackingField: 0
         <AppliesTo>k__BackingField: 0
         <DamageType>k__BackingField: 32901
-    - rid: 4023383639793074525
+    - rid: 4023384113744707789
       type: {class: Stat_DamageOverTime, ns: , asm: Assembly-CSharp}
-      data:
-        <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 0
-    - rid: 4023383639793074526
-      type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField: []

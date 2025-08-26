@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using TwitchLib.Api.Helix.Models.Search;
 
 public interface IStat : IModifiable { }
 public interface IStat<T> : IStat, IModifiable<T> { }
@@ -31,6 +30,7 @@ public class Stat<T> : IDataContainer<T>, IModifiable<T>
     {
         Value = value;
     }
+    public bool IsDefaultValue() => Value.Equals(default(T));
     public bool Get<Type>(out Type data)
     {
         data = (Type)(Value as object);
@@ -89,6 +89,7 @@ public class Stat_AdditionalTargets : NumericalSolver, IStat<float> { }
 public class Stat_Removeable : NumericalSolver, IStat<float> { }
 public class Stat_Knockback : NumericalSolver, IStat<float> { }
 public class Stat_Enmity : NumericalSolver, IStat<float> { }
+public class Stat_Intangable : PrioritySolver<bool>, IStat<bool> { }
 public class Stat_Untargetable : ListStat<(Entity, object)>, IStat<(Entity, object)> { }
 public class Stat_TargetingMethod : PrioritySolver<Targeting>, IStat<Targeting> { }
 public class Stat_Dummy : ListStat<bool>, IStat<bool> { }

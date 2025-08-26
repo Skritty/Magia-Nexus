@@ -98,6 +98,7 @@ public abstract class Trigger<Endpoint, T> : Trigger
     {
         foreach (object bindingObject in bindingObjects.Distinct())
         {
+            if (bindingObject == null) return;
             // Bound Triggers
             if (bindings.ContainsKey(bindingObject))
                 foreach (TriggerSubscription subscription in bindings[bindingObject].ToArray())

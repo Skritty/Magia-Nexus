@@ -15,9 +15,9 @@ public class Rune_Chaos : Rune
     [Header("Spell Shape")]
     [FoldoutGroup("Circle")]
     public float multiplierPerStage;
-    [FoldoutGroup("Projectile")]
+    [SerializeReference, FoldoutGroup("Projectile")]
     public Movement_HomeToTarget homing;
-    [FoldoutGroup("Curse")]
+    [SerializeReference, FoldoutGroup("Curse")]
     public Effect_Hit curseHit;
     [FoldoutGroup("Curse")]
     public float baseChanneledCurseEffect;
@@ -60,6 +60,8 @@ public class Rune_Chaos : Rune
 
     public override void ShapeModifier(Spell spell, int currentRuneIndex)
     {
+        spell.EffectMultiplier += 0.5f;
+        return;
         switch (spell.shape)
         {
             case SpellShape.Circle:

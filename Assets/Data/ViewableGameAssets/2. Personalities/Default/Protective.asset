@@ -18,30 +18,28 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.29112756, g: 0.37445113, b: 0.8050314, a: 1}
+  lockTarget: 0
+  lockMovementTarget: 0
   targeting:
-    rid: 4023383637585821782
+    rid: 4023383958333161513
   movement:
     rid: 4023383637585821783
   movementSelector:
     rid: 4023383637585821784
+  conditionalTrigger:
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 4023383637585821782
-      type: {class: Targeting_LifePercent, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        entitiesAffected: 4
-        sortingMethod: 2
-        numberOfTargets: 1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 4023383637585821783
       type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
         entitiesAffected: 4
         sortingMethod: 2
+        lineOfSight: 0
         numberOfTargets: 1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
@@ -59,3 +57,51 @@ MonoBehaviour:
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
+    - rid: 4023383958333161513
+      type: {class: Targeting_StatSortedFloatPercent, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 4
+        sortingMethod: 2
+        lineOfSight: 0
+        numberOfTargets: 1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        stat:
+          rid: 4023383958333161514
+        maximum:
+          rid: 4023383958333161518
+    - rid: 4023383958333161514
+      type: {class: Stat_CurrentLife, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 4023383958333161515
+        - rid: 4023383958333161516
+        <Step>k__BackingField: 2
+    - rid: 4023383958333161515
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0
+    - rid: 4023383958333161516
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 1
+    - rid: 4023383958333161518
+      type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 4023383958333161519
+        - rid: 4023383958333161520
+        <Step>k__BackingField: 2
+    - rid: 4023383958333161519
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0
+    - rid: 4023383958333161520
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 1

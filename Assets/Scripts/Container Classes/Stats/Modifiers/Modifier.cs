@@ -42,6 +42,7 @@ public class Modifier<T> : IModifier<T>
         RefreshDuration = refreshDuration;
     }
 
+    public bool IsDefaultValue() => Value.Equals(default(T));
     public bool Get<T1>(out T1 data)
     {
         IDataContainer<T1> container = (IDataContainer<T1>)this;
