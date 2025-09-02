@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Quick Wit
   m_EditorClassIdentifier: 
-  aliases:
-  - Quick Wit
-  - QuickWit
-  - QW
-  - Rogue
+  aliases: []
   info: 
   image: {fileID: 0}
   hidden: 1
@@ -26,7 +22,7 @@ MonoBehaviour:
   grantedActions:
   - {fileID: 11400000, guid: 466834eb724f57849b90d40e6e2673b1, type: 2}
   grantedPersonalities: []
-  actionCountModifier: 0
+  actionCountModifier: -1
   itemEffects:
   - rid: 4023383616259883176
   references:

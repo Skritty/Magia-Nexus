@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ViewableGameAsset/Personality")]
+[Serializable, CreateAssetMenu(menuName = "ViewableGameAsset/Personality")]
 public class Personality : ViewableGameAsset
 {
     public bool lockTarget, lockMovementTarget;

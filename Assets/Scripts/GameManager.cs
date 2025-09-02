@@ -28,7 +28,10 @@ public class GameManager : Singleton<GameManager>
     public List<string> defaultUnlockedClasses = new List<string>();
     [SerializeReference]
     public Personality defaultPersonality;
-    public SerializedDictionary<string, List<Item>> startingClasses;
+    public List<CharacterClass> classes;
+    public List<string> generatedNameStart = new List<string>();
+    public List<string> generatedNameMiddle = new List<string>();
+    public List<string> generatedNameEnd = new List<string>();
     public SerializedDictionary<string, Viewer> viewers = new SerializedDictionary<string, Viewer>();
     public SerializedDictionary<string, Viewer> allViewers = new SerializedDictionary<string, Viewer>();
     public static Viewer[] Viewers => Instance.viewers.Select(x => x.Value).ToArray();
@@ -62,6 +65,23 @@ public class GameManager : Singleton<GameManager>
         TwitchClient.Instance.RemoveCommand("info", Command_Info);
     }
 
+    public void JoinAsCPU()
+    {
+        string name;
+        int stop = 0;
+        do
+        {
+            name = "";
+            name += generatedNameStart[UnityEngine.Random.Range(0, generatedNameStart.Count)];
+            name += generatedNameMiddle[UnityEngine.Random.Range(0, generatedNameMiddle.Count)];
+            name += generatedNameEnd[UnityEngine.Random.Range(0, generatedNameEnd.Count)];
+            stop++;
+        }
+        while (viewers.ContainsKey(name) && stop < 100);
+        string cpuClass = defaultUnlockedClasses[UnityEngine.Random.Range(0, defaultUnlockedClasses.Count)];
+        Command_JoinGame(name, new List<string>(){ cpuClass });
+    }
+
     private CommandResponse Command_JoinGame(string user, List<string> args)
     {
         Viewer viewer;
@@ -82,29 +102,28 @@ public class GameManager : Singleton<GameManager>
             foreach (string c in defaultUnlockedClasses) viewer.unlockedClasses.Add(c);
             allViewers.Add(user, viewer);
         }
-        
+
+
         // Pick class
-        if (args.Count == 0 || !startingClasses.ContainsKey(args[0]))
+        CharacterClass characterClass = null;
+        if (args.Count != 0) characterClass = classes.Find(x => x.NameMatch(args[0]));
+        if (characterClass == null)
         {
             string classes = "";
-            foreach(string c in viewer.unlockedClasses)
+            foreach (string c in viewer.unlockedClasses)
             {
-                if (startingClasses[c].Count == 0) continue;
                 classes += $"{c}, ";
             }
-            classes = classes.Remove(classes.Length -2, 2);
+            classes = classes.Remove(classes.Length - 2, 2);
             return new CommandResponse(false, $"Please pick a valid class out of: {classes}");
         }
-        else if(!viewer.unlockedClasses.Contains(args[0]))
-        {
-            return new CommandResponse(false, $"You do not have {args[0]} unlocked");
-        }
         
-        viewer.items.AddRange(startingClasses[args[0]]);
+        viewer.items.AddRange(characterClass.items);
+        viewer.personality = characterClass.defaultPersonality;
+        viewer.autoplayAI = characterClass.autoplayAI;
         viewers.Add(viewer.viewerName, viewer);
 
-        TwitchClient.Instance.SendChatMessage($"@{user} joined as {args[0]}");
-        return new CommandResponse(true, "");
+        return new CommandResponse(true, $"joined as {args[0]}");
     }
 
     private CommandResponse Command_LeaveGame(string user, List<string> args)

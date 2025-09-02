@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Magic Rapier
   m_EditorClassIdentifier: 
-  aliases:
-  - Magic Rapier
-  - MagicRapier
-  - MR
-  - Spellsword
-  info: Enchants your weapon and invokes a spell when you hit with an attack.
+  aliases: []
+  info: 
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.9496855, g: 0.16425362, b: 0.16425362, a: 1}
@@ -36,8 +32,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 4023383616259883186
       type: {class: Effect_AddTrigger, ns: , asm: Assembly-CSharp}
       data:
@@ -59,8 +53,6 @@ MonoBehaviour:
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
-        trigger:
-          rid: -2
     - rid: 4023383616259883187
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
@@ -86,8 +78,6 @@ MonoBehaviour:
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
-        trigger:
-          rid: -2
     - rid: 4023383616259883195
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:

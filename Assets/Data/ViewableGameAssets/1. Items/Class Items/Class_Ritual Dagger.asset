@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Ritual Dagger
   m_EditorClassIdentifier: 
-  aliases:
-  - Ritual Dagger
-  - RitualDagger
-  - RD
-  - Cultist
+  aliases: []
   info: 
   image: {fileID: 0}
   hidden: 1
@@ -24,7 +20,7 @@ MonoBehaviour:
   cost: 0
   craftingRecipe: []
   grantedActions: []
-  grantedTargeting: []
+  grantedPersonalities: []
   actionCountModifier: 0
   itemEffects: []
   references:

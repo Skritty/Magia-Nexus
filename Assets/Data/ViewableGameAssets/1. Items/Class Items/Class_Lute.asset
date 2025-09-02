@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Lute
   m_EditorClassIdentifier: 
-  aliases:
-  - Lute
-  - Bard
-  info: Using a rune immediately invokes that rune.
+  aliases: []
+  info: 
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.5849056, g: 0.43794626, b: 0.27038085, a: 1}

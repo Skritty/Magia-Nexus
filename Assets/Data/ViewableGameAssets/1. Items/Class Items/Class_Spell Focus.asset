@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Spell Focus
   m_EditorClassIdentifier: 
-  aliases:
-  - Spell Focus
-  - SpellFocus
-  - SF
-  - Wizard
-  info: Grants the manifold metamagic rune and elemental spellcasting.
+  aliases: []
+  info: 
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 1, g: 1, b: 1, a: 1}

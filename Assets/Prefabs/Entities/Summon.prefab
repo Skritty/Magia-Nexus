@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
+  - rid: 5987050869617852729
   - rid: 4023383612992520271
   mechanics: []
   references:
@@ -326,6 +327,16 @@ MonoBehaviour:
       data:
         disable: 0
         delay: 0
+    - rid: 5987050869617852729
+      type: {class: Stat_EffectMultiplier, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 5987050869617852730
+        <Step>k__BackingField: 0
+    - rid: 5987050869617852730
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0

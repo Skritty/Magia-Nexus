@@ -18,7 +18,7 @@ public class Hit : Effect
 
     public void PreHitTriggers()
     {
-        Entity triggerOwner = triggerPlayerCharacter ? Owner.GetMechanic<Mechanic_PlayerOwner>().proxyOwner : Owner;
+        Entity triggerOwner = triggerPlayerCharacter ? Owner.Stat<Stat_PlayerCharacter>().Value : Owner;
         System.Action cleanup = preHit.SubscribeToTasks(triggerOwner, 0, 0, false, preOnHitEffects);
         Trigger_PreHit.Invoke(this, this, triggerOwner, Target);
         cleanup.Invoke();
@@ -26,7 +26,7 @@ public class Hit : Effect
 
     public void PostHitTriggers()
     {
-        Entity triggerOwner = triggerPlayerCharacter ? Owner.GetMechanic<Mechanic_PlayerOwner>().proxyOwner : Owner;
+        Entity triggerOwner = triggerPlayerCharacter ? Owner.Stat<Stat_PlayerCharacter>().Value : Owner;
         System.Action cleanup = postHit.SubscribeToTasks(triggerOwner, 0, 0, false, postOnHitEffects);
         Trigger_PostHit.Invoke(this, this, triggerOwner, Target);
         cleanup.Invoke();

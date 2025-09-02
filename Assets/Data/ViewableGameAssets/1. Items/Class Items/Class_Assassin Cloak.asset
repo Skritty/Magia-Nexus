@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Assassin Cloak
   m_EditorClassIdentifier: 
-  aliases:
-  - Assassin Cloak
+  aliases: []
   info: 
   image: {fileID: 0}
   hidden: 1
@@ -23,7 +22,83 @@ MonoBehaviour:
   grantedActions: []
   grantedPersonalities: []
   actionCountModifier: 0
-  itemEffects: []
+  itemEffects:
+  - rid: 5987050865069916300
+  - rid: 5987050865069916306
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5987050865069916300
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 5987050865069916301
+        modifier:
+          rid: 5987050865069916312
+    - rid: 5987050865069916301
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 5987050865069916306
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 5987050865069916307
+        modifier:
+          rid: 5987050865069916310
+    - rid: 5987050865069916307
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 5987050865069916310
+      type: {class: Modifier_Numerical, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0.2
+        <StatTag>k__BackingField:
+          rid: 5987050865069916311
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 2
+    - rid: 5987050865069916311
+      type: {class: Stat_Enmity, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0
+    - rid: 5987050865069916312
+      type: {class: Modifier_Numerical, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0.5
+        <StatTag>k__BackingField:
+          rid: 5987050870319620773
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 0
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 0
+        <RefreshDuration>k__BackingField: 0
+        <Step>k__BackingField: 2
+    - rid: 5987050870319620773
+      type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 5987050870319620774
+        - rid: 5987050870319620775
+        <Step>k__BackingField: 2
+    - rid: 5987050870319620774
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 0
+    - rid: 5987050870319620775
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        <Step>k__BackingField: 1

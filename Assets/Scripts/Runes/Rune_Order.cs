@@ -40,13 +40,12 @@ public class Rune_Order : Rune
         Entity owner = spell.Owner;
         float lMult = lifeMultiplier;
         float dMult = damageMultiplier;
-        if(owner.GetMechanic<Mechanic_PlayerOwner>().player != null)
-            while (!owner.Stat<Stat_PlayerCharacter>().Value)
-            {
-                lMult *= lifeMultiplier;
-                dMult *= damageMultiplier;
-                owner = owner.GetMechanic<Mechanic_PlayerOwner>().proxyOwner;
-            }
+        while (!owner.Stat<Stat_PlayerCharacter>().Value)
+        {
+            lMult *= lifeMultiplier;
+            dMult *= damageMultiplier;
+            owner = owner.Stat<Stat_PlayerCharacter>().Value;
+        }
         (spell.effect as Effect_Summon).lifeMultiplier = lMult;
         (spell.effect as Effect_Summon).damageMultiplier = dMult;
         spell.cleanup += Trigger_SummonCreated.Subscribe(x => SetupSummon(spell, x), spell.effect);

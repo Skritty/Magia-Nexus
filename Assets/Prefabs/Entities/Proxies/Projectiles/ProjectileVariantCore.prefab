@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: stats.Array.size
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'stats.Array.data[2]'
@@ -65,19 +65,31 @@ PrefabInstance:
       value: 4023384116733188081
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'stats.Array.data[4]'
+      value: 5987050868977958985
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'stats.Array.data[5]'
+      value: 5987050870616883432
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'stats.Array.data[6]'
+      value: 5987050870616883434
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: mechanics.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'managedReferences[-2]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
-      propertyPath: 'mechanics.Array.data[1]'
+      propertyPath: 'mechanics.Array.data[0]'
       value: 4023383614162207430
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
-      propertyPath: 'mechanics.Array.data[2]'
+      propertyPath: 'mechanics.Array.data[1]'
       value: 4023383614162207431
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
@@ -142,8 +154,98 @@ PrefabInstance:
       value: 'Assembly-CSharp DataContainer`1[[System.Boolean, mscorlib]]'
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050865069916240]'
+      value: Assembly-CSharp Stat_DamageDealt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050865069916241]'
+      value: 'Assembly-CSharp Modifier_InheritFromPlayerCharacter`1[[System.Single,
+        mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050865069916242]'
+      value: Assembly-CSharp Stat_DamageDealt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958976]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958977]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958978]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958979]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958980]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958981]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958982]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958983]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958984]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050868977958985]'
+      value: Assembly-CSharp Stat_PlayerCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050870616883432]'
+      value: Assembly-CSharp Stat_AoESize
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050870616883433]'
+      value: 'Assembly-CSharp DataContainer`1[[System.Single, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050870616883434]'
+      value: Assembly-CSharp Stat_DamageDealt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050870616883435]'
+      value: 'Assembly-CSharp Modifier_InheritFromPlayerCharacter`1[[System.Single,
+        mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050870616883436]'
+      value: Assembly-CSharp Stat_DamageDealt
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: managedReferences[4023383614162207431].aoe
       value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050865069916241].self
+      value: 
+      objectReference: {fileID: 7077477144875822046}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050865069916241].stat
+      value: 5987050865069916242
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050870616883435].self
+      value: 
+      objectReference: {fileID: 7077477144875822046}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050870616883435].stat
+      value: 5987050870616883436
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: managedReferences[4023383614162207430].Owner
@@ -234,6 +336,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050870616883432].<Step>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: managedReferences[4023383614162207440].<Value>k__BackingField
       value: 4023383614162207443
       objectReference: {fileID: 0}
@@ -243,6 +349,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: managedReferences[4023384116733188082].<Value>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050870616883433].<Value>k__BackingField
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
@@ -302,16 +412,48 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050865069916240].<Modifiers>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050865069916241].<Modifiers>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050865069916242].<Modifiers>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050870616883432].<Modifiers>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050870616883434].<Modifiers>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050870616883435].<Modifiers>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[5987050870616883436].<Modifiers>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'managedReferences[4023383589837865500].<Modifiers>k__BackingField.Array.data[1]'
       value: 4023383614162207440
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
-      propertyPath: 'managedReferences[4023384116019331672].<Modifiers>k__BackingField.Array.data[0]'
-      value: 4023384116019331673
-      objectReference: {fileID: 0}
-    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'managedReferences[4023384116733188081].<Modifiers>k__BackingField.Array.data[0]'
       value: 4023384116733188082
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050870616883432].<Modifiers>k__BackingField.Array.data[0]'
+      value: 5987050870616883433
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[5987050870616883434].<Modifiers>k__BackingField.Array.data[0]'
+      value: 5987050870616883435
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

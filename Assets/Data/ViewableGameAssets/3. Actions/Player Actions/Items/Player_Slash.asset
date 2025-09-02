@@ -86,7 +86,7 @@ MonoBehaviour:
     - rid: 4023383589043568722
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        <EffectMultiplier>k__BackingField: 1.6
+        _effectMultiplier: 1.6
         triggerPlayerCharacter: 0
         preHit:
           tasks: []

@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Tower Shield
   m_EditorClassIdentifier: 
-  aliases:
-  - Tower Shield
-  - TowerShield
-  - TS
-  - Fortress
-  info: Grants the Turtle action, which is an improved block. You are much tankier
-    and more likely to be targeted.
+  aliases: []
+  info: 
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 1, g: 1, b: 1, a: 1}

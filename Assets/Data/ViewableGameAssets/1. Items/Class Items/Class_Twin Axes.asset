@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Twin Axes
   m_EditorClassIdentifier: 
-  aliases:
-  - Twin Axes
-  - TwinAxes
-  - TA
-  - Berserker
-  info: Go berserk when hit, accelerating your turn slightly. You are much more likely
-    to be targeted.
+  aliases: []
+  info: 
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.6855345, g: 0.3426424, b: 0.20910947, a: 1}

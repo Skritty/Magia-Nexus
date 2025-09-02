@@ -78,10 +78,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
+  - rid: 5987050869617852731
   - rid: 4023383589837865500
   - rid: 4023383595816845811
-  mechanics:
-  - rid: 4023383589837865831
+  - rid: 5987050865069916326
+  - rid: 5987050870616883429
+  mechanics: []
   references:
     version: 2
     RefIds:
@@ -90,33 +92,6 @@ MonoBehaviour:
       data:
         <Modifiers>k__BackingField:
         - rid: 4023383612992520263
-    - rid: 4023383589837865831
-      type: {class: Mechanic_PlayerOwner, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 6345354840142092050}
-        baseStat: 0
-        mergeBehavior: 0
-        proxyOwner: {fileID: 0}
-        scaleWithPlayerCharacterModifiers: 0
-        characterNamePlate: {fileID: 0}
-        playerEntity: {fileID: 0}
-        player:
-          viewerID: 0
-          viewerName: 
-          personality: {fileID: 0}
-          items: []
-          actions: []
-          character: {fileID: 0}
-          points: 0
-          roundPoints: 0
-          killGainMultiplier: 0
-          gold: 0
-          totalGold: 0
-          deaths: 0
-          wins: 0
-          losses: 0
-          winstreak: 0
-          lockTargeting: 0
     - rid: 4023383595816845811
       type: {class: Stat_AoESize, ns: , asm: Assembly-CSharp}
       data:
@@ -142,6 +117,35 @@ MonoBehaviour:
       data:
         disable: 0
         delay: 0
+    - rid: 5987050865069916326
+      type: {class: Stat_PlayerCharacter, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5987050869617852731
+      type: {class: Stat_EffectMultiplier, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 5987050869617852732
+        <Step>k__BackingField: 0
+    - rid: 5987050869617852732
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1
+    - rid: 5987050870616883429
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 5987050870616883430
+    - rid: 5987050870616883430
+      type: {class: 'Modifier_InheritFromPlayerCharacter`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
+        self: {fileID: 6345354840142092050}
+        stat:
+          rid: 5987050870616883431
+    - rid: 5987050870616883431
+      type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []
 --- !u!1 &7062227953910008534
 GameObject:
   m_ObjectHideFlags: 0

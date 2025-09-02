@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8642115a82333054a94f950ad634a4ed, type: 3}
+  m_Name: Fortress
+  m_EditorClassIdentifier: 
+  aliases:
+  - Fortress
+  info: Become an immovable wall! Grants the Turtle action, which is an improved
+    block. You are much tankier and more likely to be targeted.
+  image: {fileID: 0}
+  hidden: 0
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultPersonality: {fileID: 11400000, guid: ad2337ddf219e6443aec7379c0271a17, type: 2}
+  autoplayAI: {fileID: 11400000, guid: 8ed92bd275770834da38ae62e8d727a2, type: 2}
+  items:
+  - {fileID: 11400000, guid: fcf552edc0c1bce4e8e6a98f36a7e0d5, type: 2}

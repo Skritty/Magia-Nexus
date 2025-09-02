@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec169ce96243fe64e8f6e034319be85c, type: 3}
   m_Name: Class_Enchanted Quiver
   m_EditorClassIdentifier: 
-  aliases:
-  - Echanted Quiver
-  - EchantedQuiver
-  - EQ
-  - Archer
-  info: Grants global additional projectiles and projectile homing.
+  aliases: []
+  info: 
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.49217427, g: 0.7610062, b: 0.35657206, a: 1}
@@ -101,7 +97,7 @@ MonoBehaviour:
       type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
-        propagateTarget: 0
+        propagateTarget: 1
         targetSelector:
           rid: 4023384115454673470
         modifier:

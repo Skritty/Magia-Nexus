@@ -27,6 +27,7 @@ public class Item : ViewableGameAsset
 
     public void OnGained(Entity entity)
     {
+        if (entity == null) return;
         foreach(EffectTask effect in itemEffects)
         {
             if(effect == null)

@@ -13,7 +13,7 @@ public class Task_Filter_IsPlayerCharacter : ITask<Entity>
 {
     public bool DoTask(Entity entity)
     {
-        return entity.GetMechanic<Mechanic_PlayerOwner>().playerEntity == entity;
+        return entity.Stat<Stat_PlayerCharacter>().Value == entity;
     }
 }
 
@@ -22,7 +22,7 @@ public class Task_Filter_IsProxy : ITaskOwned<Entity, Entity>
 {
     public bool DoTask(Entity owner, Entity entity)
     {
-        return entity.GetMechanic<Mechanic_PlayerOwner>().playerEntity == owner.GetMechanic<Mechanic_PlayerOwner>().playerEntity;
+        return entity.Stat<Stat_PlayerCharacter>().Value != entity;
     }
 
     public bool DoTask(Entity data) => false;
@@ -36,14 +36,14 @@ public class Task_Filter_HasItems : ITask<Entity>
     public int multiples = 1;
     public bool DoTask(Entity entity)
     {
-        if (entity.GetMechanic<Mechanic_PlayerOwner>() == null) return false;
+        if (entity.GetMechanic<Mechanic_Character>() == null) return false;
 
         List<Item> itemsLeft = new List<Item>();
         for (int i = 0; i < multiples; i++)
         {
             itemsLeft.AddRange(items);
         }
-        foreach (Item item in entity.GetMechanic<Mechanic_PlayerOwner>().player.items)
+        foreach (Item item in entity.Stat<Stat_Viewer>().Value.items)
         {
             itemsLeft.Remove(item);
         }

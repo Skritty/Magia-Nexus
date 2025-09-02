@@ -13,6 +13,7 @@ public class Phase_Shop : Phase
         roundsPast++;
         base.OnEnter();
         GivePlayersGold();
+        Autoplay();
     }
 
     public override void OnExit()
@@ -30,15 +31,35 @@ public class Phase_Shop : Phase
         }
     }
 
+    private void Autoplay()
+    {
+        foreach(Viewer viewer in GameManager.Viewers)
+        {
+            if (!viewer.autoplay) continue;
+            viewer.autoplayAI.PurchaseItems(viewer);
+            viewer.autoplayAI.CreateTurn(viewer);
+            viewer.autoplayAI.SetPersonality(viewer);
+        }
+    }
+
     private CommandResponse Command_GiveNewPlayerGold(string user, List<string> args)
     {
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(true, "");
 
         Viewer viewer = GameManager.Instance.viewers[user];
 
-        if(viewer.gold != 0) return new CommandResponse(true, "");
+        if (viewer.gold != 0)
+        {
+            viewer.autoplayAI.PurchaseItems(viewer);
+            viewer.autoplayAI.CreateTurn(viewer);
+            viewer.autoplayAI.SetPersonality(viewer);
+            return new CommandResponse(true, "");
+        }
 
         viewer.gold += baseGoldGain * roundsPast;
+        viewer.autoplayAI.PurchaseItems(viewer);
+        viewer.autoplayAI.CreateTurn(viewer);
+        viewer.autoplayAI.SetPersonality(viewer);
 
         return new CommandResponse(true, "");
     }

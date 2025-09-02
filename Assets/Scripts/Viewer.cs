@@ -9,8 +9,10 @@ public class Viewer
     // Player Info
     public int viewerID;
     public string viewerName;
-    
+
     // Character Info
+    [SerializeReference]
+    public CharacterAI autoplayAI;
     [SerializeReference]
     public Personality personality;
     public List<Item> items = new List<Item>();
@@ -18,6 +20,7 @@ public class Viewer
     public Entity character;
 
     // Persistent Data
+    public bool autoplay = true;
     public float points;
     public float roundPoints;
     public float killGainMultiplier;

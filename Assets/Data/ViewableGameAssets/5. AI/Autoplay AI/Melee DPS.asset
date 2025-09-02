@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66677c58bce01ae46b683823db075ac1, type: 3}
+  m_Name: Melee DPS
+  m_EditorClassIdentifier: 
+  aliases:
+  - Melee DPS
+  info: Close ranged attacker
+  image: {fileID: 0}
+  hidden: 1
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  ignoreRequirements: 0
+  maxItemsPurchased: 3
+  itemPurchasingBehavior:
+  - asset: {fileID: 0}
+    weight: 0.1
+    percentageOverride: 0.4
+    max: 0
+  - asset: {fileID: 11400000, guid: 71bdb7d2f35eb9b459968bc9a1c26a5a, type: 2}
+    weight: 0
+    percentageOverride: 1
+    max: 1
+  - asset: {fileID: 11400000, guid: da2ae0772fe25054fa22f8e7e1cd63e9, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 125
+  - asset: {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
+    weight: 2
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: ea57a6e11cfa4cc4dbdbaf3fd7165af4, type: 2}
+    weight: 4
+    percentageOverride: 0
+    max: 10
+  - asset: {fileID: 11400000, guid: 42151dd423a1e7a4faf15834e1c911a5, type: 2}
+    weight: 0.5
+    percentageOverride: 0
+    max: 25
+  - asset: {fileID: 11400000, guid: cf7cd7de6af40a84381d78a138533f34, type: 2}
+    weight: 3
+    percentageOverride: 0
+    max: 1
+  - asset: {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
+    weight: 1.5
+    percentageOverride: 0
+    max: 10
+  - asset: {fileID: 11400000, guid: 39485894faf673f4bb72972a38f34c31, type: 2}
+    weight: 0.2
+    percentageOverride: 0
+    max: 1
+  - asset: {fileID: 11400000, guid: 314c4d451d802d1428da0c3fb677d269, type: 2}
+    weight: 2
+    percentageOverride: 0
+    max: 1
+  - asset: {fileID: 11400000, guid: f6063d3edc5d0e5429e94bb6a4e8fb16, type: 2}
+    weight: 3
+    percentageOverride: 0
+    max: 4
+  - asset: {fileID: 11400000, guid: c10d8095f866578499b2f0f901b6548f, type: 2}
+    weight: 0.1
+    percentageOverride: 0
+    max: 3
+  turnCreationBehavior:
+  - asset: {fileID: 11400000, guid: 466834eb724f57849b90d40e6e2673b1, type: 2}
+    weight: 0
+    percentageOverride: 0.25
+    max: 1
+  - asset: {fileID: 11400000, guid: cb288b2e6ff8a0440b0c2ba1d6522ff5, type: 2}
+    weight: 0
+    percentageOverride: 0.25
+    max: 2
+  - asset: {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+    weight: 3
+    percentageOverride: 0
+    max: 2
+  - asset: {fileID: 11400000, guid: 148ea57ba83bcdd4dacc2f01315ed9f0, type: 2}
+    weight: 3
+    percentageOverride: 0
+    max: 2
+  - asset: {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+    weight: 5
+    percentageOverride: 0
+    max: 4
+  - asset: {fileID: 11400000, guid: afeb5202ca45b1d49a3f786ea88977e4, type: 2}
+    weight: 4
+    percentageOverride: 0
+    max: 4
+  - asset: {fileID: 11400000, guid: 093c9968ba015da4ab4611b69b4d1233, type: 2}
+    weight: 3
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
+    weight: 3
+    percentageOverride: 0
+    max: 2
+  - asset: {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 1
+  personalitySettingBehavior:
+  - asset: {fileID: 11400000, guid: 1eb545d953c0e7e46b434fdfea520d97, type: 2}
+    weight: 5
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: ad2337ddf219e6443aec7379c0271a17, type: 2}
+    weight: 2
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: 62a78e62c4a1e2847878304e7c83f658, type: 2}
+    weight: 3
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: a85d68b07d10805419df4753da1eda19, type: 2}
+    weight: 3
+    percentageOverride: 0
+    max: 0

@@ -50,7 +50,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
     public void TakeDamage(DamageInstance damage, bool triggered = false)
     {
-        if (Owner.Stat<Stat_CurrentLife>().Value == 0 || damage.EffectMultiplier == 0 || damage.Target == null || !damage.Target.gameObject.activeSelf)
+        if (Owner.Stat<Stat_CurrentLife>().Value <= 0 || damage.EffectMultiplier == 0 || damage.Target == null || !damage.Target.gameObject.activeSelf)
         {
             return;
         }
@@ -82,7 +82,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         baseLife.Value = Mathf.Clamp(baseLife.Value - damage.finalDamage, float.MinValue, Owner.Stat<Stat_MaxLife>().Value);
         Owner.Stat<Stat_CurrentLife>().MarkAsChanged();
 
-        Entity triggerOwner = damage.triggerPlayerCharacter ? damage.Owner.GetMechanic<Mechanic_PlayerOwner>().proxyOwner : damage.Owner;
+        Entity triggerOwner = damage.triggerPlayerCharacter ? Owner.Stat<Stat_PlayerCharacter>().Value : damage.Owner;
         if (!triggered && damage.finalDamage != 0)
         {
             damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, false)
@@ -93,7 +93,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
         if (Owner.Stat<Stat_CurrentLife>().Value <= 0)
         {
-            Owner.GetMechanic<Mechanic_PlayerOwner>().DistributeRewards();
+            //Owner.GetMechanic<Mechanic_Character>().DistributeRewards();
             Trigger_Die.Invoke(damage, damage, damage.Owner, triggerOwner, Owner);
             Trigger_Expire.Invoke(Owner, Owner);
         }

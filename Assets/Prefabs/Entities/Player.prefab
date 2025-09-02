@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats:
+  - rid: 5987050869617852727
   - rid: 4023383612992520267
   - rid: 4023383574052864072
   - rid: 4023383574052864071
@@ -308,7 +309,7 @@ MonoBehaviour:
   - rid: 4023383574052864646
   - rid: 4023383574052864647
   mechanics:
-  - rid: 1083524128524730534
+  - rid: 5987050868977958975
   - rid: 1083524128524730536
   - rid: 1083524128524730529
   - rid: 1083524128524730537
@@ -325,33 +326,6 @@ MonoBehaviour:
         mergeBehavior: 0
         healthBar: {fileID: 9101917831146373091}
         damagePopup: {fileID: 1206888003998408235, guid: ddaf2cdb81fa36d40ac1e933ecce4c05, type: 3}
-    - rid: 1083524128524730534
-      type: {class: Mechanic_PlayerOwner, ns: , asm: Assembly-CSharp}
-      data:
-        Owner: {fileID: 4300648619749440453}
-        baseStat: 0
-        mergeBehavior: 0
-        proxyOwner: {fileID: 4300648619749440453}
-        scaleWithPlayerCharacterModifiers: 0
-        characterNamePlate: {fileID: 233806103433016068}
-        playerEntity: {fileID: 4300648619749440453}
-        player:
-          viewerID: 0
-          viewerName: 
-          personality: {fileID: 0}
-          items: []
-          actions: []
-          character: {fileID: 0}
-          points: 0
-          roundPoints: 0
-          killGainMultiplier: 0
-          gold: 0
-          totalGold: 0
-          deaths: 0
-          wins: 0
-          losses: 0
-          winstreak: 0
-          lockTargeting: 0
     - rid: 1083524128524730536
       type: {class: Mechanic_AnimationStates, ns: , asm: Assembly-CSharp}
       data:
@@ -460,6 +434,23 @@ MonoBehaviour:
         tick: -1
         actionsPerTurn: 0
         actions: []
+    - rid: 5987050868977958975
+      type: {class: Mechanic_Character, ns: , asm: Assembly-CSharp}
+      data:
+        Owner: {fileID: 4300648619749440453}
+        baseStat: 0
+        mergeBehavior: 0
+        characterNamePlate: {fileID: 233806103433016068}
+    - rid: 5987050869617852727
+      type: {class: Stat_EffectMultiplier, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField:
+        - rid: 5987050869617852728
+        <Step>k__BackingField: 0
+    - rid: 5987050869617852728
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+
 [Serializable]
 public abstract class EffectTask : 
     ITaskOwned<Entity, Effect>,
@@ -35,7 +36,7 @@ public abstract class EffectTask :
     }
     public virtual bool DoTask(Entity owner, Entity target, Effect data, bool triggered, Entity proxy = null)
     {
-        DoEffect(owner, target, data != null ? data.EffectMultiplier : 1, data != null);
+        DoEffect(owner, target, data != null ? data.EffectMultiplier : owner.Stat<Stat_EffectMultiplier>().Value, data != null);
         return true;
     }
     public bool DoTaskTargetSelector(Entity owner, Effect data, bool triggered, Entity proxy = null)

@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ViewableGameAsset : ScriptableObject
+[CreateAssetMenu(menuName = "ViewableGameAsset/GenericAsset")]
+public class ViewableGameAsset : ScriptableObject
 {
     public List<string> aliases = new List<string>();
     public new string name => aliases.Count == 0 ? "" : aliases[0];
     [TextArea]
     public string info;
     public Sprite image;
-    public bool hidden;
+    public bool hidden = true;
     public Color UIColor = Color.white;
 
     public bool NameMatch(string s)

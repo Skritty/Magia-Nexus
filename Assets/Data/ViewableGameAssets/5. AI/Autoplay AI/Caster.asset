@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66677c58bce01ae46b683823db075ac1, type: 3}
+  m_Name: Caster
+  m_EditorClassIdentifier: 
+  aliases:
+  - Caster
+  info: Weave spells
+  image: {fileID: 0}
+  hidden: 1
+  UIColor: {r: 1, g: 1, b: 1, a: 1}
+  ignoreRequirements: 0
+  maxItemsPurchased: 1
+  itemPurchasingBehavior:
+  - asset: {fileID: 0}
+    weight: 0.1
+    percentageOverride: 0.4
+    max: 0
+  - asset: {fileID: 11400000, guid: da2ae0772fe25054fa22f8e7e1cd63e9, type: 2}
+    weight: 2
+    percentageOverride: 0
+    max: 125
+  - asset: {fileID: 11400000, guid: ac8753e23ac15ab41b7c40d5b02c8274, type: 2}
+    weight: 5
+    percentageOverride: 0
+    max: 10
+  - asset: {fileID: 11400000, guid: 8f9e84cd6da6e9440ba846b722a6b553, type: 2}
+    weight: 0.5
+    percentageOverride: 0
+    max: 10
+  - asset: {fileID: 11400000, guid: ea57a6e11cfa4cc4dbdbaf3fd7165af4, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 10
+  - asset: {fileID: 11400000, guid: 205e9f846b89c854d9c35116b223c3f9, type: 2}
+    weight: 0.5
+    percentageOverride: 0
+    max: 1
+  - asset: {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 10
+  - asset: {fileID: 11400000, guid: f6063d3edc5d0e5429e94bb6a4e8fb16, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 4
+  - asset: {fileID: 11400000, guid: c10d8095f866578499b2f0f901b6548f, type: 2}
+    weight: 2
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: 39485894faf673f4bb72972a38f34c31, type: 2}
+    weight: 0.1
+    percentageOverride: 0
+    max: 1
+  - asset: {fileID: 11400000, guid: 71bdb7d2f35eb9b459968bc9a1c26a5a, type: 2}
+    weight: 0.1
+    percentageOverride: 0
+    max: 1
+  - asset: {fileID: 11400000, guid: 314c4d451d802d1428da0c3fb677d269, type: 2}
+    weight: 0.1
+    percentageOverride: 0
+    max: 1
+  - asset: {fileID: 11400000, guid: 42151dd423a1e7a4faf15834e1c911a5, type: 2}
+    weight: 0.1
+    percentageOverride: 0
+    max: 0
+  turnCreationBehavior:
+  - asset: {fileID: 11400000, guid: 7ea5c5f86f30d3d45a4da9fd515b8c69, type: 2}
+    weight: 1
+    percentageOverride: 1
+    max: 1
+  - asset: {fileID: 11400000, guid: 466834eb724f57849b90d40e6e2673b1, type: 2}
+    weight: 1
+    percentageOverride: 0.25
+    max: 0
+  - asset: {fileID: 11400000, guid: b5743e9568d60fc42b6a92092f308786, type: 2}
+    weight: 1
+    percentageOverride: 0.25
+    max: 1
+  - asset: {fileID: 11400000, guid: bd86de2cfcf645346bf548b29fdbd7b2, type: 2}
+    weight: 10
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: 7493b5c0c82c7ef4a8e786f1bfe28886, type: 2}
+    weight: 10
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: bc7821f1f00aa86438c74fe6fadb5a99, type: 2}
+    weight: 10
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
+    weight: 10
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
+    weight: 10
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
+    weight: 10
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+    weight: 5
+    percentageOverride: 0
+    max: 2
+  - asset: {fileID: 11400000, guid: b33c4b74222ad584bae1f7502bc83f4b, type: 2}
+    weight: 5
+    percentageOverride: 0
+    max: 2
+  - asset: {fileID: 11400000, guid: afeb5202ca45b1d49a3f786ea88977e4, type: 2}
+    weight: 5
+    percentageOverride: 0
+    max: 2
+  - asset: {fileID: 11400000, guid: 093c9968ba015da4ab4611b69b4d1233, type: 2}
+    weight: 2
+    percentageOverride: 0
+    max: 3
+  - asset: {fileID: 11400000, guid: 29a51795b42ce0049bc69630cfbab59e, type: 2}
+    weight: 2
+    percentageOverride: 0
+    max: 1
+  - asset: {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
+    weight: 2
+    percentageOverride: 0
+    max: 1
+  personalitySettingBehavior:
+  - asset: {fileID: 11400000, guid: 1eb545d953c0e7e46b434fdfea520d97, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: e1b86ffd2abce3f4c85fa5a56faaf461, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: ad2337ddf219e6443aec7379c0271a17, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: 3e10401bb89e9654ca64c09cfa9848a3, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: 2c1d0e22aaf7ee141bd2c714fd3fedff, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: a85d68b07d10805419df4753da1eda19, type: 2}
+    weight: 1
+    percentageOverride: 0
+    max: 0
+  - asset: {fileID: 11400000, guid: f79cb59b479a54641b20b6bba6a1e172, type: 2}
+    weight: 0.2
+    percentageOverride: 0
+    max: 0

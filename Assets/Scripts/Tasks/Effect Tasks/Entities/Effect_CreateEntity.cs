@@ -28,8 +28,8 @@ public class Effect_CreateEntity : EffectTask
         Entity spawnedEntity = GameObject.Instantiate(entity, spawnOnTarget ? Target.transform.position : Owner.transform.position, Quaternion.identity);
         spawnedEntity.gameObject.SetActive(true);
         spawnedEntity.gameObject.name = spawnedEntity.gameObject.name + id;
-        spawnedEntity.GetMechanic<Mechanic_PlayerOwner>().SetPlayer(Owner.GetMechanic<Mechanic_PlayerOwner>());
-        spawnedEntity.GetMechanic<Mechanic_PlayerOwner>().proxyOwner = Owner;
+        spawnedEntity.AddModifier<Entity, Stat_PlayerCharacter>(Owner, 0);
+        spawnedEntity.AddModifier<Viewer, Stat_Viewer>(Owner.Stat<Stat_Viewer>().Value, 0);
         spawnedEntity.Stat<Stat_Team>().Add(Owner.Stat<Stat_Team>().Value);
         switch (movementTarget)
         {

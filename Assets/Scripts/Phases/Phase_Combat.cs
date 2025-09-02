@@ -17,6 +17,7 @@ public abstract class Phase_Combat : Phase
         }
     }
 
+    public int minimumPlayers = 2;
     public int winPointGain;
     public int killPointGain;
     private Dictionary<int, int> remainingPlayers = new Dictionary<int, int>();
@@ -27,6 +28,7 @@ public abstract class Phase_Combat : Phase
     public override void OnEnter()
     {
         base.OnEnter();
+        AddCPUs();
         SpawnEntities();
     }
 
@@ -39,6 +41,14 @@ public abstract class Phase_Combat : Phase
         base.OnExit();
     }
 
+    private void AddCPUs()
+    {
+        for(int i = GameManager.Viewers.Length; i < minimumPlayers; i++)
+        {
+            GameManager.Instance.JoinAsCPU();
+        }
+    }
+
     private void SpawnEntities()
     {
         spawns = GetEntitySpawns();
@@ -47,7 +57,7 @@ public abstract class Phase_Combat : Phase
         {
             spawn.owner.killGainMultiplier = killPointGain;
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawn.position, Quaternion.identity);
-            entity.GetMechanic<Mechanic_PlayerOwner>().SetPlayer(spawn.owner);
+            entity.GetMechanic<Mechanic_Character>().SetViewer(spawn.owner);
             spawn.owner.roundPoints = 0;
             entity.Stat<Stat_Team>().Add(spawn.team);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
@@ -78,7 +88,7 @@ public abstract class Phase_Combat : Phase
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);
 
-        dead.GetMechanic<Mechanic_PlayerOwner>().player.deaths++;
+        dead.Stat<Stat_Viewer>().Value.deaths++;
 
         if (remainingPlayers.Count == 1)
         {

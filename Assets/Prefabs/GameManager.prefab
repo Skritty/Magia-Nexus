@@ -99,6 +99,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 41ec8ee5ddb31ae4f96db390c6a2db97, type: 2}
   - {fileID: 11400000, guid: aa6ce0063ac0cca49bff061667b02436, type: 2}
   - {fileID: 11400000, guid: fab0137bd6f55a147bcbc29250cba0fc, type: 2}
+  - {fileID: 11400000, guid: bb6bb39929fde5545a1aad44a759ec2e, type: 2}
+  - {fileID: 11400000, guid: 2fbd065687ea6234eb41da884e1be702, type: 2}
+  - {fileID: 11400000, guid: 877f056e83041604fb8d896acf0d5a12, type: 2}
+  - {fileID: 11400000, guid: fd65a02e939ef0c48a05716eb852ce60, type: 2}
+  - {fileID: 11400000, guid: 207929701be5d48478a78019b1af3f38, type: 2}
+  - {fileID: 11400000, guid: 2d1243bf34f2c334095f95895dfed48c, type: 2}
+  - {fileID: 11400000, guid: 389d52e5eb87e2948bc3ec7d46214679, type: 2}
+  - {fileID: 11400000, guid: 7e93ff66004375d46beda044ce933efa, type: 2}
+  - {fileID: 11400000, guid: 1d809e2f1ac274f46bdb19d028a21db0, type: 2}
+  - {fileID: 11400000, guid: 46354121fb1397543ac60b538a85d53c, type: 2}
+  - {fileID: 11400000, guid: 609ee253b5473b4478fe3aff1280389a, type: 2}
+  - {fileID: 11400000, guid: d58443c2b6affc74d950f78a47197c88, type: 2}
+  - {fileID: 11400000, guid: 0ca5369911bdde14681b05b660bdf96b, type: 2}
+  - {fileID: 11400000, guid: 9ca3691c37e25544f927da4f463faa5a, type: 2}
+  - {fileID: 11400000, guid: 895771d1886b5cc4bb00823c0688ccf2, type: 2}
+  - {fileID: 11400000, guid: 76be03ea0ca55ef48b31ea1683280304, type: 2}
+  - {fileID: 11400000, guid: 5d60b968ae17a71438c7afa3a27d38cf, type: 2}
+  - {fileID: 11400000, guid: 34a67f6a1409f7e4d89ee4a1e7571d6d, type: 2}
+  - {fileID: 11400000, guid: 5ee98232c1f985f409264f9af0d69b25, type: 2}
   allGameAssets:
   - {fileID: 11400000, guid: 7b8e8df2d737ccd45ad7113c43b0b1d0, type: 2}
   - {fileID: 11400000, guid: c66160cc1e8a91f4f8edb11f1bd933a9, type: 2}
@@ -184,8 +203,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b390e06fbfbd7bd42b12e9f17c264d88, type: 2}
   - {fileID: 11400000, guid: 0bb05344769e4764da70a7adb715c44a, type: 2}
   - {fileID: 11400000, guid: 5e6ea34db4109fc4884a66cb494f2f31, type: 2}
+  - {fileID: 11400000, guid: 2946acc95d8068f47ba6e93330315dce, type: 2}
+  - {fileID: 11400000, guid: 8ed92bd275770834da38ae62e8d727a2, type: 2}
+  - {fileID: 11400000, guid: 1cc35f5a2035f654bae03c27fe9c3516, type: 2}
+  - {fileID: 11400000, guid: 878448e938aea754f8a6caf5c8e4eefa, type: 2}
+  - {fileID: 11400000, guid: bb6bb39929fde5545a1aad44a759ec2e, type: 2}
+  - {fileID: 11400000, guid: 2fbd065687ea6234eb41da884e1be702, type: 2}
+  - {fileID: 11400000, guid: 877f056e83041604fb8d896acf0d5a12, type: 2}
+  - {fileID: 11400000, guid: fd65a02e939ef0c48a05716eb852ce60, type: 2}
+  - {fileID: 11400000, guid: 207929701be5d48478a78019b1af3f38, type: 2}
+  - {fileID: 11400000, guid: 2d1243bf34f2c334095f95895dfed48c, type: 2}
+  - {fileID: 11400000, guid: 389d52e5eb87e2948bc3ec7d46214679, type: 2}
+  - {fileID: 11400000, guid: 7e93ff66004375d46beda044ce933efa, type: 2}
+  - {fileID: 11400000, guid: 1d809e2f1ac274f46bdb19d028a21db0, type: 2}
+  - {fileID: 11400000, guid: 46354121fb1397543ac60b538a85d53c, type: 2}
+  - {fileID: 11400000, guid: 609ee253b5473b4478fe3aff1280389a, type: 2}
+  - {fileID: 11400000, guid: d58443c2b6affc74d950f78a47197c88, type: 2}
+  - {fileID: 11400000, guid: 0ca5369911bdde14681b05b660bdf96b, type: 2}
+  - {fileID: 11400000, guid: 9ca3691c37e25544f927da4f463faa5a, type: 2}
+  - {fileID: 11400000, guid: 895771d1886b5cc4bb00823c0688ccf2, type: 2}
+  - {fileID: 11400000, guid: 76be03ea0ca55ef48b31ea1683280304, type: 2}
+  - {fileID: 11400000, guid: 5d60b968ae17a71438c7afa3a27d38cf, type: 2}
+  - {fileID: 11400000, guid: 34a67f6a1409f7e4d89ee4a1e7571d6d, type: 2}
+  - {fileID: 11400000, guid: 5ee98232c1f985f409264f9af0d69b25, type: 2}
   defaultPlayer: {fileID: 4300648619749440453, guid: b7fc92d34dbec554eb4b7acca034fc24, type: 3}
   defaultUnlockedClasses:
+  - assassin
   - fighter
   - archer
   - fortress
@@ -196,67 +239,55 @@ MonoBehaviour:
   - spellsword
   - bard
   defaultPersonality: {fileID: 11400000, guid: 1eb545d953c0e7e46b434fdfea520d97, type: 2}
-  startingClasses:
-    serializedPairs:
-    - key: fighter
-      value:
-      - {fileID: 11400000, guid: 685890fe3347ff54c8d6c055120ccac7, type: 2}
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-    - key: wizard
-      value:
-      - {fileID: 11400000, guid: 88f952d1265c8dc4688b3afe143c349c, type: 2}
-    - key: cultist
-      value:
-      - {fileID: 11400000, guid: e20134dda11542f47aea807e1488f451, type: 2}
-    - key: berserker
-      value:
-      - {fileID: 11400000, guid: 258cbda16d982384ca90636f280fd266, type: 2}
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-    - key: rogue
-      value:
-      - {fileID: 11400000, guid: 3156628d3afed5e4db8d8a53992b04e3, type: 2}
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-    - key: fortress
-      value:
-      - {fileID: 11400000, guid: fcf552edc0c1bce4e8e6a98f36a7e0d5, type: 2}
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-    - key: archer
-      value:
-      - {fileID: 11400000, guid: 2458c37bcb261e644a8cc08361422ae6, type: 2}
-      - {fileID: 11400000, guid: 39485894faf673f4bb72972a38f34c31, type: 2}
-    - key: bard
-      value:
-      - {fileID: 11400000, guid: a483f666bf3790749b08a51e12f13b79, type: 2}
-    - key: spellsword
-      value:
-      - {fileID: 11400000, guid: f42c7f47e0381724f87e0ad8bba9362b, type: 2}
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
-    - key: summoner
-      value:
-      - {fileID: 11400000, guid: 7cb499dc6e1d7ec4f9d44717cf087d8e, type: 2}
-    - key: necromancer
-      value:
-      - {fileID: 11400000, guid: c66160cc1e8a91f4f8edb11f1bd933a9, type: 2}
-    - key: jester
-      value:
-      - {fileID: 11400000, guid: 28dcc4eee9dabf54b985be40fcbaba43, type: 2}
-    - key: wildmage
-      value:
-      - {fileID: 11400000, guid: 1bb96781ac2e5a441a177c6d304db4b4, type: 2}
-    - key: alchemist
-      value: []
-    - key: chef
-      value: []
-    - key: buttermancer
-      value: []
-    - key: artificer
-      value: []
-    - key: merchant
-      value: []
-    - key: assassin
-      value:
-      - {fileID: 11400000, guid: 7b8e8df2d737ccd45ad7113c43b0b1d0, type: 2}
-      - {fileID: 11400000, guid: cc2dba015af4de5419725fc2cebc1070, type: 2}
+  classes:
+  - {fileID: 11400000, guid: 2fbd065687ea6234eb41da884e1be702, type: 2}
+  - {fileID: 11400000, guid: 877f056e83041604fb8d896acf0d5a12, type: 2}
+  - {fileID: 11400000, guid: fd65a02e939ef0c48a05716eb852ce60, type: 2}
+  - {fileID: 11400000, guid: 207929701be5d48478a78019b1af3f38, type: 2}
+  - {fileID: 11400000, guid: 2d1243bf34f2c334095f95895dfed48c, type: 2}
+  - {fileID: 11400000, guid: 389d52e5eb87e2948bc3ec7d46214679, type: 2}
+  - {fileID: 11400000, guid: 7e93ff66004375d46beda044ce933efa, type: 2}
+  - {fileID: 11400000, guid: 1d809e2f1ac274f46bdb19d028a21db0, type: 2}
+  - {fileID: 11400000, guid: 46354121fb1397543ac60b538a85d53c, type: 2}
+  - {fileID: 11400000, guid: 609ee253b5473b4478fe3aff1280389a, type: 2}
+  - {fileID: 11400000, guid: d58443c2b6affc74d950f78a47197c88, type: 2}
+  - {fileID: 11400000, guid: 0ca5369911bdde14681b05b660bdf96b, type: 2}
+  - {fileID: 11400000, guid: 9ca3691c37e25544f927da4f463faa5a, type: 2}
+  - {fileID: 11400000, guid: 895771d1886b5cc4bb00823c0688ccf2, type: 2}
+  - {fileID: 11400000, guid: 76be03ea0ca55ef48b31ea1683280304, type: 2}
+  - {fileID: 11400000, guid: 5d60b968ae17a71438c7afa3a27d38cf, type: 2}
+  - {fileID: 11400000, guid: 34a67f6a1409f7e4d89ee4a1e7571d6d, type: 2}
+  - {fileID: 11400000, guid: 5ee98232c1f985f409264f9af0d69b25, type: 2}
+  generatedNameStart:
+  - John
+  - Skritt
+  - Epic
+  - Rock
+  - girl
+  - Barrett
+  - Dan
+  - Awesome
+  - Neo
+  - Jazz
+  - Lay
+  generatedNameMiddle:
+  - 
+  - '-'
+  - dead
+  - _
+  - smith
+  - king
+  - ' Guy'
+  - zay
+  generatedNameEnd:
+  - magianexus
+  - y
+  - pool
+  - manville
+  - dm
+  - bb
+  - ' Corpse'
+  - BatVegeta183
   viewers:
     serializedPairs: []
   allViewers:
