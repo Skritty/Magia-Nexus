@@ -5,8 +5,22 @@ using UnityEngine;
 
 public class ListStat<T> : IModifiable<T>, IEnumerable<T>
 {
+    [field: SerializeReference]
+    public InheritModifiers<T> ModifierInheritMethod { get; set; } = new NoInherit<T>();
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()")]
-    public List<IDataContainer<T>> Modifiers { get; set; } = new();
+    private List<IDataContainer<T>> _modifiers = new();
+    public List<IDataContainer<T>> Modifiers
+    {
+        get
+        {
+            List<IDataContainer<T>> modifiers = ModifierInheritMethod.InheritedModifiers();
+            return modifiers == null ? _modifiers : modifiers;
+        }
+        set
+        {
+            _modifiers = value;
+        }
+    }
     public int Count => Modifiers.Count;
 
     public IEnumerator<T> GetEnumerator()

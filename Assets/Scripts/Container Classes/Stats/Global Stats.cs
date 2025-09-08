@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public interface IStat : IModifiable { }
 public interface IStat<T> : IStat, IModifiable<T> { }
 
 [Serializable]
-public class Stat<T> : IDataContainer<T>, IModifiable<T>
+public class Stat<T> : IDataContainer<T>, IModifiable<T>, IInheritableModifiers<T>
 {
     [ShowInInspector, FoldoutGroup("@GetType()")]
     public T Value
@@ -23,8 +25,24 @@ public class Stat<T> : IDataContainer<T>, IModifiable<T>
         }
     }
 
-    public List<IDataContainer<T>> Modifiers { get; set; } = new();
-
+    [field: SerializeReference]
+    public InheritModifiers<T> ModifierInheritMethod { get; set; } = new NoInherit<T>();
+    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
+    private List<IDataContainer<T>> _modifiers = new();
+    public List<IDataContainer<T>> Modifiers
+    {
+        get
+        {
+            if (ModifierInheritMethod == null) return _modifiers;
+            List<IDataContainer<T>> modifiers = ModifierInheritMethod.InheritedModifiers();
+            return modifiers == null ? _modifiers : modifiers;
+        }
+        set
+        {
+            _modifiers = value;
+        }
+    }
+    
     public Stat() { }
     public Stat(T value)
     {

@@ -226,6 +226,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5d60b968ae17a71438c7afa3a27d38cf, type: 2}
   - {fileID: 11400000, guid: 34a67f6a1409f7e4d89ee4a1e7571d6d, type: 2}
   - {fileID: 11400000, guid: 5ee98232c1f985f409264f9af0d69b25, type: 2}
+  - {fileID: 11400000, guid: c9a38bbca13b73748a249878d69e0eea, type: 2}
   defaultPlayer: {fileID: 4300648619749440453, guid: b7fc92d34dbec554eb4b7acca034fc24, type: 3}
   defaultUnlockedClasses:
   - assassin
@@ -234,10 +235,6 @@ MonoBehaviour:
   - fortress
   - berserker
   - rogue
-  - wizard
-  - wildmage
-  - spellsword
-  - bard
   defaultPersonality: {fileID: 11400000, guid: 1eb545d953c0e7e46b434fdfea520d97, type: 2}
   classes:
   - {fileID: 11400000, guid: 2fbd065687ea6234eb41da884e1be702, type: 2}
@@ -270,6 +267,10 @@ MonoBehaviour:
   - Neo
   - Jazz
   - Lay
+  - Tei
+  - Lord
+  - Nemu
+  - 'CC '
   generatedNameMiddle:
   - 
   - '-'
@@ -279,6 +280,9 @@ MonoBehaviour:
   - king
   - ' Guy'
   - zay
+  - black
+  - renai
+  - bob
   generatedNameEnd:
   - magianexus
   - y
@@ -288,6 +292,10 @@ MonoBehaviour:
   - bb
   - ' Corpse'
   - BatVegeta183
+  - fit
+  - star
+  - ' Kai'
+  - cat
   viewers:
     serializedPairs: []
   allViewers:

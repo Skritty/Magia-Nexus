@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
 using UnityEngine;
 
 public abstract class Phase_Combat : Phase
@@ -45,7 +46,10 @@ public abstract class Phase_Combat : Phase
     {
         for(int i = GameManager.Viewers.Length; i < minimumPlayers; i++)
         {
-            GameManager.Instance.JoinAsCPU();
+            Viewer cpu = GameManager.Instance.JoinAsCPU();
+            cpu.autoplayAI.PurchaseItems(cpu);
+            cpu.autoplayAI.CreateTurn(cpu);
+            cpu.autoplayAI.SetPersonality(cpu);
         }
     }
 
@@ -62,7 +66,7 @@ public abstract class Phase_Combat : Phase
             entity.Stat<Stat_Team>().Add(spawn.team);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
             spawn.owner.personality.Initialize(entity);
-            cleanup += Trigger_Die.Subscribe(TrackKill, entity);
+            cleanup += Trigger_Die.Subscribe(x => TrackKill(x.Target, entity), entity);
             foreach (Item item in spawn.owner.items)
             {
                 item.OnGained(entity);
@@ -80,14 +84,15 @@ public abstract class Phase_Combat : Phase
         }
     }
 
-    private void TrackKill(DamageInstance damage)
+    private void TrackKill(Entity dead, Entity owner)
     {
-        Entity dead = damage.Target;
+        if (dead != owner) return;
         int team = dead.Stat<Stat_Team>().Value;
         if (!remainingPlayers.ContainsKey(team)) return;
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);
 
+        Debug.Log($"{dead} DIED");
         dead.Stat<Stat_Viewer>().Value.deaths++;
 
         if (remainingPlayers.Count == 1)

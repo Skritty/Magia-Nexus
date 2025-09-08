@@ -65,7 +65,7 @@ public class GameManager : Singleton<GameManager>
         TwitchClient.Instance.RemoveCommand("info", Command_Info);
     }
 
-    public void JoinAsCPU()
+    public Viewer JoinAsCPU()
     {
         string name;
         int stop = 0;
@@ -80,6 +80,7 @@ public class GameManager : Singleton<GameManager>
         while (viewers.ContainsKey(name) && stop < 100);
         string cpuClass = defaultUnlockedClasses[UnityEngine.Random.Range(0, defaultUnlockedClasses.Count)];
         Command_JoinGame(name, new List<string>(){ cpuClass });
+        return viewers[name];
     }
 
     private CommandResponse Command_JoinGame(string user, List<string> args)

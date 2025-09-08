@@ -1,10 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using TwitchLib.Api.Helix.Models.Extensions.ReleasedExtensions;
-using TwitchLib.Api.Helix.Models.Teams;
-using System.Runtime.Remoting.Messaging;
 
 [CreateAssetMenu(menuName = "Phases/FreeForAll")]
 public class Phase_FreeForAll : Phase_Combat

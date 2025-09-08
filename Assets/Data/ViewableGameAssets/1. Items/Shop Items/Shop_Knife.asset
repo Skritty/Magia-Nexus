@@ -44,7 +44,7 @@ MonoBehaviour:
     - rid: 4023384113744707772
       type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
       data:
-        <Value>k__BackingField: 0
+        <Value>k__BackingField: 10
         <StatTag>k__BackingField:
           rid: 4023384113744707775
         <Alignment>k__BackingField: 0
@@ -59,4 +59,9 @@ MonoBehaviour:
     - rid: 4023384113744707775
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField: []
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5987051004831465542
+        _modifiers: []
+    - rid: 5987051004831465542
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,6 +15,37 @@ public interface IModifiable<T> : IModifiable
 {
     public List<IDataContainer<T>> Modifiers { get; set; }
     public void Add(IDataContainer<T> modifier);
+}
+
+public interface IInheritableModifiers<T> : IModifiable<T>
+{
+    public new List<IDataContainer<T>> Modifiers { get; set; }
+    public InheritModifiers<T> ModifierInheritMethod { get; set; }
+}
+
+[Serializable]
+public abstract class InheritModifiers<T>
+{
+    public abstract List<IDataContainer<T>> InheritedModifiers();
+}
+
+public class NoInherit<T> : InheritModifiers<T>
+{
+    public override List<IDataContainer<T>> InheritedModifiers()
+    {
+        return null;
+    }
+}
+
+public class InheritFromPlayerCharacter<T> : InheritModifiers<T>
+{
+    public Entity self;
+    [SerializeReference]
+    public IStat<T> referenceStat;
+    public override List<IDataContainer<T>> InheritedModifiers()
+    {
+        return (self.Stat<Stat_PlayerCharacter>().Value.Stat(referenceStat) as IStat<T>).Modifiers;
+    }
 }
 
 public interface ISolver<T>
@@ -47,8 +79,22 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
         }
     }
 
+    [field: SerializeReference]
+    public InheritModifiers<T> ModifierInheritMethod { get; set; } = new NoInherit<T>();
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
-    public List<IDataContainer<T>> Modifiers { get; set; } = new();
+    private List<IDataContainer<T>> _modifiers = new();
+    public List<IDataContainer<T>> Modifiers
+    {
+        get
+        {
+            List<IDataContainer<T>> modifiers = ModifierInheritMethod.InheritedModifiers();
+            return modifiers == null ? _modifiers : modifiers;
+        }
+        set
+        {
+            _modifiers = value;
+        }
+    }
 
     public bool IsDefaultValue() => Value.Equals(default(T));
     public bool Get<Type>(out Type data)

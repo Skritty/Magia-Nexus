@@ -27,7 +27,6 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         baseLife = new DataContainer<float>();
         baseLife.Value = Owner.Stat<Stat_MaxLife>().Value;
         Owner.Stat<Stat_CurrentLife>().Add(baseLife);
-        Owner.cleanup += Trigger_Die.Subscribe(x => Debug.Log($"{x.Target} DIED"), Owner);
     }
 
     public override void Tick()
@@ -37,6 +36,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
     private void HandleDoTDamage()
     {
+        if (Owner.Stat<Stat_DamageOverTime>().Modifiers.Count == 0) return;
         // TODO: damage dealt mods won't apply like this
         DamageInstance damage = new DamageInstance();
         damage.EffectMultiplier = 1;
@@ -69,11 +69,12 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         {
             calculation.Add(d);
         }
+        calculation.Add(new Modifier_Damage(value: damage.EffectMultiplier, step: CalculationStep.Multiplicative, appliesTo: DamageType.All));
         damage.finalDamage = calculation.Value;
         if (damage.Owner != null)
             damage.Owner.Stat<Stat_Counter_DamageDealt>()[damage.Target] += (int)damage.finalDamage;
         damage.Target.Stat<Stat_Counter_DamageDealt>()[damage.Target] += (int)damage.finalDamage;
-        //Debug.Log($"Dealing {damage.finalDamage} damage from {damage.Owner} to {damage.Target} ({Owner}). Moving from {baseLife.Value}hp to {baseLife.Value-damage.finalDamage}");
+        //Debug.Log($"({Time.time}) Dealing {damage.finalDamage} damage from {damage.Owner} to {damage.Target} ({Owner}). Moving from {baseLife.Value}hp to {baseLife.Value-damage.finalDamage}");
 
         /*// Apply tank contribution
         if (damage.finalDamage > 0)
@@ -82,19 +83,18 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
         baseLife.Value = Mathf.Clamp(baseLife.Value - damage.finalDamage, float.MinValue, Owner.Stat<Stat_MaxLife>().Value);
         Owner.Stat<Stat_CurrentLife>().MarkAsChanged();
 
-        Entity triggerOwner = damage.triggerPlayerCharacter ? Owner.Stat<Stat_PlayerCharacter>().Value : damage.Owner;
         if (!triggered && damage.finalDamage != 0)
         {
             damagePopup?.PlayVFX<VFX_TextPopup>(Owner.transform, Vector3.up * 0.6f, Vector3.up, false)
             ?.ApplyPopupInfo(Mathf.Round(damage.finalDamage).ToString("0"), new Color(.9f, .2f, .2f));
 
-            Trigger_Damage.Invoke(damage, damage, damage.Owner, triggerOwner, damage.Target);
+            Trigger_Damage.Invoke(damage, damage, damage.Owner, damage.Target);
         }
 
         if (Owner.Stat<Stat_CurrentLife>().Value <= 0)
         {
             //Owner.GetMechanic<Mechanic_Character>().DistributeRewards();
-            Trigger_Die.Invoke(damage, damage, damage.Owner, triggerOwner, Owner);
+            Trigger_Die.Invoke(damage, damage, damage.Owner, damage.Target);
             Trigger_Expire.Invoke(Owner, Owner);
         }
 

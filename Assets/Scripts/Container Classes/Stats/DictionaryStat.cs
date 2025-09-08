@@ -4,8 +4,22 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 public class DictionaryStat<Key, Value> : IModifiable<Value>, IEnumerable<Value>
 {
-    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()")]
-    public List<IDataContainer<Value>> Modifiers { get; set; } = new();
+    [field: SerializeReference]
+    public InheritModifiers<Value> ModifierInheritMethod { get; set; } = new NoInherit<Value>();
+    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
+    private List<IDataContainer<Value>> _modifiers = new();
+    public List<IDataContainer<Value>> Modifiers
+    {
+        get
+        {
+            List<IDataContainer<Value>> modifiers = ModifierInheritMethod.InheritedModifiers();
+            return modifiers == null ? _modifiers : modifiers;
+        }
+        set
+        {
+            _modifiers = value;
+        }
+    }
     public Dictionary<Key, IDataContainer<Value>> ModifierDictionary { get; set; } = new();
     public int Count => Modifiers.Count;
 

@@ -54,9 +54,6 @@ public class DamageInstance : Hit
 
     public void CalculateDamageType()
     {
-        // Add effect multiplier
-        damageModifiers.Add(new Modifier_Damage(value: EffectMultiplier, step: CalculationStep.Multiplicative, appliesTo: DamageType.All));
-
         if (runes.Count == 0) return;
         float addedFlatDamage = 0;
         Tally<DamageType> damageTypeTally = new Tally<DamageType>();

@@ -307,7 +307,6 @@ MonoBehaviour:
   - rid: 4023383574052864071
   - rid: 4023383574052864075
   - rid: 4023383574052864646
-  - rid: 4023383574052864647
   mechanics:
   - rid: 5987050868977958975
   - rid: 1083524128524730536
@@ -318,6 +317,24 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 1000
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1001
+      type: {class: 'NoInherit`1[[Trigger, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1002
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1005
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1006
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1007
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
     - rid: 1083524128524730529
       type: {class: Mechanic_Damageable, ns: , asm: Assembly-CSharp}
       data:
@@ -353,78 +370,43 @@ MonoBehaviour:
     - rid: 4023383574052864071
       type: {class: Stat_AoESize, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField:
-        - rid: 4023383574376350044
+        <ModifierInheritMethod>k__BackingField:
+          rid: 1005
+        _modifiers:
+        - rid: 5987051003583922732
         <Step>k__BackingField: 0
     - rid: 4023383574052864072
       type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField:
-        - rid: 4023383639094723202
-        - rid: 4023383639094723203
+        <ModifierInheritMethod>k__BackingField:
+          rid: 1002
+        _modifiers:
+        - rid: 5987051003583922726
+        - rid: 5987051003583922727
         <Step>k__BackingField: 2
     - rid: 4023383574052864075
       type: {class: Stat_MaxSummons, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField:
-        - rid: 4023383574376350043
+        <ModifierInheritMethod>k__BackingField:
+          rid: 1006
+        _modifiers:
+        - rid: 5987051003583922733
         <Step>k__BackingField: 0
     - rid: 4023383574052864646
       type: {class: Stat_Enmity, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField:
-        - rid: 4023383574376350041
+        <ModifierInheritMethod>k__BackingField:
+          rid: 1007
+        _modifiers:
+        - rid: 5987051003583922734
         <Step>k__BackingField: 0
-    - rid: 4023383574052864647
-      type: {class: Stat_PlayerCharacter, ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 4023383574376350041
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 1
-    - rid: 4023383574376350043
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 5
-    - rid: 4023383574376350044
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 1
     - rid: 4023383612992520267
       type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField:
-        - rid: 4023383612992520268
-    - rid: 4023383612992520268
-      type: {class: 'DataContainer`1[[Trigger, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField:
-          rid: 4023383612992520269
-    - rid: 4023383612992520269
-      type: {class: Trigger_Expire, ns: , asm: Assembly-CSharp}
-      data:
-        tasks:
-        - rid: 4023383612992520270
-    - rid: 4023383612992520270
-      type: {class: 'Task_Expire`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data:
-        disable: 1
-        delay: 0
-    - rid: 4023383639094723202
-      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
-      data:
-        <Modifiers>k__BackingField:
-        - rid: 4023383639094723204
-        <Step>k__BackingField: 0
-    - rid: 4023383639094723203
-      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
-      data:
-        <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 1
-    - rid: 4023383639094723204
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 10000
+        <ModifierInheritMethod>k__BackingField:
+          rid: 1001
+        _modifiers:
+        - rid: 5987051004831465551
     - rid: 4023383641354141696
       type: {class: Mechanic_Actions, ns: , asm: Assembly-CSharp}
       data:
@@ -444,13 +426,67 @@ MonoBehaviour:
     - rid: 5987050869617852727
       type: {class: Stat_EffectMultiplier, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField:
-        - rid: 5987050869617852728
+        <ModifierInheritMethod>k__BackingField:
+          rid: 1000
+        _modifiers:
+        - rid: 5987051003583922731
         <Step>k__BackingField: 0
-    - rid: 5987050869617852728
+    - rid: 5987051003583922726
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5987051003583922728
+        _modifiers:
+        - rid: 5987051003583922729
+        <Step>k__BackingField: 0
+    - rid: 5987051003583922727
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5987051003583922730
+        _modifiers: []
+        <Step>k__BackingField: 1
+    - rid: 5987051003583922728
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5987051003583922729
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 10000
+    - rid: 5987051003583922730
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5987051003583922731
       type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 1
+    - rid: 5987051003583922732
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1
+    - rid: 5987051003583922733
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 5
+    - rid: 5987051003583922734
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 1
+    - rid: 5987051004831465551
+      type: {class: 'DataContainer`1[[Trigger, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField:
+          rid: 5987051004831465552
+    - rid: 5987051004831465552
+      type: {class: Trigger_Expire, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 5987051004831465553
+    - rid: 5987051004831465553
+      type: {class: 'Task_Expire`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        disable: 1
+        delay: 0
 --- !u!1 &6044390600065127432
 GameObject:
   m_ObjectHideFlags: 0
