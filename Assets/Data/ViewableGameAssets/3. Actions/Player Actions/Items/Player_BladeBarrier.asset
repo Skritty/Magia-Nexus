@@ -51,6 +51,8 @@ MonoBehaviour:
         ignoreFrames: 0
         entitiesAffected: 5
         sortingMethod: 1
+        lineOfSight: 0
+        ignoreIntangeable: 0
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
@@ -61,8 +63,8 @@ MonoBehaviour:
       data:
         <Value>k__BackingField: 0.92
         <StatTag>k__BackingField:
-          rid: 4023383637585821888
-        <Alignment>k__BackingField: 0
+          rid: 5987051021247971710
+        <Alignment>k__BackingField: 1
         <MaxStacks>k__BackingField: 10
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
@@ -71,8 +73,12 @@ MonoBehaviour:
         <Step>k__BackingField: 2
         <AppliesTo>k__BackingField: 2
         <DamageType>k__BackingField: 0
-    - rid: 4023383637585821888
-      type: {class: Stat_DamageTaken, ns: , asm: Assembly-CSharp}
+    - rid: 5987051021247971710
+      type: {class: Stat_DamageOverTime, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 0
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5987051021247971711
+        _modifiers: []
+    - rid: 5987051021247971711
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 

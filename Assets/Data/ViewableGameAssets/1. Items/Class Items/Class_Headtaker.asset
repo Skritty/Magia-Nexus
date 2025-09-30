@@ -36,7 +36,7 @@ MonoBehaviour:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 1083524128524730483
+          rid: 5987051021247971714
         triggerOnce: 0
         triggerOrder: 0
         bindingObject: 1
@@ -51,10 +51,6 @@ MonoBehaviour:
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
-    - rid: 1083524128524730483
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
     - rid: 4023383639793074479
       type: {class: Trigger_ActionStart, ns: , asm: Assembly-CSharp}
       data:
@@ -109,4 +105,22 @@ MonoBehaviour:
     - rid: 4023383639793074483
       type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField: []
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5987051021247971329
+        _modifiers: []
+    - rid: 5987051021247971329
+      type: {class: 'NoInherit`1[[Trigger, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5987051021247971714
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 8
+        sortingMethod: 1
+        lineOfSight: 0
+        ignoreIntangeable: 0
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        radius: 0
+        angle: 180
