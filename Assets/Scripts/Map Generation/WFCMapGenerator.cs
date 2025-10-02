@@ -15,112 +15,21 @@ public class WFCMapGenerator : MonoBehaviour
         GenerateMap(xSize, ySize, zSize);
     }
 
-    private void ConnectionLinking(WFCTileGroup selfGroup, WFCTileGroup connectionGroup, (int, int, int) initialSelfIndex, (int, int, int) initialConnectionIndex)
-    {
-        // Iterate through self group subtiles (plus 1 around)
-        for (int x = -1; x <= selfGroup.subtiles.x; x++)
-        {
-            for (int y = -1; y <= selfGroup.subtiles.y; y++)
-            {
-                for (int z = -1; z <= selfGroup.subtiles.z; z++)
-                {
-                    (int, int, int) connectionIndex = (
-                        initialConnectionIndex.Item1 - initialSelfIndex.Item1 + x,
-                        initialConnectionIndex.Item2 - initialSelfIndex.Item2 + y,
-                        initialConnectionIndex.Item3 - initialSelfIndex.Item3 + z);
-
-                    if ((uint)connectionIndex.Item1 >= connectionGroup.subtiles.x
-                        || (uint)connectionIndex.Item2 >= connectionGroup.subtiles.y
-                        || (uint)connectionIndex.Item3 >= connectionGroup.subtiles.z)
-                        continue;
-
-                    WFCTile connectionTile = connectionGroup.subtiles[connectionIndex];
-                    WFCTile selfTile = null;
-                    if ((uint)x < selfGroup.subtiles.x && (uint)y < selfGroup.subtiles.y && (uint)z < selfGroup.subtiles.z)
-                    {
-                        selfTile = selfGroup.subtiles[x, y, z];
-                    }
-
-                    if (selfTile == null || selfTile.IsHole)
-                    {
-                        WFCTile[] holeAdjacentTiles = selfGroup.subtiles.GetAdjecentObjects((x,y,z));
-                        for (int i = 0; i < 6; i++)
-                        {
-                            if (holeAdjacentTiles[i] == null || holeAdjacentTiles[i].IsHole) continue;
-
-                            WFCConnection connection = holeAdjacentTiles[i].connections[i + (i % 2 > 0 ? -1 : 1)];
-
-                            if (connection == null) connection = holeAdjacentTiles[i].connections[i + (i % 2 > 0 ? -1 : 1)] = new WFCConnection();
-                            else if (connection.allowedTiles.Contains(connectionTile)) continue;
-                            connection.allowedTiles.Add(connectionTile);
-                            Debug.Log($"Connecting {connectionGroup.gameObject.name} ({initialSelfIndex}) to {selfGroup.gameObject.name} ({initialConnectionIndex}) at connection index {i + (i % 2 > 0 ? -1 : 1)} | ");
-                            // xyz = (0,0,-1), initialSelfIndex = (0,0,-1)
-                            // initialConnectionIndex = (0,0,0), goalIndex = (1,0,0)
-                            // initialConnectionIndex - initialSelfIndex + xyz = goalIndex
-                        }
-                    }
-                    else
-                    {
-                        // Overlaps!
-                        Debug.LogWarning($"{selfGroup.gameObject.name} overlaps with connection {connectionGroup.gameObject.name}");
-                        return;
-                    }
-                }
-            }
-        }
-    }
+    
 
     public void GenerateMap(int xSize, int ySize, int zSize)
     {
-        // Finish setting up tiles within groups, ensuring that they are valid
         List<WFCTile> tiles = new();
+
+        // Add all valid tiles in each group to the list of possible tiles. TODO: perhaps add weighting
         foreach (WFCTileGroup group in referenceTileGroups)
         {
             foreach (WFCTile tile in group.subtiles)
             {
-                // Ensure that connections link properly with other tiles in each group
-                // TODO: Make this happen in the editor
-                if(tile.allowedTiles.Count > 0)
-                {
-                    foreach (WFCTileReferenceSO connectedTileReference in tile.allowedTiles)
-                    {
-                        ConnectionLinking(group, connectedTileReference.group, group.subtiles.GetIndex(tile), connectedTileReference.tileIndex);
-                    }
-                }
-                for (int i = 0; i < 6; i++)
-                {
-                    if (tile.groupConnections[i] == null) continue;
-                    foreach (WFCTileReferenceSO connectedTileReference in tile.groupConnections[i].allowedTiles)
-                    {
-                        (int, int, int) selfIndex = group.subtiles.GetIndex(tile);
-                        selfIndex = (selfIndex.Item1 + (i == 0 || i == 1 ? -(i % 2 * 2 - 1) : 0),
-                            selfIndex.Item2 + (i == 2 || i == 3 ? -(i % 2 * 2 - 1) : 0),
-                            selfIndex.Item3 + (i == 4 || i == 5 ? -(i % 2 * 2 - 1) : 0));
-                        ConnectionLinking(group, connectedTileReference.group, selfIndex, connectedTileReference.tileIndex);
-                    }
-                }
-
-                // Set up internal connections
                 if (!tile.IsHole)
                 {
                     tiles.Add(tile);
-                    WFCTile[] adjecentTiles = group.subtiles.GetAdjecentObjects(tile);
-                    for(int i = 0; i < 6; i++)
-                    {
-                        if (adjecentTiles[i] == null || adjecentTiles[i].allowedTiles.Count > 0) continue;
-                        if(tile.connections[i] == null) tile.connections[i] = new WFCConnection();
-                        tile.connections[i].allowedTiles.Add(adjecentTiles[i]);
-                    }
-                }
-                else
-                {
-                    WFCTile[] adjecentTiles = group.subtiles.GetAdjecentObjects(tile);
-                    for (int i = 0; i < 6; i++)
-                    {
-                        if (adjecentTiles[i] == null || adjecentTiles[i].allowedTiles.Count > 0) continue;
-                        if (tile.connections[i + (i % 2 > 0 ? -1 : 1)] == null) tile.connections[i + (i % 2 > 0 ? -1 : 1)] = new WFCConnection();
-                        tile.connections[i + (i % 2 > 0 ? -1 : 1)].allowedTiles.AddRange(tile.allowedTiles.Select(x => x.group.subtiles[x.tileIndex]));
-                    }
+                    Debug.Log(tile.GetHashCode());
                 }
             }
         }
@@ -133,7 +42,8 @@ public class WFCMapGenerator : MonoBehaviour
             {
                 for (int z = 0; z < zSize; z++)
                 {
-                    mapRepresentation[x, y, z] = new List<WFCTile>(tiles);
+                    mapRepresentation[x, y, z] = new List<WFCTile>();
+                    mapRepresentation[x, y, z].AddRange(tiles);
                     validIndicies.Add((x, y, z));
                 }
             }
@@ -206,6 +116,7 @@ public class WFCMapGenerator : MonoBehaviour
             }
             else
             {
+                Debug.Log(tile.connections[connectionIndex].allowedTiles[0].GetHashCode());
                 allowed.AddRange(tile.connections[connectionIndex].allowedTiles);
             }
         }
@@ -223,6 +134,14 @@ public class WFCMapGenerator : MonoBehaviour
         List<WFCTile> potentialTileGroups = mapRepresentation[x, y, z];
         for (int i = 0; i < potentialTileGroups.Count; i++)
         {
+            foreach(WFCTile t in allowedTiles)
+            {
+                foreach (WFCTile t2 in potentialTileGroups)
+                {
+                    Debug.Log($"{t.GetHashCode()} = {t2.GetHashCode()}");
+                }
+            }
+            
             if (allowedTiles.Contains(potentialTileGroups[i])) continue;
             toRemove.Add(potentialTileGroups[i]);
         }

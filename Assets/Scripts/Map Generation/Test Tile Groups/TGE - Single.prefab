@@ -67,6 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0285f4e3ccd35da42a430ccced39d9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reset: 0
+  save: 0
   doSelection: 1
   subtiles:
     x: 1
@@ -76,64 +78,1415 @@ MonoBehaviour:
     - allowedTiles: []
       reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
       position: {x: -0.5, y: -0.5, z: -0.5}
+      tileGroup: {fileID: 4445119554156304193}
       content: {fileID: 8697923457659117573}
+      connections:
+      - allowedTiles:
+        - rid: 5297449274525876406
+      - allowedTiles:
+        - rid: 5297449274525876406
+      - allowedTiles: []
+      - allowedTiles: []
+      - allowedTiles:
+        - rid: 5297449274525876406
+      - allowedTiles:
+        - rid: 5297449274525876406
       groupConnections:
-      - rid: 5987051335007077052
-      - rid: 5987051335007077053
-      - rid: 5987051335007077054
-      - rid: 5987051335007077055
-      - rid: 5987051335007077056
-      - rid: 5987051335007077057
+      - allowedTiles:
+        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+      - allowedTiles:
+        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+      - allowedTiles: []
+      - allowedTiles: []
+      - allowedTiles:
+        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+      - allowedTiles:
+        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
   extents: {x: 0.5, y: 0.5, z: 0.5}
   selectedTile:
-    rid: 5987051497053225733
+    rid: 5297449272198562747
   selectedConnection:
-    rid: 5987051335007077053
+    rid: 5297449272198562748
   references:
     version: 2
     RefIds:
-    - rid: 5987051335007077052
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051335007077053
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051335007077054
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051335007077055
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051335007077056
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051335007077057
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225733
+    - rid: 5297449272198562747
       type: {class: WFCTile, ns: , asm: Assembly-CSharp}
       data:
         allowedTiles: []
         reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
         position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
         content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876292
+        - allowedTiles:
+          - rid: 5297449274525876292
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876292
+        - allowedTiles:
+          - rid: 5297449274525876292
         groupConnections:
-        - rid: 5987051335007077052
-        - rid: 5987051335007077053
-        - rid: 5987051335007077054
-        - rid: 5987051335007077055
-        - rid: 5987051335007077056
-        - rid: 5987051335007077057
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449272198562748
+      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles:
+        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876292
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876293
+        - allowedTiles:
+          - rid: 5297449274525876293
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876293
+        - allowedTiles:
+          - rid: 5297449274525876293
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876293
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876294
+        - allowedTiles:
+          - rid: 5297449274525876294
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876294
+        - allowedTiles:
+          - rid: 5297449274525876294
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876294
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876295
+        - allowedTiles:
+          - rid: 5297449274525876295
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876295
+        - allowedTiles:
+          - rid: 5297449274525876295
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876295
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876296
+        - allowedTiles:
+          - rid: 5297449274525876296
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876296
+        - allowedTiles:
+          - rid: 5297449274525876296
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876296
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876297
+        - allowedTiles:
+          - rid: 5297449274525876297
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876297
+        - allowedTiles:
+          - rid: 5297449274525876297
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876297
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876298
+        - allowedTiles:
+          - rid: 5297449274525876298
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876298
+        - allowedTiles:
+          - rid: 5297449274525876298
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876298
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876299
+        - allowedTiles:
+          - rid: 5297449274525876299
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876299
+        - allowedTiles:
+          - rid: 5297449274525876299
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876299
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876300
+        - allowedTiles:
+          - rid: 5297449274525876300
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876300
+        - allowedTiles:
+          - rid: 5297449274525876300
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876300
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876301
+        - allowedTiles:
+          - rid: 5297449274525876301
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876301
+        - allowedTiles:
+          - rid: 5297449274525876301
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876301
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876302
+        - allowedTiles:
+          - rid: 5297449274525876302
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876302
+        - allowedTiles:
+          - rid: 5297449274525876302
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876302
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876303
+        - allowedTiles:
+          - rid: 5297449274525876303
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876303
+        - allowedTiles:
+          - rid: 5297449274525876303
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876303
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876304
+        - allowedTiles:
+          - rid: 5297449274525876304
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876304
+        - allowedTiles:
+          - rid: 5297449274525876304
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876304
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876305
+        - allowedTiles:
+          - rid: 5297449274525876305
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876305
+        - allowedTiles:
+          - rid: 5297449274525876305
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876305
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876306
+        - allowedTiles:
+          - rid: 5297449274525876306
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876306
+        - allowedTiles:
+          - rid: 5297449274525876306
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876306
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876307
+        - allowedTiles:
+          - rid: 5297449274525876307
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876307
+        - allowedTiles:
+          - rid: 5297449274525876307
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876307
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876308
+        - allowedTiles:
+          - rid: 5297449274525876308
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876308
+        - allowedTiles:
+          - rid: 5297449274525876308
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876308
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876309
+        - allowedTiles:
+          - rid: 5297449274525876309
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876309
+        - allowedTiles:
+          - rid: 5297449274525876309
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876309
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876310
+        - allowedTiles:
+          - rid: 5297449274525876310
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876310
+        - allowedTiles:
+          - rid: 5297449274525876310
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876310
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876311
+        - allowedTiles:
+          - rid: 5297449274525876311
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876311
+        - allowedTiles:
+          - rid: 5297449274525876311
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876311
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876406
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876407
+        - allowedTiles:
+          - rid: 5297449274525876407
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876407
+        - allowedTiles:
+          - rid: 5297449274525876407
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876407
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876408
+        - allowedTiles:
+          - rid: 5297449274525876408
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876408
+        - allowedTiles:
+          - rid: 5297449274525876408
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876408
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876409
+        - allowedTiles:
+          - rid: 5297449274525876409
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876409
+        - allowedTiles:
+          - rid: 5297449274525876409
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876409
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876410
+        - allowedTiles:
+          - rid: 5297449274525876410
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876410
+        - allowedTiles:
+          - rid: 5297449274525876410
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876410
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876411
+        - allowedTiles:
+          - rid: 5297449274525876411
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876411
+        - allowedTiles:
+          - rid: 5297449274525876411
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876411
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876412
+        - allowedTiles:
+          - rid: 5297449274525876412
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876412
+        - allowedTiles:
+          - rid: 5297449274525876412
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876412
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876413
+        - allowedTiles:
+          - rid: 5297449274525876413
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876413
+        - allowedTiles:
+          - rid: 5297449274525876413
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876413
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876414
+        - allowedTiles:
+          - rid: 5297449274525876414
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876414
+        - allowedTiles:
+          - rid: 5297449274525876414
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876414
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876415
+        - allowedTiles:
+          - rid: 5297449274525876415
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876415
+        - allowedTiles:
+          - rid: 5297449274525876415
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876415
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876416
+        - allowedTiles:
+          - rid: 5297449274525876416
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876416
+        - allowedTiles:
+          - rid: 5297449274525876416
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876416
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876417
+        - allowedTiles:
+          - rid: 5297449274525876417
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876417
+        - allowedTiles:
+          - rid: 5297449274525876417
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876417
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876418
+        - allowedTiles:
+          - rid: 5297449274525876418
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876418
+        - allowedTiles:
+          - rid: 5297449274525876418
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876418
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876419
+        - allowedTiles:
+          - rid: 5297449274525876419
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876419
+        - allowedTiles:
+          - rid: 5297449274525876419
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876419
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876420
+        - allowedTiles:
+          - rid: 5297449274525876420
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876420
+        - allowedTiles:
+          - rid: 5297449274525876420
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876420
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876421
+        - allowedTiles:
+          - rid: 5297449274525876421
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876421
+        - allowedTiles:
+          - rid: 5297449274525876421
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876421
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876422
+        - allowedTiles:
+          - rid: 5297449274525876422
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876422
+        - allowedTiles:
+          - rid: 5297449274525876422
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876422
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876423
+        - allowedTiles:
+          - rid: 5297449274525876423
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876423
+        - allowedTiles:
+          - rid: 5297449274525876423
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876423
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876424
+        - allowedTiles:
+          - rid: 5297449274525876424
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876424
+        - allowedTiles:
+          - rid: 5297449274525876424
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876424
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876425
+        - allowedTiles:
+          - rid: 5297449274525876425
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876425
+        - allowedTiles:
+          - rid: 5297449274525876425
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876425
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876426
+        - allowedTiles:
+          - rid: 5297449274525876426
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876426
+        - allowedTiles:
+          - rid: 5297449274525876426
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876426
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876427
+        - allowedTiles:
+          - rid: 5297449274525876427
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876427
+        - allowedTiles:
+          - rid: 5297449274525876427
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876427
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876428
+        - allowedTiles:
+          - rid: 5297449274525876428
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876428
+        - allowedTiles:
+          - rid: 5297449274525876428
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876428
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876429
+        - allowedTiles:
+          - rid: 5297449274525876429
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876429
+        - allowedTiles:
+          - rid: 5297449274525876429
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876429
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles:
+          - rid: 5297449274525876430
+        - allowedTiles:
+          - rid: 5297449274525876430
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - rid: 5297449274525876430
+        - allowedTiles:
+          - rid: 5297449274525876430
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+    - rid: 5297449274525876430
+      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
+      data:
+        allowedTiles: []
+        reference: {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        position: {x: -0.5, y: -0.5, z: -0.5}
+        tileGroup: {fileID: 4445119554156304193}
+        content: {fileID: 8697923457659117573}
+        connections:
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        groupConnections:
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
+        - allowedTiles:
+          - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
 --- !u!1 &8697923457659117573
 GameObject:
   m_ObjectHideFlags: 0

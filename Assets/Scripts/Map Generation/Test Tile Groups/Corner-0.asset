@@ -12,49 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cd6fc8ddc4d46d49b6af4160d4e6a5a, type: 3}
   m_Name: Corner-0
   m_EditorClassIdentifier: 
-  tileRef:
-    rid: 5987051497053225388
+  xIndex: 0
+  yIndex: 0
+  zIndex: 1
   group: {fileID: 812934095266707935, guid: 6b6667cc8aaf1ff4eb55819b34c5b490, type: 3}
-  references:
-    version: 2
-    RefIds:
-    - rid: 5987051497053225388
-      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-        reference: {fileID: 11400000}
-        position: {x: -0.5, y: -0.5, z: -0.5}
-        content: {fileID: 0}
-        groupConnections:
-        - rid: 5987051497053225389
-        - rid: 5987051497053225390
-        - rid: 5987051497053225391
-        - rid: 5987051497053225392
-        - rid: 5987051497053225393
-        - rid: 5987051497053225394
-    - rid: 5987051497053225389
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051497053225390
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225391
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051497053225392
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051497053225393
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225394
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []

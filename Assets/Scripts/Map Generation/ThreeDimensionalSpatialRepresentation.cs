@@ -44,7 +44,7 @@ public class ThreeDimensionalSpatialRepresentation<T> : IEnumerable, ISerializat
             {
                 for (int z = 0; z < this.z; z++)
                 {
-                    objects[x, y, z] = serializedObjectsArray[x + y * this.x + z * this.x * this.y];
+                    objects[x, y, z] = serializedObjectsArray[z + y * this.y + x * this.y * this.z];
                 }
             }
         }

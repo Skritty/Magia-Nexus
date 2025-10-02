@@ -42,16 +42,16 @@ public class Editor_WFCTileGroupHelper : Editor
         group.selectedConnection = null;
         foreach (WFCTile tile in group.subtiles)
         {
-            if(group.selectedConnection == null) CheckConnection(group, tile.groupConnections[0], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.right);
-            if(group.selectedConnection == null) CheckConnection(group, tile.groupConnections[1], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.left);
-            if(group.selectedConnection == null) CheckConnection(group, tile.groupConnections[2], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.up);
-            if(group.selectedConnection == null) CheckConnection(group, tile.groupConnections[3], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.down);
-            if(group.selectedConnection == null) CheckConnection(group, tile.groupConnections[4], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.forward);
-            if(group.selectedConnection == null) CheckConnection(group, tile.groupConnections[5], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.back);
+            if(group.selectedConnection == null) CheckConnection(0, group, tile.groupConnections[0], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.right);
+            if(group.selectedConnection == null) CheckConnection(1,group, tile.groupConnections[1], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.left);
+            if(group.selectedConnection == null) CheckConnection(2, group, tile.groupConnections[2], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.up);
+            if(group.selectedConnection == null) CheckConnection(3, group, tile.groupConnections[3], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.down);
+            if(group.selectedConnection == null) CheckConnection(4, group, tile.groupConnections[4], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.forward);
+            if(group.selectedConnection == null) CheckConnection(5, group, tile.groupConnections[5], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.back);
         }
     }
 
-    private void CheckConnection(WFCTileGroup group, WFCGroupConnection connection, BoxCollider collider, Vector3 center)
+    private void CheckConnection(int i, WFCTileGroup group, WFCGroupConnection connection, BoxCollider collider, Vector3 center)
     {
         if (connection == null) return;
         collider.center = center;
