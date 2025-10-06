@@ -46,104 +46,1271 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0285f4e3ccd35da42a430ccced39d9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reset: 0
+  save: 0
   doSelection: 1
   subtiles:
     x: 1
     y: 1
     z: 2
     serializedObjectsArray:
-    - allowedTiles: []
+    - xIndex: 0
+      yIndex: 0
+      zIndex: 0
+      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE -
+        Double.prefab
       reference: {fileID: 0}
-      position: {x: -0.5, y: -0.5, z: -0.5}
       content: {fileID: 0}
+      allowedTileSOs: []
+      connections:
+      - allowedTiles:
+        - xIndex: 0
+          yIndex: 0
+          zIndex: 0
+          groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+            - Corner.prefab
+          reference: {fileID: 0}
+          content: {fileID: 0}
+          allowedTileSOs: []
+          connections:
+          - allowedTiles:
+            - xIndex: 1
+              yIndex: 0
+              zIndex: 0
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Corner.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: 0, y: 0, z: 0}
+            - xIndex: 1
+              yIndex: 0
+              zIndex: 0
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Corner.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: 0, y: 0, z: 0}
+          - allowedTiles:
+            - xIndex: 0
+              yIndex: 0
+              zIndex: 0
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Double.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles:
+                - xIndex: 0
+                  yIndex: 0
+                  zIndex: 0
+                  groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                    - Corner.prefab
+                  reference: {fileID: 0}
+                  content: {fileID: 0}
+                  allowedTileSOs: []
+                  connections:
+                  - allowedTiles:
+                    - xIndex: 1
+                      yIndex: 0
+                      zIndex: 0
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Corner.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: 0, y: 0, z: 0}
+                    - xIndex: 1
+                      yIndex: 0
+                      zIndex: 0
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Corner.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: 0, y: 0, z: 0}
+                  - allowedTiles:
+                    - xIndex: 0
+                      yIndex: 0
+                      zIndex: 0
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Double.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: -0.5, y: -0.5, z: -0.5}
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles:
+                    - xIndex: 0
+                      yIndex: 0
+                      zIndex: 1
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Corner.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: 0, y: 0, z: 0}
+                    - xIndex: 0
+                      yIndex: 0
+                      zIndex: 1
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Corner.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: 0, y: 0, z: 0}
+                  - allowedTiles: []
+                  groupConnections:
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  position: {x: -0.5, y: -0.5, z: -1.5}
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles:
+                - xIndex: 0
+                  yIndex: 0
+                  zIndex: 1
+                  groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                    - Double.prefab
+                  reference: {fileID: 0}
+                  content: {fileID: 0}
+                  allowedTileSOs: []
+                  connections:
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  groupConnections:
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  position: {x: 0, y: 0, z: 0}
+                - xIndex: 0
+                  yIndex: 0
+                  zIndex: 1
+                  groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                    - Double.prefab
+                  reference: {fileID: 0}
+                  content: {fileID: 0}
+                  allowedTileSOs: []
+                  connections:
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  groupConnections:
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  position: {x: 0, y: 0, z: 0}
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: -0.5, y: -0.5, z: -0.5}
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles:
+            - xIndex: 0
+              yIndex: 0
+              zIndex: 1
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Corner.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: 0, y: 0, z: 0}
+            - xIndex: 0
+              yIndex: 0
+              zIndex: 1
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Corner.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: 0, y: 0, z: 0}
+          - allowedTiles: []
+          groupConnections:
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          position: {x: -0.5, y: -0.5, z: -1.5}
+      - allowedTiles: []
+      - allowedTiles: []
+      - allowedTiles: []
+      - allowedTiles:
+        - xIndex: 0
+          yIndex: 0
+          zIndex: 1
+          groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+            - Double.prefab
+          reference: {fileID: 0}
+          content: {fileID: 0}
+          allowedTileSOs: []
+          connections:
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          groupConnections:
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          position: {x: 0, y: 0, z: 0}
+        - xIndex: 0
+          yIndex: 0
+          zIndex: 1
+          groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+            - Double.prefab
+          reference: {fileID: 0}
+          content: {fileID: 0}
+          allowedTileSOs: []
+          connections:
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          groupConnections:
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          position: {x: 0, y: 0, z: 0}
+      - allowedTiles: []
       groupConnections:
-      - rid: 5987051497053225157
-      - rid: 5987051497053225158
-      - rid: 5987051497053225159
-      - rid: 5987051497053225160
-      - rid: -2
-      - rid: 5987051497053225161
-    - allowedTiles: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      position: {x: -0.5, y: -0.5, z: -0.5}
+    - xIndex: 0
+      yIndex: 0
+      zIndex: 1
+      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE -
+        Double.prefab
       reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
-      position: {x: -0.5, y: -0.5, z: 0.5}
-      content: {fileID: 5852781338015080959}
+      content: {fileID: 0}
+      allowedTileSOs: []
+      connections:
+      - allowedTiles:
+        - xIndex: 0
+          yIndex: 0
+          zIndex: 1
+          groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+            - Corner.prefab
+          reference: {fileID: 11400000, guid: d9a836908743ff44c8e92c5e044c56f7, type: 2}
+          content: {fileID: 0}
+          allowedTileSOs: []
+          connections:
+          - allowedTiles:
+            - xIndex: 1
+              yIndex: 0
+              zIndex: 1
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Corner.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: 0, y: 0, z: 0}
+            - xIndex: 1
+              yIndex: 0
+              zIndex: 1
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Corner.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: 0, y: 0, z: 0}
+          - allowedTiles:
+            - xIndex: 0
+              yIndex: 0
+              zIndex: 1
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Double.prefab
+              reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles:
+                - xIndex: 0
+                  yIndex: 0
+                  zIndex: 0
+                  groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                    - Double.prefab
+                  reference: {fileID: 0}
+                  content: {fileID: 0}
+                  allowedTileSOs: []
+                  connections:
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  groupConnections:
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  position: {x: 0, y: 0, z: 0}
+                - xIndex: 0
+                  yIndex: 0
+                  zIndex: 0
+                  groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                    - Double.prefab
+                  reference: {fileID: 0}
+                  content: {fileID: 0}
+                  allowedTileSOs: []
+                  connections:
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  groupConnections:
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  position: {x: 0, y: 0, z: 0}
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: -0.5, y: -0.5, z: 0.5}
+            - xIndex: 0
+              yIndex: 0
+              zIndex: 1
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Double.prefab
+              reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles:
+                - xIndex: 0
+                  yIndex: 0
+                  zIndex: 1
+                  groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                    - Corner.prefab
+                  reference: {fileID: 11400000, guid: d9a836908743ff44c8e92c5e044c56f7, type: 2}
+                  content: {fileID: 0}
+                  allowedTileSOs: []
+                  connections:
+                  - allowedTiles:
+                    - xIndex: 1
+                      yIndex: 0
+                      zIndex: 1
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Corner.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: 0, y: 0, z: 0}
+                    - xIndex: 1
+                      yIndex: 0
+                      zIndex: 1
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Corner.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: 0, y: 0, z: 0}
+                  - allowedTiles:
+                    - xIndex: 0
+                      yIndex: 0
+                      zIndex: 1
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Double.prefab
+                      reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: -0.5, y: -0.5, z: 0.5}
+                    - xIndex: 0
+                      yIndex: 0
+                      zIndex: 1
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Double.prefab
+                      reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: -0.5, y: -0.5, z: 0.5}
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles:
+                    - xIndex: 0
+                      yIndex: 0
+                      zIndex: 0
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Corner.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: 0, y: 0, z: 0}
+                    - xIndex: 0
+                      yIndex: 0
+                      zIndex: 0
+                      groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                        Groups/TGE - Corner.prefab
+                      reference: {fileID: 0}
+                      content: {fileID: 0}
+                      allowedTileSOs: []
+                      connections: []
+                      groupConnections: []
+                      position: {x: 0, y: 0, z: 0}
+                  groupConnections:
+                  - allowedTileSOs: []
+                  - allowedTileSOs:
+                    - {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  position: {x: -0.5, y: -0.5, z: -0.5}
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles:
+                - xIndex: 0
+                  yIndex: 0
+                  zIndex: 0
+                  groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                    - Double.prefab
+                  reference: {fileID: 0}
+                  content: {fileID: 0}
+                  allowedTileSOs: []
+                  connections:
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  groupConnections:
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  position: {x: 0, y: 0, z: 0}
+                - xIndex: 0
+                  yIndex: 0
+                  zIndex: 0
+                  groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                    - Double.prefab
+                  reference: {fileID: 0}
+                  content: {fileID: 0}
+                  allowedTileSOs: []
+                  connections:
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  - allowedTiles: []
+                  groupConnections:
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  - allowedTileSOs: []
+                  position: {x: 0, y: 0, z: 0}
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: -0.5, y: -0.5, z: 0.5}
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles:
+            - xIndex: 0
+              yIndex: 0
+              zIndex: 0
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Corner.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: 0, y: 0, z: 0}
+            - xIndex: 0
+              yIndex: 0
+              zIndex: 0
+              groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                - Corner.prefab
+              reference: {fileID: 0}
+              content: {fileID: 0}
+              allowedTileSOs: []
+              connections:
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              - allowedTiles: []
+              groupConnections:
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              - allowedTileSOs: []
+              position: {x: 0, y: 0, z: 0}
+          groupConnections:
+          - allowedTileSOs: []
+          - allowedTileSOs:
+            - {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          position: {x: -0.5, y: -0.5, z: -0.5}
+      - allowedTiles: []
+      - allowedTiles: []
+      - allowedTiles: []
+      - allowedTiles: []
+      - allowedTiles:
+        - xIndex: 0
+          yIndex: 0
+          zIndex: 0
+          groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+            - Double.prefab
+          reference: {fileID: 0}
+          content: {fileID: 0}
+          allowedTileSOs: []
+          connections:
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          groupConnections:
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          position: {x: 0, y: 0, z: 0}
+        - xIndex: 0
+          yIndex: 0
+          zIndex: 0
+          groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+            - Double.prefab
+          reference: {fileID: 0}
+          content: {fileID: 0}
+          allowedTileSOs: []
+          connections:
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          - allowedTiles: []
+          groupConnections:
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          - allowedTileSOs: []
+          position: {x: 0, y: 0, z: 0}
       groupConnections:
-      - rid: 5987051497053225162
-      - rid: 5987051497053225163
-      - rid: 5987051497053225164
-      - rid: 5987051497053225165
-      - rid: 5987051497053225166
-      - rid: -2
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      - allowedTileSOs: []
+      position: {x: -0.5, y: -0.5, z: 0.5}
   extents: {x: 0.5, y: 0.5, z: 1}
   selectedTile:
-    rid: 5987051497053225844
-  selectedConnection:
-    rid: 5987051497053225158
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 5987051497053225157
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225158
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225159
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051497053225160
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051497053225161
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225162
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225163
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225164
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051497053225165
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-    - rid: 5987051497053225166
-      type: {class: WFCGroupConnection, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles:
-        - {fileID: 11400000, guid: ffd3095711bf5eb41bdfa895c525f1ec, type: 2}
-    - rid: 5987051497053225844
-      type: {class: WFCTile, ns: , asm: Assembly-CSharp}
-      data:
-        allowedTiles: []
-        reference: {fileID: 0}
-        position: {x: -0.5, y: -0.5, z: -0.5}
+    xIndex: 0
+    yIndex: 0
+    zIndex: 1
+    groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE - Double.prefab
+    reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+    content: {fileID: 0}
+    allowedTileSOs: []
+    connections:
+    - allowedTiles:
+      - xIndex: 0
+        yIndex: 0
+        zIndex: 1
+        groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+          - Corner.prefab
+        reference: {fileID: 11400000, guid: d9a836908743ff44c8e92c5e044c56f7, type: 2}
         content: {fileID: 0}
+        allowedTileSOs: []
+        connections:
+        - allowedTiles:
+          - xIndex: 1
+            yIndex: 0
+            zIndex: 1
+            groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+              - Corner.prefab
+            reference: {fileID: 0}
+            content: {fileID: 0}
+            allowedTileSOs: []
+            connections:
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            groupConnections:
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            position: {x: 0, y: 0, z: 0}
+          - xIndex: 1
+            yIndex: 0
+            zIndex: 1
+            groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+              - Corner.prefab
+            reference: {fileID: 0}
+            content: {fileID: 0}
+            allowedTileSOs: []
+            connections:
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            groupConnections:
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            position: {x: 0, y: 0, z: 0}
+        - allowedTiles:
+          - xIndex: 0
+            yIndex: 0
+            zIndex: 1
+            groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+              - Double.prefab
+            reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+            content: {fileID: 0}
+            allowedTileSOs: []
+            connections:
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles:
+              - xIndex: 0
+                yIndex: 0
+                zIndex: 0
+                groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                  - Double.prefab
+                reference: {fileID: 0}
+                content: {fileID: 0}
+                allowedTileSOs: []
+                connections:
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                groupConnections:
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                position: {x: 0, y: 0, z: 0}
+              - xIndex: 0
+                yIndex: 0
+                zIndex: 0
+                groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                  - Double.prefab
+                reference: {fileID: 0}
+                content: {fileID: 0}
+                allowedTileSOs: []
+                connections:
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                groupConnections:
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                position: {x: 0, y: 0, z: 0}
+            groupConnections:
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            position: {x: -0.5, y: -0.5, z: 0.5}
+          - xIndex: 0
+            yIndex: 0
+            zIndex: 1
+            groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+              - Double.prefab
+            reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+            content: {fileID: 0}
+            allowedTileSOs: []
+            connections:
+            - allowedTiles:
+              - xIndex: 0
+                yIndex: 0
+                zIndex: 1
+                groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                  - Corner.prefab
+                reference: {fileID: 11400000, guid: d9a836908743ff44c8e92c5e044c56f7, type: 2}
+                content: {fileID: 0}
+                allowedTileSOs: []
+                connections:
+                - allowedTiles:
+                  - xIndex: 1
+                    yIndex: 0
+                    zIndex: 1
+                    groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                      Groups/TGE - Corner.prefab
+                    reference: {fileID: 0}
+                    content: {fileID: 0}
+                    allowedTileSOs: []
+                    connections:
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    groupConnections:
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    position: {x: 0, y: 0, z: 0}
+                  - xIndex: 1
+                    yIndex: 0
+                    zIndex: 1
+                    groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                      Groups/TGE - Corner.prefab
+                    reference: {fileID: 0}
+                    content: {fileID: 0}
+                    allowedTileSOs: []
+                    connections:
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    groupConnections:
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    position: {x: 0, y: 0, z: 0}
+                - allowedTiles:
+                  - xIndex: 0
+                    yIndex: 0
+                    zIndex: 1
+                    groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                      Groups/TGE - Double.prefab
+                    reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+                    content: {fileID: 0}
+                    allowedTileSOs: []
+                    connections:
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles:
+                      - xIndex: 0
+                        yIndex: 0
+                        zIndex: 0
+                        groupPrefabAssetPath: Assets/Scripts/Map Generation/Test
+                          Tile Groups/TGE - Double.prefab
+                      - xIndex: 0
+                        yIndex: 0
+                        zIndex: 0
+                        groupPrefabAssetPath: Assets/Scripts/Map Generation/Test
+                          Tile Groups/TGE - Double.prefab
+                    groupConnections:
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    position: {x: -0.5, y: -0.5, z: 0.5}
+                  - xIndex: 0
+                    yIndex: 0
+                    zIndex: 1
+                    groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                      Groups/TGE - Double.prefab
+                    reference: {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+                    content: {fileID: 0}
+                    allowedTileSOs: []
+                    connections:
+                    - allowedTiles:
+                      - xIndex: 0
+                        yIndex: 0
+                        zIndex: 1
+                        groupPrefabAssetPath: Assets/Scripts/Map Generation/Test
+                          Tile Groups/TGE - Corner.prefab
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles:
+                      - xIndex: 0
+                        yIndex: 0
+                        zIndex: 0
+                        groupPrefabAssetPath: Assets/Scripts/Map Generation/Test
+                          Tile Groups/TGE - Double.prefab
+                      - xIndex: 0
+                        yIndex: 0
+                        zIndex: 0
+                        groupPrefabAssetPath: Assets/Scripts/Map Generation/Test
+                          Tile Groups/TGE - Double.prefab
+                    groupConnections:
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    position: {x: -0.5, y: -0.5, z: 0.5}
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles:
+                  - xIndex: 0
+                    yIndex: 0
+                    zIndex: 0
+                    groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                      Groups/TGE - Corner.prefab
+                    reference: {fileID: 0}
+                    content: {fileID: 0}
+                    allowedTileSOs: []
+                    connections:
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    groupConnections:
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    position: {x: 0, y: 0, z: 0}
+                  - xIndex: 0
+                    yIndex: 0
+                    zIndex: 0
+                    groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile
+                      Groups/TGE - Corner.prefab
+                    reference: {fileID: 0}
+                    content: {fileID: 0}
+                    allowedTileSOs: []
+                    connections:
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    - allowedTiles: []
+                    groupConnections:
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    - allowedTileSOs: []
+                    position: {x: 0, y: 0, z: 0}
+                groupConnections:
+                - allowedTileSOs: []
+                - allowedTileSOs:
+                  - {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                position: {x: -0.5, y: -0.5, z: -0.5}
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles:
+              - xIndex: 0
+                yIndex: 0
+                zIndex: 0
+                groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                  - Double.prefab
+                reference: {fileID: 0}
+                content: {fileID: 0}
+                allowedTileSOs: []
+                connections:
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                groupConnections:
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                position: {x: 0, y: 0, z: 0}
+              - xIndex: 0
+                yIndex: 0
+                zIndex: 0
+                groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+                  - Double.prefab
+                reference: {fileID: 0}
+                content: {fileID: 0}
+                allowedTileSOs: []
+                connections:
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                - allowedTiles: []
+                groupConnections:
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                - allowedTileSOs: []
+                position: {x: 0, y: 0, z: 0}
+            groupConnections:
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            position: {x: -0.5, y: -0.5, z: 0.5}
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles:
+          - xIndex: 0
+            yIndex: 0
+            zIndex: 0
+            groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+              - Corner.prefab
+            reference: {fileID: 0}
+            content: {fileID: 0}
+            allowedTileSOs: []
+            connections:
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            groupConnections:
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            position: {x: 0, y: 0, z: 0}
+          - xIndex: 0
+            yIndex: 0
+            zIndex: 0
+            groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+              - Corner.prefab
+            reference: {fileID: 0}
+            content: {fileID: 0}
+            allowedTileSOs: []
+            connections:
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            - allowedTiles: []
+            groupConnections:
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            - allowedTileSOs: []
+            position: {x: 0, y: 0, z: 0}
         groupConnections:
-        - rid: 5987051497053225157
-        - rid: 5987051497053225158
-        - rid: 5987051497053225159
-        - rid: 5987051497053225160
-        - rid: -2
-        - rid: 5987051497053225161
+        - allowedTileSOs: []
+        - allowedTileSOs:
+          - {fileID: 11400000, guid: 7ecba0974a7552f4d85710c8ddba507c, type: 2}
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        position: {x: -0.5, y: -0.5, z: -0.5}
+    - allowedTiles: []
+    - allowedTiles: []
+    - allowedTiles: []
+    - allowedTiles: []
+    - allowedTiles:
+      - xIndex: 0
+        yIndex: 0
+        zIndex: 0
+        groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+          - Double.prefab
+        reference: {fileID: 0}
+        content: {fileID: 0}
+        allowedTileSOs: []
+        connections:
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        groupConnections:
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        position: {x: 0, y: 0, z: 0}
+      - xIndex: 0
+        yIndex: 0
+        zIndex: 0
+        groupPrefabAssetPath: Assets/Scripts/Map Generation/Test Tile Groups/TGE
+          - Double.prefab
+        reference: {fileID: 0}
+        content: {fileID: 0}
+        allowedTileSOs: []
+        connections:
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        - allowedTiles: []
+        groupConnections:
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        - allowedTileSOs: []
+        position: {x: 0, y: 0, z: 0}
+    groupConnections:
+    - allowedTileSOs: []
+    - allowedTileSOs: []
+    - allowedTileSOs: []
+    - allowedTileSOs: []
+    - allowedTileSOs: []
+    - allowedTileSOs: []
+    position: {x: -0.5, y: -0.5, z: 0.5}
+  selectedConnection:
+    allowedTileSOs: []
 --- !u!65 &870417575082531673
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -164,7 +1331,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!1 &3982157679649571941
 GameObject:
   m_ObjectHideFlags: 0

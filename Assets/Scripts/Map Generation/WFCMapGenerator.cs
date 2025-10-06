@@ -109,14 +109,13 @@ public class WFCMapGenerator : MonoBehaviour
         HashSet<WFCTile> allowed = new();
         foreach (WFCTile tile in tiles)
         {
-            if(tile.connections[connectionIndex] == null)
+            if(tile.connections[connectionIndex].Equals(default(WFCConnection)))
             {
                 allowed.Clear();
                 break;
             }
             else
             {
-                Debug.Log(tile.connections[connectionIndex].allowedTiles[0].GetHashCode());
                 allowed.AddRange(tile.connections[connectionIndex].allowedTiles);
             }
         }
@@ -134,14 +133,6 @@ public class WFCMapGenerator : MonoBehaviour
         List<WFCTile> potentialTileGroups = mapRepresentation[x, y, z];
         for (int i = 0; i < potentialTileGroups.Count; i++)
         {
-            foreach(WFCTile t in allowedTiles)
-            {
-                foreach (WFCTile t2 in potentialTileGroups)
-                {
-                    Debug.Log($"{t.GetHashCode()} = {t2.GetHashCode()}");
-                }
-            }
-            
             if (allowedTiles.Contains(potentialTileGroups[i])) continue;
             toRemove.Add(potentialTileGroups[i]);
         }

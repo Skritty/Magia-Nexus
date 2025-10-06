@@ -20,7 +20,7 @@ public class ThreeDimensionalSpatialRepresentation<T> : IEnumerable, ISerializat
         objects = new T[x, y, z];
     }
 
-    public IEnumerator GetEnumerator() => objects.GetEnumerator();
+    public IEnumerator GetEnumerator() => objects?.GetEnumerator();
 
     public T this[int x, int y, int z]
     {

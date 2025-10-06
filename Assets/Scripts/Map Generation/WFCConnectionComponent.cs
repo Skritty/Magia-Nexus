@@ -5,5 +5,5 @@ using UnityEngine;
 [Serializable]
 public class WFCGroupConnection
 {
-    public List<WFCTileReferenceSO> allowedTiles = new();
+    public List<WFCTileReferenceSO> allowedTileSOs = new();
 }
