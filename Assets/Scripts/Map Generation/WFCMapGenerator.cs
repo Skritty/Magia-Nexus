@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using OpenCover.Framework.Model;
+using TreeEditor;
 using Unity.VisualScripting;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class WFCMapGenerator : MonoBehaviour
 {
     public int xSize, ySize, zSize;
-    public List<WFCTileGroup> referenceTileGroups;
+    public List<WFCTileGroup> tileGroupPrefabs;
     public ThreeDimensionalSpatialRepresentation<List<WFCTile>> mapRepresentation;
     private List<(int, int, int)> validIndicies = new();
 
@@ -20,16 +24,47 @@ public class WFCMapGenerator : MonoBehaviour
     public void GenerateMap(int xSize, int ySize, int zSize)
     {
         List<WFCTile> tiles = new();
+        Dictionary<string, WFCTileGroup> loadedTileGroups = new();
+        
+        foreach (WFCTileGroup groupPrefab in tileGroupPrefabs)
+        {
+            string prefabPath = AssetDatabase.GetAssetPath(groupPrefab.gameObject);
+            WFCTileGroup tileGroup = new EditPrefabAssetScope(prefabPath).prefabRoot.GetComponent<WFCTileGroup>();
+            loadedTileGroups.Add(prefabPath, tileGroup);
+        }
+
+        // Reciprocate connections to loaded tile groups (these will not be saved to prefabs)
+        foreach (KeyValuePair<string, WFCTileGroup> loadedTileGroup in loadedTileGroups)
+        {
+            foreach (WFCTile tile in loadedTileGroup.Value.subtiles)
+            {
+                if (tile.IsHole) continue;
+                // Reciprocate connections
+                for(int i = 0; i < 6; i++)
+                {
+                    foreach(WFCTile connectedTile in tile.connections[i].allowedTiles)
+                    {
+                        if (tile.groupPrefabAssetPath == connectedTile.groupPrefabAssetPath || !loadedTileGroups.ContainsKey(connectedTile.groupPrefabAssetPath)) continue;
+                        WFCTile tileActual = loadedTileGroups[connectedTile.groupPrefabAssetPath].subtiles[connectedTile.xIndex, connectedTile.yIndex, connectedTile.zIndex];
+                        List<WFCTile> otherAllowed = tileActual.connections[i + (i % 2 > 0 ? -1 : 1)].allowedTiles;
+                        if (!otherAllowed.Contains(tile))
+                        {
+                            otherAllowed.Add(tile);
+                        }
+                    }
+                    
+                }
+            }
+        }
 
         // Add all valid tiles in each group to the list of possible tiles. TODO: perhaps add weighting
-        foreach (WFCTileGroup group in referenceTileGroups)
+        foreach (KeyValuePair<string, WFCTileGroup> loadedTileGroup in loadedTileGroups)
         {
-            foreach (WFCTile tile in group.subtiles)
+            foreach (WFCTile tile in loadedTileGroup.Value.subtiles)
             {
                 if (!tile.IsHole)
                 {
                     tiles.Add(tile);
-                    Debug.Log(tile.GetHashCode());
                 }
             }
         }
@@ -87,9 +122,14 @@ public class WFCMapGenerator : MonoBehaviour
                 for (int z = 0; z < zSize; z++)
                 {
                     if (mapRepresentation[x,y,z].Count == 0 || mapRepresentation[x, y, z][0].content == null) continue;
-                    Instantiate(mapRepresentation[x, y, z][0].content, transform.position + new Vector3(x,y,z), Quaternion.identity, transform);
+                    Instantiate(mapRepresentation[x, y, z][0].content, transform.position + new Vector3(x,y,z) - mapRepresentation[x, y, z][0].position, Quaternion.identity, transform);
                 }
             }
+        }
+
+        foreach (KeyValuePair<string, WFCTileGroup> group in loadedTileGroups)
+        {
+            PrefabUtility.UnloadPrefabContents(group.Value.gameObject);
         }
     }
 
@@ -104,9 +144,9 @@ public class WFCMapGenerator : MonoBehaviour
         Collapse(CompileAllowedTiles(tiles, 5), x, y, z - 1);
     }
 
-    private HashSet<WFCTile> CompileAllowedTiles(List<WFCTile> tiles, int connectionIndex)
+    private List<WFCTile> CompileAllowedTiles(List<WFCTile> tiles, int connectionIndex)
     {
-        HashSet<WFCTile> allowed = new();
+        List<WFCTile> allowed = new();
         foreach (WFCTile tile in tiles)
         {
             if(tile.connections[connectionIndex].Equals(default(WFCConnection)))
@@ -122,9 +162,10 @@ public class WFCMapGenerator : MonoBehaviour
         return allowed;
     }
 
-    private void Collapse(HashSet<WFCTile> allowedTiles, int x, int y, int z)
+    private void Collapse(List<WFCTile> allowedTiles, int x, int y, int z)
     {
-        if ((uint)x >= mapRepresentation.x
+        if (allowedTiles.Count == 0
+            || (uint)x >= mapRepresentation.x
             || (uint)y >= mapRepresentation.y
             || (uint)z >= mapRepresentation.z)
             return;
@@ -142,6 +183,7 @@ public class WFCMapGenerator : MonoBehaviour
         {
             potentialTileGroups.Remove(tile);
         }
+        
         Observe(x, y, z);
     }
 }

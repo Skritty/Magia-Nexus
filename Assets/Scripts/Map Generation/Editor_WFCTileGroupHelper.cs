@@ -16,12 +16,12 @@ public class Editor_WFCTileGroupHelper : Editor
             if (group.reset)
             {
                 group.reset = false;
-                group.CreateSubtiles(obj);
+                group.CreateSubtiles();
             }
             if (group.save)
             {
                 group.save = false;
-                group.SolveConnections(obj);
+                group.SolveConnections();
             }
         }
     }
@@ -62,21 +62,21 @@ public class Editor_WFCTileGroupHelper : Editor
         foreach (WFCTile tile in group.subtiles)
         {
             if (tile.groupConnections.Length < 6) continue;
-            if (group.selectedConnection == null) CheckConnection(0, group, tile.groupConnections[0], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.right);
-            if (group.selectedConnection == null) CheckConnection(1,group, tile.groupConnections[1], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.left);
-            if (group.selectedConnection == null) CheckConnection(2, group, tile.groupConnections[2], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.up);
-            if (group.selectedConnection == null) CheckConnection(3, group, tile.groupConnections[3], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.down);
-            if (group.selectedConnection == null) CheckConnection(4, group, tile.groupConnections[4], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.forward);
-            if (group.selectedConnection == null) CheckConnection(5, group, tile.groupConnections[5], collider, tile.position + Vector3.one * 0.5f + 0.5f * Vector3.back);
+            if (group.selectedConnection == null) CheckConnection(tile, 0, group, collider, 0.5f * Vector3.right);
+            if (group.selectedConnection == null) CheckConnection(tile, 1, group, collider, 0.5f * Vector3.left);
+            if (group.selectedConnection == null) CheckConnection(tile, 2, group, collider, 0.5f * Vector3.up);
+            if (group.selectedConnection == null) CheckConnection(tile, 3, group, collider, 0.5f * Vector3.down);
+            if (group.selectedConnection == null) CheckConnection(tile, 4, group, collider, 0.5f * Vector3.forward);
+            if (group.selectedConnection == null) CheckConnection(tile, 5, group, collider, 0.5f * Vector3.back);
         }
     }
 
-    private void CheckConnection(int i, WFCTileGroup group, WFCGroupConnection connection, BoxCollider collider, Vector3 center)
+    private void CheckConnection(WFCTile tile, int i, WFCTileGroup group, BoxCollider collider, Vector3 offset)
     {
-        if (connection == null) return;
-        collider.center = center;
+        collider.center = tile.position + Vector3.one * 0.5f + offset;
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         if (!PhysicsSceneExtensions.GetPhysicsScene(group.gameObject.scene).Raycast(ray.origin, ray.direction)) return;
-        group.selectedConnection = connection;
+        group.selectedConnection = tile.groupConnections[i];
+        group.selectedRealConnections = tile.connections[i];
     }
 }
