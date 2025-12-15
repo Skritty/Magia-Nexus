@@ -1,51 +1,78 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public struct WFCTile : IEquatable<WFCTile>
+public class WFCTile : IEquatable<WFCTile>
 {
-    public int xIndex, yIndex, zIndex;
-    public string groupPrefabAssetPath;
-    public WFCTileReferenceSO reference;
+    public int x, y, z;
+    public string groupUID;
     public GameObject content;
 
-    public List<WFCTileReferenceSO> allowedTileSOs;
+    [HideInInspector]
     public WFCConnection[] connections;
-    public WFCGroupConnection[] groupConnections;
+    public List<WFCTileRef> holeAllowedTileRefs;
 
     [HideInInspector]
     public Vector3 position;
-    public bool IsHole => allowedTileSOs.Count > 0;
+    public bool IsHole => holeAllowedTileRefs.Count > 0;
     
 
-    public WFCTile(string groupPrefabAssetPath, int xIndex, int yIndex, int zIndex)
+    public WFCTile(string groupPrefabAssetPath, int x, int y, int z)
     {
-        this.groupPrefabAssetPath = groupPrefabAssetPath;
-        this.xIndex = xIndex;
-        this.yIndex = yIndex;
-        this.zIndex = zIndex;
-        reference = null;
+        this.groupUID = groupPrefabAssetPath;
+        this.x = x;
+        this.y = y;
+        this.z = z;
         content = null;
-        allowedTileSOs = new();
+        holeAllowedTileRefs = new();
         connections = new WFCConnection[6];
-        groupConnections = new WFCGroupConnection[6];
         position = Vector3.zero;
     }
 
     public bool Equals(WFCTile other)
     {
-        if (groupPrefabAssetPath == other.groupPrefabAssetPath
-            && xIndex == other.xIndex
-            && yIndex == other.yIndex
-            && zIndex == other.zIndex)
+        if (other != null && 
+            groupUID == other.groupUID
+            && x == other.x
+            && y == other.y
+            && z == other.z)
             return true;
         return false;
     }
 }
 
 [Serializable]
-public struct WFCConnection
+public class WFCConnection
 {
-    public List<WFCTile> allowedTiles;
+    public List<WFCTileRef> allowedTileRefs = new();
+    [HideInInspector]
+    public List<WFCTile> allowedTiles = new();
+    [HideInInspector]
+    public bool displayConnectionGizmo;
+
+    public WFCConnection(bool displayConnectionGizmo)
+    {
+        this.displayConnectionGizmo = displayConnectionGizmo;
+    }
+}
+
+[Serializable]
+public struct WFCTileRef
+{
+    public WFCTileGroup tileGroupPrefab;
+    public string groupUID;
+    public int x, y, z;
+
+    public WFCTileRef(string groupUID, int x, int y, int z)
+    {
+        tileGroupPrefab = null;
+        this.groupUID = groupUID;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    // TODO: add better equality
 }

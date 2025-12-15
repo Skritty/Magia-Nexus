@@ -1,48 +1,43 @@
 using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
-using Sirenix.Utilities.Editor;
-using Unity.VisualScripting;
+using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
+#endif
+
 
 [RequireComponent(typeof(BoxCollider))]
 public class WFCTileGroup : MonoBehaviour
 {
-    public bool reset, save;
+    public bool reset;
     public bool doSelection;
+    public string groupUID;
+    [HideInInspector]
     public ThreeDimensionalSpatialRepresentation<WFCTile> subtiles;
     public Vector3 extents = Vector3.zero;
     public WFCTile selectedTile;
-    public WFCGroupConnection selectedConnection;
-    [ReadOnly]
-    public WFCConnection selectedRealConnections;
+    public WFCConnection selectedConnection;
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (subtiles.x == 0) return;
-        if (!string.IsNullOrEmpty(selectedTile.groupPrefabAssetPath))
+        if (subtiles == null || subtiles.x == 0) return;
+        if (!string.IsNullOrEmpty(selectedTile.groupUID))
         {
-            subtiles[selectedTile.xIndex, selectedTile.yIndex, selectedTile.zIndex] = selectedTile;
+            subtiles[selectedTile.x, selectedTile.y, selectedTile.z] = selectedTile;
         }
     }
 
     [Button("Reset")]
     public void CreateSubtiles()
     {
-        // TODO: just make this be a UID
-        string prefabPath = PrefabStageUtility.GetPrefabStage(gameObject).assetPath;
-        if (string.IsNullOrEmpty(prefabPath))
+        groupUID = PrefabStageUtility.GetPrefabStage(gameObject).assetPath;
+        if (string.IsNullOrEmpty(groupUID))
         {
             Debug.LogWarning($"{gameObject.name} is not a prefab! Cannot generate");
             return;
         }
-        /*string prefabPath = AssetDatabase.GetAssetPath(gameObject);
-        string prefabPath = PrefabStageUtility.GetPrefabStage(prefab).assetPath;
-        EditPrefabAssetScope prefabAsset = new EditPrefabAssetScope(prefabPath);
-        WFCTileGroup tileGroupPrefab = prefabAsset.prefabRoot.GetComponent<WFCTileGroup>();*/
 
         Bounds bounds = new();
         bounds.center = transform.position;
@@ -78,188 +73,21 @@ public class WFCTileGroup : MonoBehaviour
                     }
                     catch { }*/
 
-                    WFCTile subtile = new WFCTile(prefabPath, x, y, z);
+                    WFCTile subtile = new WFCTile(groupUID, x, y, z);
                     subtile.position = transform.InverseTransformPoint(bounds.center - bounds.extents) + new Vector3(x, y, z);
                     subtiles[x, y, z] = subtile;
 
-                    subtile.groupConnections[0] = (uint)(x + 1) >= (int)(bounds.extents.x * 2) ? new WFCGroupConnection() : null;
-                    subtile.groupConnections[1] = (uint)(x - 1) >= (int)(bounds.extents.x * 2) ? new WFCGroupConnection() : null;
-                    subtile.groupConnections[2] = (uint)(y + 1) >= (int)(bounds.extents.y * 2) ? new WFCGroupConnection() : null;
-                    subtile.groupConnections[3] = (uint)(y - 1) >= (int)(bounds.extents.y * 2) ? new WFCGroupConnection() : null;
-                    subtile.groupConnections[4] = (uint)(z + 1) >= (int)(bounds.extents.z * 2) ? new WFCGroupConnection() : null;
-                    subtile.groupConnections[5] = (uint)(z - 1) >= (int)(bounds.extents.z * 2) ? new WFCGroupConnection() : null;
+                    subtile.connections[0] = new WFCConnection((uint)(x + 1) >= (int)(bounds.extents.x * 2));
+                    subtile.connections[1] = new WFCConnection((uint)(x - 1) >= (int)(bounds.extents.x * 2));
+                    subtile.connections[2] = new WFCConnection((uint)(y + 1) >= (int)(bounds.extents.y * 2));
+                    subtile.connections[3] = new WFCConnection((uint)(y - 1) >= (int)(bounds.extents.y * 2));
+                    subtile.connections[4] = new WFCConnection((uint)(z + 1) >= (int)(bounds.extents.z * 2));
+                    subtile.connections[5] = new WFCConnection((uint)(z - 1) >= (int)(bounds.extents.z * 2));
                 }
             }
         }
         doSelection = true;
     }
-
-    [Button("Save")]
-    public void SolveConnections()
-    {
-        string prefabPath = PrefabStageUtility.GetPrefabStage(gameObject).assetPath;
-        if (string.IsNullOrEmpty(prefabPath))
-        {
-            Debug.LogWarning($"{gameObject.name} is not a prefab! Cannot generate");
-            return;
-        }
-        Dictionary<string, WFCTileGroup> loadedTileGroups = new();
-        loadedTileGroups.Add(prefabPath, this);
-
-        foreach (WFCTile tile in subtiles)
-        {
-            // Skip hole tiles (they are considered to not exist)
-            if (tile.IsHole) continue;
-
-            // Link this tile to its tile reference
-            if (tile.reference != null)
-            {
-                tile.reference.tileRef = tile;
-            }
-
-            for (int i = 0; i < 6; i++)
-            {
-                tile.connections[i] = new WFCConnection();
-                tile.connections[i].allowedTiles = new();
-            }
-        }
-
-        foreach (WFCTile tile in subtiles)
-        {
-            // Skip hole tiles (they are considered to not exist)
-            if (tile.IsHole) continue;
-
-            // Set up internal and external connections to actual tile references
-            WFCTile[] adjecentTiles = subtiles.GetAdjecentObjects(tile);
-            for (int i = 0; i < 6; i++)
-            {
-                // External ref connections
-                AddTileRefs(tile.groupConnections[i]?.allowedTileSOs, tile, i, loadedTileGroups);
-
-                if (adjecentTiles[i].Equals(default(WFCTile))) continue;
-                if (adjecentTiles[i].IsHole)
-                {
-                    // Extract the hole's tile references
-                    AddTileRefs(adjecentTiles[i].allowedTileSOs, tile, i, loadedTileGroups);
-                }
-                else
-                {
-                    // Connect the adjecent internal tile
-                    (int, int, int) adjecentIndex = subtiles.GetIndex(adjecentTiles[i]);
-                    tile.connections[i].allowedTiles.Add(new WFCTile(prefabPath, adjecentIndex.Item1, adjecentIndex.Item2, adjecentIndex.Item3));
-                }
-            }
-        }
-        foreach (WFCTile tile in subtiles)
-        {
-            // Ensure that connections link properly with other tiles in each group
-            for (int i = 0; i < 6; i++)
-            {
-                foreach (WFCTile connectedTile in tile.connections[i].allowedTiles.ToArray())
-                {
-                    // Find the index where the connecting tile would be
-                    (int, int, int) selfIndex = subtiles.GetIndex(tile);
-                    selfIndex = (selfIndex.Item1 + (i == 0 || i == 1 ? -(i % 2 * 2 - 1) : 0),
-                        selfIndex.Item2 + (i == 2 || i == 3 ? -(i % 2 * 2 - 1) : 0),
-                        selfIndex.Item3 + (i == 4 || i == 5 ? -(i % 2 * 2 - 1) : 0));
-                    ConnectOtherGroup(loadedTileGroups[connectedTile.groupPrefabAssetPath], selfIndex, (connectedTile.xIndex, connectedTile.yIndex, connectedTile.zIndex));
-                }
-            }
-        }
-        foreach(KeyValuePair<string, WFCTileGroup> group in loadedTileGroups)
-        {
-            if (group.Value == this) continue;
-            PrefabUtility.UnloadPrefabContents(group.Value.gameObject);
-        }
-    }
-
-    private void AddTileRefs(List<WFCTileReferenceSO> tileRefList, WFCTile selfTile, int connectionIndex, Dictionary<string, WFCTileGroup> loadedTileGroups)
-    {
-        if (tileRefList == null) return;
-        // TODO: replace tile ref SOs and "connections" with a tool that lets you move the offset of a group you want at a spot
-        foreach(WFCTileReferenceSO tileRefSO in tileRefList)
-        {
-            WFCTile tileRef = tileRefSO.tileRef;
-
-            // Add the TileRef to our connections
-            selfTile.connections[connectionIndex].allowedTiles.Add(tileRef);
-
-            // Self reciprocation in case that side of the tile is lacking the reference
-            if(selfTile.groupPrefabAssetPath == tileRef.groupPrefabAssetPath)
-            {
-                WFCTile tileActual = subtiles[tileRef.xIndex, tileRef.yIndex, tileRef.zIndex];
-                List<WFCTile> otherAllowed = tileActual.connections[connectionIndex + (connectionIndex % 2 > 0 ? -1 : 1)].allowedTiles;
-
-                if (!otherAllowed.Contains(selfTile))
-                {
-                    otherAllowed.Add(selfTile);
-                }
-            }
-
-            // Get/load the prefab we are connecting to
-            if (!loadedTileGroups.ContainsKey(tileRef.groupPrefabAssetPath))
-            {
-                loadedTileGroups.Add(tileRef.groupPrefabAssetPath, new EditPrefabAssetScope(tileRef.groupPrefabAssetPath).prefabRoot.GetComponent<WFCTileGroup>());
-            }
-        }
-    }
-
-    private void ConnectOtherGroup(WFCTileGroup group, (int, int, int) initialSelfIndex, (int, int, int) initialConnectionIndex)
-    {
-        // Iterate through self group subtiles (plus 1 around)
-        for (int x = -1; x <= subtiles.x; x++)
-        {
-            for (int y = -1; y <= subtiles.y; y++)
-            {
-                for (int z = -1; z <= subtiles.z; z++)
-                {
-                    (int, int, int) connectionIndex = (
-                        initialConnectionIndex.Item1 - initialSelfIndex.Item1 + x,
-                        initialConnectionIndex.Item2 - initialSelfIndex.Item2 + y,
-                        initialConnectionIndex.Item3 - initialSelfIndex.Item3 + z);
-
-                    if ((uint)connectionIndex.Item1 >= group.subtiles.x
-                        || (uint)connectionIndex.Item2 >= group.subtiles.y
-                        || (uint)connectionIndex.Item3 >= group.subtiles.z)
-                        continue;
-
-                    WFCTile connectionTile = group.subtiles[connectionIndex];
-                    WFCTile selfTile = default;
-                    if ((uint)x < subtiles.x && (uint)y < subtiles.y && (uint)z < subtiles.z)
-                    {
-                        selfTile = subtiles[x, y, z];
-                    }
-
-                    if (selfTile.Equals(default) || selfTile.IsHole)
-                    {
-                        WFCTile[] holeAdjacentTiles = subtiles.GetAdjecentObjects((x, y, z));
-                        for (int i = 0; i < 6; i++)
-                        {
-                            if (holeAdjacentTiles[i].Equals(default) || holeAdjacentTiles[i].IsHole) continue;
-
-                            WFCConnection connection = holeAdjacentTiles[i].connections[i + (i % 2 > 0 ? -1 : 1)];
-
-                            if (connection.Equals(default(WFCConnection))) connection = holeAdjacentTiles[i].connections[i + (i % 2 > 0 ? -1 : 1)] = new WFCConnection();
-                            else if (connection.allowedTiles.Contains(connectionTile)) continue;
-                            connection.allowedTiles.Add(connectionTile);
-
-                            Debug.Log($"Connecting {group.gameObject.name} ({initialSelfIndex}) to {gameObject.name} ({initialConnectionIndex}) at connection index {i + (i % 2 > 0 ? -1 : 1)} | ");
-                            // xyz = (0,0,-1), initialSelfIndex = (0,0,-1)
-                            // initialConnectionIndex = (0,0,0), goalIndex = (1,0,0)
-                            // initialConnectionIndex - initialSelfIndex + xyz = goalIndex
-                        }
-                    }
-                    else
-                    {
-                        // Overlaps!
-                        Debug.LogWarning($"{gameObject.name} overlaps with connection {group.gameObject.name}");
-                        return;
-                    }
-                }
-            }
-        }
-    }
-#endif
 
     private void OnDrawGizmos()
     {
@@ -289,17 +117,17 @@ public class WFCTileGroup : MonoBehaviour
         if (subtiles.GetEnumerator() == null) return;
         foreach (WFCTile tile in subtiles)
         {
-            if (tile.groupConnections.Length < 6) continue;
-            DrawConnection(tile.groupConnections[0], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.right);
-            DrawConnection(tile.groupConnections[1], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.left);
-            DrawConnection(tile.groupConnections[2], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.up);
-            DrawConnection(tile.groupConnections[3], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.down);
-            DrawConnection(tile.groupConnections[4], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.forward);
-            DrawConnection(tile.groupConnections[5], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.back);
+            if (tile.connections.Length < 6) continue;
+            DrawConnection(tile.connections[0], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.right);
+            DrawConnection(tile.connections[1], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.left);
+            DrawConnection(tile.connections[2], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.up);
+            DrawConnection(tile.connections[3], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.down);
+            DrawConnection(tile.connections[4], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.forward);
+            DrawConnection(tile.connections[5], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.back);
         }
     }
 
-    private void DrawConnection(WFCGroupConnection connection, Vector3 position)
+    private void DrawConnection(WFCConnection connection, Vector3 position)
     {
         if (connection == null) return;
         if (connection == selectedConnection)
@@ -312,4 +140,5 @@ public class WFCTileGroup : MonoBehaviour
         }
         Gizmos.DrawCube(position, Vector3.one * .25f);
     }
+#endif
 }

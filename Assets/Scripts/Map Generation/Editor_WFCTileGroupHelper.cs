@@ -1,7 +1,8 @@
 using Sirenix.Utilities.Editor;
-using TreeEditor;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 [CustomEditor(typeof(WFCTileGroup))]
 public class Editor_WFCTileGroupHelper : Editor
@@ -13,15 +14,34 @@ public class Editor_WFCTileGroupHelper : Editor
         {
             WFCTileGroup group = obj.GetComponent<WFCTileGroup>();
             if (group == null) continue;
+            
             if (group.reset)
             {
                 group.reset = false;
                 group.CreateSubtiles();
             }
-            if (group.save)
+            if (group.selectedConnection != null && group.selectedConnection.allowedTileRefs != null)
             {
-                group.save = false;
-                group.SolveConnections();
+                for(int i = 0; i < group.selectedConnection.allowedTileRefs.Count; i++)
+                {
+                    
+                    WFCTileRef newTileRef = group.selectedConnection.allowedTileRefs[i];
+                    if (newTileRef.tileGroupPrefab == null || newTileRef.tileGroupPrefab.GetInstanceID() < 0) continue;
+                    newTileRef.groupUID = AssetDatabase.GetAssetPath(group.selectedConnection.allowedTileRefs[i].tileGroupPrefab.gameObject);
+                    if(newTileRef.groupUID == "") newTileRef.groupUID = PrefabStageUtility.GetPrefabStage(group.selectedConnection.allowedTileRefs[i].tileGroupPrefab.gameObject).assetPath;
+                    group.selectedConnection.allowedTileRefs[i] = newTileRef;
+                }
+            }
+            if (group.selectedTile != null && group.selectedTile.holeAllowedTileRefs != null)
+            {
+                for (int i = 0; i < group.selectedTile.holeAllowedTileRefs.Count; i++)
+                {
+                    WFCTileRef newTileRef = group.selectedTile.holeAllowedTileRefs[i];
+                    if (newTileRef.tileGroupPrefab == null || newTileRef.tileGroupPrefab.GetInstanceID() < 0) continue;
+                    newTileRef.groupUID = AssetDatabase.GetAssetPath(group.selectedTile.holeAllowedTileRefs[i].tileGroupPrefab.gameObject);
+                    if (newTileRef.groupUID == "") newTileRef.groupUID = PrefabStageUtility.GetPrefabStage(group.selectedTile.holeAllowedTileRefs[i].tileGroupPrefab.gameObject).assetPath;
+                    group.selectedTile.holeAllowedTileRefs[i] = newTileRef;
+                }
             }
         }
     }
@@ -61,7 +81,7 @@ public class Editor_WFCTileGroupHelper : Editor
         group.selectedConnection = null;
         foreach (WFCTile tile in group.subtiles)
         {
-            if (tile.groupConnections.Length < 6) continue;
+            if (tile.connections.Length < 6) continue;
             if (group.selectedConnection == null) CheckConnection(tile, 0, group, collider, 0.5f * Vector3.right);
             if (group.selectedConnection == null) CheckConnection(tile, 1, group, collider, 0.5f * Vector3.left);
             if (group.selectedConnection == null) CheckConnection(tile, 2, group, collider, 0.5f * Vector3.up);
@@ -76,7 +96,6 @@ public class Editor_WFCTileGroupHelper : Editor
         collider.center = tile.position + Vector3.one * 0.5f + offset;
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         if (!PhysicsSceneExtensions.GetPhysicsScene(group.gameObject.scene).Raycast(ray.origin, ray.direction)) return;
-        group.selectedConnection = tile.groupConnections[i];
-        group.selectedRealConnections = tile.connections[i];
+        group.selectedConnection = tile.connections[i];
     }
 }
