@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -8,20 +10,26 @@ public class WFCMapGenerator : MonoBehaviour
     public int xSize, ySize, zSize;
     public List<WFCTileGroup> tileGroupPrefabs;
     public ThreeDimensionalSpatialRepresentation<List<WFCTile>> mapRepresentation;
-    private List<(int, int, int)> validIndicies = new();
+    public float creationDelayBranch, creationDelayTile;
+    public GameObject ErrorTile;
 
-    [SerializeField, HideInInspector]
+    private List<(int, int, int)> validIndicies = new();
+    private List<(int, int, int)> determinedTiles = new();
+
+    [SerializeField]
     private List<WFCTileGroup> tileGroups = new();
 
     private void Start()
     {
+        SolveConnections();
         GenerateMap(xSize, ySize, zSize);
+        //StartCoroutine(GenerateMap(xSize, ySize, zSize));
     }
 
     [InfoBox("Connections must be resolved any time a change is made to subtile dimensions or if the tile group list is changed"), Button("Solve Connections")]
     public void SolveConnections()
     {
-        foreach(WFCTileGroup tileGroup in tileGroups)
+        foreach (WFCTileGroup tileGroup in tileGroups)
         {
             if (tileGroup == null) continue;
             DestroyImmediate(tileGroup.gameObject);
@@ -92,9 +100,11 @@ public class WFCMapGenerator : MonoBehaviour
                             continue;
                         }
                         WFCTile tileActual = tileGroupsByUID[connectedTileRef.groupUID].subtiles[connectedTileRef.x, connectedTileRef.y, connectedTileRef.z];
-                        if (!tile.connections[i].allowedTiles.Contains(tile)) tile.connections[i].allowedTiles.Add(tileActual);
-                        List<WFCTile> otherAllowed = tileActual.connections[i + (i % 2 > 0 ? -1 : 1)].allowedTiles;
-                        if (!otherAllowed.Contains(tile)) otherAllowed.Add(tile);
+                        if (!tile.connections[i].allowedTiles.Any(x => x.groupUID == tileActual.groupUID))
+                            tile.connections[i].allowedTiles.Add(tileActual);
+                        WFCConnection otherConnection = tileActual.connections[i + (i % 2 > 0 ? -1 : 1)];
+                        if (otherConnection.allowedTileRefs.Count != 0 && !otherConnection.allowedTiles.Any(x => x.groupUID == tile.groupUID))
+                            otherConnection.allowedTiles.Add(tile);
                     }
                 }
             }
@@ -160,7 +170,7 @@ public class WFCMapGenerator : MonoBehaviour
     public void GenerateMap(int xSize, int ySize, int zSize)
     {
         List<WFCTile> tiles = new();
-        
+
         // Add all valid tiles in each group to the list of possible tiles. TODO: perhaps add weighting
         foreach (WFCTileGroup tileGroup in tileGroups)
         {
@@ -210,24 +220,40 @@ public class WFCMapGenerator : MonoBehaviour
                 }
             }
             (int, int, int) index = validIndiciesLowest[Random.Range(0, validIndiciesLowest.Count)];
-            List<WFCTile> potentialTileGroups = mapRepresentation[index.Item1, index.Item2, index.Item3];
+            List<WFCTile> potentialTiles = mapRepresentation[index.Item1, index.Item2, index.Item3];
             WFCTile selectedTile;
-            if (potentialTileGroups.Count == 0)
+            if (potentialTiles.Count == 0)
             {
-                selectedTile = default;
+                selectedTile = null;
             }
             else
             {
-                selectedTile = potentialTileGroups[Random.Range(0, potentialTileGroups.Count)];
+                WFCTile[] randomTileOptions = potentialTiles.Where(x => x.excludeSeedPick).ToArray();
+                selectedTile = randomTileOptions[Random.Range(0, randomTileOptions.Length)];
             }
             mapRepresentation[index.Item1, index.Item2, index.Item3].Clear();
             mapRepresentation[index.Item1, index.Item2, index.Item3].Add(selectedTile);
             validIndicies.Remove(index);
+            determinedTiles.Add(index);
             Observe(index.Item1, index.Item2, index.Item3);
+
+            foreach((int, int, int) determinedIndex in determinedTiles)
+            {
+                if (mapRepresentation[determinedIndex.Item1, determinedIndex.Item2, determinedIndex.Item3].Count == 0) continue;
+                WFCTile tile = mapRepresentation[determinedIndex.Item1, determinedIndex.Item2, determinedIndex.Item3][0];
+                if (tile.content == null) continue;
+                Instantiate(tile.content, 
+                    transform.position + new Vector3(determinedIndex.Item1, determinedIndex.Item2, determinedIndex.Item3) 
+                    - tile.position, 
+                    Quaternion.identity, transform);
+                //yield return new WaitForSeconds(creationDelayTile);
+            }
+            //if(determinedTiles.Count > 0) yield return new WaitForSeconds(creationDelayBranch);
+            determinedTiles.Clear();
         }
 
         // Generate the map objects
-        for (int x = 0; x < xSize; x++)
+        /*for (int x = 0; x < xSize; x++)
         {
             for (int y = 0; y < ySize; y++)
             {
@@ -237,7 +263,7 @@ public class WFCMapGenerator : MonoBehaviour
                     Instantiate(mapRepresentation[x, y, z][0].content, transform.position + new Vector3(x,y,z) - mapRepresentation[x, y, z][0].position, Quaternion.identity, transform);
                 }
             }
-        }
+        }*/
     }
 
     private void Observe(int x, int y, int z)
@@ -256,45 +282,48 @@ public class WFCMapGenerator : MonoBehaviour
         List<WFCTile> allowed = new();
         foreach (WFCTile tile in tiles)
         {
-            if(tile.connections == null)
-            {
-                Debug.LogWarning($"Invalid tile in {tile} tile group!");
-            }
-            else if(!tile.connections[connectionIndex].Equals(default(WFCConnection)))
-            {
-                allowed.AddRange(tile.connections[connectionIndex].allowedTiles);
-            }
+            allowed.AddRange(tile.connections[connectionIndex].allowedTiles);
         }
         return allowed;
     }
 
     private void Collapse(List<WFCTile> allowedTiles, int x, int y, int z)
     {
-        if (allowedTiles.Count == 0
+        if (allowedTiles.Count == 0// || !validIndicies.Contains((x, y, z))
             || (uint)x >= mapRepresentation.x
             || (uint)y >= mapRepresentation.y
             || (uint)z >= mapRepresentation.z)
             return;
 
         HashSet<WFCTile> toRemove = new();
-        List<WFCTile> potentialTileGroups = mapRepresentation[x, y, z];
-        for (int i = 0; i < potentialTileGroups.Count; i++)
+        List<WFCTile> potentialTiles = mapRepresentation[x, y, z];
+        for (int i = 0; i < potentialTiles.Count; i++)
         {
-            WFCTile tile = potentialTileGroups[i];
-            if (allowedTiles.Contains(tile)) continue;
-            toRemove.Add(potentialTileGroups[i]);
+            if (!allowedTiles.Contains(potentialTiles[i]))
+                toRemove.Add(potentialTiles[i]);
         }
-        if (potentialTileGroups.Count-toRemove.Count == 0)
-        {
-            Debug.LogWarning("Leaving a tile with no options!");
-        }
-        if (potentialTileGroups.Count <= 1) validIndicies.Remove((x,y,z));
         if (toRemove.Count == 0) return;
         foreach (WFCTile tile in toRemove)
         {
-            potentialTileGroups.Remove(tile);
+            potentialTiles.Remove(tile);
         }
-        
+        if (potentialTiles.Count == 0)
+        {
+            string remove = "";
+            foreach(WFCTile tr in toRemove)
+            {
+                remove += $"{tr.content.name}, ";
+            }
+            Debug.LogWarning($"Leaving a tile with no options! Removed: {remove}");
+            Instantiate(ErrorTile,
+                transform.position + new Vector3(x, y, z) + Vector3.one*0.5f,
+                    Quaternion.identity, transform);
+        }
+        if (potentialTiles.Count == 1)
+        {
+            validIndicies.Remove((x, y, z));
+            determinedTiles.Add((x, y, z));
+        }
         Observe(x, y, z);
     }
 }

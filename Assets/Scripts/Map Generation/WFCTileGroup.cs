@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using System;
+
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -13,31 +15,18 @@ public class WFCTileGroup : MonoBehaviour
     public bool reset;
     public bool doSelection;
     public string groupUID;
-    [HideInInspector]
     public ThreeDimensionalSpatialRepresentation<WFCTile> subtiles;
     public Vector3 extents = Vector3.zero;
-    public WFCTile selectedTile;
-    public WFCConnection selectedConnection;
+    //[NonSerialized]
+    public WFCTile selectedTile = null;
+    //[NonSerialized]
+    public WFCConnection selectedConnection = null;
 
 #if UNITY_EDITOR
-    private void OnValidate()
-    {
-        if (subtiles == null || subtiles.x == 0) return;
-        if (!string.IsNullOrEmpty(selectedTile.groupUID))
-        {
-            subtiles[selectedTile.x, selectedTile.y, selectedTile.z] = selectedTile;
-        }
-    }
-
     [Button("Reset")]
     public void CreateSubtiles()
     {
-        groupUID = PrefabStageUtility.GetPrefabStage(gameObject).assetPath;
-        if (string.IsNullOrEmpty(groupUID))
-        {
-            Debug.LogWarning($"{gameObject.name} is not a prefab! Cannot generate");
-            return;
-        }
+        groupUID = name;
 
         Bounds bounds = new();
         bounds.center = transform.position;
@@ -45,7 +34,7 @@ public class WFCTileGroup : MonoBehaviour
         {
             bounds.Encapsulate(render.bounds);
         }
-        //Gizmos.color = new Color(.8f, .8f, .8f, .1f);
+        //Gizmos.color = new Color(.8f, .8f, .8f, .1f);/
         //Gizmos.DrawCube(bounds.center, bounds.size + new Vector3(.1f, .1f, .1f));
         //if (extents == bounds.extents) return;
 

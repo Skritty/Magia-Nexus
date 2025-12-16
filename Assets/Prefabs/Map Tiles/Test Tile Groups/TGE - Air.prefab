@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7439214691426126644}
   - component: {fileID: 8707550192482256494}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Air
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1958302738984136576}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 2605588272391428623}
   - component: {fileID: 9206229358997751364}
   m_Layer: 0
-  m_Name: Nothing
+  m_Name: TGE - Air
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reset: 0
   doSelection: 1
-  groupUID: Assets/Prefabs/Map Tiles/Test Tile Groups/Nothing.prefab
+  groupUID: TGE - Air
   subtiles:
     x: 1
     y: 1
@@ -186,25 +186,81 @@ MonoBehaviour:
     - x: 0
       y: 0
       z: 0
-      groupUID: Assets/Prefabs/Map Tiles/Test Tile Groups/Nothing.prefab
+      groupUID: TGE - Air
+      excludeSeedPick: 0
       content: {fileID: 0}
       connections:
-      - allowedTileRefs: []
+      - allowedTileRefs:
+        - tileGroupPrefab: {fileID: 9206229358997751364}
+          groupUID: TGE - Air
+          x: 0
+          y: 0
+          z: 0
+        - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+          groupUID: TGE - Ground
+          x: 0
+          y: 0
+          z: 0
         allowedTiles: []
         displayConnectionGizmo: 1
-      - allowedTileRefs: []
+      - allowedTileRefs:
+        - tileGroupPrefab: {fileID: 9206229358997751364}
+          groupUID: TGE - Air
+          x: 0
+          y: 0
+          z: 0
+        - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+          groupUID: TGE - Ground
+          x: 0
+          y: 0
+          z: 0
         allowedTiles: []
         displayConnectionGizmo: 1
-      - allowedTileRefs: []
+      - allowedTileRefs:
+        - tileGroupPrefab: {fileID: 9206229358997751364}
+          groupUID: TGE - Air
+          x: 0
+          y: 0
+          z: 0
         allowedTiles: []
         displayConnectionGizmo: 1
-      - allowedTileRefs: []
+      - allowedTileRefs:
+        - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+          groupUID: TGE - Ground
+          x: 0
+          y: 0
+          z: 0
+        - tileGroupPrefab: {fileID: 9206229358997751364}
+          groupUID: TGE - Air
+          x: 0
+          y: 0
+          z: 0
         allowedTiles: []
         displayConnectionGizmo: 1
-      - allowedTileRefs: []
+      - allowedTileRefs:
+        - tileGroupPrefab: {fileID: 9206229358997751364}
+          groupUID: TGE - Air
+          x: 0
+          y: 0
+          z: 0
+        - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+          groupUID: TGE - Ground
+          x: 0
+          y: 0
+          z: 0
         allowedTiles: []
         displayConnectionGizmo: 1
-      - allowedTileRefs: []
+      - allowedTileRefs:
+        - tileGroupPrefab: {fileID: 9206229358997751364}
+          groupUID: TGE - Air
+          x: 0
+          y: 0
+          z: 0
+        - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+          groupUID: TGE - Ground
+          x: 0
+          y: 0
+          z: 0
         allowedTiles: []
         displayConnectionGizmo: 1
       holeAllowedTileRefs: []
@@ -214,25 +270,81 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-    groupUID: Assets/Prefabs/Map Tiles/Test Tile Groups/Nothing.prefab
+    groupUID: TGE - Air
+    excludeSeedPick: 0
     content: {fileID: 0}
     connections:
-    - allowedTileRefs: []
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 9206229358997751364}
+        groupUID: TGE - Air
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+        groupUID: TGE - Ground
+        x: 0
+        y: 0
+        z: 0
       allowedTiles: []
       displayConnectionGizmo: 1
-    - allowedTileRefs: []
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 9206229358997751364}
+        groupUID: TGE - Air
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+        groupUID: TGE - Ground
+        x: 0
+        y: 0
+        z: 0
       allowedTiles: []
       displayConnectionGizmo: 1
-    - allowedTileRefs: []
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 9206229358997751364}
+        groupUID: TGE - Air
+        x: 0
+        y: 0
+        z: 0
       allowedTiles: []
       displayConnectionGizmo: 1
-    - allowedTileRefs: []
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+        groupUID: TGE - Ground
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 9206229358997751364}
+        groupUID: TGE - Air
+        x: 0
+        y: 0
+        z: 0
       allowedTiles: []
       displayConnectionGizmo: 1
-    - allowedTileRefs: []
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 9206229358997751364}
+        groupUID: TGE - Air
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+        groupUID: TGE - Ground
+        x: 0
+        y: 0
+        z: 0
       allowedTiles: []
       displayConnectionGizmo: 1
-    - allowedTileRefs: []
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 9206229358997751364}
+        groupUID: TGE - Air
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+        groupUID: TGE - Ground
+        x: 0
+        y: 0
+        z: 0
       allowedTiles: []
       displayConnectionGizmo: 1
     holeAllowedTileRefs: []
@@ -240,4 +352,4 @@ MonoBehaviour:
   selectedConnection:
     allowedTileRefs: []
     allowedTiles: []
-    displayConnectionGizmo: 1
+    displayConnectionGizmo: 0

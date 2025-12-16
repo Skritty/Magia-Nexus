@@ -27,8 +27,8 @@ public class Editor_WFCTileGroupHelper : Editor
                     
                     WFCTileRef newTileRef = group.selectedConnection.allowedTileRefs[i];
                     if (newTileRef.tileGroupPrefab == null || newTileRef.tileGroupPrefab.GetInstanceID() < 0) continue;
-                    newTileRef.groupUID = AssetDatabase.GetAssetPath(group.selectedConnection.allowedTileRefs[i].tileGroupPrefab.gameObject);
-                    if(newTileRef.groupUID == "") newTileRef.groupUID = PrefabStageUtility.GetPrefabStage(group.selectedConnection.allowedTileRefs[i].tileGroupPrefab.gameObject).assetPath;
+                    newTileRef.groupUID = group.selectedConnection.allowedTileRefs[i].tileGroupPrefab.gameObject.name;
+                    if(newTileRef.groupUID == "") newTileRef.groupUID = group.selectedConnection.allowedTileRefs[i].tileGroupPrefab.gameObject.name;
                     group.selectedConnection.allowedTileRefs[i] = newTileRef;
                 }
             }
@@ -38,8 +38,8 @@ public class Editor_WFCTileGroupHelper : Editor
                 {
                     WFCTileRef newTileRef = group.selectedTile.holeAllowedTileRefs[i];
                     if (newTileRef.tileGroupPrefab == null || newTileRef.tileGroupPrefab.GetInstanceID() < 0) continue;
-                    newTileRef.groupUID = AssetDatabase.GetAssetPath(group.selectedTile.holeAllowedTileRefs[i].tileGroupPrefab.gameObject);
-                    if (newTileRef.groupUID == "") newTileRef.groupUID = PrefabStageUtility.GetPrefabStage(group.selectedTile.holeAllowedTileRefs[i].tileGroupPrefab.gameObject).assetPath;
+                    newTileRef.groupUID = group.selectedTile.holeAllowedTileRefs[i].tileGroupPrefab.gameObject.name;
+                    if (newTileRef.groupUID == "") newTileRef.groupUID = group.selectedTile.holeAllowedTileRefs[i].tileGroupPrefab.gameObject.name;
                     group.selectedTile.holeAllowedTileRefs[i] = newTileRef;
                 }
             }

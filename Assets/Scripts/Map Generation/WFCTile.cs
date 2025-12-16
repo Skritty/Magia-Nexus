@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
@@ -8,9 +7,11 @@ public class WFCTile : IEquatable<WFCTile>
 {
     public int x, y, z;
     public string groupUID;
+    public bool excludeSeedPick;
+    [SerializeReference]
     public GameObject content;
 
-    [HideInInspector]
+    //[HideInInspector]
     public WFCConnection[] connections;
     public List<WFCTileRef> holeAllowedTileRefs;
 
@@ -46,14 +47,16 @@ public class WFCTile : IEquatable<WFCTile>
 [Serializable]
 public class WFCConnection
 {
-    public List<WFCTileRef> allowedTileRefs = new();
-    [HideInInspector]
-    public List<WFCTile> allowedTiles = new();
+    public List<WFCTileRef> allowedTileRefs;
+    //[HideInInspector]
+    public List<WFCTile> allowedTiles;
     [HideInInspector]
     public bool displayConnectionGizmo;
 
     public WFCConnection(bool displayConnectionGizmo)
     {
+        allowedTileRefs = new();
+        allowedTiles = new();
         this.displayConnectionGizmo = displayConnectionGizmo;
     }
 }
