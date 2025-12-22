@@ -1,8 +1,6 @@
 using Sirenix.Utilities.Editor;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 [CustomEditor(typeof(WFCTileGroup))]
 public class Editor_WFCTileGroupHelper : Editor
@@ -19,6 +17,11 @@ public class Editor_WFCTileGroupHelper : Editor
             {
                 group.reset = false;
                 group.CreateSubtiles();
+            }
+            if (group.updateConnectionStatus)
+            {
+                group.updateConnectionStatus = false;
+                group.UpdateConnectionStatus();
             }
             if (group.selectedConnection != null && group.selectedConnection.allowedTileRefs != null)
             {
@@ -62,7 +65,7 @@ public class Editor_WFCTileGroupHelper : Editor
     {
         BoxCollider collider = group.GetComponent<BoxCollider>();
         collider.size = Vector3.one;
-        group.selectedTile = default(WFCTile);
+        group.selectedTile = null;
 
         foreach (WFCTile tile in group.subtiles)
         {
@@ -70,7 +73,7 @@ public class Editor_WFCTileGroupHelper : Editor
             Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
             if (!PhysicsSceneExtensions.GetPhysicsScene(group.gameObject.scene).Raycast(ray.origin, ray.direction)) continue;
             group.selectedTile = tile;
-            break;
+            return;
         }
     }
 

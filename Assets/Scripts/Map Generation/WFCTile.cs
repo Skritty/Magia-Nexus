@@ -7,17 +7,18 @@ public class WFCTile : IEquatable<WFCTile>
 {
     public int x, y, z;
     public string groupUID;
-    public bool excludeSeedPick;
     [SerializeReference]
     public GameObject content;
+    public float weight;
 
     //[HideInInspector]
     public WFCConnection[] connections;
+    public bool isHole;
     public List<WFCTileRef> holeAllowedTileRefs;
 
     [HideInInspector]
     public Vector3 position;
-    public bool IsHole => holeAllowedTileRefs.Count > 0;
+    
     
 
     public WFCTile(string groupPrefabAssetPath, int x, int y, int z)
@@ -48,16 +49,16 @@ public class WFCTile : IEquatable<WFCTile>
 public class WFCConnection
 {
     public List<WFCTileRef> allowedTileRefs;
-    //[HideInInspector]
+    [HideInInspector]
     public List<WFCTile> allowedTiles;
     [HideInInspector]
-    public bool displayConnectionGizmo;
+    public bool isInternalConnection;
 
     public WFCConnection(bool displayConnectionGizmo)
     {
         allowedTileRefs = new();
         allowedTiles = new();
-        this.displayConnectionGizmo = displayConnectionGizmo;
+        this.isInternalConnection = displayConnectionGizmo;
     }
 }
 

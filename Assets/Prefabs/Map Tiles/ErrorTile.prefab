@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 224536510515128868}
   - component: {fileID: 3162623308867682789}
   m_Layer: 0
-  m_Name: TGE - Underground
+  m_Name: ErrorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8577701968181594033}
+  - {fileID: 4733335666571860784}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &224536510515128868
@@ -70,7 +70,7 @@ MonoBehaviour:
   reset: 0
   updateConnectionStatus: 0
   doSelection: 1
-  groupUID: TGE - Underground
+  groupUID: ErrorTile
   weight: 1
   subtiles:
     x: 1
@@ -81,58 +81,28 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-        groupUID: TGE - Underground
-        content: {fileID: 8697923457659117573}
+        groupUID: ErrorTile
+        content: {fileID: 0}
         weight: 0
         connections:
-        - allowedTileRefs:
-          - tileGroupPrefab: {fileID: 3162623308867682789}
-            groupUID: TGE - Underground
-            x: 0
-            y: 0
-            z: 0
+        - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 0
-        - allowedTileRefs:
-          - tileGroupPrefab: {fileID: 3162623308867682789}
-            groupUID: TGE - Underground
-            x: 0
-            y: 0
-            z: 0
+          isInternalConnection: 1
+        - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 0
-        - allowedTileRefs:
-          - tileGroupPrefab: {fileID: 3162623308867682789}
-            groupUID: TGE - Underground
-            x: 0
-            y: 0
-            z: 0
+          isInternalConnection: 1
+        - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 0
-        - allowedTileRefs:
-          - tileGroupPrefab: {fileID: 3162623308867682789}
-            groupUID: TGE - Underground
-            x: 0
-            y: 0
-            z: 0
+          isInternalConnection: 1
+        - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 0
-        - allowedTileRefs:
-          - tileGroupPrefab: {fileID: 3162623308867682789}
-            groupUID: TGE - Underground
-            x: 0
-            y: 0
-            z: 0
+          isInternalConnection: 1
+        - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 0
-        - allowedTileRefs:
-          - tileGroupPrefab: {fileID: 3162623308867682789}
-            groupUID: TGE - Underground
-            x: 0
-            y: 0
-            z: 0
+          isInternalConnection: 1
+        - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 0
+          isInternalConnection: 1
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -0.5, z: -0.5}
@@ -144,56 +114,26 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-    groupUID: TGE - Underground
-    content: {fileID: 8697923457659117573}
+    groupUID: ErrorTile
+    content: {fileID: 4672229097290372143}
     weight: 0
     connections:
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
+    - allowedTileRefs: []
       allowedTiles: []
       isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
+    - allowedTileRefs: []
       allowedTiles: []
       isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
+    - allowedTileRefs: []
       allowedTiles: []
       isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
+    - allowedTileRefs: []
       allowedTiles: []
       isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
+    - allowedTileRefs: []
       allowedTiles: []
       isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
+    - allowedTileRefs: []
       allowedTiles: []
       isInternalConnection: 0
     isHole: 0
@@ -203,7 +143,7 @@ MonoBehaviour:
     allowedTileRefs: []
     allowedTiles: []
     isInternalConnection: 0
---- !u!1 &8697923457659117573
+--- !u!1 &4672229097290372143
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,46 +151,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8577701968181594033}
-  - component: {fileID: 260137834259904133}
-  - component: {fileID: 4966746238280033728}
+  - component: {fileID: 4733335666571860784}
+  - component: {fileID: 7706308914643216781}
+  - component: {fileID: 8710927625125976770}
+  - component: {fileID: 5612771807628959864}
   m_Layer: 0
-  m_Name: Underground
+  m_Name: Error
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8577701968181594033
+--- !u!4 &4733335666571860784
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8697923457659117573}
+  m_GameObject: {fileID: 4672229097290372143}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5459544018823565849}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &260137834259904133
+--- !u!33 &7706308914643216781
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8697923457659117573}
+  m_GameObject: {fileID: 4672229097290372143}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4966746238280033728
+--- !u!23 &8710927625125976770
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8697923457659117573}
+  m_GameObject: {fileID: 4672229097290372143}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -267,7 +208,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76a05e5a77929854381e42cb979e1f93, type: 2}
+  - {fileID: 2100000, guid: 990edb68a8aab704c9f8bba9ce9d0287, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -289,3 +230,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5612771807628959864
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4672229097290372143}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

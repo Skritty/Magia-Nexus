@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -8,8 +9,22 @@ public class ThreeDimensionalSpatialRepresentation<T> : IEnumerable, ISerializat
     public T[,,] objects;
     [HideInInspector]
     public int x, y, z;
-    [SerializeField]
-    private T[] serializedObjectsArray;
+    [SerializeField, HideInInspector]
+    private List<SerializedSpatialObject> serializedObjects = new();
+    [Serializable]
+    public struct SerializedSpatialObject
+    {
+        public T obj;
+        public int x, y, z;
+
+        public SerializedSpatialObject(T obj, int x, int y, int z)
+        {
+            this.obj = obj;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+    }
 
     public ThreeDimensionalSpatialRepresentation(int x, int y, int z)
     {
@@ -35,29 +50,27 @@ public class ThreeDimensionalSpatialRepresentation<T> : IEnumerable, ISerializat
 
     public void OnAfterDeserialize()
     {
-        if (serializedObjectsArray == null) return;
+        if (serializedObjects == null || serializedObjects.Count == 0) return;
         objects = new T[x, y, z];
-        for (int x = 0; x < this.x; x++)
+        foreach(SerializedSpatialObject serializedObj in serializedObjects)
         {
-            for (int y = 0; y < this.y; y++)
-            {
-                for (int z = 0; z < this.z; z++)
-                {
-                    objects[x, y, z] = serializedObjectsArray[z + y * this.y + x * this.y * this.z];
-                }
-            }
+            objects[serializedObj.x, serializedObj.y, serializedObj.z] = serializedObj.obj;
         }
     }
 
     public void OnBeforeSerialize()
     {
         if (objects == null) return;
-        serializedObjectsArray = new T[objects.Length];
-        int i = 0;
-        foreach (T obj in objects)
+        serializedObjects.Clear();
+        for (int x = 0; x < this.x; x++)
         {
-            serializedObjectsArray[i] = obj;
-            i++;
+            for (int y = 0; y < this.y; y++)
+            {
+                for (int z = 0; z < this.z; z++)
+                {
+                    serializedObjects.Add(new SerializedSpatialObject(objects[x,y,z], x, y, z));
+                }
+            }
         }
     }
 
