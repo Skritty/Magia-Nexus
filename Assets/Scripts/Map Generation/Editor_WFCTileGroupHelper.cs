@@ -18,10 +18,10 @@ public class Editor_WFCTileGroupHelper : Editor
                 group.reset = false;
                 group.CreateSubtiles();
             }
-            if (group.updateConnectionStatus)
+            if (group.updateData)
             {
-                group.updateConnectionStatus = false;
-                group.UpdateConnectionStatus();
+                group.updateData = false;
+                group.UpdateData();
             }
             if (group.selectedConnection != null && group.selectedConnection.allowedTileRefs != null)
             {

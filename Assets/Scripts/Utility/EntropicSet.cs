@@ -16,11 +16,13 @@ public class EntropicSet<T>
     }
 
     /// <summary>
-    /// Entropy must be >= 0
+    /// Entropy must be > 0
     /// </summary>
-    /// <param name="entropyLevel">Entropy must be >= 0</param>
+    /// <param name="entropyLevel">Entropy must be > 0</param>
     public void Add(int entropyLevel, T item)
     {
+        if (entropyLevel < 1) return;
+        entropyLevel--;
         if (entropyLevels[entropyLevel] == null)
         {
             entropyLevels[entropyLevel] = new HashSet<T>();

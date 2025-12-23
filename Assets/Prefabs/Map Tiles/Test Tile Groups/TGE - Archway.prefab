@@ -412,7 +412,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: -1, y: -0.5, z: 0}
 --- !u!114 &6299595504519974301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,10 +426,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reset: 0
-  updateConnectionStatus: 0
+  updateData: 0
   doSelection: 1
   groupUID: TGE - Archway
-  weight: 0
+  weight: 0.00000001
   subtiles:
     x: 5
     y: 5
@@ -440,13 +440,23 @@ MonoBehaviour:
         y: 0
         z: 0
         groupUID: TGE - Archway
-        content: {fileID: 4706005702785630993}
-        weight: 0.5
+        content: {fileID: 6769237645404421629}
+        weight: 0.05
         connections:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 1
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+            groupUID: TGE - Surface Ground
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -460,10 +470,30 @@ MonoBehaviour:
             z: 0
           allowedTiles: []
           isInternalConnection: 0
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+            groupUID: TGE - Surface Ground
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+            groupUID: TGE - Surface Ground
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         isHole: 0
@@ -483,7 +513,12 @@ MonoBehaviour:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 1
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -492,10 +527,20 @@ MonoBehaviour:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 1
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         isHole: 0
@@ -582,7 +627,12 @@ MonoBehaviour:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 0
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -627,7 +677,17 @@ MonoBehaviour:
           allowedTiles: []
           isInternalConnection: 0
         isHole: 1
-        holeAllowedTileRefs: []
+        holeAllowedTileRefs:
+        - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+          groupUID: TGE - Surface Air
+          x: 0
+          y: 0
+          z: 0
+        - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+          groupUID: TGE - Surface Ground
+          x: 0
+          y: 0
+          z: 0
         position: {x: -1.5, y: -2, z: -0.5}
       x: 1
       y: 0
@@ -742,7 +802,12 @@ MonoBehaviour:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 1
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -893,7 +958,7 @@ MonoBehaviour:
         y: 4
         z: 0
         groupUID: TGE - Archway
-        content: {fileID: 6919539065543902185}
+        content: {fileID: 0}
         weight: 0
         connections:
         - allowedTileRefs: []
@@ -902,7 +967,12 @@ MonoBehaviour:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 1
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -947,7 +1017,17 @@ MonoBehaviour:
           allowedTiles: []
           isInternalConnection: 0
         isHole: 1
-        holeAllowedTileRefs: []
+        holeAllowedTileRefs:
+        - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+          groupUID: TGE - Surface Air
+          x: 0
+          y: 0
+          z: 0
+        - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+          groupUID: TGE - Surface Ground
+          x: 0
+          y: 0
+          z: 0
         position: {x: 0.5, y: -2, z: -0.5}
       x: 3
       y: 0
@@ -1062,7 +1142,12 @@ MonoBehaviour:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 1
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -1085,10 +1170,20 @@ MonoBehaviour:
         y: 0
         z: 0
         groupUID: TGE - Archway
-        content: {fileID: 7168001884945737582}
-        weight: 0
+        content: {fileID: 0}
+        weight: 0.05
         connections:
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+            groupUID: TGE - Surface Ground
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -1105,10 +1200,30 @@ MonoBehaviour:
             z: 0
           allowedTiles: []
           isInternalConnection: 0
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+            groupUID: TGE - Surface Ground
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+            groupUID: TGE - Surface Ground
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         isHole: 0
@@ -1125,7 +1240,12 @@ MonoBehaviour:
         content: {fileID: 0}
         weight: 0
         connections:
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -1137,10 +1257,20 @@ MonoBehaviour:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 1
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         isHole: 0
@@ -1227,7 +1357,12 @@ MonoBehaviour:
         - allowedTileRefs: []
           allowedTiles: []
           isInternalConnection: 1
-        - allowedTileRefs: []
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+            groupUID: TGE - Surface Air
+            x: 0
+            y: 0
+            z: 0
           allowedTiles: []
           isInternalConnection: 0
         - allowedTileRefs: []
@@ -1245,10 +1380,12 @@ MonoBehaviour:
       x: 4
       y: 4
       z: 0
-  extents: {x: 2.5, y: 2.5, z: 0.5}
+  bounds:
+    m_Center: {x: 0, y: 0.5, z: 0}
+    m_Extent: {x: 2.5, y: 2.5, z: 0.5}
   selectedTile:
-    x: 2
-    y: 3
+    x: 1
+    y: 1
     z: 0
     groupUID: TGE - Archway
     content: {fileID: 0}
@@ -1274,8 +1411,13 @@ MonoBehaviour:
       isInternalConnection: 0
     isHole: 1
     holeAllowedTileRefs: []
-    position: {x: -0.5, y: 1, z: -0.5}
+    position: {x: -1.5, y: -1, z: -0.5}
   selectedConnection:
-    allowedTileRefs: []
+    allowedTileRefs:
+    - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+      groupUID: TGE - Surface Air
+      x: 0
+      y: 0
+      z: 0
     allowedTiles: []
     isInternalConnection: 0

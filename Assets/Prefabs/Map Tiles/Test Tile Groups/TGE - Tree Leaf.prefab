@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reset: 0
+  updateData: 0
   doSelection: 1
   groupUID: TGE - Tree Leaf
   weight: 2
@@ -177,7 +178,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
             groupUID: TGE - Surface Air
@@ -185,7 +186,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
             groupUID: TGE - Surface Air
@@ -193,7 +194,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
             groupUID: TGE - Surface Air
@@ -201,7 +202,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
             groupUID: TGE - Surface Air
@@ -209,7 +210,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
             groupUID: TGE - Surface Air
@@ -217,13 +218,16 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
+        isHole: 0
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -0.5, z: -0.5}
       x: 0
       y: 0
       z: 0
-  extents: {x: 0.5, y: 0.5, z: 0.5}
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   selectedTile:
     x: 0
     y: 0
@@ -239,7 +243,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
         groupUID: TGE - Surface Air
@@ -247,7 +251,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
         groupUID: TGE - Surface Air
@@ -255,7 +259,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
         groupUID: TGE - Surface Air
@@ -263,7 +267,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
         groupUID: TGE - Surface Air
@@ -271,7 +275,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
         groupUID: TGE - Surface Air
@@ -279,7 +283,8 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
+    isHole: 0
     holeAllowedTileRefs: []
     position: {x: -0.5, y: -0.5, z: -0.5}
   selectedConnection:
@@ -290,4 +295,4 @@ MonoBehaviour:
       y: 0
       z: 0
     allowedTiles: []
-    displayConnectionGizmo: 1
+    isInternalConnection: 0

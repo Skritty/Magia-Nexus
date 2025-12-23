@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reset: 0
+  updateData: 0
   doSelection: 1
   groupUID: TGE - Tree Branch
   weight: 2
@@ -182,7 +183,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 6299595504519974301}
             groupUID: TGE - Tree Branch
@@ -195,7 +196,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 6299595504519974301}
             groupUID: TGE - Tree Branch
@@ -208,7 +209,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 6299595504519974301, guid: d3ba290c701fba9498a3d40a8d39e9c3, type: 3}
             groupUID: TGE - Tree Leaf
@@ -216,20 +217,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
-        - allowedTileRefs:
-          - tileGroupPrefab: {fileID: 6299595504519974301}
-            groupUID: TGE - Tree Branch
-            x: 0
-            y: 0
-            z: 0
-          - tileGroupPrefab: {fileID: 6299595504519974301, guid: d3ba290c701fba9498a3d40a8d39e9c3, type: 3}
-            groupUID: TGE - Tree Leaf
-            x: 0
-            y: 0
-            z: 0
-          allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 6299595504519974301}
             groupUID: TGE - Tree Branch
@@ -242,13 +230,29 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 6299595504519974301}
+            groupUID: TGE - Tree Branch
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 6299595504519974301, guid: d3ba290c701fba9498a3d40a8d39e9c3, type: 3}
+            groupUID: TGE - Tree Leaf
+            x: 0
+            y: 0
+            z: 0
+          allowedTiles: []
+          isInternalConnection: 0
+        isHole: 0
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -0.5, z: -0.5}
       x: 0
       y: 0
       z: 0
-  extents: {x: 0.5, y: 0.5, z: 0.5}
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   selectedTile:
     x: 0
     y: 0
@@ -269,7 +273,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 6299595504519974301}
         groupUID: TGE - Tree Branch
@@ -282,7 +286,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 6299595504519974301}
         groupUID: TGE - Tree Branch
@@ -295,7 +299,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 6299595504519974301, guid: d3ba290c701fba9498a3d40a8d39e9c3, type: 3}
         groupUID: TGE - Tree Leaf
@@ -303,20 +307,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 6299595504519974301}
-        groupUID: TGE - Tree Branch
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 6299595504519974301, guid: d3ba290c701fba9498a3d40a8d39e9c3, type: 3}
-        groupUID: TGE - Tree Leaf
-        x: 0
-        y: 0
-        z: 0
-      allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 6299595504519974301}
         groupUID: TGE - Tree Branch
@@ -329,10 +320,24 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 6299595504519974301}
+        groupUID: TGE - Tree Branch
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 6299595504519974301, guid: d3ba290c701fba9498a3d40a8d39e9c3, type: 3}
+        groupUID: TGE - Tree Leaf
+        x: 0
+        y: 0
+        z: 0
+      allowedTiles: []
+      isInternalConnection: 0
+    isHole: 0
     holeAllowedTileRefs: []
     position: {x: -0.5, y: -0.5, z: -0.5}
   selectedConnection:
     allowedTileRefs: []
     allowedTiles: []
-    displayConnectionGizmo: 0
+    isInternalConnection: 0

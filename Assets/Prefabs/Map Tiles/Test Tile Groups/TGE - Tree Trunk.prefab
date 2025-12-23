@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reset: 0
-  updateConnectionStatus: 0
+  updateData: 0
   doSelection: 1
   groupUID: TGE - Tree Trunk
   weight: 0.01
@@ -399,7 +399,9 @@ MonoBehaviour:
       x: 0
       y: 2
       z: 0
-  extents: {x: 0.5, y: 1.5, z: 0.5}
+  bounds:
+    m_Center: {x: 0, y: 1, z: 0}
+    m_Extent: {x: 0.5, y: 1.5, z: 0.5}
   selectedTile:
     x: 0
     y: 2

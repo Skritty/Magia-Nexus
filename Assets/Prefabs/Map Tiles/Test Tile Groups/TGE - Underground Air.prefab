@@ -113,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 7794864211761730692}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.9303, y: -12.5, z: -17.73841}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -154,9 +154,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reset: 0
+  updateData: 0
   doSelection: 1
   groupUID: TGE - Underground Air
-  weight: 1
+  weight: 0.7
   subtiles:
     x: 1
     y: 1
@@ -177,7 +178,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
             groupUID: TGE - Underground Air
@@ -185,7 +186,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
             groupUID: TGE - Underground Air
@@ -198,7 +199,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
             groupUID: TGE - Underground Air
@@ -206,7 +207,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
             groupUID: TGE - Underground Air
@@ -214,7 +215,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
             groupUID: TGE - Underground Air
@@ -222,13 +223,16 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
+        isHole: 0
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -0.5, z: -0.5}
       x: 0
       y: 0
       z: 0
-  extents: {x: 0.5, y: 0.5, z: 0.5}
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   selectedTile:
     x: 0
     y: 0
@@ -244,7 +248,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
         groupUID: TGE - Underground Air
@@ -252,7 +256,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
         groupUID: TGE - Underground Air
@@ -265,7 +269,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
         groupUID: TGE - Underground Air
@@ -273,7 +277,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
         groupUID: TGE - Underground Air
@@ -281,7 +285,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
         groupUID: TGE - Underground Air
@@ -289,10 +293,11 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
+    isHole: 0
     holeAllowedTileRefs: []
     position: {x: -0.5, y: -0.5, z: -0.5}
   selectedConnection:
     allowedTileRefs: []
     allowedTiles: []
-    displayConnectionGizmo: 0
+    isInternalConnection: 0

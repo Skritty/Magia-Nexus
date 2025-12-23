@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reset: 0
+  updateData: 0
   doSelection: 1
   groupUID: TGE - Cave Floor
   weight: 0.04
@@ -101,7 +102,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789}
             groupUID: TGE - Cave Floor
@@ -119,7 +120,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
             groupUID: TGE - Underground Air
@@ -132,7 +133,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
             groupUID: TGE - Underground
@@ -140,25 +141,7 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
-        - allowedTileRefs:
-          - tileGroupPrefab: {fileID: 3162623308867682789}
-            groupUID: TGE - Cave Floor
-            x: 0
-            y: 0
-            z: 0
-          - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-            groupUID: TGE - Underground
-            x: 0
-            y: 0
-            z: 0
-          - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-            groupUID: TGE - Underground Air
-            x: 0
-            y: 0
-            z: 0
-          allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789}
             groupUID: TGE - Cave Floor
@@ -176,13 +159,34 @@ MonoBehaviour:
             y: 0
             z: 0
           allowedTiles: []
-          displayConnectionGizmo: 1
+          isInternalConnection: 0
+        - allowedTileRefs:
+          - tileGroupPrefab: {fileID: 3162623308867682789}
+            groupUID: TGE - Cave Floor
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
+            groupUID: TGE - Underground
+            x: 0
+            y: 0
+            z: 0
+          - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
+            groupUID: TGE - Underground Air
+            x: 0
+            y: 0
+            z: 0
+          allowedTiles: []
+          isInternalConnection: 0
+        isHole: 0
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -0.5, z: -0.5}
       x: 0
       y: 0
       z: 0
-  extents: {x: 0.5, y: 0.5, z: 0.5}
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   selectedTile:
     x: 0
     y: 0
@@ -208,7 +212,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 3162623308867682789}
         groupUID: TGE - Cave Floor
@@ -226,7 +230,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
         groupUID: TGE - Underground Air
@@ -239,7 +243,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
         groupUID: TGE - Underground
@@ -247,25 +251,7 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Cave Floor
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-        groupUID: TGE - Underground Air
-        x: 0
-        y: 0
-        z: 0
-      allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 3162623308867682789}
         groupUID: TGE - Cave Floor
@@ -283,7 +269,26 @@ MonoBehaviour:
         y: 0
         z: 0
       allowedTiles: []
-      displayConnectionGizmo: 1
+      isInternalConnection: 0
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 3162623308867682789}
+        groupUID: TGE - Cave Floor
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
+        groupUID: TGE - Underground
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
+        groupUID: TGE - Underground Air
+        x: 0
+        y: 0
+        z: 0
+      allowedTiles: []
+      isInternalConnection: 0
+    isHole: 0
     holeAllowedTileRefs: []
     position: {x: -0.5, y: -0.5, z: -0.5}
   selectedConnection:
@@ -299,7 +304,7 @@ MonoBehaviour:
       y: 0
       z: 0
     allowedTiles: []
-    displayConnectionGizmo: 1
+    isInternalConnection: 0
 --- !u!1 &8697923457659117573
 GameObject:
   m_ObjectHideFlags: 0

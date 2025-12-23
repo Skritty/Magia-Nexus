@@ -13,12 +13,12 @@ using UnityEditor.SceneManagement;
 public class WFCTileGroup : MonoBehaviour
 {
     public bool reset;
-    public bool updateConnectionStatus;
+    public bool updateData;
     public bool doSelection;
     public string groupUID;
     public float weight = 1;
     public ThreeDimensionalSpatialRepresentation<WFCTile> subtiles;
-    public Vector3 extents = Vector3.zero;
+    public Bounds bounds = new Bounds();
     //[NonSerialized]
     public WFCTile selectedTile = null;
     //[NonSerialized]
@@ -30,7 +30,7 @@ public class WFCTileGroup : MonoBehaviour
     {
         groupUID = name;
 
-        Bounds bounds = new();
+        bounds = new();
         bounds.center = transform.position;
         foreach (Renderer render in GetComponentsInChildren<Renderer>())
         {
@@ -44,7 +44,6 @@ public class WFCTileGroup : MonoBehaviour
         ThreeDimensionalSpatialRepresentation<WFCTile> oldSubtiles = null;
         oldSubtiles = subtiles;
         subtiles = new((int)(bounds.extents.x * 2), (int)(bounds.extents.y * 2), (int)(bounds.extents.z * 2));
-        extents = bounds.extents;
 
         for (int x = 0; x < (int)(bounds.extents.x * 2); x++)
         {
@@ -80,25 +79,30 @@ public class WFCTileGroup : MonoBehaviour
         doSelection = true;
     }
 
-    public void UpdateConnectionStatus()
+    public void UpdateData()
     {
-        for (int x = 0; x < (int)(extents.x * 2); x++)
+        bounds = new();
+        bounds.center = transform.position;
+        foreach (Renderer render in GetComponentsInChildren<Renderer>())
         {
-            for (int y = 0; y < (int)(extents.y * 2); y++)
+            bounds.Encapsulate(render.bounds);
+        }
+        for (int x = 0; x < (int)(bounds.extents.x * 2); x++)
+        {
+            for (int y = 0; y < (int)(bounds.extents.y * 2); y++)
             {
-                for (int z = 0; z < (int)(extents.z * 2); z++)
+                for (int z = 0; z < (int)(bounds.extents.z * 2); z++)
                 {
-                    subtiles[x, y, z].connections[0].isInternalConnection = (uint)(x + 1) < (int)(extents.x * 2);
-                    subtiles[x, y, z].connections[1].isInternalConnection = (uint)(x - 1) < (int)(extents.x * 2);
-                    subtiles[x, y, z].connections[2].isInternalConnection = (uint)(y + 1) < (int)(extents.y * 2);
-                    subtiles[x, y, z].connections[3].isInternalConnection = (uint)(y - 1) < (int)(extents.y * 2);
-                    subtiles[x, y, z].connections[4].isInternalConnection = (uint)(z + 1) < (int)(extents.z * 2);
-                    subtiles[x, y, z].connections[5].isInternalConnection = (uint)(z - 1) < (int)(extents.z * 2);
+                    subtiles[x, y, z].connections[0].isInternalConnection = (uint)(x + 1) < (int)(bounds.extents.x * 2);
+                    subtiles[x, y, z].connections[1].isInternalConnection = (uint)(x - 1) < (int)(bounds.extents.x * 2);
+                    subtiles[x, y, z].connections[2].isInternalConnection = (uint)(y + 1) < (int)(bounds.extents.y * 2);
+                    subtiles[x, y, z].connections[3].isInternalConnection = (uint)(y - 1) < (int)(bounds.extents.y * 2);
+                    subtiles[x, y, z].connections[4].isInternalConnection = (uint)(z + 1) < (int)(bounds.extents.z * 2);
+                    subtiles[x, y, z].connections[5].isInternalConnection = (uint)(z - 1) < (int)(bounds.extents.z * 2);
                 }
             }
         }
     }
-
     private void OnDrawGizmos()
     {
         DrawTileSelectors();

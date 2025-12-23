@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reset: 0
-  updateConnectionStatus: 0
+  updateData: 0
   doSelection: 1
   groupUID: ErrorTile
   weight: 1
@@ -82,34 +82,36 @@ MonoBehaviour:
         y: 0
         z: 0
         groupUID: ErrorTile
-        content: {fileID: 0}
+        content: {fileID: 4672229097290372143}
         weight: 0
         connections:
         - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 1
+          isInternalConnection: 0
         - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 1
+          isInternalConnection: 0
         - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 1
+          isInternalConnection: 0
         - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 1
+          isInternalConnection: 0
         - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 1
+          isInternalConnection: 0
         - allowedTileRefs: []
           allowedTiles: []
-          isInternalConnection: 1
+          isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -0.5, z: -0.5}
       x: 0
       y: 0
       z: 0
-  extents: {x: 0.5, y: 0.5, z: 0.5}
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   selectedTile:
     x: 0
     y: 0
@@ -120,29 +122,29 @@ MonoBehaviour:
     connections:
     - allowedTileRefs: []
       allowedTiles: []
-      isInternalConnection: 0
+      isInternalConnection: 1
     - allowedTileRefs: []
       allowedTiles: []
-      isInternalConnection: 0
+      isInternalConnection: 1
     - allowedTileRefs: []
       allowedTiles: []
-      isInternalConnection: 0
+      isInternalConnection: 1
     - allowedTileRefs: []
       allowedTiles: []
-      isInternalConnection: 0
+      isInternalConnection: 1
     - allowedTileRefs: []
       allowedTiles: []
-      isInternalConnection: 0
+      isInternalConnection: 1
     - allowedTileRefs: []
       allowedTiles: []
-      isInternalConnection: 0
+      isInternalConnection: 1
     isHole: 0
     holeAllowedTileRefs: []
     position: {x: -0.5, y: -0.5, z: -0.5}
   selectedConnection:
     allowedTileRefs: []
     allowedTiles: []
-    isInternalConnection: 0
+    isInternalConnection: 1
 --- !u!1 &4672229097290372143
 GameObject:
   m_ObjectHideFlags: 0
