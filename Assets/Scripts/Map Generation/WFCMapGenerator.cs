@@ -12,7 +12,7 @@ public class WFCMapGenerator : MonoBehaviour
     public int xSize, ySize, zSize, bufferSize;
     public List<WFCTileGroup> tileGroupPrefabs;
     [NonSerialized]
-    public ThreeDimensionalSpatialRepresentation<List<WFCTile>> mapRepresentation;
+    public ThreeDimensionalSpatialRepresentation<HashSet<WFCTile>> mapRepresentation;
     public float creationDelay, solveDelay;
     public WFCTileGroup ErrorTile;
 
@@ -25,8 +25,10 @@ public class WFCMapGenerator : MonoBehaviour
     private List<WFCTileGroup> tileGroups = new();
     private Dictionary<string, WFCTileGroup> tileGroupsByUID = new();
     private int tileCount;
+    private HashSet<WFCTile> allowed = new();
+    private int counter;
 
-    private List<WFCTile> GetMapTiles((int, int, int) index)
+    private HashSet<WFCTile> GetMapTiles((int, int, int) index)
     {
         if ((uint)index.Item1 >= mapRepresentation.x || (uint)index.Item2 >= mapRepresentation.y || (uint)index.Item3 >= mapRepresentation.z) return null;
         return mapRepresentation[index.Item1, index.Item2, index.Item3];
@@ -35,14 +37,14 @@ public class WFCMapGenerator : MonoBehaviour
     private void Start()
     {
         SolveConnections();
-        GenerateMap(xSize, ySize, zSize);
-        //StartCoroutine(GenerateMap(xSize, ySize, zSize));
+        //GenerateMap(xSize, ySize, zSize);
+        StartCoroutine(GenerateMap(xSize, ySize, zSize));
     }
 
     //[InfoBox("Connections must be resolved any time a change is made to subtile dimensions or if the tile group list is changed"), Button("Solve Connections")]
     public void SolveConnections()
     {
-        Profiler.BeginSample("Solve Connections");
+        Profiler.BeginSample("SolveConnections");
         foreach (Transform child in transform)
         {
             DestroyImmediate(child.gameObject);
@@ -126,9 +128,9 @@ public class WFCMapGenerator : MonoBehaviour
                             WFCConnection otherConnection = tileActual.connections[reciprocatedIndex];
                             if (otherConnection.isInternalConnection) continue;
 
-                            if (!tile.connections[i].allowedTiles.Contains(tileActual))
-                                tile.connections[i].allowedTiles.Add(tileActual);
-                            if (!otherConnection.allowedTiles.Contains(tile))
+                            /*if (!tile.connections[i].allowedTiles.Contains(tileActual))
+                                tile.connections[i].allowedTiles.Add(tileActual);*/
+                            if (otherConnection.allowedTileRefs.Count > 0 && !otherConnection.allowedTiles.Contains(tile))
                                 otherConnection.allowedTiles.Add(tile);
                         }
                     }
@@ -145,7 +147,7 @@ public class WFCMapGenerator : MonoBehaviour
                             if (!tile.connections[i].allowedTiles.Contains(tileActual))
                                 tile.connections[i].allowedTiles.Add(tileActual);
                             WFCConnection otherConnection = tileActual.connections[reciprocatedIndex];
-                            if (!otherConnection.allowedTiles.Contains(tile))
+                            if (otherConnection.allowedTileRefs.Count > 0 && !otherConnection.allowedTiles.Contains(tile))
                                 otherConnection.allowedTiles.Add(tile);
                         }
                     }
@@ -211,8 +213,9 @@ public class WFCMapGenerator : MonoBehaviour
         }
     }
 
-    public void GenerateMap(int xSize, int ySize, int zSize)
+    public IEnumerator GenerateMap(int xSize, int ySize, int zSize)
     {
+        Profiler.BeginSample("Setup");
         List<WFCTile> tiles = new();
         tileGroupsByUID = new();
         tileGroupsByUID.Add(ErrorTile.groupUID, ErrorTile);
@@ -239,8 +242,11 @@ public class WFCMapGenerator : MonoBehaviour
             {
                 for (int z = 0; z < mapRepresentation.z; z++)
                 {
-                    mapRepresentation[x, y, z] = new List<WFCTile>();
-                    mapRepresentation[x, y, z].AddRange(tiles);
+                    mapRepresentation[x, y, z] = new HashSet<WFCTile>();
+                    foreach(WFCTile tile in tiles)
+                    {
+                        mapRepresentation[x, y, z].Add(tile);
+                    }
                     (int, int, int) index = (x, y, z);
                     if (!IsBufferTile(index))
                     {
@@ -249,34 +255,43 @@ public class WFCMapGenerator : MonoBehaviour
                 }
             }
         }
+        Profiler.EndSample();
+
         // Solve the WFC
+        Profiler.BeginSample("SolveWFC");
         while (entropicMap.Count > 0)
         {
             (int, int, int) index = entropicMap.GetRandomAtLowestEntropy();
+            entropicMap.Remove(index);
+            if (IsBufferTile(index))
+            {
+                Debug.Log("How");
+            }
+
             WeightedChance<WFCTile> potentialTiles = new();
-            List<WFCTile> tiles2 = mapRepresentation[index.Item1, index.Item2, index.Item3];
             foreach (WFCTile tile in mapRepresentation[index.Item1, index.Item2, index.Item3])
             {
                 potentialTiles.Add(tile, tile.weight);
             }
             WFCTile selectedTile = potentialTiles.GetRandomEntry();
-            if (!inQueue.Contains(index))
-            {
-                updateQueue.Enqueue(index);
-                inQueue.Add(index);
-            }
-            GenerateTile(selectedTile, tileGroupsByUID[selectedTile.groupUID], index);
+            mapRepresentation[index.Item1, index.Item2, index.Item3].Clear();
+            mapRepresentation[index.Item1, index.Item2, index.Item3].Add(selectedTile);
+            updateQueue.Enqueue(index);
+            inQueue.Add(index);
+            //GenerateTile(selectedTile, tileGroupsByUID[selectedTile.groupUID], index);
             while (updateQueue.Count > 0)
             {
                 (int, int, int) updatePosition = updateQueue.Dequeue();
                 inQueue.Remove(updatePosition);
                 Observe(updatePosition.Item1, updatePosition.Item2, updatePosition.Item3);
-                //if (solveDelay > 0) yield return new WaitForSeconds(solveDelay);
+                if (solveDelay > 0) yield return new WaitForSeconds(solveDelay);
             }
-            //if (creationDelay > 0) yield return new WaitForSeconds(creationDelay);
+            if (creationDelay > 0) yield return new WaitForSeconds(creationDelay);
         }
+        Profiler.EndSample();
 
         // Instantiate tile visuals
+        Profiler.BeginSample("Visuals");
         for (int x = 0; x < mapRepresentation.x; x++)
         {
             for (int y = 0; y < mapRepresentation.y; y++)
@@ -284,7 +299,7 @@ public class WFCMapGenerator : MonoBehaviour
                 for (int z = 0; z < mapRepresentation.z; z++)
                 {
                     if (mapRepresentation[x, y, z].Count != 1) continue;
-                    WFCTile tile = mapRepresentation[x, y, z][0];
+                    WFCTile tile = mapRepresentation[x, y, z].First();
                     WFCTileGroup group = tileGroupsByUID[tile.groupUID];
                     if (tile.content == null) continue;
                     GameObject visuals = Instantiate(tile.content, Vector3.zero, Quaternion.identity);
@@ -294,6 +309,7 @@ public class WFCMapGenerator : MonoBehaviour
                 }
             }
         }
+        Profiler.EndSample();
 
         foreach (WFCTileGroup tileGroup in tileGroups)
         {
@@ -313,50 +329,54 @@ public class WFCMapGenerator : MonoBehaviour
 
     private void Observe(int x, int y, int z)
     {
-        Profiler.BeginSample("Observe");
-        List<WFCTile> tiles = mapRepresentation[x, y, z];
+        HashSet<WFCTile> tiles = mapRepresentation[x, y, z];
         Collapse(tiles, 0, (x + 1, y, z));
         Collapse(tiles, 1, (x - 1, y, z));
         Collapse(tiles, 2, (x, y + 1, z));
         Collapse(tiles, 3, (x, y - 1, z));
         Collapse(tiles, 4, (x, y, z + 1));
         Collapse(tiles, 5, (x, y, z - 1));
-        Profiler.EndSample();
     }
 
-    private List<WFCTile> GetAllowedTiles(List<WFCTile> tiles, int connectionIndex)
+    private HashSet<WFCTile> GetAllowedTiles(HashSet<WFCTile> tiles, int connectionIndex)
     {
-        List<WFCTile> allowed = new();
+        allowed.Clear();
         foreach (WFCTile tile in tiles)
         {
-            if(tile.connections[connectionIndex].allowedTiles.Count == 0)
+            if (tile.connections[connectionIndex].allowedTiles.Count == 0)
+                return allowed;
+        }
+        foreach (WFCTile tile in tiles)
+        {
+            foreach (WFCTile allowedTile in tile.connections[connectionIndex].allowedTiles)
             {
-                allowed.Clear();
-                break;
+                allowed.Add(allowedTile);
             }
-            allowed.AddRange(tile.connections[connectionIndex].allowedTiles);
         }
         return allowed;
     }
 
-    private void Collapse(List<WFCTile> possibleConnections, int connectionIndex, (int, int, int) index)
+    private void Collapse(HashSet<WFCTile> possibleConnections, int connectionIndex, (int, int, int) index)
     {
-        List<WFCTile> potentialTiles = GetMapTiles(index);
-        // Is this tile outside of the map?
-        if (potentialTiles == null) return;
-
-        // Does this tile have yet to be solved?
-        if (potentialTiles.Count <= 1) return;
+        Profiler.BeginSample("GetMapTiles");
+        HashSet<WFCTile> potentialTiles = GetMapTiles(index);
+        Profiler.EndSample();
+        // Is this tile outside of the map or is it already solved?
+        if (potentialTiles == null || potentialTiles.Count <= 1) return;
 
         // Is this connection a wildcard?
-        List<WFCTile> allowedTiles = GetAllowedTiles(possibleConnections, connectionIndex);
+        Profiler.BeginSample("GetAllowedTiles");
+        HashSet<WFCTile> allowedTiles = GetAllowedTiles(possibleConnections, connectionIndex);
+        Profiler.EndSample();
         if (allowedTiles.Count == 0) return;
 
         updating = index;
+        Profiler.BeginSample("RemoveAll");
+        counter = potentialTiles.Count;
+        potentialTiles.RemoveWhere(x => !allowedTiles.Contains(x));
+        Profiler.EndSample();
 
-        int removed = potentialTiles.RemoveAll(x => !allowedTiles.Contains(x));
-
-        if (removed > 0)
+        if (counter != potentialTiles.Count)
         {
             if (potentialTiles.Count == 0)
             {
@@ -372,8 +392,6 @@ public class WFCMapGenerator : MonoBehaviour
             {
                 // Tile is determined
                 //GenerateTile(potentialTiles[0], tileGroupsByUID[potentialTiles[0].groupUID], index);
-                mapRepresentation[index.Item1, index.Item2, index.Item3].Clear();
-                mapRepresentation[index.Item1, index.Item2, index.Item3].Add(potentialTiles[0]);
                 entropicMap.Remove(index);
             }
             else
