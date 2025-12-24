@@ -13,6 +13,10 @@ public class EntropicSet<T>
     public EntropicSet(int maxEntropyLevel)
     {
         entropyLevels = new HashSet<T>[maxEntropyLevel];
+        for(int i = 0; i < entropyLevels.Length; i++)
+        {
+            entropyLevels[i] = new HashSet<T>();
+        }
     }
 
     /// <summary>
@@ -23,18 +27,16 @@ public class EntropicSet<T>
     {
         if (entropyLevel < 1) return;
         entropyLevel--;
-        if (entropyLevels[entropyLevel] == null)
-        {
-            entropyLevels[entropyLevel] = new HashSet<T>();
-        }
         entropyLevels[entropyLevel].Add(item);
         itemEntropyLevels.Add(item, entropyLevel);
     }
 
     public void Update(int entropyLevel, T item)
     {
-        Remove(item);
-        Add(entropyLevel, item);
+        if (!itemEntropyLevels.ContainsKey(item)) return;
+        entropyLevels[itemEntropyLevels[item]].Remove(item);
+        entropyLevels[entropyLevel].Add(item);
+        itemEntropyLevels[item] = entropyLevel;
     }
 
     public void Remove(T item)
