@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public abstract class Trigger
 {
+    public System.Action<object> triggered;
     /// <summary>
     /// Subscribes a method to this Trigger. Be sure to set conditionals and use the unsubscribe method that is returned.
     /// </summary>
@@ -17,6 +18,7 @@ public abstract class Trigger
 
 public abstract class Trigger<Endpoint, T> : Trigger
 {
+    public System.Action<object, T> triggeredWithData;
     [SerializeReference]
     public List<ITask<T>> tasks = new();
     protected static Dictionary<object, List<TriggerSubscription>> bindings = new();
@@ -54,7 +56,12 @@ public abstract class Trigger<Endpoint, T> : Trigger
             }
             else if (!task.DoTask(data)) return;
         }
-        if (additionalTasks == null) return;
+        if (additionalTasks == null)
+        {
+            triggered?.Invoke(owner);
+            triggeredWithData?.Invoke(owner, data);
+            return;
+        }
         foreach (ITask<T> task in additionalTasks)
         {
             if (task is ITaskOwned<Owner, T>)
@@ -63,6 +70,8 @@ public abstract class Trigger<Endpoint, T> : Trigger
             }
             else if (!task.DoTask(data)) return;
         }
+        triggered?.Invoke(owner);
+        triggeredWithData?.Invoke(owner, data);
     }
 
     /// <summary>

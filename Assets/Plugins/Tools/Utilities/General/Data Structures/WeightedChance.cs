@@ -138,6 +138,13 @@ namespace Skritty.Tools.Utilities
             CalculatePercents();
         }
 
+        public void Clear()
+        {
+            totalWeight = 0;
+            entries.Clear();
+            _entryMap.Clear();
+        }
+
         /// <summary>
         /// Updates given entry to a new weight
         /// </summary>

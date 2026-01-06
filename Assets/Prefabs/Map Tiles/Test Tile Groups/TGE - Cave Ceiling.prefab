@@ -101,7 +101,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789}
@@ -119,7 +119,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
@@ -127,7 +127,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
@@ -140,7 +140,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789}
@@ -158,7 +158,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789}
@@ -176,11 +176,12 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -0.5, z: -0.5}
+        tileIndex: 0
       x: 0
       y: 0
       z: 0
@@ -191,119 +192,22 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-    groupUID: TGE - Cave Ceiling
-    content: {fileID: 8697923457659117573}
+    groupUID: 
+    content: {fileID: 0}
     weight: 0
-    connections:
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Cave Ceiling
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-        groupUID: TGE - Underground Air
-        x: 0
-        y: 0
-        z: 0
-      allowedTiles: []
-      isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Cave Ceiling
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-        groupUID: TGE - Underground Air
-        x: 0
-        y: 0
-        z: 0
-      allowedTiles: []
-      isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
-      allowedTiles: []
-      isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-        groupUID: TGE - Underground Air
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
-        groupUID: TGE - Cave Floor
-        x: 0
-        y: 0
-        z: 0
-      allowedTiles: []
-      isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Cave Ceiling
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-        groupUID: TGE - Underground Air
-        x: 0
-        y: 0
-        z: 0
-      allowedTiles: []
-      isInternalConnection: 0
-    - allowedTileRefs:
-      - tileGroupPrefab: {fileID: 3162623308867682789}
-        groupUID: TGE - Cave Ceiling
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-        groupUID: TGE - Underground
-        x: 0
-        y: 0
-        z: 0
-      - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-        groupUID: TGE - Underground Air
-        x: 0
-        y: 0
-        z: 0
-      allowedTiles: []
-      isInternalConnection: 0
+    connections: []
     isHole: 0
     holeAllowedTileRefs: []
-    position: {x: -0.5, y: -0.5, z: -0.5}
+    position: {x: 0, y: 0, z: 0}
+    tileIndex: 0
   selectedConnection:
     allowedTileRefs:
-    - tileGroupPrefab: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-      groupUID: TGE - Underground Air
+    - tileGroupPrefab: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
+      groupUID: TGE - Underground
       x: 0
       y: 0
       z: 0
-    - tileGroupPrefab: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
-      groupUID: TGE - Cave Floor
-      x: 0
-      y: 0
-      z: 0
-    allowedTiles: []
+    allowedTiles: 0
     isInternalConnection: 0
 --- !u!1 &8697923457659117573
 GameObject:
@@ -369,7 +273,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2ac2f750ba89fd240ab4881675139e8b, type: 2}
+  - {fileID: 2100000, guid: 418ba4f91e0331942a25085eacd2127c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

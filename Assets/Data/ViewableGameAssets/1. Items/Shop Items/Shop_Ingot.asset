@@ -18,6 +18,7 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 1, g: 1, b: 1, a: 1}
+  classification: 2
   cost: 10
   craftingRecipe: []
   grantedActions: []
@@ -84,22 +85,42 @@ MonoBehaviour:
     - rid: 4023383621529763851
       type: {class: Stat_MaxLife, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField:
-        - rid: 4023383621529763852
-        - rid: 4023383621529763853
+        <ModifierInheritMethod>k__BackingField:
+          rid: 7009677036979224725
+        _modifiers:
+        - rid: 7009677036979224726
+        - rid: 7009677036979224727
         <Step>k__BackingField: 2
-    - rid: 4023383621529763852
-      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
-      data:
-        <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 0
-    - rid: 4023383621529763853
-      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
-      data:
-        <Modifiers>k__BackingField: []
-        <Step>k__BackingField: 1
     - rid: 4023383621529763854
       type: {class: Stat_Enmity, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField: []
+        <ModifierInheritMethod>k__BackingField:
+          rid: 7009677036979224728
+        _modifiers: []
         <Step>k__BackingField: 0
+    - rid: 7009677036979224725
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7009677036979224726
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 7009677036979224729
+        _modifiers: []
+        <Step>k__BackingField: 0
+    - rid: 7009677036979224727
+      type: {class: NumericalSolver, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 7009677036979224730
+        _modifiers: []
+        <Step>k__BackingField: 1
+    - rid: 7009677036979224728
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7009677036979224729
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 7009677036979224730
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 

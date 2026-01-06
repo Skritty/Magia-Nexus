@@ -18,6 +18,7 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 1, g: 1, b: 1, a: 1}
+  classification: 4
   cost: 20
   craftingRecipe: []
   grantedActions: []
@@ -59,4 +60,9 @@ MonoBehaviour:
     - rid: 4023384113744707779
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
       data:
-        <Modifiers>k__BackingField: []
+        <ModifierInheritMethod>k__BackingField:
+          rid: 7009677036979224731
+        _modifiers: []
+    - rid: 7009677036979224731
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 

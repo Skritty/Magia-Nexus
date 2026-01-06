@@ -17,14 +17,14 @@ public class Effect_ModifierActionDuration : EffectTask
         if (multiplier != 1 && modifier is Modifier_Numerical)
         {
             Modifier_Numerical clone = (modifier as Modifier_Numerical).Clone();
-            target.AddModifier(clone, owner.GetMechanic<Mechanic_Actions>().TicksPerAction);
+            target.AddModifier(clone, 25);// owner.GetMechanic<Mechanic_Actions>().TicksPerAction);
             clone.Step = CalculationStep.Multiplicative;
             clone.Value *= multiplier;
             return;
         }
         else
         {
-            target.TryAddModifier(modifier, owner.GetMechanic<Mechanic_Actions>().TicksPerAction);
+            target.TryAddModifier(modifier, 25);// owner.GetMechanic<Mechanic_Actions>().TicksPerAction);
         }
     }
 }

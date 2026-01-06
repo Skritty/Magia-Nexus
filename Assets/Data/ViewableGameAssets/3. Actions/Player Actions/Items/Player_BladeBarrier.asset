@@ -68,7 +68,7 @@ MonoBehaviour:
         <MaxStacks>k__BackingField: 10
         <StacksAdded>k__BackingField: 1
         <PerPlayer>k__BackingField: 0
-        <TickDuration>k__BackingField: 0
+        <TickDuration>k__BackingField: 250
         <RefreshDuration>k__BackingField: 0
         <Step>k__BackingField: 2
         <AppliesTo>k__BackingField: 2

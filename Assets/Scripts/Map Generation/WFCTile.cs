@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 [Serializable]
 public class WFCTile : IEquatable<WFCTile>
@@ -18,8 +20,10 @@ public class WFCTile : IEquatable<WFCTile>
 
     [HideInInspector]
     public Vector3 position;
-    
-    
+    [HideInInspector]
+    public int tileIndex;
+
+
 
     public WFCTile(string groupPrefabAssetPath, int x, int y, int z)
     {
@@ -50,14 +54,13 @@ public class WFCConnection
 {
     public List<WFCTileRef> allowedTileRefs;
     [HideInInspector]
-    public List<WFCTile> allowedTiles;
+    public ulong allowedTiles;
     [HideInInspector]
     public bool isInternalConnection;
 
     public WFCConnection(bool displayConnectionGizmo)
     {
         allowedTileRefs = new();
-        allowedTiles = new();
         this.isInternalConnection = displayConnectionGizmo;
     }
 }

@@ -66,11 +66,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'stats.Array.data[6]'
-      value: 5987050870616883434
+      value: 7009677036284281779
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'stats.Array.data[7]'
-      value: 5987051000207508382
+      value: 7009677036284281777
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'stats.Array.data[8]'
@@ -391,6 +391,39 @@ PrefabInstance:
       value: 'Assembly-CSharp NoInherit`1[[Trigger, Assembly-CSharp]]'
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281774]'
+      value: Assembly-CSharp Stat_Intangable
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281775]'
+      value: 'Assembly-CSharp NoInherit`1[[System.Boolean, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281776]'
+      value: 'Assembly-CSharp DataContainer`1[[System.Boolean, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281777]'
+      value: Assembly-CSharp Stat_Untargetable
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281778]'
+      value: 'Assembly-CSharp NoInherit`1[[System.ValueTuple`2[[Entity, Assembly-CSharp],[System.Object,
+        mscorlib]], mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281779]'
+      value: Assembly-CSharp Stat_Intangable
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281780]'
+      value: 'Assembly-CSharp NoInherit`1[[System.Boolean, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281781]'
+      value: 'Assembly-CSharp DataContainer`1[[System.Boolean, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: managedReferences[4023383614162207431].aoe
       value: -2
       objectReference: {fileID: 0}
@@ -655,6 +688,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281774]._modifiers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281777]._modifiers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281779]._modifiers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: managedReferences[4023383614162207440].<Value>k__BackingField
       value: 4023383614162207443
       objectReference: {fileID: 0}
@@ -699,6 +744,14 @@ PrefabInstance:
       value: 5987051004831465565
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281776].<Value>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281781].<Value>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'managedReferences[4023383589837865500]._modifiers.Array.data[0]'
       value: 5987051004831465554
       objectReference: {fileID: 0}
@@ -727,7 +780,23 @@ PrefabInstance:
       value: 5987051004831465566
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281774]._modifiers.Array.data[0]'
+      value: 7009677036284281776
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: 'managedReferences[7009677036284281779]._modifiers.Array.data[0]'
+      value: 7009677036284281781
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: managedReferences[4023384116733188081].<Priority>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281774].<Priority>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281779].<Priority>k__BackingField
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
@@ -957,6 +1026,18 @@ PrefabInstance:
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: managedReferences[5987051004831465566].<ModifierInheritMethod>k__BackingField
       value: 5987051004831465569
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281774].<ModifierInheritMethod>k__BackingField
+      value: 7009677036284281775
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281777].<ModifierInheritMethod>k__BackingField
+      value: 7009677036284281778
+      objectReference: {fileID: 0}
+    - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
+      propertyPath: managedReferences[7009677036284281779].<ModifierInheritMethod>k__BackingField
+      value: 7009677036284281780
       objectReference: {fileID: 0}
     - target: {fileID: 6345354840142092050, guid: 72c04f7ba4dfcc54cbbba692197a444a, type: 3}
       propertyPath: 'managedReferences[4023383589837865500].<Modifiers>k__BackingField.Array.data[1]'

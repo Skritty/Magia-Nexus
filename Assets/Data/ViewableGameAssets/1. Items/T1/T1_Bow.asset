@@ -18,6 +18,7 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 0
   UIColor: {r: 0.9559748, g: 0.8915088, b: 0.8086705, a: 1}
+  classification: 128
   cost: 20
   craftingRecipe: []
   grantedActions:

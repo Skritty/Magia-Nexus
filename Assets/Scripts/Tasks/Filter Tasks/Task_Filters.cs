@@ -348,6 +348,23 @@ public class Task_Filter_Matching<T> : ITask<T>
         return data.Equals(comparison);
     }
 }
+
+[LabelText("Filter: Has Any Targets")]
+public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
+{
+    [SerializeReference]
+    public Targeting targeting;
+
+    public bool DoTask(Entity owner, T data)
+    {
+        return targeting.GetTargets(owner).Count > 0;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
 #endregion
 
 

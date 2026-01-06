@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60c43b84dfb0d10479e5b7e1dd019c94, type: 3}
+  m_Name: Projectile Attack
+  m_EditorClassIdentifier: 
+  skillTriggerCondition:
+    rid: 7009677035471634698
+  canOverrideQueuedSkill: 0
+  actions:
+  - {fileID: 11400000, guid: 9c1d34e2b86cdfe44803bc82d2852ac7, type: 2}
+  - {fileID: 11400000, guid: e58f23542adfefa49b730f903648484e, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7009677035471634698
+      type: {class: Trigger_SkillTriggerCheck, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 7009677035471634700
+    - rid: 7009677035471634700
+      type: {class: 'Task_Filter_HasAnyTargets`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        targeting:
+          rid: 7009677035471634701
+    - rid: 7009677035471634701
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 8
+        sortingMethod: 1
+        lineOfSight: 0
+        ignoreIntangeable: 0
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        radius: 4
+        angle: 180

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EntropicSet<T>
 {
     private HashSet<T>[] entropyLevels;
+    //private List<T>[] entropyLevelsList;
     private Dictionary<T, int> itemEntropyLevels = new();
 
     public int Count => itemEntropyLevels.Count;
@@ -13,7 +14,7 @@ public class EntropicSet<T>
     public EntropicSet(int maxEntropyLevel)
     {
         entropyLevels = new HashSet<T>[maxEntropyLevel];
-        for(int i = 0; i < entropyLevels.Length; i++)
+        for(int i = 0; i < maxEntropyLevel; i++)
         {
             entropyLevels[i] = new HashSet<T>();
         }
@@ -27,6 +28,7 @@ public class EntropicSet<T>
     {
         if (entropyLevel < 1) return;
         entropyLevel--;
+        
         entropyLevels[entropyLevel].Add(item);
         itemEntropyLevels.Add(item, entropyLevel);
     }
@@ -34,6 +36,9 @@ public class EntropicSet<T>
     public void Update(int entropyLevel, T item)
     {
         if (!itemEntropyLevels.ContainsKey(item)) return;
+        if (entropyLevel < 1) return;
+        entropyLevel--;
+
         entropyLevels[itemEntropyLevels[item]].Remove(item);
         entropyLevels[entropyLevel].Add(item);
         itemEntropyLevels[item] = entropyLevel;
@@ -61,11 +66,10 @@ public class EntropicSet<T>
 
     public T GetRandomAtLowestEntropy()
     {
-        foreach(HashSet<T> set in entropyLevels)
+        foreach(HashSet<T> entropyLevel in entropyLevels)
         {
-            if (set == null || set.Count == 0) continue;
-            T[] items = set.ToArray();
-            return items[Random.Range(0, items.Length)];
+            if (entropyLevel.Count == 0) continue;
+            return entropyLevel.ToArray()[Random.Range(0, entropyLevel.Count)];
         }
         return default;
     }
