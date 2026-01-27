@@ -28,7 +28,6 @@ public class EntropicSet<T>
     {
         if (entropyLevel < 1) return;
         entropyLevel--;
-        
         entropyLevels[entropyLevel].Add(item);
         itemEntropyLevels.Add(item, entropyLevel);
     }

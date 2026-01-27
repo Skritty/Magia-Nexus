@@ -4,45 +4,97 @@ using System.Collections.Generic;
 using System.Linq;
 using Skritty.Tools.Utilities;
 using UnityEngine;
-using UnityEngine.Profiling;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
 public class WFCMapGenerator : MonoBehaviour
 {
-    public int xSize, ySize, zSize, bufferSize;
+    public Transform center;
+    public int sqRadius, sqBufferSize;
     public List<WFCTileGroup> tileGroupPrefabs;
     [NonSerialized]
-    public ThreeDimensionalSpatialRepresentation<HashSet<WFCTile>> mapRepresentation;
+    public NTree<FlagList> spatialTree;
     public float creationDelay, solveDelay;
     public WFCTileGroup ErrorTile;
 
-    private EntropicSet<(int x, int y, int z)> entropicMap;
-    private Queue<(int x, int y, int z)> updateQueue = new();
-    private HashSet<(int x, int y, int z)> inQueue = new();
+    private EntropicSet<MultidimensionalPosition> entropicMap;
+    private HashSet<MultidimensionalPosition> bufferTiles = new();
+    private HashSet<MultidimensionalPosition> generatedTiles = new();
+    private Queue<MultidimensionalPosition> updateQueue = new();
+    private HashSet<MultidimensionalPosition> inQueue = new();
     
 
     [SerializeField]
     private List<WFCTileGroup> tileGroups = new();
+    private List<WFCTile> tileOptions;
+    private ulong defaultTileFlags;
     private Dictionary<string, WFCTileGroup> tileGroupsByUID = new();
     private WeightedChance<WFCTile> potentialTiles = new();
     private int tileCount;
     private ulong allowed;
-    private (int x, int y, int z) index;
     private (int x, int y, int z) updating;
     private const ulong ULOne = 1;
+    private bool generating;
+    private Vector3 targetCenter = Vector3.zero;
+    private Vector3 previousCenter = Vector3.zero;
 
-    private HashSet<WFCTile> GetMapTiles((int x, int y, int z) index)
+    public class FlagList
     {
-        if ((uint)index.x >= mapRepresentation.x || (uint)index.y >= mapRepresentation.y || (uint)index.z >= mapRepresentation.z) return null;
-        return mapRepresentation[index.x, index.y, index.z];
-    }
+        public ulong options;
+        public int Entropy
+        {
+            get
+            {
+                if (options == 0) return 0;
+                int entropy = 0;
+                for (int i = 0; i < 64; i++)
+                {
+                    if ((options & (ULOne << i)) != 0) entropy++;
+                }
+                return entropy;
+            }
+        }
 
+        public bool Solved => (options & (options - 1)) == 0;
+
+        public FlagList(ulong options)
+        {
+            this.options = options;
+        }
+
+        public List<T> GetObjects<T>(params T[] objects)
+        {
+            List<T> objectsList = new();
+            for(int i = 0; i < objects.Count(); i++)
+            {
+                if ((options & (ULOne << i)) != 0)
+                {
+                    objectsList.Add(objects[i]);
+                }
+            }
+            return objectsList;
+        }
+    }
+    
     private void Start()
     {
         SolveConnections();
-        //GenerateMap(xSize, ySize, zSize);
-        StartCoroutine(GenerateMap(xSize, ySize, zSize));
+        Initialize();
+        targetCenter = center.position - transform.position;
+    }
+
+    private void FixedUpdate()
+    {
+        if (!generating)
+        {
+            targetCenter = Vector3.Lerp(targetCenter, center.position - transform.position, 0.01f);
+            
+            if(Vector3.Distance(previousCenter, targetCenter) >= 1)
+            {
+                StartCoroutine(GenerateMap());
+                previousCenter = targetCenter;
+            }
+        }
     }
 
     //[InfoBox("Connections must be resolved any time a change is made to subtile dimensions or if the tile group list is changed"), Button("Solve Connections")]
@@ -68,7 +120,7 @@ public class WFCMapGenerator : MonoBehaviour
             {
                 if (tile.isHole) continue;
                 allTiles.Add(tile);
-                tile.tileIndex = tileCount;
+                tile.tileBit = ULOne << tileCount;
                 tileCount++;
             }
         }
@@ -92,7 +144,7 @@ public class WFCMapGenerator : MonoBehaviour
                     }
                     else
                     {
-                        tile.connections[i].allowedTiles |= ULOne << adjecentTiles[i].tileIndex;
+                        tile.connections[i].allowedTiles |= adjecentTiles[i].tileBit;
                         tile.connections[i].isInternalConnection = true;
                     }
                 }
@@ -133,8 +185,8 @@ public class WFCMapGenerator : MonoBehaviour
                             WFCConnection otherConnection = tileActual.connections[reciprocatedIndex];
                             if (otherConnection.isInternalConnection) continue;
 
-                            tile.connections[i].allowedTiles |= ULOne << tileActual.tileIndex;
-                            otherConnection.allowedTiles |= ULOne << tile.tileIndex;
+                            tile.connections[i].allowedTiles |= tileActual.tileBit;
+                            otherConnection.allowedTiles |=  tile.tileBit;
                         }
                     }
                     else
@@ -147,8 +199,8 @@ public class WFCMapGenerator : MonoBehaviour
                                 continue;
                             }
                             WFCTile tileActual = tileGroupsByUID[connectedTileRef.groupUID].subtiles[connectedTileRef.x, connectedTileRef.y, connectedTileRef.z];
-                            tile.connections[i].allowedTiles |= ULOne << tileActual.tileIndex;
-                            tileActual.connections[reciprocatedIndex].allowedTiles |= ULOne << tile.tileIndex;
+                            tile.connections[i].allowedTiles |= tileActual.tileBit;
+                            tileActual.connections[reciprocatedIndex].allowedTiles |= tile.tileBit;
                         }
                     }
                 }
@@ -212,9 +264,11 @@ public class WFCMapGenerator : MonoBehaviour
         }
     }
 
-    public IEnumerator GenerateMap(int xSize, int ySize, int zSize)
+    public void Initialize()
     {
-        List<WFCTile> tiles = new();
+        spatialTree = new();
+        
+        tileOptions = new();
         tileGroupsByUID = new();
         tileGroupsByUID.Add(ErrorTile.groupUID, ErrorTile);
 
@@ -226,60 +280,98 @@ public class WFCMapGenerator : MonoBehaviour
             {
                 if (!tile.isHole)
                 {
-                    tiles.Add(tile);
+                    tileOptions.Add(tile);
                 }
             }
         }
 
-        // Setup the initial "waveform"
-        mapRepresentation = new(xSize + 2 * bufferSize, ySize + 2 * bufferSize, zSize + 2 * bufferSize);
-        entropicMap = new(tiles.Count);
-        for (int x = 0; x < mapRepresentation.x; x++)
+        entropicMap = new(tileOptions.Count);
+        defaultTileFlags = ulong.MaxValue >> Mathf.Clamp(64 - tileOptions.Count, 0, 64);
+    }
+
+    private FlagList AddTile(MultidimensionalPosition position)
+    {
+        FlagList flagList = new(defaultTileFlags);
+        spatialTree.TryAddData(flagList, position, out _, true);
+        if (!IsGenerationTile(position))
         {
-            for (int y = 0; y < mapRepresentation.y; y++)
+            // Is the tile outside generation range?
+            bufferTiles.Add(position);
+        }
+        else
+        {
+            entropicMap.Add(tileOptions.Count, position);
+        }
+        return flagList;
+    }
+
+    public IEnumerator GenerateMap()
+    {
+        generating = true;
+
+        /*if (center.x - transform.position.x < 0
+            || center.y - transform.position.y < 0
+            || center.z - transform.position.z < 0) return null;*/
+
+        /*MultidimensionalPosition generationStartPos = new(
+            (ushort)(center.x - transform.position.x),
+            (ushort)(center.y - transform.position.y),
+            (ushort)(center.z - transform.position.z));*/
+
+        MultidimensionalPosition generationStartPos = new(
+           (ushort)(targetCenter.x),
+           (ushort)(targetCenter.y),
+           (ushort)(targetCenter.z));
+
+        // Set up seed nodes
+        if (spatialTree[generationStartPos] == null)
+        {
+            AddTile(generationStartPos);
+        }
+        else
+        {
+            foreach (MultidimensionalPosition position in bufferTiles.ToArray())
             {
-                for (int z = 0; z < mapRepresentation.z; z++)
-                {
-                    mapRepresentation[x, y, z] = new HashSet<WFCTile>();
-                    foreach(WFCTile tile in tiles)
-                    {
-                        mapRepresentation[x, y, z].Add(tile);
-                    }
-                    index = (x, y, z);
-                    if (!IsBufferTile(index))
-                    {
-                        entropicMap.Add(tiles.Count, index);
-                    }
-                }
+                if (!IsGenerationTile(position)) continue;
+                entropicMap.Add(spatialTree[position].Entropy, position);
+                bufferTiles.Remove(position);
             }
         }
 
+        int tilesPerDelay = 25;
+        int tilesPlaced = 0;
         // Solve the WFC
         while (entropicMap.Count > 0)
         {
-            index = entropicMap.GetRandomAtLowestEntropy();
-            entropicMap.Remove(index);
+            MultidimensionalPosition position = entropicMap.GetRandomAtLowestEntropy();
+            entropicMap.Remove(position);
 
             potentialTiles.Clear();
-            foreach (WFCTile tile in mapRepresentation[index.x, index.y, index.z])
+            foreach (WFCTile tile in spatialTree[position].GetObjects(tileOptions.ToArray()))
             {
                 potentialTiles.Add(tile, tile.weight);
             }
             WFCTile selectedTile = potentialTiles.GetRandomEntry();
 
-            mapRepresentation[index.x, index.y, index.z].Clear();
-            mapRepresentation[index.x, index.y, index.z].Add(selectedTile);
-            updateQueue.Enqueue(index);
-            inQueue.Add(index);
-            GenerateTile(selectedTile, tileGroupsByUID[selectedTile.groupUID], index);
+            spatialTree[position].options = ULOne << tileOptions.IndexOf(selectedTile);
+            updateQueue.Enqueue(position);
+            inQueue.Add(position);
+            if(GenerateTile(selectedTile, tileGroupsByUID[selectedTile.groupUID], position))
+            {
+                tilesPlaced++;
+                if (tilesPlaced >= tilesPerDelay && creationDelay > 0)
+                {
+                    tilesPlaced = 0;
+                    yield return new WaitForSeconds(creationDelay);
+                }
+            }
             while (updateQueue.Count > 0)
             {
-                index = updateQueue.Dequeue();
-                inQueue.Remove(index);
-                Observe(index.x, index.y, index.z);
+                position = updateQueue.Dequeue();
+                inQueue.Remove(position);
+                Observe(position);
                 if (solveDelay > 0) yield return new WaitForSeconds(solveDelay);
             }
-            if (creationDelay > 0) yield return new WaitForSeconds(creationDelay);
         }
 
         // Instantiate tile visuals
@@ -301,132 +393,137 @@ public class WFCMapGenerator : MonoBehaviour
             }
         }*/
 
-        foreach (WFCTileGroup tileGroup in tileGroups)
+        /*foreach (WFCTileGroup tileGroup in tileGroups)
         {
             Destroy(tileGroup.gameObject);
         }
-        tileGroups.Clear();
-        Debug.Break();
+        tileGroups.Clear();*/
+        generating = false;
+        //Debug.Break();
     }
 
-    private bool IsBufferTile((int, int, int) index)
+    private bool IsBufferTile(MultidimensionalPosition position)
     {
-        if ((uint)(index.Item1 - bufferSize) >= xSize) return true;
-        if ((uint)(index.Item2 - bufferSize) >= ySize) return true;
-        if ((uint)(index.Item3 - bufferSize) >= zSize) return true;
-        return false;
+        float sqDist = Mathf.Pow(targetCenter.x - position[0], 2) + Mathf.Pow(targetCenter.y - position[1], 2) + Mathf.Pow(targetCenter.z - position[2], 2);
+        return sqDist > sqRadius && sqDist <= sqRadius + sqBufferSize;
     }
 
-    private void Observe(int x, int y, int z)
+    private bool IsGenerationTile(MultidimensionalPosition position)
     {
-        HashSet<WFCTile> tiles = mapRepresentation[x, y, z];
-        Collapse(tiles, 0, (x + 1, y, z));
-        Collapse(tiles, 1, (x - 1, y, z));
-        Collapse(tiles, 2, (x, y + 1, z));
-        Collapse(tiles, 3, (x, y - 1, z));
-        Collapse(tiles, 4, (x, y, z + 1));
-        Collapse(tiles, 5, (x, y, z - 1));
+        float sqDist = Mathf.Pow(targetCenter.x - position[0], 2) + Mathf.Pow(targetCenter.y - position[1], 2) + Mathf.Pow(targetCenter.z - position[2], 2);
+        return sqDist <= sqRadius;
     }
 
-    private ulong GetAllowedTiles(HashSet<WFCTile> tiles, int connectionIndex)
+    private void Observe(MultidimensionalPosition position)
+    {
+        FlagList tiles = spatialTree[position];
+        if (position[0] != ushort.MaxValue) Collapse(tiles, 0, new((ushort)(position[0] + 1), position[1], position[2]));
+        if (position[0] != 0) Collapse(tiles, 1, new((ushort)(position[0] - 1), position[1], position[2]));
+        if (position[1] != ushort.MaxValue) Collapse(tiles, 2, new(position[0], (ushort)(position[1] + 1), position[2]));
+        if (position[1] != 0) Collapse(tiles, 3, new(position[0], (ushort)(position[1] - 1), position[2]));
+        if (position[2] != ushort.MaxValue) Collapse(tiles, 4, new(position[0], position[1], (ushort)(position[2] + 1)));
+        if (position[2] != 0) Collapse(tiles, 5, new(position[0], position[1], (ushort)(position[2] - 1)));
+    }
+
+    private ulong GetAllowedTiles(FlagList tiles, int connectionIndex)
     {
         allowed = 0;
-        foreach (WFCTile tile in tiles)
+        foreach (WFCTile tile in tiles.GetObjects(tileOptions.ToArray()))
         {
             allowed |= tile.connections[connectionIndex].allowedTiles;
         }
         return allowed;
     }
 
-    private void Collapse(HashSet<WFCTile> possibleConnections, int connectionIndex, (int x, int y, int z) index)
+    private void Collapse(FlagList possibleConnections, int connectionIndex, MultidimensionalPosition position)
     {
-        HashSet<WFCTile> potentialTiles = GetMapTiles(index);
+        FlagList potentialTiles = spatialTree[position];
         // Is this tile outside of the map or is it already solved?
-        if (potentialTiles == null || potentialTiles.Count <= 1) return;
+        if (potentialTiles == null)
+        {
+            potentialTiles = AddTile(position);
+        }
+        if(potentialTiles.Solved) return;
 
         ulong allowedTiles = GetAllowedTiles(possibleConnections, connectionIndex);
         //updating = index;
-        int count = potentialTiles.Count;
-        potentialTiles.RemoveWhere(x => (allowedTiles & (ULOne << x.tileIndex)) == 0);
+        ulong options = potentialTiles.options;
+        potentialTiles.options &= allowedTiles;
 
-        if (count != potentialTiles.Count)
+        if (options != potentialTiles.options)
         {
-            if (potentialTiles.Count == 0)
+            if (potentialTiles.options == 0)
             {
                 // Error! No tile options left to pick
-                GenerateTile(ErrorTile.subtiles[0, 0, 0], ErrorTile, index);
-                mapRepresentation[index.x, index.y, index.z].Clear();
-                mapRepresentation[index.x, index.y, index.z].Add(ErrorTile.subtiles[0, 0, 0]);
-                entropicMap.Remove(index);
+                GenerateTile(ErrorTile.subtiles[0, 0, 0], ErrorTile, position);
+                entropicMap.Remove(position);
                 return;
             }
 
-            if (potentialTiles.Count == 1)
+            if (potentialTiles.Solved)
             {
                 // Tile is determined
-                foreach(WFCTile tile in potentialTiles)
-                    GenerateTile(tile, tileGroupsByUID[tile.groupUID], index);
-                entropicMap.Remove(index);
+                WFCTile tile = potentialTiles.GetObjects(tileOptions.ToArray())[0];
+                GenerateTile(tile, tileGroupsByUID[tile.groupUID], position);
+                entropicMap.Remove(position);
             }
             else
             {
                 // Tile entropy reduced
-                entropicMap.Update(potentialTiles.Count, index);
+                entropicMap.Update(potentialTiles.Entropy, position);
             }
 
             // Add to the update queue
-            if (!inQueue.Contains(index))
+            if (!inQueue.Contains(position) && (IsGenerationTile(position) || IsBufferTile(position)))
             {
-                updateQueue.Enqueue(index);
-                inQueue.Add(index);
+                updateQueue.Enqueue(position);
+                inQueue.Add(position);
             }
         }
     }
 
-    private void GenerateTile(WFCTile tile, WFCTileGroup group, (int, int, int) index)
+    private bool GenerateTile(WFCTile tile, WFCTileGroup group, MultidimensionalPosition position)
     {
         //mapRepresentation[index.Item1, index.Item2, index.Item3].Clear();
         //mapRepresentation[index.Item1, index.Item2, index.Item3].Add(tile);
 
-        if (tile.content == null) return;
+        if (tile.content == null) return false;
         GameObject visuals = Instantiate(tile.content, Vector3.zero, Quaternion.identity);
-        visuals.transform.position += transform.position + new Vector3(index.Item1, index.Item2, index.Item3)
+        visuals.transform.position += transform.position + position.ToVector3
             - group.bounds.center + group.bounds.extents;
         visuals.transform.parent = transform;
+        generatedTiles.Add(position);
+        return true;
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (mapRepresentation == null || tileGroups == null) return;
-        for (int x = 0; x < mapRepresentation.x; x++)
+        if (spatialTree == null || tileGroups == null) return;
+        foreach (var node in spatialTree.nodes)
         {
-            for (int y = 0; y < mapRepresentation.y; y++)
+            MultidimensionalPosition position = node.position;
+            FlagList tiles = spatialTree[position];
+            /*if (updating.Item1 == position[0] && updating.Item2 == position[1] && updating.Item3 == position[2])
             {
-                for (int z = 0; z < mapRepresentation.z; z++)
+                Gizmos.color = Color.red;
+                Gizmos.DrawCube(position.ToVector3 + transform.position + Vector3.one * 0.5f, Vector3.one * 0.9f);
+            }*/
+            //else
+            {
+                if (!IsGenerationTile(position)) continue;
+                if (tiles.Solved)
                 {
-                    if (updating.Item1 == x && updating.Item2 == y && updating.Item3 == z)
-                    {
-                        Gizmos.color = Color.red;
-                        Gizmos.DrawCube(new Vector3(x, y, z) + transform.position + Vector3.one * 0.5f, Vector3.one * 0.9f);
-                    }
-                    else
-                    {
-                        if (IsBufferTile((x,y,z))) continue;
-                        if(mapRepresentation[x, y, z].Count <= 1)
-                        {
-                            Gizmos.color = Color.blue;
-                            continue;
-                        }
-                        else
-                        {
-                            float a = (1f - mapRepresentation[x, y, z].Count * 1f / tileCount);
-                            if (a == 0) continue;
-                            Gizmos.color = new Color(a, a, a, a * 0.4f);
-                        }
-
-                        Gizmos.DrawCube(new Vector3(x, y, z) + transform.position + Vector3.one * 0.5f, Vector3.one * 0.9f);
-                    }
+                    Gizmos.color = Color.blue;
+                    continue;
                 }
+                else
+                {
+                    float a = (1f - tiles.Entropy * 1f / tileCount);
+                    if (a == 0) continue;
+                    Gizmos.color = new Color(a, a, a, a * 0.2f);
+                }
+
+                Gizmos.DrawCube(new Vector3(position[0], position[1], position[2]) + transform.position + Vector3.one * 0.5f, Vector3.one * 0.9f);
             }
         }
     }

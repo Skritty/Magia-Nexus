@@ -71,7 +71,7 @@ MonoBehaviour:
   updateData: 0
   doSelection: 1
   groupUID: TGE - Riverbank
-  weight: 0.4
+  weight: 0.3
   subtiles:
     x: 1
     y: 1

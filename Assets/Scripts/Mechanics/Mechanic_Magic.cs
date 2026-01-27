@@ -11,10 +11,10 @@ public class Stat_Enchantments : QueueStat<List<Rune>>, IStat<List<Rune>> { }
 public class Mechanic_Magic : Mechanic<Mechanic_Magic>
 {
     public Spell originSpell;
-    [SerializeReference, FoldoutGroup("Magic")]
-    public List<Spell> ownedSpells = new List<Spell>();
     [FoldoutGroup("Magic")]
     public VFX vfx;
+    [SerializeReference, FoldoutGroup("Magic"), ReadOnly]
+    public List<Spell> ownedSpells = new List<Spell>();
     private GraphicsBuffer runeInfo;
 
     public override void Initialize()

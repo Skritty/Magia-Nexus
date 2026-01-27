@@ -412,7 +412,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: -1, y: -0.5, z: 0}
+  m_Center: {x: -2, y: -1.5, z: 0}
 --- !u!114 &6299595504519974301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,7 +444,7 @@ MonoBehaviour:
         weight: 0.05
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -457,10 +457,10 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
@@ -468,7 +468,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -481,7 +481,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -494,11 +494,12 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -2.5, y: -2, z: -0.5}
+        tileIndex: 0
       x: 0
       y: 0
       z: 0
@@ -511,7 +512,7 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -519,13 +520,13 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -533,7 +534,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -541,11 +542,12 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -2.5, y: -1, z: -0.5}
+        tileIndex: 0
       x: 0
       y: 1
       z: 0
@@ -558,26 +560,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -2.5, y: 0, z: -0.5}
+        tileIndex: 0
       x: 0
       y: 2
       z: 0
@@ -590,26 +593,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -2.5, y: 1, z: -0.5}
+        tileIndex: 0
       x: 0
       y: 3
       z: 0
@@ -622,10 +626,10 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -633,20 +637,21 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -2.5, y: 2, z: -0.5}
+        tileIndex: 0
       x: 0
       y: 4
       z: 0
@@ -659,22 +664,22 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs:
@@ -689,6 +694,7 @@ MonoBehaviour:
           y: 0
           z: 0
         position: {x: -1.5, y: -2, z: -0.5}
+        tileIndex: 0
       x: 1
       y: 0
       z: 0
@@ -701,26 +707,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: -1.5, y: -1, z: -0.5}
+        tileIndex: 0
       x: 1
       y: 1
       z: 0
@@ -733,26 +740,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: -1.5, y: 0, z: -0.5}
+        tileIndex: 0
       x: 1
       y: 2
       z: 0
@@ -765,26 +773,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: -1.5, y: 1, z: -0.5}
+        tileIndex: 0
       x: 1
       y: 3
       z: 0
@@ -797,10 +806,10 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -808,20 +817,21 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -1.5, y: 2, z: -0.5}
+        tileIndex: 0
       x: 1
       y: 4
       z: 0
@@ -834,26 +844,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -2, z: -0.5}
+        tileIndex: 0
       x: 2
       y: 0
       z: 0
@@ -866,26 +877,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: -0.5, y: -1, z: -0.5}
+        tileIndex: 0
       x: 2
       y: 1
       z: 0
@@ -898,26 +910,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: -0.5, y: 0, z: -0.5}
+        tileIndex: 0
       x: 2
       y: 2
       z: 0
@@ -930,26 +943,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: -0.5, y: 1, z: -0.5}
+        tileIndex: 0
       x: 2
       y: 3
       z: 0
@@ -962,10 +976,10 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -973,20 +987,21 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: -0.5, y: 2, z: -0.5}
+        tileIndex: 0
       x: 2
       y: 4
       z: 0
@@ -999,22 +1014,22 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs:
@@ -1029,6 +1044,7 @@ MonoBehaviour:
           y: 0
           z: 0
         position: {x: 0.5, y: -2, z: -0.5}
+        tileIndex: 0
       x: 3
       y: 0
       z: 0
@@ -1041,26 +1057,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: 0.5, y: -1, z: -0.5}
+        tileIndex: 0
       x: 3
       y: 1
       z: 0
@@ -1073,26 +1090,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: 0.5, y: 0, z: -0.5}
+        tileIndex: 0
       x: 3
       y: 2
       z: 0
@@ -1105,26 +1123,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 1
         holeAllowedTileRefs: []
         position: {x: 0.5, y: 1, z: -0.5}
+        tileIndex: 0
       x: 3
       y: 3
       z: 0
@@ -1137,10 +1156,10 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -1148,20 +1167,21 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: 0.5, y: 2, z: -0.5}
+        tileIndex: 0
       x: 3
       y: 4
       z: 0
@@ -1184,13 +1204,13 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
@@ -1198,7 +1218,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -1211,7 +1231,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -1224,11 +1244,12 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: 1.5, y: -2, z: -0.5}
+        tileIndex: 0
       x: 4
       y: 0
       z: 0
@@ -1246,16 +1267,16 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -1263,7 +1284,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -1271,11 +1292,12 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: 1.5, y: -1, z: -0.5}
+        tileIndex: 0
       x: 4
       y: 1
       z: 0
@@ -1288,26 +1310,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: 1.5, y: 0, z: -0.5}
+        tileIndex: 0
       x: 4
       y: 2
       z: 0
@@ -1320,26 +1343,27 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: 1.5, y: 1, z: -0.5}
+        tileIndex: 0
       x: 4
       y: 3
       z: 0
@@ -1352,10 +1376,10 @@ MonoBehaviour:
         weight: 0
         connections:
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
@@ -1363,20 +1387,21 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 1
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs: []
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         position: {x: 1.5, y: 2, z: -0.5}
+        tileIndex: 0
       x: 4
       y: 4
       z: 0
@@ -1384,40 +1409,76 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0.5, z: 0}
     m_Extent: {x: 2.5, y: 2.5, z: 0.5}
   selectedTile:
-    x: 1
-    y: 1
+    x: 0
+    y: 0
     z: 0
     groupUID: TGE - Archway
-    content: {fileID: 0}
-    weight: 0
+    content: {fileID: 6769237645404421629}
+    weight: 0.05
     connections:
     - allowedTileRefs: []
-      allowedTiles: []
+      allowedTiles: 0
       isInternalConnection: 1
-    - allowedTileRefs: []
-      allowedTiles: []
-      isInternalConnection: 1
-    - allowedTileRefs: []
-      allowedTiles: []
-      isInternalConnection: 1
-    - allowedTileRefs: []
-      allowedTiles: []
-      isInternalConnection: 1
-    - allowedTileRefs: []
-      allowedTiles: []
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+        groupUID: TGE - Surface Air
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+        groupUID: TGE - Surface Ground
+        x: 0
+        y: 0
+        z: 0
+      allowedTiles: 0
       isInternalConnection: 0
     - allowedTileRefs: []
-      allowedTiles: []
+      allowedTiles: 0
+      isInternalConnection: 1
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+        groupUID: TGE - Surface Ground
+        x: 0
+        y: 0
+        z: 0
+      allowedTiles: 0
       isInternalConnection: 0
-    isHole: 1
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+        groupUID: TGE - Surface Air
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+        groupUID: TGE - Surface Ground
+        x: 0
+        y: 0
+        z: 0
+      allowedTiles: 0
+      isInternalConnection: 0
+    - allowedTileRefs:
+      - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
+        groupUID: TGE - Surface Air
+        x: 0
+        y: 0
+        z: 0
+      - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+        groupUID: TGE - Surface Ground
+        x: 0
+        y: 0
+        z: 0
+      allowedTiles: 0
+      isInternalConnection: 0
+    isHole: 0
     holeAllowedTileRefs: []
-    position: {x: -1.5, y: -1, z: -0.5}
+    position: {x: -2.5, y: -2, z: -0.5}
+    tileIndex: 0
   selectedConnection:
     allowedTileRefs:
-    - tileGroupPrefab: {fileID: 9206229358997751364, guid: 91ebaa85cbceea2429eca1daea7b8685, type: 3}
-      groupUID: TGE - Surface Air
+    - tileGroupPrefab: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+      groupUID: TGE - Surface Ground
       x: 0
       y: 0
       z: 0
-    allowedTiles: []
+    allowedTiles: 0
     isInternalConnection: 0

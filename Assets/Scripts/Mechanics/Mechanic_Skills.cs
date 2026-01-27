@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class Stat_ThinkingTime : NumericalSolver, IStat<float> { }
@@ -6,9 +7,12 @@ public class Trigger_SkillTriggerCheck : Trigger<Trigger_SkillTriggerCheck, Enti
 public class Trigger_DefaultSkill : Trigger<Trigger_DefaultSkill, Entity> { }
 public class Mechanic_Skills : Mechanic<Mechanic_Skills>
 {
-    public List<Skill> skills;
+    [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private Skill queuedSkill;
+    [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private Skill activeSkill;
+    [FoldoutGroup("Skills")]
+    public List<Skill> skills;
     private int tick;
     private bool thinking = true;
 

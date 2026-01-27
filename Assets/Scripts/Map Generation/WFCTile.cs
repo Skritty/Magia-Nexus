@@ -21,7 +21,7 @@ public class WFCTile : IEquatable<WFCTile>
     [HideInInspector]
     public Vector3 position;
     [HideInInspector]
-    public int tileIndex;
+    public ulong tileBit;
 
 
 
