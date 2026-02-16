@@ -1493,7 +1493,7 @@ MonoBehaviour:
   - {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
   - {fileID: 3162623308867682789, guid: 55ee9df678e2fc941b60da938ad6e9ab, type: 3}
   - {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-  creationDelay: 0
+  creationDelay: 0.00001
   solveDelay: 0
   ErrorTile: {fileID: 3162623308867682789, guid: 393db4d902d13ff4eb65b621d1a3e37e, type: 3}
   tileGroups: []

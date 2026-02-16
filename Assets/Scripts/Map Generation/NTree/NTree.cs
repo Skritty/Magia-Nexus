@@ -26,12 +26,12 @@ public class NTree<T>
         // 4: 0,0,1 | 5: 1,0,1
         // 6: 0,1,1 | 7: 1,1,1
 
-        public NTreeNode(MultidimensionalPosition position, int id = 0, byte depth = 0)
+        public NTreeNode(MultidimensionalPosition position, int id = -1, byte depth = 0)
         {
             Initialize(position, id, depth);
         }
 
-        public NTreeNode Initialize(MultidimensionalPosition position, int id = 0, byte depth = 0)
+        public NTreeNode Initialize(MultidimensionalPosition position, int id = -1, byte depth = 0)
         {
             allNodes.Add(this);
             this.id = id;
@@ -84,14 +84,13 @@ public class NTree<T>
             childCount--;
         }
 
-        public NTreeNode GetLeaf(MultidimensionalPosition position)
+        public NTreeNode GetLeaf(MultidimensionalPosition position, byte targetDepth)
         {
-            if (depth == 0) return this;
+            if (depth == targetDepth) return this;
             NTreeNode child = children[position.GetIndexAtDepth(depth - 1)];
             if (child == null) return null;
-            return child.GetLeaf(position);
+            return child.GetLeaf(position, targetDepth);
         }
-
         public override string ToString()
         {
             return $"({position[0]},{position[1]},{position[2]})";
@@ -550,7 +549,7 @@ public class NTree<T>
         set => TryAddData(value, new MultidimensionalPosition((ushort)x, (ushort)y, (ushort)z), out _, true);
     }
 
-    private static NTreeNode CreateNode(MultidimensionalPosition position, int id = 0, byte depth = 0)
+    private static NTreeNode CreateNode(MultidimensionalPosition position, int id = -1, byte depth = 0)
     {
         if (nodePool.Count > 0)
         {
@@ -572,20 +571,20 @@ public class NTree<T>
         //Debug.Log($"Node Pool: {nodePool.Count}");
     }
 
-    private NTreeNode GetNodeAtPosition(MultidimensionalPosition position)
+    private NTreeNode GetNodeAtPosition(MultidimensionalPosition position, byte targetDepth = 0)
     {
         if (root == null || position.Depth > root.depth)
         {
             return null;
         }
-        return root.GetLeaf(position);
+        return root.GetLeaf(position, targetDepth);
     }
 
-    public T GetDataAtPosition(MultidimensionalPosition position)
+    public T GetDataAtPosition(MultidimensionalPosition position, byte targetDepth = 0)
     {
-        NTreeNode node = GetNodeAtPosition(position);
+        NTreeNode node = GetNodeAtPosition(position, targetDepth);
         if (node == null) return default;
-        return data[GetNodeAtPosition(position).id];
+        return data[node.id];
     }
 
     public T GetDataFromIndex(ushort index)
@@ -626,7 +625,7 @@ public class NTree<T>
         depth = position.GetDepth(depth);
         if(root == null)
         {
-            root = CreateNode(position, 0, (byte)(depth + 1));
+            root = CreateNode(position, -1, (byte)(depth + 1));
             //Debug.Log($"New Root {root}(D{root.depth}, L{root.leafCount})");
         }
         else if(root.depth <= depth)
@@ -634,7 +633,7 @@ public class NTree<T>
             // Old root that is at a lower depth than the new one? Attach it with a new branch
             NTreeNode oldRoot = root;
             //Debug.Log($"Old Root {root}(D{root.depth}, L{root.leafCount})");
-            root = CreateNode(position, 0, (byte)(depth + 1));
+            root = CreateNode(position, -1, (byte)(depth + 1));
             Profiler.BeginSample("AddSector");
             root.AddSector(oldRoot, position);
             Profiler.EndSample();

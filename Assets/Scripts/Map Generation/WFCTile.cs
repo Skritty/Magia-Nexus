@@ -5,12 +5,9 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 [Serializable]
-public class WFCTile : IEquatable<WFCTile>
+public class WFCTile : GenerationTile, IEquatable<WFCTile>
 {
-    public int x, y, z;
     public string groupUID;
-    [SerializeReference]
-    public GameObject content;
     public float weight;
 
     //[HideInInspector]
