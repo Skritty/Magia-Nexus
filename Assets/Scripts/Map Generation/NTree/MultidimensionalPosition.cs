@@ -138,6 +138,19 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
         }
     }
 
+    /// <summary>
+    /// Returns a new position ignoring bit depth at or below the passed in depth.
+    /// </summary>
+    public MultidimensionalPosition PositionAtDepth(int depth)
+    {
+        MultidimensionalPosition newPosition = new MultidimensionalPosition();
+        for (int axis = 0; axis < Dimensions; axis++)
+        {
+            newPosition[axis] = (ushort)(position[axis] & (~0 << depth));
+        }
+        return newPosition;
+    }
+
     public MultidimensionalPosition FarthestPositionAtDepth(int depth)
     {
         MultidimensionalPosition farthest = this;

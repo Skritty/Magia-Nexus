@@ -69,7 +69,7 @@ public class Editor_WFCTileGroupHelper : Editor
 
         foreach (WFCTile tile in group.subtiles)
         {
-            collider.center = tile.position + Vector3.one * 0.5f;
+            collider.center = tile.positionActual + Vector3.one * 0.5f;
             Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
             if (!PhysicsSceneExtensions.GetPhysicsScene(group.gameObject.scene).Raycast(ray.origin, ray.direction)) continue;
             group.selectedTile = tile;
@@ -96,7 +96,7 @@ public class Editor_WFCTileGroupHelper : Editor
 
     private void CheckConnection(WFCTile tile, int i, WFCTileGroup group, BoxCollider collider, Vector3 offset)
     {
-        collider.center = tile.position + Vector3.one * 0.5f + offset;
+        collider.center = tile.positionActual + Vector3.one * 0.5f + offset;
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         if (!PhysicsSceneExtensions.GetPhysicsScene(group.gameObject.scene).Raycast(ray.origin, ray.direction)) return;
         group.selectedConnection = tile.connections[i];

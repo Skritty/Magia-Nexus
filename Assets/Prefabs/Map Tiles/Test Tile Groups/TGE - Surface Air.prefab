@@ -140,7 +140,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!114 &9206229358997751364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,11 +164,10 @@ MonoBehaviour:
     z: 1
     serializedObjects:
     - obj:
-        x: 0
-        y: 0
-        z: 0
-        groupUID: TGE - Surface Air
+        position:
+          position: 
         content: {fileID: 0}
+        groupUID: TGE - Surface Air
         weight: 0
         connections:
         - allowedTileRefs:
@@ -177,7 +176,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -185,7 +184,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -193,7 +192,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -201,7 +200,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -209,7 +208,7 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -217,11 +216,12 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: []
+          allowedTiles: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
-        position: {x: -0.5, y: -0.5, z: -0.5}
+        positionActual: {x: 0, y: 0, z: 0}
+        tileBit: 0
       x: 0
       y: 0
       z: 0
@@ -229,11 +229,10 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   selectedTile:
-    x: 0
-    y: 0
-    z: 0
-    groupUID: TGE - Surface Air
+    position:
+      position: 
     content: {fileID: 0}
+    groupUID: TGE - Surface Air
     weight: 0
     connections:
     - allowedTileRefs:
@@ -242,7 +241,7 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: []
+      allowedTiles: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -250,7 +249,7 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: []
+      allowedTiles: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -258,7 +257,7 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: []
+      allowedTiles: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -266,7 +265,7 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: []
+      allowedTiles: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -274,7 +273,7 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: []
+      allowedTiles: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -282,12 +281,13 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: []
+      allowedTiles: 0
       isInternalConnection: 0
     isHole: 0
     holeAllowedTileRefs: []
-    position: {x: -0.5, y: -0.5, z: -0.5}
+    positionActual: {x: 0, y: 0, z: 0}
+    tileBit: 0
   selectedConnection:
     allowedTileRefs: []
-    allowedTiles: []
+    allowedTiles: 0
     isInternalConnection: 0

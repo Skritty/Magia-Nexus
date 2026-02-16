@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Skritty.Tools.Utilities;
+using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public abstract class MapGenerator
 {
-    public abstract void Initialize(MapGenerationManager manager);
-    public abstract void Generate(NTree<FlagList> spatialTree);
+    public abstract List<MultidimensionalPosition> Generate(NTree<FlagList> spatialTree, Bounds generationBounds, List<WFCTile> tileSet);
 }
 public class FlagList
 {
@@ -47,41 +48,127 @@ public class FlagList
         return objectsList;
     }
 }
-public class MapGenerationManager : Singleton<MapGenerationManager>
+public class MapGenerationManager : MonoBehaviour
 {
-    //[NonSerialized]
+    [NonSerialized]
     private NTree<FlagList>[] mapRepresentationLODs;
+
+    public Transform center;
+    public Vector3 size;
+    public WFCTileGroup ErrorTile;
     public List<WFCTileGroup> tileGroups;
-    [SerializeReference]
-    public List<MapGenerator>[] generationLayers;
+    public GenerationLayer[] generationLayers = new GenerationLayer[0];
+
+    [Serializable]
+    public class GenerationLayer
+    {
+        [SerializeReference]
+        public List<MapGenerator> mapGenerators = new();
+    }
 
     private Dictionary<string, WFCTileGroup> tileGroupsByUID = new();
     private int tileCount;
     private const ulong ULOne = 1;
+    private Vector3 previousCenter, previousSize;
 
     private void Start()
     {
+        SolveConnections();
+        Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
+        mapRepresentationLODs = new NTree<FlagList>[generationLayers.Length];
         for (int i = 0; i < generationLayers.Length; i++)
         {
             if (generationLayers[i] == null) continue;
-            mapRepresentationLODs[i] = new NTree<FlagList>();
-            foreach (MapGenerator generator in generationLayers[i])
+            if (mapRepresentationLODs[i] == null)
             {
-                generator.Initialize(this);
-            }
-            foreach (MapGenerator generator in generationLayers[i])
-            {
-                generator.Generate(mapRepresentationLODs[0]);
+                mapRepresentationLODs[i] = new NTree<FlagList>();
             }
         }
     }
-    
-    public void GetFlagsAtLOD(int level, MultidimensionalPosition position)
+
+    private void FixedUpdate()
+    {
+        Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
+        if (centerSnapped != previousCenter || size != previousSize)
+        {
+            previousSize = size;
+            previousCenter = centerSnapped;
+            Generate();
+        }
+    }
+
+    private void Generate()
+    {
+        List<WFCTile> tileSet = new();
+        // Add all valid tiles in each group to the list of possible tiles.
+        foreach (WFCTileGroup tileGroup in tileGroups)
+        {
+            foreach (WFCTile tile in tileGroup.subtiles)
+            {
+                if (!tile.isHole)
+                {
+                    tileSet.Add(tile);
+                }
+            }
+        }
+        ulong defaultTileFlags = ulong.MaxValue >> Mathf.Clamp(64 - tileSet.Count, 0, 64);
+
+        Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
+        Bounds generationBounds = new Bounds(centerSnapped - transform.position, size);
+        for (int i = 0; i < generationLayers.Length; i++)
+        {
+            if (generationLayers[i] == null) continue;
+
+            for (int x = (int)-generationBounds.extents.x; x < generationBounds.extents.x; x++)
+            {
+                for (int y = (int)-generationBounds.extents.y; y < generationBounds.extents.y; y++)
+                {
+                    for (int z = (int)-generationBounds.extents.z; z < generationBounds.extents.z; z++)
+                    {
+                        MultidimensionalPosition position = new MultidimensionalPosition((ushort)(generationBounds.center.x + x), (ushort)(generationBounds.center.y + y), (ushort)(generationBounds.center.z + z));
+                        mapRepresentationLODs[i].TryAddData(new FlagList(defaultTileFlags), position, out _);
+                    }
+                }
+            }
+
+            List<MultidimensionalPosition> generatedTiles = new();
+            foreach (MapGenerator generator in generationLayers[i].mapGenerators)
+            {
+                generatedTiles.AddRange(generator.Generate(mapRepresentationLODs[i], generationBounds, tileSet));
+            }
+            foreach (MultidimensionalPosition tilePosition in generatedTiles)
+            {
+                List<WFCTile> tile = mapRepresentationLODs[i][tilePosition].GetObjects(tileSet.ToArray());
+                if (tile.Count == 0)
+                {
+                    // Error
+                    GenerateTile(ErrorTile.subtiles.objects[0,0,0], ErrorTile, tilePosition);
+                }
+                else if (tile.Count == 1)
+                {
+                    GenerateTile(tile[0], tileGroupsByUID[tile[0].groupUID], tilePosition);
+                }
+            }
+        }
+    }
+
+    private bool GenerateTile(WFCTile tile, WFCTileGroup group, MultidimensionalPosition position)
+    {
+        if (tile.content == null) return false;
+        GameObject visuals = Instantiate(tile.content, Vector3.zero, Quaternion.identity);
+        visuals.transform.position += transform.position + position.ToVector3
+            - group.bounds.center + group.bounds.extents;
+        visuals.transform.parent = transform;
+        return true;
+    }
+
+    public void GetTilesAtLOD(byte level, MultidimensionalPosition position)
     {
         position = position.Clone();
-        position.MaskDimensions(~0 << level);
+        position.PositionAtDepth(level - 1);
         mapRepresentationLODs[level].GetDataAtPosition(position);
     }
+
     public void SaveMap() { }
     public void LoadMap() { }
 
@@ -92,12 +179,13 @@ public class MapGenerationManager : Singleton<MapGenerationManager>
         {
             DestroyImmediate(child.gameObject);
         }
-        tileGroups.Clear();
         tileGroupsByUID = new();
         List<WFCTile> allTiles = new List<WFCTile>();
 
+        WFCTileGroup[] tileGroupPrefabs = tileGroups.ToArray();
+        tileGroups.Clear();
         // Create prefab instances, put them into UID dictionary
-        foreach (WFCTileGroup groupPrefab in tileGroups)
+        foreach (WFCTileGroup groupPrefab in tileGroupPrefabs)
         {
             WFCTileGroup loadedTileGroup = Instantiate(groupPrefab);
             loadedTileGroup.gameObject.SetActive(false);
@@ -168,14 +256,14 @@ public class MapGenerationManager : Singleton<MapGenerationManager>
                     if (tile.connections[i].allowedTileRefs.Count == 0)
                     {
                         // Wildcard tile
-                        foreach (WFCTile tileActual in allTiles)
+                        /*foreach (WFCTile tileActual in allTiles)
                         {
                             WFCConnection otherConnection = tileActual.connections[reciprocatedIndex];
                             if (otherConnection.isInternalConnection) continue;
 
                             tile.connections[i].allowedTiles |= tileActual.tileBit;
                             otherConnection.allowedTiles |= tile.tileBit;
-                        }
+                        }*/
                     }
                     else
                     {
@@ -190,6 +278,62 @@ public class MapGenerationManager : Singleton<MapGenerationManager>
                             tile.connections[i].allowedTiles |= tileActual.tileBit;
                             tileActual.connections[reciprocatedIndex].allowedTiles |= tile.tileBit;
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private void ConjoinTileGroups(WFCTileGroup group1, WFCTileGroup group2, (int, int, int) projectedIndex, (int, int, int) initialConnectionIndex)
+    {
+        // Iterate through group1 subtiles (plus 1 around)
+        for (int x = -1; x <= group1.subtiles.x; x++)
+        {
+            for (int y = -1; y <= group1.subtiles.y; y++)
+            {
+                for (int z = -1; z <= group1.subtiles.z; z++)
+                {
+                    (int, int, int) connectionIndex = (
+                        initialConnectionIndex.Item1 - projectedIndex.Item1 + x,
+                        initialConnectionIndex.Item2 - projectedIndex.Item2 + y,
+                        initialConnectionIndex.Item3 - projectedIndex.Item3 + z);
+
+                    if ((uint)connectionIndex.Item1 >= group2.subtiles.x
+                        || (uint)connectionIndex.Item2 >= group2.subtiles.y
+                        || (uint)connectionIndex.Item3 >= group2.subtiles.z)
+                        continue;
+
+                    if (group2.subtiles[connectionIndex].isHole) continue;
+
+                    WFCTile selfTile = null;
+                    if ((uint)x < group1.subtiles.x && (uint)y < group1.subtiles.y && (uint)z < group1.subtiles.z)
+                    {
+                        selfTile = group1.subtiles[x, y, z];
+                    }
+
+                    if (selfTile == null || selfTile.isHole)
+                    {
+                        WFCTile[] holeAdjacentTiles = group1.subtiles.GetAdjecentObjects((x, y, z));
+                        for (int i = 0; i < 6; i++)
+                        {
+                            if (holeAdjacentTiles[i] == null || holeAdjacentTiles[i].isHole) continue;
+
+                            WFCConnection connection = holeAdjacentTiles[i].connections[i + (i % 2 > 0 ? -1 : 1)];
+
+                            WFCTileRef tileRef = new WFCTileRef(group2.groupUID, connectionIndex.Item1, connectionIndex.Item2, connectionIndex.Item3);
+                            if (!connection.allowedTileRefs.Any(x => x.groupUID == tileRef.groupUID)) connection.allowedTileRefs.Add(tileRef);
+
+                            //Debug.Log($"Connecting {group2.gameObject.name} ({projectedIndex}) to {gameObject.name} ({initialConnectionIndex}) at connection index {i + (i % 2 > 0 ? -1 : 1)} | ");
+                            // xyz = (0,0,-1), initialSelfIndex = (0,0,-1)
+                            // initialConnectionIndex = (0,0,0), goalIndex = (1,0,0)
+                            // initialConnectionIndex - initialSelfIndex + xyz = goalIndex
+                        }
+                    }
+                    else
+                    {
+                        // Overlaps!
+                        Debug.LogWarning($"{gameObject.name} overlaps with connection {group2.gameObject.name}");
+                        return;
                     }
                 }
             }

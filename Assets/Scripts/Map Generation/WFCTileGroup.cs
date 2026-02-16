@@ -64,7 +64,7 @@ public class WFCTileGroup : MonoBehaviour
                     catch { }*/
 
                     WFCTile subtile = new WFCTile(groupUID, x, y, z);
-                    subtile.position = transform.InverseTransformPoint(bounds.center - bounds.extents) + new Vector3(x, y, z);
+                    subtile.positionActual = transform.InverseTransformPoint(bounds.center - bounds.extents) + new Vector3(x, y, z);
                     subtiles[x, y, z] = subtile;
 
                     subtile.connections[0] = new WFCConnection((uint)(x + 1) >= (int)(bounds.extents.x * 2));
@@ -122,7 +122,7 @@ public class WFCTileGroup : MonoBehaviour
             {
                 Gizmos.color = new Color(.3f, .3f, .3f, .1f);
             }
-            Gizmos.DrawCube(transform.TransformPoint(tile.position) + Vector3.one * 0.5f, Vector3.one * 1.05f);
+            Gizmos.DrawCube(transform.TransformPoint(tile.positionActual) + Vector3.one * 0.5f, Vector3.one * 1.05f);
         }
     }
 
@@ -132,12 +132,12 @@ public class WFCTileGroup : MonoBehaviour
         foreach (WFCTile tile in subtiles)
         {
             if (tile.connections.Length < 6) continue;
-            DrawConnection(tile.connections[0], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.right);
-            DrawConnection(tile.connections[1], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.left);
-            DrawConnection(tile.connections[2], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.up);
-            DrawConnection(tile.connections[3], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.down);
-            DrawConnection(tile.connections[4], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.forward);
-            DrawConnection(tile.connections[5], transform.TransformPoint(tile.position) + Vector3.one * 0.5f + 0.5f * Vector3.back);
+            DrawConnection(tile.connections[0], transform.TransformPoint(tile.positionActual) + Vector3.one * 0.5f + 0.5f * Vector3.right);
+            DrawConnection(tile.connections[1], transform.TransformPoint(tile.positionActual) + Vector3.one * 0.5f + 0.5f * Vector3.left);
+            DrawConnection(tile.connections[2], transform.TransformPoint(tile.positionActual) + Vector3.one * 0.5f + 0.5f * Vector3.up);
+            DrawConnection(tile.connections[3], transform.TransformPoint(tile.positionActual) + Vector3.one * 0.5f + 0.5f * Vector3.down);
+            DrawConnection(tile.connections[4], transform.TransformPoint(tile.positionActual) + Vector3.one * 0.5f + 0.5f * Vector3.forward);
+            DrawConnection(tile.connections[5], transform.TransformPoint(tile.positionActual) + Vector3.one * 0.5f + 0.5f * Vector3.back);
         }
     }
 

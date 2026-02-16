@@ -15,8 +15,8 @@ public class WFCTile : GenerationTile, IEquatable<WFCTile>
     public bool isHole;
     public List<WFCTileRef> holeAllowedTileRefs;
 
-    [HideInInspector]
-    public Vector3 position;
+    //[HideInInspector]
+    public Vector3 positionActual;
     [HideInInspector]
     public ulong tileBit;
 
@@ -25,22 +25,18 @@ public class WFCTile : GenerationTile, IEquatable<WFCTile>
     public WFCTile(string groupPrefabAssetPath, int x, int y, int z)
     {
         this.groupUID = groupPrefabAssetPath;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        position = new MultidimensionalPosition((ushort)x, (ushort)y, (ushort)z);
         content = null;
         holeAllowedTileRefs = new();
         connections = new WFCConnection[6];
-        position = Vector3.zero;
+        positionActual = Vector3.zero;
     }
 
     public bool Equals(WFCTile other)
     {
         if (other != null && 
             groupUID == other.groupUID
-            && x == other.x
-            && y == other.y
-            && z == other.z)
+            && position.Equals(other.position))
             return true;
         return false;
     }

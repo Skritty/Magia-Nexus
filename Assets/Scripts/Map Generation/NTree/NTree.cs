@@ -594,10 +594,20 @@ public class NTree<T>
 
     public bool TryAddData(T data, MultidimensionalPosition position, out int dataIndex, bool overrideAtPosition = false)
     {
-        if(root != null && !overrideAtPosition && GetNodeAtPosition(position) != null)
+        if(root != null && GetNodeAtPosition(position) != null)
         {
-            dataIndex = 0;
-            return false;
+            if (overrideAtPosition)
+            {
+                dataIndex = this.data.Count;
+                this.data.Add(data);
+                GetNodeAtPosition(position).id = dataIndex;
+                return true;
+            }
+            else
+            {
+                dataIndex = 0;
+                return false;
+            }
         }
         if (highestDimensions < position.Dimensions)
         {
@@ -607,7 +617,7 @@ public class NTree<T>
         NTreeNode node = CreateNode(position, dataIndex);
         this.data.Add(data);
         nodes.Add(node);
-        TryMoveNode(dataIndex, position, overrideAtPosition);
+        TryMoveNode(nodes.Count-1, position, overrideAtPosition);
         return true;
     }
 
