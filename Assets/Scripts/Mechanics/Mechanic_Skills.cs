@@ -71,7 +71,7 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
 
     public void QueueSkill(object owner, Skill skill)
     {
-        if (!Owner.Equals(owner) || (queuedSkill != null && !skill.canOverrideQueuedSkill)) return;
+        if (!Owner.Equals(owner) || (queuedSkill != null && queuedSkill.priority >= skill.priority)) return;
         queuedSkill = skill;
     }
 }

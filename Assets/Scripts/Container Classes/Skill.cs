@@ -7,7 +7,7 @@ public class Skill : ScriptableObject
 {
     [SerializeReference]
     public Trigger skillTriggerCondition;
-    public bool canOverrideQueuedSkill;
+    public int priority;
     public List<Action> actions = new();
     private Action currentAction;
 
