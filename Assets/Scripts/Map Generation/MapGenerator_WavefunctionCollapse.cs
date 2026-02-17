@@ -5,23 +5,23 @@ using Skritty.Tools.Utilities;
 using UnityEngine;
 
 [Serializable]
-public class WFCMapGenerator : MapGenerator
+public class MapGenerator_WavefunctionCollapse : MapGenerator
 {
     //public List<WFCTileGroup> tileGroupPrefabs;
     //public float creationDelay, solveDelay;
     public int buffer;
 
-    private NTree<FlagList> spatialTree;
+    private NTree<TileSuperposition> spatialTree;
     private List<WFCTile> tileSet;
     private EntropicSet<MultidimensionalPosition> entropicMap;
     private Queue<MultidimensionalPosition> updateQueue = new();
     private HashSet<MultidimensionalPosition> inQueue = new();
 
     private Bounds generationBounds, bufferBounds;
-    private FlagList tileOptions;
+    private TileSuperposition tileOptions;
     private ulong defaultTileFlags;
     private WeightedChance<WFCTile> potentialTiles = new();
-    private List<MultidimensionalPosition> generatedTiles = new();
+    private HashSet<MultidimensionalPosition> generatedTiles = new();
     private ulong allowed;
     private const ulong ULOne = 1;
 
@@ -52,7 +52,7 @@ public class WFCMapGenerator : MapGenerator
         targetCenter = center.position - transform.position;
     }*/
 
-    public override List<MultidimensionalPosition> Generate(NTree<FlagList> spatialTree, Bounds generationBounds, List<WFCTile> tileSet)
+    public override HashSet<MultidimensionalPosition> Generate(NTree<TileSuperposition> spatialTree, Bounds generationBounds, Dictionary<string, WFCTileGroup> tilesByGroupUID)
     {
         this.spatialTree = spatialTree;
         this.tileSet = tileSet;
@@ -71,7 +71,7 @@ public class WFCMapGenerator : MapGenerator
                 for (int z = (int)-generationBounds.extents.z; z < generationBounds.extents.z; z++)
                 {
                     MultidimensionalPosition position = new MultidimensionalPosition((ushort)(generationBounds.center.x + x), (ushort)(generationBounds.center.y + y), (ushort)(generationBounds.center.z + z));
-                    FlagList tile = spatialTree[position];
+                    TileSuperposition tile = spatialTree[position];
                     if (tile.Entropy != 0 && !tile.Solved)
                     {
                         entropicMap.Add(spatialTree[position].Entropy, position);
@@ -106,9 +106,9 @@ public class WFCMapGenerator : MapGenerator
         return generatedTiles;
     }
 
-    private FlagList AddTile(MultidimensionalPosition position)
+    private TileSuperposition AddTile(MultidimensionalPosition position)
     {
-        FlagList flagList = new(defaultTileFlags);
+        TileSuperposition flagList = new(defaultTileFlags);
         spatialTree.TryAddData(flagList, position, out _);
         if (IsGenerationTile(position))
         {
@@ -249,7 +249,7 @@ public class WFCMapGenerator : MapGenerator
 
     private void Observe(MultidimensionalPosition position)
     {
-        FlagList tiles = spatialTree[position];
+        TileSuperposition tiles = spatialTree[position];
         if (position[0] != ushort.MaxValue) Collapse(tiles, 0, new((ushort)(position[0] + 1), position[1], position[2]));
         if (position[0] != 0) Collapse(tiles, 1, new((ushort)(position[0] - 1), position[1], position[2]));
         if (position[1] != ushort.MaxValue) Collapse(tiles, 2, new(position[0], (ushort)(position[1] + 1), position[2]));
@@ -258,7 +258,7 @@ public class WFCMapGenerator : MapGenerator
         if (position[2] != 0) Collapse(tiles, 5, new(position[0], position[1], (ushort)(position[2] - 1)));
     }
 
-    private ulong GetAllowedTiles(FlagList tiles, int connectionIndex)
+    private ulong GetAllowedTiles(TileSuperposition tiles, int connectionIndex)
     {
         allowed = 0;
         foreach (WFCTile tile in tiles.GetObjects(tileSet.ToArray()))
@@ -268,9 +268,9 @@ public class WFCMapGenerator : MapGenerator
         return allowed;
     }
 
-    private void Collapse(FlagList possibleConnections, int connectionIndex, MultidimensionalPosition position)
+    private void Collapse(TileSuperposition possibleConnections, int connectionIndex, MultidimensionalPosition position)
     {
-        FlagList potentialTiles = spatialTree[position];
+        TileSuperposition potentialTiles = spatialTree[position];
         // Is this tile outside of the map or is it already solved?
         if (potentialTiles == null)
         {

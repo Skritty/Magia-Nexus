@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -19,8 +19,6 @@ public class WFCTile : GenerationTile, IEquatable<WFCTile>
     public Vector3 positionActual;
     [HideInInspector]
     public ulong tileBit;
-
-
 
     public WFCTile(string groupPrefabAssetPath, int x, int y, int z)
     {

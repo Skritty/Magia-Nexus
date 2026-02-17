@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Skritty.Tools.Utilities;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
 public abstract class MapGenerator
 {
-    public abstract List<MultidimensionalPosition> Generate(NTree<FlagList> spatialTree, Bounds generationBounds, List<WFCTile> tileSet);
+    public abstract HashSet<MultidimensionalPosition> Generate(NTree<TileSuperposition> spatialTree, Bounds generationBounds, Dictionary<string, WFCTileGroup> tilesByGroupUID);
 }
-public class FlagList
+public class TileSuperposition
 {
     static readonly ulong ULOne = 1;
     public ulong options;
+    public bool generated;
     public int Entropy
     {
         get
@@ -28,9 +27,9 @@ public class FlagList
         }
     }
 
-    public bool Solved => (options & (options - 1)) == 0;
+    public bool Solved => (options & (options - 1)) == 0 && options != 0;
 
-    public FlagList(ulong options)
+    public TileSuperposition(ulong options)
     {
         this.options = options;
     }
@@ -48,10 +47,10 @@ public class FlagList
         return objectsList;
     }
 }
-public class MapGenerationManager : MonoBehaviour
+public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerationManager>
 {
     [NonSerialized]
-    private NTree<FlagList>[] mapRepresentationLODs;
+    private NTree<TileSuperposition>[] mapRepresentationLODs;
 
     public Transform center;
     public Vector3 size;
@@ -67,6 +66,7 @@ public class MapGenerationManager : MonoBehaviour
     }
 
     private Dictionary<string, WFCTileGroup> tileGroupsByUID = new();
+    private Dictionary<string, WFCTile> tilesGroupsByUID = new();
     private int tileCount;
     private const ulong ULOne = 1;
     private Vector3 previousCenter, previousSize;
@@ -75,13 +75,13 @@ public class MapGenerationManager : MonoBehaviour
     {
         SolveConnections();
         Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
-        mapRepresentationLODs = new NTree<FlagList>[generationLayers.Length];
+        mapRepresentationLODs = new NTree<TileSuperposition>[generationLayers.Length];
         for (int i = 0; i < generationLayers.Length; i++)
         {
             if (generationLayers[i] == null) continue;
             if (mapRepresentationLODs[i] == null)
             {
-                mapRepresentationLODs[i] = new NTree<FlagList>();
+                mapRepresentationLODs[i] = new NTree<TileSuperposition>();
             }
         }
     }
@@ -119,7 +119,7 @@ public class MapGenerationManager : MonoBehaviour
         {
             if (generationLayers[i] == null) continue;
 
-            for (int x = (int)-generationBounds.extents.x; x < generationBounds.extents.x; x++)
+            /*for (int x = (int)-generationBounds.extents.x; x < generationBounds.extents.x; x++)
             {
                 for (int y = (int)-generationBounds.extents.y; y < generationBounds.extents.y; y++)
                 {
@@ -129,20 +129,21 @@ public class MapGenerationManager : MonoBehaviour
                         mapRepresentationLODs[i].TryAddData(new FlagList(defaultTileFlags), position, out _);
                     }
                 }
-            }
+            }*/
 
             List<MultidimensionalPosition> generatedTiles = new();
             foreach (MapGenerator generator in generationLayers[i].mapGenerators)
             {
-                generatedTiles.AddRange(generator.Generate(mapRepresentationLODs[i], generationBounds, tileSet));
+                generatedTiles.AddRange(generator.Generate(mapRepresentationLODs[i], generationBounds, tileGroupsByUID));
             }
             foreach (MultidimensionalPosition tilePosition in generatedTiles)
             {
                 List<WFCTile> tile = mapRepresentationLODs[i][tilePosition].GetObjects(tileSet.ToArray());
+                mapRepresentationLODs[i][tilePosition].generated = true;
                 if (tile.Count == 0)
                 {
                     // Error
-                    GenerateTile(ErrorTile.subtiles.objects[0,0,0], ErrorTile, tilePosition);
+                    //GenerateTile(ErrorTile.subtiles.objects[0,0,0], ErrorTile, tilePosition);
                 }
                 else if (tile.Count == 1)
                 {
@@ -196,6 +197,7 @@ public class MapGenerationManager : MonoBehaviour
             {
                 if (tile.isHole) continue;
                 allTiles.Add(tile);
+                tilesGroupsByUID.Add(loadedTileGroup.groupUID, tile);
                 tile.tileBit = ULOne << tileCount;
                 tileCount++;
             }
