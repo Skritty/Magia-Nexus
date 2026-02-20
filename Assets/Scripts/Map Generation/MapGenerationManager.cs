@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
@@ -8,44 +10,146 @@ public abstract class MapGenerator
 {
     public abstract HashSet<MultidimensionalPosition> Generate(NTree<TileSuperposition> spatialTree, Bounds generationBounds, Dictionary<string, WFCTileGroup> tilesByGroupUID);
 }
-public class TileSuperposition
+
+public static class BitArrayExtensions
 {
-    static readonly ulong ULOne = 1;
-    public ulong options;
+    public static bool IsZero(this BitArray bitArray)
+    {
+        for(int i = 0; i < bitArray.Length; i++)
+        {
+            if (bitArray[i]) return false;
+        }
+        return true;
+    }
+}
+
+[Serializable]
+public class TileSuperposition // TODO: Make this a struct. Figure out marshalling/Native for the bit array
+{
+    private static int tileCount = 10; // Remove this
+
+    [SerializeField]
+    private List<WFCTileGroup> _tiles;
+    [Button("Set")]
+    public void Set()
+    {
+        options = new BitArray(tileCount);
+        for (int i = 0; i < tileCount; i++)
+        {
+            if (_tiles.Count == i) break;
+            if (_tiles[i] != null) options[i] = true;
+        }
+    }
+    public WFCTileGroup AddTile
+    {
+        get => _tiles.Count > 0 ? _tiles[_tiles.Count - 1] : null;
+        set
+        {
+            _tiles.Add(value);
+            options[value.index] = true;
+        }
+    }
+    [ShowInInspector]
+    public BitArray options = new(tileCount);
+    [HideInInspector]
     public bool generated;
+
     public int Entropy
     {
         get
         {
-            if (options == 0) return 0;
             int entropy = 0;
-            for (int i = 0; i < 64; i++)
+            for (int i = 0; i < options.Length; i++)
             {
-                if ((options & (ULOne << i)) != 0) entropy++;
+                if (options[i]) entropy++;
             }
             return entropy;
         }
     }
 
-    public bool Solved => (options & (options - 1)) == 0 && options != 0;
-
-    public TileSuperposition(ulong options)
+    public bool Solved
     {
-        this.options = options;
+        get
+        {
+            bool solved = false;
+            for (int i = 0; i < options.Length; i++)
+            {
+                if (options[i])
+                {
+                    if (solved) return false;
+                    solved = true;
+                }
+            }
+            return solved;
+        }
+    }
+
+    public TileSuperposition()
+    {
+        options = new(tileCount);
+    }
+
+    public TileSuperposition(params bool[] flags)
+    {
+        options = new BitArray(flags);
     }
 
     public List<T> GetObjects<T>(params T[] objects)
     {
         List<T> objectsList = new();
-        for (int i = 0; i < objects.Count(); i++)
+        for (int i = 0; i < options.Length; i++)
         {
-            if ((options & (ULOne << i)) != 0)
+            if (objects.Length == i) break;
+            if (options[i])
             {
                 objectsList.Add(objects[i]);
             }
         }
         return objectsList;
     }
+
+    /// <summary>
+    /// Returns true if this contains all the same set bits as other
+    /// </summary>
+    public bool Contains(TileSuperposition other)
+    {
+        for (int i = 0; i < options.Length; i++)
+        {
+            if (other.options.Length == i) break;
+            if (other.options[i])
+            {
+                if (!options[i]) return false;
+            }
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Returns true if this contains all the same set bits as other
+    /// </summary>
+    public bool ContainsAll(TileSuperposition other)
+    {
+        for (int i = 0; i < options.Length; i++)
+        {
+            if (other.options.Length == i) break;
+            if (other.options[i])
+            {
+                if (!options[i]) return false;
+            }
+        }
+        return true;
+    }
+
+    // Override equals as well? Consider consiquences
+    /*public override bool Equals(object obj)
+    {
+        if (options.Length != other.options.Length) return false;
+        for (int i = 0; i < options.Length; i++)
+        {
+            if (options[i] != other.options[i]) return false;
+        }
+        return true;
+    }*/
 }
 public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerationManager>
 {

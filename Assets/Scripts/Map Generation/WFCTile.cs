@@ -5,8 +5,12 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 [Serializable]
-public class WFCTile : GenerationTile, IEquatable<WFCTile>
+public class WFCTile : IEquatable<WFCTile>
 {
+    public MultidimensionalPosition position;
+    public GameObject content;
+
+    public int index;
     public string groupUID;
     public float weight;
 

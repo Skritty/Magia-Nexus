@@ -2912,7 +2912,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025231278}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54938ea5a6e0b19498e47e94a93e6ca6, type: 3}
   m_Name: 
@@ -7025,162 +7025,140 @@ MonoBehaviour:
   size: {x: 21, y: 21, z: 21}
   ErrorTile: {fileID: 3162623308867682789, guid: 393db4d902d13ff4eb65b621d1a3e37e, type: 3}
   tileGroups:
-  - {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
   - {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-  - {fileID: 3162623308867682789, guid: 36fd396502a5d3846af9c2801c20b303, type: 3}
-  - {fileID: 3162623308867682789, guid: 55ee9df678e2fc941b60da938ad6e9ab, type: 3}
+  - {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
   - {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
-  - {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
+  - {fileID: 3162623308867682789, guid: 36fd396502a5d3846af9c2801c20b303, type: 3}
   generationLayers:
   - mapGenerators:
-    - rid: 4394044671005032580
-    - rid: 4394044674563637971
-    - rid: 4394044674563637752
-    - rid: 4394044674563637941
+    - rid: 4394044748503187582
   references:
     version: 2
     RefIds:
-    - rid: 4394044671005032580
-      type: {class: MapGenerator_GradientNoise, ns: , asm: Assembly-CSharp}
+    - rid: 4394044748503187582
+      type: {class: MapGenerator_All, ns: , asm: Assembly-CSharp}
       data:
-        noisePasses:
-        - rid: 4394044677625479618
-        - rid: 4394044677625479619
-        - rid: 4394044677625479620
-        - rid: 4394044677625479621
-        overwriteSolvedTiles: 0
-        doNotCreateNewTiles: 0
-        solveTilesDown: 0
+        skipNull: 0
         generationRules:
-        - tileGroup: {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
-          generationRange: {x: 0, y: 100}
-        - tileGroup: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
-          generationRange: {x: 100, y: 101}
-        - tileGroup: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
-          generationRange: {x: 100, y: 101}
-    - rid: 4394044674563637752
-      type: {class: MapGenerator_GradientNoise, ns: , asm: Assembly-CSharp}
+        - rid: 4394044748503187583
+        - rid: 4394044748503187884
+        - rid: 4394044748503187890
+        - rid: 4394044748503187888
+    - rid: 4394044748503187583
+      type: {class: GenerationRule_NoiseValueRange, ns: , asm: Assembly-CSharp}
       data:
+        tileSettings:
+        - tileOptions:
+            _tiles:
+            - {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
+            generated: 0
+          noiseRange: {x: 0, y: 100}
+          solveType: 0
+        - tileOptions:
+            _tiles:
+            - {fileID: 0}
+            - {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+            - {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+            generated: 0
+          noiseRange: {x: 100, y: 101}
+          solveType: 0
         noisePasses:
-        - rid: 4394044677625479639
-        overwriteSolvedTiles: 0
-        doNotCreateNewTiles: 0
-        solveTilesDown: 0
-        generationRules:
-        - tileGroup: {fileID: 3162623308867682789, guid: 36fd396502a5d3846af9c2801c20b303, type: 3}
-          generationRange: {x: 99, y: 100}
-    - rid: 4394044674563637941
-      type: {class: MapGenerator_GradientNoise, ns: , asm: Assembly-CSharp}
-      data:
-        noisePasses:
-        - rid: 4394044677625479640
-        overwriteSolvedTiles: 0
-        doNotCreateNewTiles: 1
-        solveTilesDown: 1
-        generationRules:
-        - tileGroup: {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
-          generationRange: {x: 0, y: 99}
-        - tileGroup: {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
-          generationRange: {x: 99, y: 200}
-    - rid: 4394044674563637971
-      type: {class: MapGenerator_GradientNoise, ns: , asm: Assembly-CSharp}
-      data:
-        noisePasses:
-        - rid: 4394044677625479622
-        - rid: 4394044677625479628
-        overwriteSolvedTiles: 1
-        doNotCreateNewTiles: 1
-        solveTilesDown: 1
-        generationRules:
-        - tileGroup: {fileID: 9206229358997751364, guid: e443441c3619a2142a8efded5bdc91c0, type: 3}
-          generationRange: {x: 70, y: 100}
-    - rid: 4394044677625479618
-      type: {class: MapGenerator_GradientNoise/NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
+        - rid: 4394044748503187585
+        - rid: 4394044748503187586
+        - rid: 4394044748503187917
+        - rid: 4394044748503187918
+        createNewTiles: 1
+    - rid: 4394044748503187585
+      type: {class: NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
       data:
         axis: 1
-    - rid: 4394044677625479619
-      type: {class: MapGenerator_GradientNoise/NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+    - rid: 4394044748503187586
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
       data:
         scale: 0.01
+        noiseRange: {x: -20, y: 20}
         axis1: 0
         axis2: 2
-        noiseRange: {x: -10, y: 10}
-    - rid: 4394044677625479620
-      type: {class: MapGenerator_GradientNoise/NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+    - rid: 4394044748503187884
+      type: {class: GenerationRule_NoiseValueRange, ns: , asm: Assembly-CSharp}
       data:
-        scale: 0.05
-        axis1: 0
-        axis2: 2
-        noiseRange: {x: -7, y: 7}
-    - rid: 4394044677625479621
-      type: {class: MapGenerator_GradientNoise/NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
-      data:
-        scale: 0.1
-        axis1: 0
-        axis2: 2
-        noiseRange: {x: -4, y: 0}
-    - rid: 4394044677625479622
-      type: {class: MapGenerator_GradientNoise/NoisePass_GradientNoise3D, ns: , asm: Assembly-CSharp}
+        tileSettings:
+        - tileOptions:
+            _tiles: []
+            generated: 0
+          noiseRange: {x: 70, y: 100}
+          solveType: 3
+        noisePasses:
+        - rid: 4394044748503187886
+        createNewTiles: 0
+    - rid: 4394044748503187886
+      type: {class: NoisePass_GradientNoise3D, ns: , asm: Assembly-CSharp}
       data:
         scale: 0.04
+        noiseRange: {x: 0, y: 100}
         axis1: 0
         axis2: 1
         axis3: 2
-        noiseRange: {x: 0, y: 100}
-    - rid: 4394044677625479628
-      type: {class: MapGenerator_GradientNoise/NoisePass_AxialNoiseClamp, ns: , asm: Assembly-CSharp}
+    - rid: 4394044748503187888
+      type: {class: GenerationRule_NoiseValueRange, ns: , asm: Assembly-CSharp}
       data:
-        axis: 0
-        invert: 0
-        clampedNoiseMax:
-        - rid: 4394044677625479630
-        - rid: 4394044677625479631
-        - rid: 4394044677625479632
-        - rid: 4394044677625479633
-        - rid: 4394044677625479636
-        - rid: 4394044677625479634
-    - rid: 4394044677625479630
-      type: {class: MapGenerator_GradientNoise/NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
+        tileSettings:
+        - tileOptions:
+            _tiles:
+            - {fileID: 0}
+            - {fileID: 0}
+            - {fileID: 0}
+            - {fileID: 3162623308867682789, guid: 36fd396502a5d3846af9c2801c20b303, type: 3}
+            generated: 0
+          noiseRange: {x: 100, y: 100}
+          solveType: 4
+        noisePasses:
+        - rid: 4394044748503187889
+        createNewTiles: 1
+    - rid: 4394044748503187889
+      type: {class: NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
       data:
         axis: 1
-    - rid: 4394044677625479631
-      type: {class: MapGenerator_GradientNoise/NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+    - rid: 4394044748503187890
+      type: {class: GenerationRule_NoiseValueRange, ns: , asm: Assembly-CSharp}
       data:
-        scale: 0.01
-        axis1: 0
-        axis2: 1
-        noiseRange: {x: -10, y: 10}
-    - rid: 4394044677625479632
-      type: {class: MapGenerator_GradientNoise/NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+        tileSettings:
+        - tileOptions:
+            _tiles:
+            - {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
+            - {fileID: 0}
+            - {fileID: 3162623308867682789, guid: 765ad0cdc06991744b08a534891b3989, type: 3}
+            generated: 0
+          noiseRange: {x: 0, y: 99}
+          solveType: 2
+        - tileOptions:
+            _tiles:
+            - {fileID: 3162623308867682789, guid: 28854011f47210046adcd94fd2c413cb, type: 3}
+            - {fileID: 3162623308867682789, guid: b6317abc19c98ed45aba96eaeea13ca0, type: 3}
+            generated: 0
+          noiseRange: {x: 100, y: 200}
+          solveType: 2
+        noisePasses:
+        - rid: 4394044748503187900
+        createNewTiles: 0
+    - rid: 4394044748503187900
+      type: {class: NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
+      data:
+        axis: 1
+    - rid: 4394044748503187917
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
       data:
         scale: 0.05
-        axis1: 0
-        axis2: 1
         noiseRange: {x: -7, y: 7}
-    - rid: 4394044677625479633
-      type: {class: MapGenerator_GradientNoise/NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+        axis1: 0
+        axis2: 2
+    - rid: 4394044748503187918
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
       data:
         scale: 0.1
-        axis1: 0
-        axis2: 1
         noiseRange: {x: -4, y: 0}
-    - rid: 4394044677625479634
-      type: {class: MapGenerator_GradientNoise/NoisePass_Static, ns: , asm: Assembly-CSharp}
-      data:
-        toAdd: 2
-    - rid: 4394044677625479636
-      type: {class: MapGenerator_GradientNoise/NoisePass_Scale, ns: , asm: Assembly-CSharp}
-      data:
-        center: 100
-        scale: 0.9
-    - rid: 4394044677625479639
-      type: {class: MapGenerator_GradientNoise/NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
-      data:
-        axis: 1
-    - rid: 4394044677625479640
-      type: {class: MapGenerator_GradientNoise/NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
-      data:
-        axis: 1
+        axis1: 0
+        axis2: 2
 --- !u!4 &2070111366
 Transform:
   m_ObjectHideFlags: 0

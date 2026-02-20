@@ -12,6 +12,7 @@ using UnityEditor.SceneManagement;
 [RequireComponent(typeof(BoxCollider))]
 public class WFCTileGroup : MonoBehaviour
 {
+    public int index; // get rid of this
     public bool reset;
     public bool updateData;
     public bool doSelection;
