@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Generation Tile")]
+[CreateAssetMenu(menuName = "Generation Tile/Basic")]
 public class GenerationTile : ScriptableObject
 {
-    public int index;
-    public List<ITask<MultidimensionalPosition>> tasks;
+    [SerializeReference]
+    public List<ITask<Vector3>> tasks;
 }

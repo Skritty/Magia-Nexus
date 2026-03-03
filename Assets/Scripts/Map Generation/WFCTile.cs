@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 [Serializable]
 public class WFCTile : IEquatable<WFCTile>
 {
+    public string name;
     public MultidimensionalPosition position;
     public GameObject content;
 
@@ -22,7 +22,7 @@ public class WFCTile : IEquatable<WFCTile>
     //[HideInInspector]
     public Vector3 positionActual;
     [HideInInspector]
-    public ulong tileBit;
+    public TileSuperposition tileBit;
 
     public WFCTile(string groupPrefabAssetPath, int x, int y, int z)
     {
@@ -49,7 +49,7 @@ public class WFCConnection
 {
     public List<WFCTileRef> allowedTileRefs;
     [HideInInspector]
-    public ulong allowedTiles;
+    public TileSuperposition allowedTiles;
     [HideInInspector]
     public bool isInternalConnection;
 

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66202aef72a5b5e4ba14be2fb404678e, type: 3}
+  m_Name: Terrain Tileset
+  m_EditorClassIdentifier: 
+  isDefaultTileset: 1
+  tiles:
+  - {fileID: 11400000, guid: 125095453d2c45446a04fff964026135, type: 2}
+  - {fileID: 11400000, guid: ebcb4921eecf3674397ca74db88932fe, type: 2}
+  - {fileID: 11400000, guid: 4c2f558b2fe6a9f489ed5330007a3134, type: 2}
+  - {fileID: 11400000, guid: ec236d9ff5baba149b0c1906c3471f77, type: 2}
+  - {fileID: 11400000, guid: c5240b4c77faeed4b9fb5a23d2822f6d, type: 2}
+  - {fileID: 11400000, guid: 7bb9f3aaff440124bac6f2c100b3d7fa, type: 2}
+  - {fileID: 11400000, guid: eb20670cbc2eab042ad1477ead25d63e, type: 2}
+  tileGroups: []

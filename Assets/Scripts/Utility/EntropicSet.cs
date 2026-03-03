@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -17,7 +18,10 @@ public class EntropicSet<T>
         if (entropyLevel < 0) return;
         if(entropyLevels.Count <= entropyLevel)
         {
-            entropyLevels.AddRange(new HashSet<T>[entropyLevel + 1 - entropyLevels.Count]);
+            for(int i = entropyLevels.Count; i < entropyLevel + 1; i++)
+            {
+                entropyLevels.Add(new HashSet<T>());
+            }
         }
         entropyLevels[entropyLevel].Add(item);
         itemEntropyLevels.Add(item, entropyLevel);
@@ -29,7 +33,10 @@ public class EntropicSet<T>
         if (entropyLevel < 0) return;
         if (entropyLevels.Count <= entropyLevel)
         {
-            entropyLevels.AddRange(new HashSet<T>[entropyLevel + 1 - entropyLevels.Count]);
+            for (int i = entropyLevels.Count; i < entropyLevel + 1; i++)
+            {
+                entropyLevels.Add(new HashSet<T>());
+            }
         }
         entropyLevels[itemEntropyLevels[item]].Remove(item);
         entropyLevels[entropyLevel].Add(item);

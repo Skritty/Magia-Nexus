@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -213,6 +214,23 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
         return dist;
     }
 
+    public float Distance(MultidimensionalPosition other)
+    {
+        float dist = 0;
+        for (int axis = 0; axis < Dimensions; axis++)
+        {
+            if(position[axis] >= other[axis])
+            {
+                dist += Mathf.Pow((position[axis] - other[axis]), 2);
+            }
+            else
+            {
+                dist += Mathf.Pow((other[axis] - position[axis]), 2);
+            }
+        }
+        return Mathf.Sqrt(dist);
+    }
+
     public bool EqualsFromDepthUp(MultidimensionalPosition compareTo, byte depth)
     {
         for (int axis = 0; axis < position.Length; axis++)
@@ -239,7 +257,7 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
 
     public override string ToString()
     {
-        return $"({position[0]},{position[1]},{position[2]})";
+        return "("+ string.Join(',', position) + ')';
     }
 
     public IEnumerator GetEnumerator()

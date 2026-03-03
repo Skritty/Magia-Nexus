@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b95f741a524e65f4d849bb9e5692bec3, type: 3}
+  m_Name: Chunk - Lake
+  m_EditorClassIdentifier: 
+  tasks:
+  - rid: 5185998389326119179
+  terrainNoise:
+  - rid: 5185998389326119555
+  - rid: 5185998389326119551
+  - rid: 5185998389326119552
+  - rid: 5185998389326119553
+  generationRules:
+  - rid: 5185998389326119115
+  - rid: 5185998389326119118
+  - rid: 5185998389326119119
+  references:
+    version: 2
+    RefIds:
+    - rid: 5185998389326119115
+      type: {class: GenerationRule_NoiseValueRange, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+          optionsSerializer: 000000000000
+          generated: 0
+        tileSettings:
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+            optionsSerializer: 000000000100
+            generated: 0
+          noiseRange: {x: 98, y: 100}
+          solveType: 0
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+            optionsSerializer: 000101000000
+            generated: 0
+          noiseRange: {x: 100, y: 101}
+          solveType: 0
+        noisePasses:
+        - rid: 5185998389326119556
+    - rid: 5185998389326119118
+      type: {class: GenerationRule_NoiseValueRange, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+          optionsSerializer: 000000000000
+          generated: 0
+        tileSettings:
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+            optionsSerializer: 000001000000
+            generated: 0
+          noiseRange: {x: 0, y: 0.5}
+          solveType: 2
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+            optionsSerializer: 000100000000
+            generated: 0
+          noiseRange: {x: 0.5, y: 1}
+          solveType: 2
+        noisePasses:
+        - rid: 5185998389326119128
+    - rid: 5185998389326119119
+      type: {class: GenerationRule_NoiseValueRange, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+          optionsSerializer: 000000000000
+          generated: 0
+        tileSettings:
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+            optionsSerializer: 000000000001
+            generated: 0
+          noiseRange: {x: 99, y: 99}
+          solveType: 4
+        noisePasses:
+        - rid: 5185998389326119129
+    - rid: 5185998389326119128
+      type: {class: NoisePass_GradientNoise3D, ns: , asm: Assembly-CSharp}
+      data:
+        scale: 0.08
+        noiseRange: {x: 0, y: 1}
+        calcType: 0
+        axis1: 0
+        axis2: 1
+        axis3: 2
+    - rid: 5185998389326119129
+      type: {class: NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
+      data:
+        axis: 1
+    - rid: 5185998389326119179
+      type: {class: Task_InstantiateAtPosition, ns: , asm: Assembly-CSharp}
+      data:
+        obj: {fileID: 3867228185287287865, guid: fe73499bfc25cf74d948ba2031a18754, type: 3}
+    - rid: 5185998389326119551
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+      data:
+        scale: 0.01
+        noiseRange: {x: -5, y: 0}
+        calcType: 1
+        axis1: 0
+        axis2: 2
+    - rid: 5185998389326119552
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+      data:
+        scale: 0.05
+        noiseRange: {x: -3, y: 0}
+        calcType: 1
+        axis1: 0
+        axis2: 2
+    - rid: 5185998389326119553
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+      data:
+        scale: 0.1
+        noiseRange: {x: -2, y: 0}
+        calcType: 1
+        axis1: 0
+        axis2: 2
+    - rid: 5185998389326119555
+      type: {class: NoisePass_PositionAxisAmount, ns: , asm: Assembly-CSharp}
+      data:
+        axis: 1
+    - rid: 5185998389326119556
+      type: {class: NoisePass_WeightedAveragePositionalChunkTerrainNoise, ns: , asm: Assembly-CSharp}
+      data: 
