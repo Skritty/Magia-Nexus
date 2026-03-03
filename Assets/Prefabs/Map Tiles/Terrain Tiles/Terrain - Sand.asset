@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 210ea94759b704d4688ff41d4dc812d7, type: 3}
+  m_Name: Terrain - Sand
+  m_EditorClassIdentifier: 
+  tasks:
+  - rid: 5185998389326119044
+  references:
+    version: 2
+    RefIds:
+    - rid: 5185998389326119044
+      type: {class: Task_InstantiateAtPosition, ns: , asm: Assembly-CSharp}
+      data:
+        obj: {fileID: 6808951896328773572, guid: d55c90afb956d0e45ab729715f0659fc, type: 3}

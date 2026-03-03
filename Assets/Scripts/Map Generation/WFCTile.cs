@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 [Serializable]
-public class WFCTile : GenerationTile, IEquatable<WFCTile>
+public class WFCTile : IEquatable<WFCTile>
 {
+    public string name;
+    public MultidimensionalPosition position;
+    public GameObject content;
+
+    public int index;
     public string groupUID;
     public float weight;
 
@@ -18,9 +22,7 @@ public class WFCTile : GenerationTile, IEquatable<WFCTile>
     //[HideInInspector]
     public Vector3 positionActual;
     [HideInInspector]
-    public ulong tileBit;
-
-
+    public TileSuperposition tileBit;
 
     public WFCTile(string groupPrefabAssetPath, int x, int y, int z)
     {
@@ -47,7 +49,7 @@ public class WFCConnection
 {
     public List<WFCTileRef> allowedTileRefs;
     [HideInInspector]
-    public ulong allowedTiles;
+    public TileSuperposition allowedTiles;
     [HideInInspector]
     public bool isInternalConnection;
 

@@ -1,33 +1,28 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using NUnit.Framework;
 using UnityEngine;
 
 public class EntropicSet<T>
 {
-    private HashSet<T>[] entropyLevels;
-    //private List<T>[] entropyLevelsList;
+    private List<HashSet<T>> entropyLevels = new();
     private Dictionary<T, int> itemEntropyLevels = new();
 
     public int Count => itemEntropyLevels.Count;
     public T[] AsArray => itemEntropyLevels.Select(x => x.Key).ToArray();
 
-    public EntropicSet(int maxEntropyLevel)
-    {
-        entropyLevels = new HashSet<T>[maxEntropyLevel];
-        for(int i = 0; i < maxEntropyLevel; i++)
-        {
-            entropyLevels[i] = new HashSet<T>();
-        }
-    }
-
-    /// <summary>
-    /// Entropy must be > 0
-    /// </summary>
-    /// <param name="entropyLevel">Entropy must be > 0</param>
     public void Add(int entropyLevel, T item)
     {
-        if (entropyLevel < 1) return;
-        entropyLevel--;
+        if (entropyLevel < 0) return;
+        if(entropyLevels.Count <= entropyLevel)
+        {
+            for(int i = entropyLevels.Count; i < entropyLevel + 1; i++)
+            {
+                entropyLevels.Add(new HashSet<T>());
+            }
+        }
         entropyLevels[entropyLevel].Add(item);
         itemEntropyLevels.Add(item, entropyLevel);
     }
@@ -35,9 +30,14 @@ public class EntropicSet<T>
     public void Update(int entropyLevel, T item)
     {
         if (!itemEntropyLevels.ContainsKey(item)) return;
-        if (entropyLevel < 1) return;
-        entropyLevel--;
-
+        if (entropyLevel < 0) return;
+        if (entropyLevels.Count <= entropyLevel)
+        {
+            for (int i = entropyLevels.Count; i < entropyLevel + 1; i++)
+            {
+                entropyLevels.Add(new HashSet<T>());
+            }
+        }
         entropyLevels[itemEntropyLevels[item]].Remove(item);
         entropyLevels[entropyLevel].Add(item);
         itemEntropyLevels[item] = entropyLevel;
@@ -48,6 +48,12 @@ public class EntropicSet<T>
         if (!itemEntropyLevels.ContainsKey(item)) return;
         entropyLevels[itemEntropyLevels[item]].Remove(item);
         itemEntropyLevels.Remove(item);
+    }
+
+    public void Clear()
+    {
+        entropyLevels.Clear();
+        itemEntropyLevels.Clear();
     }
 
     public bool Contains(T item) => itemEntropyLevels.ContainsKey(item);

@@ -30,6 +30,15 @@ namespace Skritty.Tools.Utilities
         private Dictionary<T, WeightedChanceEntry<T>> _entryMap = new Dictionary<T, WeightedChanceEntry<T>>();
 
         public int Count => entries.Count;
+        public float TotalWeight
+        {
+            get
+            {
+                float weight = 0;
+                foreach (WeightedChanceEntry<T> entry in entries) weight += entry.weight;
+                return weight;
+            }
+        }
 
         // ------------------------------------------------------------------------------------
 

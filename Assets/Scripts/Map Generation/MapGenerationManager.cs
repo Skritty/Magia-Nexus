@@ -1,63 +1,29 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Skritty.Tools.Utilities;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
 public abstract class MapGenerator
 {
-    public abstract List<MultidimensionalPosition> Generate(NTree<FlagList> spatialTree, Bounds generationBounds, List<WFCTile> tileSet);
+    public abstract IEnumerator Generate(MapGenerationManager manager /*TODO: THIS IS TEMP*/, NTree<TileSuperposition> spatialTree, Bounds generationBounds, Action<MultidimensionalPosition> generateTile);
+    public virtual void DrawGizmos(NTree<TileSuperposition> tree) {  }
 }
-public class FlagList
-{
-    static readonly ulong ULOne = 1;
-    public ulong options;
-    public int Entropy
-    {
-        get
-        {
-            if (options == 0) return 0;
-            int entropy = 0;
-            for (int i = 0; i < 64; i++)
-            {
-                if ((options & (ULOne << i)) != 0) entropy++;
-            }
-            return entropy;
-        }
-    }
 
-    public bool Solved => (options & (options - 1)) == 0;
-
-    public FlagList(ulong options)
-    {
-        this.options = options;
-    }
-
-    public List<T> GetObjects<T>(params T[] objects)
-    {
-        List<T> objectsList = new();
-        for (int i = 0; i < objects.Count(); i++)
-        {
-            if ((options & (ULOne << i)) != 0)
-            {
-                objectsList.Add(objects[i]);
-            }
-        }
-        return objectsList;
-    }
-}
-public class MapGenerationManager : MonoBehaviour
+public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerationManager>
 {
     [NonSerialized]
-    private NTree<FlagList>[] mapRepresentationLODs;
+    private NTree<TileSuperposition>[] mapRepresentationLODs;
 
+    public int chunkDimensions = 32;
+    public Bounds chunkGenBounds;
+    public Bounds initialTerrainGenBounds;
     public Transform center;
     public Vector3 size;
     public WFCTileGroup ErrorTile;
-    public List<WFCTileGroup> tileGroups;
-    public GenerationLayer[] generationLayers = new GenerationLayer[0];
+    public GenerationLayer worldGeneration;
+    public GenerationLayer mapGeneration;
+    public GenerationLayer levelGeneration;
 
     [Serializable]
     public class GenerationLayer
@@ -66,24 +32,14 @@ public class MapGenerationManager : MonoBehaviour
         public List<MapGenerator> mapGenerators = new();
     }
 
-    private Dictionary<string, WFCTileGroup> tileGroupsByUID = new();
-    private int tileCount;
-    private const ulong ULOne = 1;
     private Vector3 previousCenter, previousSize;
 
     private void Start()
     {
-        SolveConnections();
         Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
-        mapRepresentationLODs = new NTree<FlagList>[generationLayers.Length];
-        for (int i = 0; i < generationLayers.Length; i++)
-        {
-            if (generationLayers[i] == null) continue;
-            if (mapRepresentationLODs[i] == null)
-            {
-                mapRepresentationLODs[i] = new NTree<FlagList>();
-            }
-        }
+        mapRepresentationLODs = new NTree<TileSuperposition>[2];
+        Generate(worldGeneration, 0, chunkGenBounds);
+        //Generate(mapGeneration, 1, initialTerrainGenBounds);
     }
 
     private void FixedUpdate()
@@ -93,250 +49,108 @@ public class MapGenerationManager : MonoBehaviour
         {
             previousSize = size;
             previousCenter = centerSnapped;
-            Generate();
+
+            Bounds generationBounds = new Bounds(centerSnapped - transform.position, size);
+
+            Generate(mapGeneration, 1, generationBounds);
+            //Generate(levelGeneration, 1);
         }
     }
 
-    private void Generate()
+    private void Generate(GenerationLayer layer, int LODIndex, Bounds bounds)
     {
-        List<WFCTile> tileSet = new();
-        // Add all valid tiles in each group to the list of possible tiles.
-        foreach (WFCTileGroup tileGroup in tileGroups)
+        if (layer == null) return;
+        if(mapRepresentationLODs[LODIndex] == null)
         {
-            foreach (WFCTile tile in tileGroup.subtiles)
-            {
-                if (!tile.isHole)
-                {
-                    tileSet.Add(tile);
-                }
-            }
+            mapRepresentationLODs[LODIndex] = new NTree<TileSuperposition>();
         }
-        ulong defaultTileFlags = ulong.MaxValue >> Mathf.Clamp(64 - tileSet.Count, 0, 64);
 
-        Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
-        Bounds generationBounds = new Bounds(centerSnapped - transform.position, size);
-        for (int i = 0; i < generationLayers.Length; i++)
+        foreach (MapGenerator generator in layer.mapGenerators)
         {
-            if (generationLayers[i] == null) continue;
+            StartCoroutine(generator.Generate(this, mapRepresentationLODs[LODIndex], bounds, GenerateTileInternal));
+        }
 
-            for (int x = (int)-generationBounds.extents.x; x < generationBounds.extents.x; x++)
+        void GenerateTileInternal(MultidimensionalPosition position)
+        {
+            List<GenerationTile> tile = mapRepresentationLODs[LODIndex][position].GetTiles();
+            mapRepresentationLODs[LODIndex][position].generated = true;
+            if (tile.Count == 0)
             {
-                for (int y = (int)-generationBounds.extents.y; y < generationBounds.extents.y; y++)
-                {
-                    for (int z = (int)-generationBounds.extents.z; z < generationBounds.extents.z; z++)
-                    {
-                        MultidimensionalPosition position = new MultidimensionalPosition((ushort)(generationBounds.center.x + x), (ushort)(generationBounds.center.y + y), (ushort)(generationBounds.center.z + z));
-                        mapRepresentationLODs[i].TryAddData(new FlagList(defaultTileFlags), position, out _);
-                    }
-                }
+                // Error
+                //GenerateTile(ErrorTile.subtiles.objects[0,0,0], ErrorTile, tilePosition);
             }
-
-            List<MultidimensionalPosition> generatedTiles = new();
-            foreach (MapGenerator generator in generationLayers[i].mapGenerators)
+            else if (tile.Count == 1)
             {
-                generatedTiles.AddRange(generator.Generate(mapRepresentationLODs[i], generationBounds, tileSet));
-            }
-            foreach (MultidimensionalPosition tilePosition in generatedTiles)
-            {
-                List<WFCTile> tile = mapRepresentationLODs[i][tilePosition].GetObjects(tileSet.ToArray());
-                if (tile.Count == 0)
-                {
-                    // Error
-                    GenerateTile(ErrorTile.subtiles.objects[0,0,0], ErrorTile, tilePosition);
-                }
-                else if (tile.Count == 1)
-                {
-                    GenerateTile(tile[0], tileGroupsByUID[tile[0].groupUID], tilePosition);
-                }
+                GenerateTile(tile[0], position);
             }
         }
     }
 
-    private bool GenerateTile(WFCTile tile, WFCTileGroup group, MultidimensionalPosition position)
+    private bool GenerateTile(GenerationTile tile, MultidimensionalPosition position)
     {
-        if (tile.content == null) return false;
-        GameObject visuals = Instantiate(tile.content, Vector3.zero, Quaternion.identity);
-        visuals.transform.position += transform.position + position.ToVector3
-            - group.bounds.center + group.bounds.extents;
-        visuals.transform.parent = transform;
+        Vector3 pos = transform.position + new Vector3(position[0], position[1], position[2]);
+        foreach (ITask<Vector3> task in tile.tasks)
+        {
+            task.DoTask(pos);
+        }
+        //if (tile.content == null) return false;
+        //GameObject visuals = Instantiate(tile.content, Vector3.zero, Quaternion.identity);
+        //visuals.transform.position += transform.position + position.ToVector3;
+            //- group.bounds.center + group.bounds.extents;
+        //visuals.transform.parent = transform;
         return true;
     }
 
-    public void GetTilesAtLOD(byte level, MultidimensionalPosition position)
+    public ChunkTile GetChunk(MultidimensionalPosition position)
     {
-        position = position.Clone();
-        position.PositionAtDepth(level - 1);
-        mapRepresentationLODs[level].GetDataAtPosition(position);
+        MultidimensionalPosition chunkPos = new MultidimensionalPosition(position.Dimensions);
+        for(int axis = 0; axis < chunkPos.Dimensions; axis++)
+        {
+            chunkPos[axis] = (ushort)(position[axis] * 1f / chunkDimensions);
+        }
+        chunkPos[1] = 0;// TODO: Remove
+        ChunkTile chunk = mapRepresentationLODs[0].GetDataAtPosition(chunkPos).GetTiles()[0] as ChunkTile;
+        return chunk;
+    }
+
+    public List<(ChunkTile chunk, int distance)> GetNearbyChunks(MultidimensionalPosition position)
+    {
+        List<(ChunkTile chunk, int distance)> chunks = new();
+        for(int x = 0; x < 2; x++)
+        {
+            int xOffset = 0;
+            if (x > 0) xOffset = (int)(chunkDimensions * 0.5f * (position[0] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
+            for (int y = 0; y < 2; y++)
+            {
+                y = 2; // TODO: Remove
+                int yOffset = 0;
+                //if (y > 0) yOffset = (int)(chunkDimensions * 0.5f * (position[1] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
+                for (int z = 0; z < 2; z++)
+                {
+                    int zOffset = 0;
+                    if (z > 0) zOffset = (int)(chunkDimensions * 0.5f * (position[2] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
+
+                    MultidimensionalPosition chunkPos = new MultidimensionalPosition(
+                        (ushort)((position[0] + xOffset) / chunkDimensions), 
+                        0,//(ushort)((position[1] + yOffset) / chunkDimensions), 
+                        (ushort)((position[2] + zOffset) / chunkDimensions));
+                    ChunkTile chunk = mapRepresentationLODs[0].GetDataAtPosition(chunkPos).GetTiles()[0] as ChunkTile;
+                    chunkPos[0] = (ushort)(chunkPos[0] * chunkDimensions + 0.5f * chunkDimensions);
+                    chunkPos[1] = position[1];
+                    chunkPos[2] = (ushort)(chunkPos[2] * chunkDimensions + 0.5f * chunkDimensions);
+                    chunks.Add((chunk, (int)Mathf.Clamp(chunkDimensions - chunkPos.Distance(position), 0, chunkDimensions)));
+                }
+            }
+        }
+        return chunks;
     }
 
     public void SaveMap() { }
     public void LoadMap() { }
 
-    //[InfoBox("Connections must be resolved any time a change is made to subtile dimensions or if the tile group list is changed"), Button("Solve Connections")]
-    public void SolveConnections()
+    private void OnDrawGizmos()
     {
-        foreach (Transform child in transform)
-        {
-            DestroyImmediate(child.gameObject);
-        }
-        tileGroupsByUID = new();
-        List<WFCTile> allTiles = new List<WFCTile>();
-
-        WFCTileGroup[] tileGroupPrefabs = tileGroups.ToArray();
-        tileGroups.Clear();
-        // Create prefab instances, put them into UID dictionary
-        foreach (WFCTileGroup groupPrefab in tileGroupPrefabs)
-        {
-            WFCTileGroup loadedTileGroup = Instantiate(groupPrefab);
-            loadedTileGroup.gameObject.SetActive(false);
-            loadedTileGroup.transform.parent = transform;
-            tileGroups.Add(loadedTileGroup);
-            tileGroupsByUID.Add(loadedTileGroup.groupUID, loadedTileGroup);
-            foreach (WFCTile tile in loadedTileGroup.subtiles)
-            {
-                if (tile.isHole) continue;
-                allTiles.Add(tile);
-                tile.tileBit = ULOne << tileCount;
-                tileCount++;
-            }
-        }
-
-        // Set up connections with loaded tile groups
-        foreach (WFCTileGroup tileGroup in tileGroups)
-        {
-            // Handle internal connections
-            foreach (WFCTile tile in tileGroup.subtiles)
-            {
-                if (tile.weight == 0) tile.weight = tileGroup.weight;
-
-                WFCTile[] adjecentTiles = tileGroup.subtiles.GetAdjecentObjects(tile);
-                for (int i = 0; i < 6; i++)
-                {
-                    if (adjecentTiles[i] == null) continue;
-                    if (adjecentTiles[i].isHole)
-                    {
-                        tile.connections[i].allowedTileRefs.AddRange(adjecentTiles[i].holeAllowedTileRefs);
-                        tile.connections[i].isInternalConnection = false;
-                    }
-                    else
-                    {
-                        tile.connections[i].allowedTiles |= adjecentTiles[i].tileBit;
-                        tile.connections[i].isInternalConnection = true;
-                    }
-                }
-            }
-
-            // Handle group links
-            /*foreach (WFCTile tile in tileGroup.subtiles)
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    foreach (WFCTileRef connectedTileRef in tile.connections[i].allowedTileRefs.ToArray())
-                    {
-                        if (!tileGroupsByUID.ContainsKey(connectedTileRef.groupUID)) continue;
-                        // Find the index where the connecting tile would be
-                        (int, int, int) projectedIndex = tileGroup.subtiles.GetIndex(tile);
-                        projectedIndex = (projectedIndex.Item1 + (i == 0 || i == 1 ? -(i % 2 * 2 - 1) : 0),
-                            projectedIndex.Item2 + (i == 2 || i == 3 ? -(i % 2 * 2 - 1) : 0),
-                            projectedIndex.Item3 + (i == 4 || i == 5 ? -(i % 2 * 2 - 1) : 0));
-                        ConjoinTileGroups(tileGroup, tileGroupsByUID[connectedTileRef.groupUID], projectedIndex, (connectedTileRef.x, connectedTileRef.y, connectedTileRef.z));
-                    }
-                }
-            }*/
-
-            // Handle connections
-            foreach (WFCTile tile in tileGroup.subtiles)
-            {
-                if (tile.isHole) continue;
-                // Set up and reciprocate actual tile connections from tileRefs
-                for (int i = 0; i < 6; i++)
-                {
-                    if (tile.connections[i].isInternalConnection) continue;
-                    int reciprocatedIndex = i + (i % 2 > 0 ? -1 : 1);
-                    if (tile.connections[i].allowedTileRefs.Count == 0)
-                    {
-                        // Wildcard tile
-                        /*foreach (WFCTile tileActual in allTiles)
-                        {
-                            WFCConnection otherConnection = tileActual.connections[reciprocatedIndex];
-                            if (otherConnection.isInternalConnection) continue;
-
-                            tile.connections[i].allowedTiles |= tileActual.tileBit;
-                            otherConnection.allowedTiles |= tile.tileBit;
-                        }*/
-                    }
-                    else
-                    {
-                        foreach (WFCTileRef connectedTileRef in tile.connections[i].allowedTileRefs)
-                        {
-                            if (!tileGroupsByUID.ContainsKey(connectedTileRef.groupUID))
-                            {
-                                // Tile group referened doesn't exist in this generation
-                                continue;
-                            }
-                            WFCTile tileActual = tileGroupsByUID[connectedTileRef.groupUID].subtiles[connectedTileRef.x, connectedTileRef.y, connectedTileRef.z];
-                            tile.connections[i].allowedTiles |= tileActual.tileBit;
-                            tileActual.connections[reciprocatedIndex].allowedTiles |= tile.tileBit;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void ConjoinTileGroups(WFCTileGroup group1, WFCTileGroup group2, (int, int, int) projectedIndex, (int, int, int) initialConnectionIndex)
-    {
-        // Iterate through group1 subtiles (plus 1 around)
-        for (int x = -1; x <= group1.subtiles.x; x++)
-        {
-            for (int y = -1; y <= group1.subtiles.y; y++)
-            {
-                for (int z = -1; z <= group1.subtiles.z; z++)
-                {
-                    (int, int, int) connectionIndex = (
-                        initialConnectionIndex.Item1 - projectedIndex.Item1 + x,
-                        initialConnectionIndex.Item2 - projectedIndex.Item2 + y,
-                        initialConnectionIndex.Item3 - projectedIndex.Item3 + z);
-
-                    if ((uint)connectionIndex.Item1 >= group2.subtiles.x
-                        || (uint)connectionIndex.Item2 >= group2.subtiles.y
-                        || (uint)connectionIndex.Item3 >= group2.subtiles.z)
-                        continue;
-
-                    if (group2.subtiles[connectionIndex].isHole) continue;
-
-                    WFCTile selfTile = null;
-                    if ((uint)x < group1.subtiles.x && (uint)y < group1.subtiles.y && (uint)z < group1.subtiles.z)
-                    {
-                        selfTile = group1.subtiles[x, y, z];
-                    }
-
-                    if (selfTile == null || selfTile.isHole)
-                    {
-                        WFCTile[] holeAdjacentTiles = group1.subtiles.GetAdjecentObjects((x, y, z));
-                        for (int i = 0; i < 6; i++)
-                        {
-                            if (holeAdjacentTiles[i] == null || holeAdjacentTiles[i].isHole) continue;
-
-                            WFCConnection connection = holeAdjacentTiles[i].connections[i + (i % 2 > 0 ? -1 : 1)];
-
-                            WFCTileRef tileRef = new WFCTileRef(group2.groupUID, connectionIndex.Item1, connectionIndex.Item2, connectionIndex.Item3);
-                            if (!connection.allowedTileRefs.Any(x => x.groupUID == tileRef.groupUID)) connection.allowedTileRefs.Add(tileRef);
-
-                            //Debug.Log($"Connecting {group2.gameObject.name} ({projectedIndex}) to {gameObject.name} ({initialConnectionIndex}) at connection index {i + (i % 2 > 0 ? -1 : 1)} | ");
-                            // xyz = (0,0,-1), initialSelfIndex = (0,0,-1)
-                            // initialConnectionIndex = (0,0,0), goalIndex = (1,0,0)
-                            // initialConnectionIndex - initialSelfIndex + xyz = goalIndex
-                        }
-                    }
-                    else
-                    {
-                        // Overlaps!
-                        Debug.LogWarning($"{gameObject.name} overlaps with connection {group2.gameObject.name}");
-                        return;
-                    }
-                }
-            }
-        }
+        if (mapRepresentationLODs == null) return;
+        foreach (MapGenerator generator in worldGeneration.mapGenerators) if(generator != null) generator.DrawGizmos(mapRepresentationLODs[0]);
     }
 }

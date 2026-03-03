@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d9d901132707d4ba5f3a9fe03deaf4, type: 3}
+  m_Name: Packaging Unit
+  m_EditorClassIdentifier: 
+  recipies:
+  - productionTime: 10
+    outputMaterial:
+      type: 13
+      max: 0
+      _amount: 1
+    recipe:
+    - type: 12
+      max: 0
+      _amount: 10
+    - type: 9
+      max: 0
+      _amount: 15

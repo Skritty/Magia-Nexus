@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0285f4e3ccd35da42a430ccced39d9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
   reset: 0
   updateData: 0
   doSelection: 1
@@ -164,9 +165,11 @@ MonoBehaviour:
     z: 1
     serializedObjects:
     - obj:
+        name: 
         position:
           position: 
-        content: {fileID: 0}
+        content: {fileID: 3070751280406944945}
+        index: 0
         groupUID: TGE - Underground Air
         weight: 0
         connections:
@@ -176,7 +179,10 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: 0
+          allowedTiles:
+            tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+            optionsSerializer: 000000000000
+            generated: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -184,7 +190,10 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: 0
+          allowedTiles:
+            tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+            optionsSerializer: 000000000000
+            generated: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -197,7 +206,10 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: 0
+          allowedTiles:
+            tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+            optionsSerializer: 000000000000
+            generated: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -205,7 +217,10 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: 0
+          allowedTiles:
+            tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+            optionsSerializer: 000000000000
+            generated: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -213,7 +228,10 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: 0
+          allowedTiles:
+            tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+            optionsSerializer: 000000000000
+            generated: 0
           isInternalConnection: 0
         - allowedTileRefs:
           - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -221,12 +239,18 @@ MonoBehaviour:
             x: 0
             y: 0
             z: 0
-          allowedTiles: 0
+          allowedTiles:
+            tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+            optionsSerializer: 000000000000
+            generated: 0
           isInternalConnection: 0
         isHole: 0
         holeAllowedTileRefs: []
         positionActual: {x: 0, y: 0, z: 0}
-        tileBit: 0
+        tileBit:
+          tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+          optionsSerializer: 000000000000
+          generated: 0
       x: 0
       y: 0
       z: 0
@@ -234,9 +258,11 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0.5}
   selectedTile:
+    name: 
     position:
       position: 
-    content: {fileID: 0}
+    content: {fileID: 3070751280406944945}
+    index: 0
     groupUID: TGE - Underground Air
     weight: 0
     connections:
@@ -246,7 +272,10 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: 0
+      allowedTiles:
+        tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+        optionsSerializer: 000000000000
+        generated: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -254,7 +283,10 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: 0
+      allowedTiles:
+        tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+        optionsSerializer: 000000000000
+        generated: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -267,7 +299,10 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: 0
+      allowedTiles:
+        tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+        optionsSerializer: 000000000000
+        generated: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -275,7 +310,10 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: 0
+      allowedTiles:
+        tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+        optionsSerializer: 000000000000
+        generated: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -283,7 +321,10 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: 0
+      allowedTiles:
+        tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+        optionsSerializer: 000000000000
+        generated: 0
       isInternalConnection: 0
     - allowedTileRefs:
       - tileGroupPrefab: {fileID: 9206229358997751364}
@@ -291,13 +332,22 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      allowedTiles: 0
+      allowedTiles:
+        tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+        optionsSerializer: 000000000000
+        generated: 0
       isInternalConnection: 0
     isHole: 0
     holeAllowedTileRefs: []
     positionActual: {x: 0, y: 0, z: 0}
-    tileBit: 0
+    tileBit:
+      tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+      optionsSerializer: 000000000000
+      generated: 0
   selectedConnection:
     allowedTileRefs: []
-    allowedTiles: 0
+    allowedTiles:
+      tileset: {fileID: 11400000, guid: ecb995547f0dbb74b8e4538f76d1af7c, type: 2}
+      optionsSerializer: 000000000000
+      generated: 0
     isInternalConnection: 0
