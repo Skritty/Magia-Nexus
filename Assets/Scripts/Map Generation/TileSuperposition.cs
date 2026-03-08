@@ -192,6 +192,7 @@ public class TileSuperposition : ISerializationCallbackReceiver // TODO: Make th
 
     public void OnAfterDeserialize()
     {
+        if (optionsSerializer == null) return;
         options = new BitArray(optionsSerializer);
         if (tileset == null) tileset = Tileset.defaultTileset;
     }

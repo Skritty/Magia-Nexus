@@ -9142,6 +9142,7 @@ MonoBehaviour:
         - rid: 5185998353600086189
         propagationRules:
         - rid: 5185998368748863790
+        - rid: 5185998402315878519
     - rid: 5185998353600086189
       type: {class: GenerationRule_WeightedCollapse, ns: , asm: Assembly-CSharp}
       data:
@@ -9192,7 +9193,7 @@ MonoBehaviour:
             generated: 0
           tileOptions:
             tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
-            optionsSerializer: 010100010101
+            optionsSerializer: 010100010001
             generated: 0
         - tileReference:
             tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
@@ -9216,7 +9217,7 @@ MonoBehaviour:
             generated: 0
           tileOptions:
             tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
-            optionsSerializer: 010000010100
+            optionsSerializer: 010000010000
             generated: 0
         - tileReference:
             tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
@@ -9224,7 +9225,7 @@ MonoBehaviour:
             generated: 0
           tileOptions:
             tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
-            optionsSerializer: 010001010100
+            optionsSerializer: 000001000100
             generated: 0
         - tileReference:
             tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
@@ -9318,6 +9319,29 @@ MonoBehaviour:
         calcType: 0
         axis1: 0
         axis2: 2
+    - rid: 5185998402315878519
+      type: {class: GenerationRule_MapConstraints, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 0
+        defaultTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 010101010101
+          generated: 0
+        solveType: 2
+        offsets:
+        - {x: -1, y: 0, z: 1}
+        - {x: 1, y: 0, z: -1}
+        - {x: -1, y: 0, z: -1}
+        - {x: 1, y: 0, z: 1}
+        observationRules:
+        - tileReference:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000000010000
+            generated: 0
+          tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 010000010000
+            generated: 0
 --- !u!4 &2070111366
 Transform:
   m_ObjectHideFlags: 0

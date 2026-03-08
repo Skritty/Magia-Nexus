@@ -175,14 +175,17 @@ public class GenerationRule_MapConstraints : GenerationRule
         TileSuperposition tile = tree[position];
 
         // Compile rules together
+        bool valid = false;
         TileSuperposition options = new TileSuperposition(tile.tileset.tiles.Count);
         foreach (ObservationRule rule in observationRules)
         {
             if (tile.ContainsSubset(rule.tileReference))
             {
                 options.Or(rule.tileOptions);
+                valid = true;
             }
         }
+        if (!valid) return modifiedTiles;
 
         // Apply rule
         foreach (Vector3 offset in offsets)
