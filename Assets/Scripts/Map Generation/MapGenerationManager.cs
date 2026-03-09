@@ -39,7 +39,7 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
         Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
         mapRepresentationLODs = new NTree<TileSuperposition>[2];
         Generate(worldGeneration, 0, chunkGenBounds);
-        //Generate(mapGeneration, 1, initialTerrainGenBounds);
+        Generate(mapGeneration, 1, initialTerrainGenBounds);
     }
 
     private void FixedUpdate()

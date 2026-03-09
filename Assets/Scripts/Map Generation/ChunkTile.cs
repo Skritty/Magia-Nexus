@@ -8,4 +8,5 @@ public class ChunkTile : GenerationTile
     public List<NoisePass> terrainNoise = new();
     [SerializeReference]
     public List<GenerationRule> generationRules = new();
+    public List<WorldEvent> worldEvents = new();
 }

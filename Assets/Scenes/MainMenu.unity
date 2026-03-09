@@ -9113,7 +9113,7 @@ MonoBehaviour:
     m_Extent: {x: 51, y: 0.5, z: 51}
   initialTerrainGenBounds:
     m_Center: {x: 110, y: 110, z: 110}
-    m_Extent: {x: 100, y: 40, z: 100}
+    m_Extent: {x: 100, y: 30, z: 100}
   center: {fileID: 1025231282}
   size: {x: 20, y: 40, z: 20}
   ErrorTile: {fileID: 3162623308867682789, guid: 393db4d902d13ff4eb65b621d1a3e37e, type: 3}
