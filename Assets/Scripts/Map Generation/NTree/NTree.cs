@@ -1,10 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 
-public class NTree<T>
+public class NTree<T> : IEnumerable<MultidimensionalPosition>
 {
     public class NTreeNode
     {
@@ -744,6 +745,21 @@ public class NTree<T>
         leaf.parent.AscendSearch(nearby, startPosition, radius, dimensionMask, leaf.IndexInParent);
         
         return nearby.Select(x => data[x.id]).ToArray();
+    }
+
+    public IEnumerator<MultidimensionalPosition> GetEnumerator()
+    {
+        List<MultidimensionalPosition> leaves = new();
+        foreach(NTreeNode node in nodes)
+        {
+            if (node.depth == 0) leaves.Add(node.position);
+        }
+        return leaves.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 }
 

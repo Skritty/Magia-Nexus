@@ -1,61 +1,71 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "WorldEvent")]
 public class WorldEvent : ScriptableObject
 {
-    // Only one world event may exist at a time! Fix this at some point please.
-    public int ticksUntilResolution;
-    [SerializeReference]
-    public List<ITask<WorldEvent>> spawnConditions = new();
+    public List<string> requiredSpawnFlags = new();
     [SerializeReference]
     public List<Trigger> outcomes = new();
-    private System.Action cleanup;
+    [SerializeReference]
+    public WorldEventSpawnLogic spawnChunk;
+    public List<EncounterSpawn> encounterSpawns = new();
 
-    public void TrySpawn(WorldEventSpawnLogic spawnLogic)
+    [Serializable]
+    public class EncounterSpawn
     {
-        foreach (ITask<WorldEvent> condition in spawnConditions)
+        public Texture2D spawnProbabilityMap;
+        public Entity encounterSpawn;
+    }
+
+    [Serializable]
+    public class WorldEventCondition
+    {
+        public bool flag;
+        [SerializeReference]
+        public Trigger trigger;
+
+        public virtual void SetFlag()
         {
-            if (!condition.DoTask(this)) return;
-        }
-        foreach (Trigger outcome in outcomes)
-        {
-            cleanup += outcome.SubscribeToTasks(this, 0, triggerOnce: true);
+            flag = true;
         }
     }
 
-    public void Despawn()
+    public void CreateEncounter(NTree<TileSuperposition> terrainMap)
     {
-        // Despawn after timer is done
-        cleanup?.Invoke();
-    }
 
-    public void CreateEncounter()
-    {
-        //MapGenerationManager.Instance.GetChunk();
-        // TODO
     }
 }
 
-public class WorldEventCondition
-{
-    public bool condition; // TODO
-}
-
+[Serializable]
 public abstract class WorldEventSpawnLogic
 {
     public abstract ChunkTile GetSpawnChunk();
 }
 
-public class RandomAdjacent : WorldEventSpawnLogic
+public class RandomChunk : WorldEventSpawnLogic
 {
-    public TileSuperposition biomes;
+    public TileSuperposition chunkFilter;
     public override ChunkTile GetSpawnChunk()
     {
-        throw new System.NotImplementedException();
+        return MapGenerationManager.Instance.GetRandomChunk(chunkFilter);
     }
 }
 
+public class RandomAdjacentChunk : WorldEventSpawnLogic
+{
+    public TileSuperposition chunkFilter;
+    public override ChunkTile GetSpawnChunk()
+    {
+        // TODO: store previous/current chunk position as a stat on the world event
+        return MapGenerationManager.Instance.GetRandomChunk(chunkFilter);
+    }
+}
+
+public class Stat_WorldEventTickCounter : Stat_Counter { }
+public class Trigger_WorldEventTick : Trigger<Trigger_WorldEventTick, int> { }
+public class Trigger_WorldEventCompleted : Trigger<Trigger_WorldEvent_EnemiesDefeated, WorldEvent> { }
 public class Trigger_WorldEvent_TimeExpired : Trigger<Trigger_WorldEvent_EnemiesDefeated, WorldEvent> { }
 public class Trigger_WorldEvent_EnemiesDefeated : Trigger<Trigger_WorldEvent_EnemiesDefeated, WorldEvent> { }
 public class Trigger_WorldEvent_PuzzleSolved : Trigger<Trigger_WorldEvent_EnemiesDefeated, WorldEvent> { }

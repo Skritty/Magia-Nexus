@@ -12,43 +12,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b859b2e45f794c42a10c2e4ec6d81db, type: 3}
   m_Name: Roaming Bandits
   m_EditorClassIdentifier: 
-  ticksUntilResolution: 3000
-  spawnConditions: []
+  requiredSpawnFlags: []
   outcomes:
-  - rid: 5185998526309466524
-  - rid: 5185998526309466521
+  - rid: 5185998865974428149
+  - rid: 5185998865974428147
+  spawnChunk:
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 5185998526309466521
-      type: {class: Trigger_WorldEvent_EnemiesDefeated, ns: , asm: Assembly-CSharp}
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 5185998865974428147
+      type: {class: Trigger_Expire, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 5185998526309466522
-    - rid: 5185998526309466522
-      type: {class: 'Task_Filter_Matching`1[[WorldEvent, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+        - rid: 5185998865974428148
+        - rid: 5185998865974428162
+        - rid: 5185998865974428156
+    - rid: 5185998865974428148
+      type: {class: 'Task_Filter_Matching`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
-        comparison: {fileID: 11400000}
-    - rid: 5185998526309466524
-      type: {class: Trigger_WorldEvent_TimeExpired, ns: , asm: Assembly-CSharp}
+        comparison: {fileID: 0}
+    - rid: 5185998865974428149
+      type: {class: Trigger_WorldEventTick, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 5185998526309466525
-        - rid: 5185998526309466543
-    - rid: 5185998526309466525
-      type: {class: 'Task_Filter_Matching`1[[WorldEvent, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+        - rid: 5185998865974428150
+        - rid: 5185998865974428158
+    - rid: 5185998865974428150
+      type: {class: 'Task_Filter_Count`1[[System.Int32, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
-        comparison: {fileID: 11400000}
-    - rid: 5185998526309466543
-      type: {class: 'Task_WorldEvent_SpawnWorldEvent`1[[WorldEvent, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+        counter:
+          rid: 5185998865974428152
+        countIncrease: 1
+        threshold: 6000
+    - rid: 5185998865974428152
+      type: {class: Stat_WorldEventTickCounter, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5185998865974428153
+        _modifiers: []
+    - rid: 5185998865974428153
+      type: {class: 'NoInherit`1[[System.Int32, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5185998865974428156
+      type: {class: 'Task_WorldEvent_SetFlag`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        flag: bandits_killed
+    - rid: 5185998865974428158
+      type: {class: 'Task_WorldEvent_SpawnWorldEvent`1[[System.Int32, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
         worldEvent: {fileID: 11400000}
         spawnLogic:
-          rid: 5185998526309466558
-    - rid: 5185998526309466558
+          rid: 5185998865974428159
+    - rid: 5185998865974428159
       type: {class: RandomAdjacent, ns: , asm: Assembly-CSharp}
       data:
         biomes:
-          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
-          optionsSerializer: 000101000000
+          tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+          optionsSerializer: 00000000000000
           generated: 0
+    - rid: 5185998865974428162
+      type: {class: 'Task_Filter_Count`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        counter:
+          rid: 5185998865974428163
+        countIncrease: 1
+        threshold: 3
+    - rid: 5185998865974428163
+      type: {class: Stat_Counter_DamageDealt, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5185998865974428164
+        _modifiers: []
+    - rid: 5185998865974428164
+      type: {class: 'NoInherit`1[[System.Int32, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 

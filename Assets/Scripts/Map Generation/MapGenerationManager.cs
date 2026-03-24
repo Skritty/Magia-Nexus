@@ -145,6 +145,19 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
         return chunks;
     }
 
+    public ChunkTile GetRandomChunk(TileSuperposition filter)
+    {
+        // TODO: Add weighting to make this fancier
+        List<TileSuperposition> tiles = new List<TileSuperposition>();
+        foreach(MultidimensionalPosition position in mapRepresentationLODs[0])
+        {
+            if (mapRepresentationLODs[0][position].Entropy == 1 && 
+                filter.ContainsSubset(mapRepresentationLODs[0][position]))
+                tiles.Add(mapRepresentationLODs[0][position]);
+        }
+        return tiles[UnityEngine.Random.Range(0, tiles.Count)].GetTiles()[0] as ChunkTile;
+    }
+
     public void SaveMap() { }
     public void LoadMap() { }
 
