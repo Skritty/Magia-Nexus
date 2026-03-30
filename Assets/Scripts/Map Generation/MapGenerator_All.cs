@@ -18,7 +18,7 @@ public class MapGenerator_All : MapGenerator
                 for (int z = (int)-generationBounds.extents.z; z < generationBounds.extents.z; z++)
                 {
                     MultidimensionalPosition position = new MultidimensionalPosition((ushort)(generationBounds.center.x + x), (ushort)(generationBounds.center.y + y), (ushort)(generationBounds.center.z + z));
-                    if ((tree[position] == null && skipNull) || tree[position] != null && tree[position].generated) continue;
+                    if ((tree[position] == null && skipNull) || (tree[position] != null && tree[position].generated)) continue;
 
                     foreach (GenerationRule generationRule in generationRules)
                     {

@@ -36,14 +36,17 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
 
     private void Start()
     {
-        Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
+        //Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
         mapRepresentationLODs = new NTree<TileSuperposition>[2];
         Generate(worldGeneration, 0, chunkGenBounds);
         Generate(mapGeneration, 1, initialTerrainGenBounds);
+        WorldEventManager.Instance.Initialize();
+        WorldEventManager.Instance.GenerateChunkEvent(mapRepresentationLODs[1], new(1,0,1));
     }
 
     private void FixedUpdate()
     {
+        if (center == null) return;
         Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
         if (centerSnapped != previousCenter || size != previousSize)
         {
@@ -145,17 +148,23 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
         return chunks;
     }
 
-    public ChunkTile GetRandomChunk(TileSuperposition filter)
+    public MultidimensionalPosition GetRandomChunkPosition(TileSuperposition filter)
     {
         // TODO: Add weighting to make this fancier
-        List<TileSuperposition> tiles = new List<TileSuperposition>();
+        List<MultidimensionalPosition> positions = new List<MultidimensionalPosition>();
         foreach(MultidimensionalPosition position in mapRepresentationLODs[0])
         {
             if (mapRepresentationLODs[0][position].Entropy == 1 && 
                 filter.ContainsSubset(mapRepresentationLODs[0][position]))
-                tiles.Add(mapRepresentationLODs[0][position]);
+                positions.Add(position);
         }
-        return tiles[UnityEngine.Random.Range(0, tiles.Count)].GetTiles()[0] as ChunkTile;
+        UnityEngine.Random.InitState(filter.GetHashCode());
+        return positions[UnityEngine.Random.Range(0, positions.Count)];
+    }
+
+    public ChunkTile GetRandomChunk(TileSuperposition filter)
+    {
+        return mapRepresentationLODs[0][GetRandomChunkPosition(filter)].GetTiles()[0] as ChunkTile;
     }
 
     public void SaveMap() { }

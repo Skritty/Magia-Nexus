@@ -1,13 +1,30 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using Skritty.Tools.Utilities;
 using UnityEngine;
 
 public class WorldEventManager : Singleton<WorldEventManager>
 {
     public List<WorldEvent> possibleWorldEvents = new();
-    public List<WorldEvent> activeWorldEvents = new();
-    private HashSet<string> flagKeywords;
+    public List<WorldEvent> initialWorldEvents = new();
+    [ShowInInspector, ReadOnly]
+    public Dictionary<MultidimensionalPosition, WorldEvent> activeWorldEvents = new(); // TODO: worldevent list
+    private HashSet<string> flagKeywords = new();
     private int eventTick = 0;
+
+    public void Initialize()
+    {
+        foreach (WorldEvent worldEvent in initialWorldEvents)
+        {
+            AddActiveWorldEvent(worldEvent);
+        }
+    }
+
+    public void GenerateChunkEvent(NTree<TileSuperposition> terrainMap, MultidimensionalPosition position)
+    {
+        if (!activeWorldEvents.ContainsKey(position)) return;
+        activeWorldEvents[position].CreateEncounter(terrainMap, position);
+    }
 
     private void FixedUpdate()
     {
@@ -55,7 +72,7 @@ public class WorldEventManager : Singleton<WorldEventManager>
 
     public void AddActiveWorldEvent(WorldEvent worldEvent)
     {
-        worldEvent.spawnChunk.GetSpawnChunk().worldEvents.Add(worldEvent);
-        activeWorldEvents.Add(worldEvent);
+        MultidimensionalPosition position = new(1, 0, 1);//worldEvent.spawnChunk.GetSpawnChunkPosition();
+        activeWorldEvents.Add(position, worldEvent);
     }
 }

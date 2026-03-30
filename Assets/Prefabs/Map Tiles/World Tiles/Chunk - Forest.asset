@@ -21,6 +21,7 @@ MonoBehaviour:
   - rid: 5185998389326119541
   generationRules:
   - rid: 5185998389326119145
+  worldEvents: []
   references:
     version: 2
     RefIds:
@@ -30,18 +31,18 @@ MonoBehaviour:
         createNewTiles: 1
         defaultTile:
           tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
-          optionsSerializer: 000000000000
+          optionsSerializer: 00000000000000
           generated: 0
         tileSettings:
         - tileOptions:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
-            optionsSerializer: 000000000100
+            optionsSerializer: 00000000010000
             generated: 0
           noiseRange: {x: 99, y: 100}
           solveType: 0
         - tileOptions:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
-            optionsSerializer: 010000000000
+            optionsSerializer: 01000000000000
             generated: 0
           noiseRange: {x: 100, y: 101}
           solveType: 0

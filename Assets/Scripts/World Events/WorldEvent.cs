@@ -16,50 +16,44 @@ public class WorldEvent : ScriptableObject
     public class EncounterSpawn
     {
         public Texture2D spawnProbabilityMap;
-        public Entity encounterSpawn;
-    }
-
-    [Serializable]
-    public class WorldEventCondition
-    {
-        public bool flag;
         [SerializeReference]
-        public Trigger trigger;
-
-        public virtual void SetFlag()
-        {
-            flag = true;
-        }
+        public List<ITask<MultidimensionalPosition>> encounterSpawnTasks;
     }
 
-    public void CreateEncounter(NTree<TileSuperposition> terrainMap)
+    public void CreateEncounter(NTree<TileSuperposition> terrainMap, MultidimensionalPosition chunkPosition)
     {
-
+        foreach(EncounterSpawn spawn in encounterSpawns)
+        {
+            foreach(ITask<MultidimensionalPosition> task in spawn.encounterSpawnTasks)
+            {
+                if (!task.DoTask(chunkPosition)) break; // TODO:P not chunk position, tile position
+            }
+        }
     }
 }
 
 [Serializable]
 public abstract class WorldEventSpawnLogic
 {
-    public abstract ChunkTile GetSpawnChunk();
+    public abstract MultidimensionalPosition GetSpawnChunkPosition();
 }
 
 public class RandomChunk : WorldEventSpawnLogic
 {
     public TileSuperposition chunkFilter;
-    public override ChunkTile GetSpawnChunk()
+    public override MultidimensionalPosition GetSpawnChunkPosition()
     {
-        return MapGenerationManager.Instance.GetRandomChunk(chunkFilter);
+        return MapGenerationManager.Instance.GetRandomChunkPosition(chunkFilter);
     }
 }
 
 public class RandomAdjacentChunk : WorldEventSpawnLogic
 {
     public TileSuperposition chunkFilter;
-    public override ChunkTile GetSpawnChunk()
+    public override MultidimensionalPosition GetSpawnChunkPosition()
     {
         // TODO: store previous/current chunk position as a stat on the world event
-        return MapGenerationManager.Instance.GetRandomChunk(chunkFilter);
+        return MapGenerationManager.Instance.GetRandomChunkPosition(chunkFilter);
     }
 }
 

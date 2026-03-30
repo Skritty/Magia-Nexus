@@ -574,7 +574,7 @@ public class NTree<T> : IEnumerable<MultidimensionalPosition>
 
     private NTreeNode GetNodeAtPosition(MultidimensionalPosition position, byte targetDepth = 0)
     {
-        if (root == null || position.Depth > root.depth)
+        if (root == null || position.Depth >= root.depth)
         {
             return null;
         }
