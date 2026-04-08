@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
+using Skritty.Tools.Utilities;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "WorldEvent")]
@@ -16,17 +18,44 @@ public class WorldEvent : ScriptableObject
     public class EncounterSpawn
     {
         public Texture2D spawnProbabilityMap;
+        public TileSuperposition spawnTile;
+        public int mapOffsetX, mapOffsetY;
+        public int verticalMargin = 16;
+        public Vector3 offset;
         [SerializeReference]
-        public List<ITask<MultidimensionalPosition>> encounterSpawnTasks;
+        public List<ITask<Vector3>> encounterSpawnTasks;
     }
 
     public void CreateEncounter(NTree<TileSuperposition> terrainMap, MultidimensionalPosition chunkPosition)
     {
+        int chunkDim = MapGenerationManager.Instance.chunkDimensions;
+        MultidimensionalPosition chunkCorner = new((ushort)(chunkPosition[0] * chunkDim), (ushort)(chunkPosition[1] * chunkDim), (ushort)(chunkPosition[2] * chunkDim));
+        WeightedChance<MultidimensionalPosition> weightedSpawn = new();
         foreach(EncounterSpawn spawn in encounterSpawns)
         {
-            foreach(ITask<MultidimensionalPosition> task in spawn.encounterSpawnTasks)
+            weightedSpawn.Clear();
+
+            for (int x = 0; x < spawn.spawnProbabilityMap.width; x++)
             {
-                if (!task.DoTask(chunkPosition)) break; // TODO:P not chunk position, tile position
+                for (int z = 0; z < spawn.spawnProbabilityMap.height; z++)
+                {
+                    for (int y = -spawn.verticalMargin; y < chunkDim + spawn.verticalMargin; y++) // TODO: skip around y randomly
+                    {
+                        TileSuperposition tile = terrainMap[chunkCorner[0] + x - spawn.mapOffsetX, chunkCorner[1] + y, chunkCorner[2] + z + spawn.mapOffsetY];
+                        if (tile == null || !tile.ContainsSubset(spawn.spawnTile)) continue;
+                        Color c = spawn.spawnProbabilityMap.GetPixel(x, z);
+                        if (c.r == 0) continue;
+                        weightedSpawn.Add(chunkCorner + new MultidimensionalPosition((ushort)x, (ushort)y, (ushort)z), c.r);
+                        break;
+                    }
+                }
+            }
+            if (weightedSpawn.Count == 0) continue;
+            MultidimensionalPosition position = weightedSpawn.GetRandomEntry();
+
+            foreach (ITask<Vector3> task in spawn.encounterSpawnTasks)
+            {
+                if (!task.DoTask(spawn.offset + new Vector3(position[0], position[1], position[2]))) break;
             }
         }
     }

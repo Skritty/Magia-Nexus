@@ -1132,10 +1132,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <UseDontDestroyOnLoad>k__BackingField: 1
-  chunkDimensions: 16
+  chunkDimensions: 8
   chunkGenBounds:
-    m_Center: {x: 3, y: 0, z: 3}
-    m_Extent: {x: 3, y: 0.5, z: 3}
+    m_Center: {x: 10, y: 12, z: 10}
+    m_Extent: {x: 10, y: 1.5, z: 10}
   initialTerrainGenBounds:
     m_Center: {x: 64, y: 110, z: 64}
     m_Extent: {x: 32, y: 30, z: 32}
@@ -3431,6 +3431,370 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+--- !u!1 &792673347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792673349}
+  - component: {fileID: 792673348}
+  m_Layer: 0
+  m_Name: Map (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &792673348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792673347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f666d28a8ed8584d9f646c19fd4151b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <UseDontDestroyOnLoad>k__BackingField: 1
+  chunkDimensions: 8
+  chunkGenBounds:
+    m_Center: {x: 25, y: 12, z: 25}
+    m_Extent: {x: 25, y: 1.5, z: 25}
+  initialTerrainGenBounds:
+    m_Center: {x: 64, y: 110, z: 64}
+    m_Extent: {x: 0, y: 0, z: 0}
+  center: {fileID: 0}
+  size: {x: 16, y: 40, z: 16}
+  ErrorTile: {fileID: 3162623308867682789, guid: 393db4d902d13ff4eb65b621d1a3e37e, type: 3}
+  worldGeneration:
+    mapGenerators:
+    - rid: 5185998389326119238
+    - rid: 5185999028564001210
+    - rid: 5185999028564001216
+  mapGeneration:
+    mapGenerators:
+    - rid: 5185998389326119584
+  levelGeneration:
+    mapGenerators: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5185998389326119238
+      type: {class: MapGenerator_All, ns: , asm: Assembly-CSharp}
+      data:
+        tileGenWaitTime: 0.1
+        skipNull: 0
+        generationRules:
+        - rid: 5185999028564001205
+    - rid: 5185998389326119584
+      type: {class: MapGenerator_All, ns: , asm: Assembly-CSharp}
+      data:
+        tileGenWaitTime: 0
+        skipNull: 0
+        generationRules:
+        - rid: 5185998389326119585
+    - rid: 5185998389326119585
+      type: {class: GenerationRule_ChunkReference, ns: , asm: Assembly-CSharp}
+      data:
+        xVirtualOffset:
+        - rid: 5185998389326119907
+        yVirtualOffset:
+        - rid: 5185998389326119908
+        zVirtualOffset:
+        - rid: 5185998389326119909
+    - rid: 5185998389326119907
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+      data:
+        scale: 0.04
+        noiseRange: {x: -10, y: 10}
+        calcType: 0
+        axis1: 0
+        axis2: 2
+    - rid: 5185998389326119908
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+      data:
+        scale: 0.04
+        noiseRange: {x: -10, y: 10}
+        calcType: 0
+        axis1: 0
+        axis2: 2
+    - rid: 5185998389326119909
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+      data:
+        scale: 0.04
+        noiseRange: {x: -1, y: 10}
+        calcType: 0
+        axis1: 0
+        axis2: 2
+    - rid: 5185999028564001205
+      type: {class: GenerationRule_NoiseValueRange, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 000000000000
+          generated: 0
+        tileSettings:
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 010101000001
+            generated: 0
+          noiseRange: {x: 0.4, y: 1}
+          solveType: 0
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000000010100
+            generated: 0
+          noiseRange: {x: 0, y: 0.4}
+          solveType: 0
+        noisePasses:
+        - rid: 5185999028564001206
+    - rid: 5185999028564001206
+      type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
+      data:
+        scale: 0.14
+        noiseRange: {x: 0, y: 1}
+        calcType: 0
+        axis1: 0
+        axis2: 2
+    - rid: 5185999028564001210
+      type: {class: MapGenerator_EntropicPropagation, ns: , asm: Assembly-CSharp}
+      data:
+        tileGenWaitTime: 0.1
+        startWithSeedTileInstead: 0
+        seedTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 000000000000
+          generated: 0
+        generationRules:
+        - rid: 5185999028564001211
+        propagationRules:
+        - rid: 5185999028564001212
+        - rid: 5185999028564001214
+    - rid: 5185999028564001211
+      type: {class: GenerationRule_WeightedCollapse, ns: , asm: Assembly-CSharp}
+      data:
+        tileSettings:
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000000010000
+            generated: 0
+          weight: 1
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000000000100
+            generated: 0
+          weight: 1
+    - rid: 5185999028564001212
+      type: {class: GenerationRule_MapConstraints, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 010101010101
+          generated: 0
+        solveType: 2
+        offsets:
+        - {x: 1, y: 0, z: 0}
+        - {x: -1, y: 0, z: 0}
+        - {x: 0, y: 0, z: 1}
+        - {x: 0, y: 0, z: -1}
+        - {x: 0, y: 1, z: 0}
+        - {x: 0, y: -1, z: 0}
+        observationRules:
+        - tileReference:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000000010000
+            generated: 0
+          tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 010000010000
+            generated: 0
+    - rid: 5185999028564001214
+      type: {class: GenerationRule_MapConstraints, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 010101010101
+          generated: 0
+        solveType: 2
+        offsets:
+        - {x: 1, y: 0, z: 0}
+        - {x: -1, y: 0, z: 0}
+        - {x: 0, y: 0, z: 1}
+        - {x: 0, y: 0, z: -1}
+        - {x: 0, y: 1, z: 0}
+        - {x: 0, y: -1, z: 0}
+        observationRules:
+        - tileReference:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000000000100
+            generated: 0
+          tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000001000100
+            generated: 0
+    - rid: 5185999028564001216
+      type: {class: MapGenerator_EntropicPropagation, ns: , asm: Assembly-CSharp}
+      data:
+        tileGenWaitTime: 0.1
+        startWithSeedTileInstead: 0
+        seedTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 010101010101
+          generated: 0
+        generationRules:
+        - rid: 5185999028564001217
+        propagationRules:
+        - rid: 5185999028564001218
+        - rid: 5185999028564001219
+        - rid: 5185999028564001220
+        - rid: 5185999028564001221
+    - rid: 5185999028564001217
+      type: {class: GenerationRule_WeightedCollapse, ns: , asm: Assembly-CSharp}
+      data:
+        tileSettings:
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000100000000
+            generated: 0
+          weight: 1
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000000000001
+            generated: 0
+          weight: 2
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000001000000
+            generated: 0
+          weight: 1
+        - tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 010000000000
+            generated: 0
+          weight: 1
+    - rid: 5185999028564001218
+      type: {class: GenerationRule_MapConstraints, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 010101010101
+          generated: 0
+        solveType: 2
+        offsets:
+        - {x: 1, y: 0, z: 0}
+        - {x: -1, y: 0, z: 0}
+        - {x: 0, y: 0, z: 1}
+        - {x: 0, y: 0, z: -1}
+        - {x: 0, y: 1, z: 0}
+        - {x: 0, y: -1, z: 0}
+        observationRules:
+        - tileReference:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 010000000000
+            generated: 0
+          tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 010100010001
+            generated: 0
+    - rid: 5185999028564001219
+      type: {class: GenerationRule_MapConstraints, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 010101010101
+          generated: 0
+        solveType: 2
+        offsets:
+        - {x: 1, y: 0, z: 0}
+        - {x: -1, y: 0, z: 0}
+        - {x: 0, y: 0, z: 1}
+        - {x: 0, y: 0, z: -1}
+        - {x: 0, y: 1, z: 0}
+        - {x: 0, y: -1, z: 0}
+        observationRules:
+        - tileReference:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000100000000
+            generated: 0
+          tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 010101000001
+            generated: 0
+    - rid: 5185999028564001220
+      type: {class: GenerationRule_MapConstraints, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 010101010101
+          generated: 0
+        solveType: 2
+        offsets:
+        - {x: 1, y: 0, z: 0}
+        - {x: -1, y: 0, z: 0}
+        - {x: 0, y: 0, z: 1}
+        - {x: 0, y: 0, z: -1}
+        - {x: 0, y: 1, z: 0}
+        - {x: 0, y: -1, z: 0}
+        observationRules:
+        - tileReference:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000001000000
+            generated: 0
+          tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000101000100
+            generated: 0
+    - rid: 5185999028564001221
+      type: {class: GenerationRule_MapConstraints, ns: , asm: Assembly-CSharp}
+      data:
+        createNewTiles: 1
+        defaultTile:
+          tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+          optionsSerializer: 010101010101
+          generated: 0
+        solveType: 2
+        offsets:
+        - {x: 1, y: 0, z: 0}
+        - {x: -1, y: 0, z: 0}
+        - {x: 0, y: 0, z: 1}
+        - {x: 0, y: 0, z: -1}
+        - {x: 0, y: 1, z: 0}
+        - {x: 0, y: -1, z: 0}
+        observationRules:
+        - tileReference:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 000000000001
+            generated: 0
+          tileOptions:
+            tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
+            optionsSerializer: 010100000001
+            generated: 0
+--- !u!4 &792673349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792673347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -100, y: -100, z: -100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &836724790
 GameObject:
   m_ObjectHideFlags: 0
@@ -6782,7 +7146,6 @@ MonoBehaviour:
   possibleWorldEvents: []
   initialWorldEvents:
   - {fileID: 11400000, guid: bad5b4da802417b45b007654aeec022c, type: 2}
-  activeWorldEvents: []
 --- !u!4 &1581247057
 Transform:
   m_ObjectHideFlags: 0
@@ -9422,7 +9785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2070111365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9438,13 +9801,13 @@ MonoBehaviour:
   <UseDontDestroyOnLoad>k__BackingField: 1
   chunkDimensions: 16
   chunkGenBounds:
-    m_Center: {x: 2.5, y: 0, z: 2.5}
-    m_Extent: {x: 2.5, y: 0.5, z: 2.5}
+    m_Center: {x: 4, y: 8, z: 4}
+    m_Extent: {x: 4, y: 2, z: 4}
   initialTerrainGenBounds:
-    m_Center: {x: 48, y: 110, z: 48}
-    m_Extent: {x: 24, y: 30, z: 24}
+    m_Center: {x: 64, y: 110, z: 64}
+    m_Extent: {x: 64, y: 30, z: 64}
   center: {fileID: 0}
-  size: {x: 16, y: 40, z: 16}
+  size: {x: 10, y: 40, z: 10}
   ErrorTile: {fileID: 3162623308867682789, guid: 393db4d902d13ff4eb65b621d1a3e37e, type: 3}
   worldGeneration:
     mapGenerators:
@@ -10577,5 +10940,6 @@ SceneRoots:
   - {fileID: 1025231282}
   - {fileID: 2070111366}
   - {fileID: 277745147}
+  - {fileID: 792673349}
   - {fileID: 513072652}
   - {fileID: 1581247057}

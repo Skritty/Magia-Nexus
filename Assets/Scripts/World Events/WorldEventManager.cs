@@ -72,7 +72,7 @@ public class WorldEventManager : Singleton<WorldEventManager>
 
     public void AddActiveWorldEvent(WorldEvent worldEvent)
     {
-        MultidimensionalPosition position = new(1, 0, 1);//worldEvent.spawnChunk.GetSpawnChunkPosition();
+        MultidimensionalPosition position = worldEvent.spawnChunk.GetSpawnChunkPosition();
         activeWorldEvents.Add(position, worldEvent);
     }
 }

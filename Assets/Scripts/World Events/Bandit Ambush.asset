@@ -19,17 +19,37 @@ MonoBehaviour:
     rid: 5185999002687242710
   encounterSpawns:
   - spawnProbabilityMap: {fileID: 2800000, guid: c475b2262adf3ec4ea712ebc30a1616c, type: 3}
+    spawnTile:
+      tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+      optionsSerializer: 01000000000000
+      generated: 0
+    offset: {x: -100, y: -99, z: -100}
     encounterSpawnTasks:
-    - rid: 5185999002687242706
+    - rid: 5185999022005158012
   - spawnProbabilityMap: {fileID: 2800000, guid: 2456d15aa3ddff142b400772f0d28541, type: 3}
+    spawnTile:
+      tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+      optionsSerializer: 01000000000000
+      generated: 0
+    offset: {x: -100, y: -99, z: -100}
     encounterSpawnTasks:
-    - rid: 5185999002687242707
+    - rid: 5185999022005158014
   - spawnProbabilityMap: {fileID: 2800000, guid: 79f8f78fbf48a2140a31b13ce9a704cd, type: 3}
+    spawnTile:
+      tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+      optionsSerializer: 01000000000000
+      generated: 0
+    offset: {x: -100, y: -99, z: -100}
     encounterSpawnTasks:
-    - rid: 5185999002687242708
+    - rid: 5185999022005158015
   - spawnProbabilityMap: {fileID: 2800000, guid: f6d4266273ac13c4493a53d9445d227d, type: 3}
+    spawnTile:
+      tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
+      optionsSerializer: 01000000000000
+      generated: 0
+    offset: {x: -100, y: -99, z: -100}
     encounterSpawnTasks:
-    - rid: 5185999002687242709
+    - rid: 5185999022005158016
   references:
     version: 2
     RefIds:
@@ -64,18 +84,6 @@ MonoBehaviour:
     - rid: 5185998865974428164
       type: {class: 'NoInherit`1[[System.Int32, mscorlib]]', ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 5185999002687242706
-      type: {class: 'Task_Debug`1[[MultidimensionalPosition, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5185999002687242707
-      type: {class: 'Task_Debug`1[[MultidimensionalPosition, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5185999002687242708
-      type: {class: 'Task_Debug`1[[MultidimensionalPosition, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5185999002687242709
-      type: {class: 'Task_Debug`1[[MultidimensionalPosition, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 5185999002687242710
       type: {class: RandomChunk, ns: , asm: Assembly-CSharp}
       data:
@@ -83,3 +91,19 @@ MonoBehaviour:
           tileset: {fileID: 11400000, guid: 15595cd57c9ed204bb6c718b7af8a955, type: 2}
           optionsSerializer: 000101000000
           generated: 0
+    - rid: 5185999022005158012
+      type: {class: Task_InstantiateAtPosition, ns: , asm: Assembly-CSharp}
+      data:
+        obj: {fileID: 3867228185287287865, guid: fe73499bfc25cf74d948ba2031a18754, type: 3}
+    - rid: 5185999022005158014
+      type: {class: Task_InstantiateAtPosition, ns: , asm: Assembly-CSharp}
+      data:
+        obj: {fileID: 3867228185287287865, guid: fe73499bfc25cf74d948ba2031a18754, type: 3}
+    - rid: 5185999022005158015
+      type: {class: Task_InstantiateAtPosition, ns: , asm: Assembly-CSharp}
+      data:
+        obj: {fileID: 3867228185287287865, guid: fe73499bfc25cf74d948ba2031a18754, type: 3}
+    - rid: 5185999022005158016
+      type: {class: Task_InstantiateAtPosition, ns: , asm: Assembly-CSharp}
+      data:
+        obj: {fileID: 3867228185287287865, guid: fe73499bfc25cf74d948ba2031a18754, type: 3}

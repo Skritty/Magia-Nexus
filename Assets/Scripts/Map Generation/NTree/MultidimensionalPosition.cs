@@ -22,6 +22,15 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
         this.position = position;
     }
 
+    public MultidimensionalPosition(MultidimensionalPosition other)
+    {
+        this.position = new ushort[other.position.Length];
+        for (int axis = 0; axis < Dimensions; axis++)
+        {
+            this.position[axis] = other.position[axis];
+        }
+    }
+
     public int Dimensions => position.Length;
     public int Depth
     {
@@ -63,7 +72,7 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
 
     public static MultidimensionalPosition operator +(MultidimensionalPosition operand, MultidimensionalPosition other)
     {
-        MultidimensionalPosition newPosition = operand;
+        MultidimensionalPosition newPosition = new(operand);
         for (int axis = 0; axis < newPosition.Dimensions; axis++)
         {
             newPosition[axis] += other[axis];
@@ -73,7 +82,7 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
 
     public static MultidimensionalPosition operator -(MultidimensionalPosition operand, MultidimensionalPosition other)
     {
-        MultidimensionalPosition newPosition = operand;
+        MultidimensionalPosition newPosition = new(operand);
         for (int axis = 0; axis < newPosition.Dimensions; axis++)
         {
             if (operand[axis] >= other[axis])

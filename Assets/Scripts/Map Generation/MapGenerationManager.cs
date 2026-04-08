@@ -39,9 +39,14 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
         //Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
         mapRepresentationLODs = new NTree<TileSuperposition>[2];
         Generate(worldGeneration, 0, chunkGenBounds);
-        Generate(mapGeneration, 1, initialTerrainGenBounds);
+        /*Generate(mapGeneration, 1, initialTerrainGenBounds);
         WorldEventManager.Instance.Initialize();
-        WorldEventManager.Instance.GenerateChunkEvent(mapRepresentationLODs[1], new(1,0,1));
+
+        foreach (var node in mapRepresentationLODs[0].nodes)
+        {
+            WorldEventManager.Instance.GenerateChunkEvent(mapRepresentationLODs[1], node.position);
+        }
+        */
     }
 
     private void FixedUpdate()
@@ -111,9 +116,9 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
         {
             chunkPos[axis] = (ushort)(position[axis] * 1f / chunkDimensions);
         }
-        chunkPos[1] = 0;// TODO: Remove
-        ChunkTile chunk = mapRepresentationLODs[0].GetDataAtPosition(chunkPos).GetTiles()[0] as ChunkTile;
-        return chunk;
+        TileSuperposition chunk = mapRepresentationLODs[0].GetDataAtPosition(chunkPos);
+        if (chunk == null) return null;
+        return chunk.GetTiles()[0] as ChunkTile;
     }
 
     public List<(ChunkTile chunk, int distance)> GetNearbyChunks(MultidimensionalPosition position)
@@ -125,9 +130,8 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
             if (x > 0) xOffset = (int)(chunkDimensions * 0.5f * (position[0] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
             for (int y = 0; y < 2; y++)
             {
-                y = 2; // TODO: Remove
                 int yOffset = 0;
-                //if (y > 0) yOffset = (int)(chunkDimensions * 0.5f * (position[1] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
+                if (y > 0) yOffset = (int)(chunkDimensions * 0.5f * (position[1] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
                 for (int z = 0; z < 2; z++)
                 {
                     int zOffset = 0;
@@ -135,13 +139,14 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
 
                     MultidimensionalPosition chunkPos = new MultidimensionalPosition(
                         (ushort)((position[0] + xOffset) / chunkDimensions), 
-                        0,//(ushort)((position[1] + yOffset) / chunkDimensions), 
+                        (ushort)((position[1] + yOffset) / chunkDimensions), 
                         (ushort)((position[2] + zOffset) / chunkDimensions));
-                    ChunkTile chunk = mapRepresentationLODs[0].GetDataAtPosition(chunkPos).GetTiles()[0] as ChunkTile;
+                    TileSuperposition tile = mapRepresentationLODs[0].GetDataAtPosition(chunkPos);
+                    if (tile == null) continue;
                     chunkPos[0] = (ushort)(chunkPos[0] * chunkDimensions + 0.5f * chunkDimensions);
                     chunkPos[1] = position[1];
                     chunkPos[2] = (ushort)(chunkPos[2] * chunkDimensions + 0.5f * chunkDimensions);
-                    chunks.Add((chunk, (int)Mathf.Clamp(chunkDimensions - chunkPos.Distance(position), 0, chunkDimensions)));
+                    chunks.Add((tile.GetTiles()[0] as ChunkTile, (int)Mathf.Clamp(chunkDimensions - chunkPos.Distance(position), 0, chunkDimensions)));
                 }
             }
         }
@@ -174,5 +179,9 @@ public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerat
     {
         if (mapRepresentationLODs == null) return;
         foreach (MapGenerator generator in worldGeneration.mapGenerators) if(generator != null) generator.DrawGizmos(mapRepresentationLODs[0]);
+        foreach (var node in mapRepresentationLODs[0].nodes)
+        {
+            Gizmos.DrawWireCube(node.position.ToVector3 * chunkDimensions + Vector3.one * (chunkDimensions * 0.5f - 0.5f) + transform.position, Vector3.one * chunkDimensions);
+        }
     }
 }
