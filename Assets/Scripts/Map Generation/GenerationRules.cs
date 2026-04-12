@@ -78,6 +78,7 @@ public class GenerationRule_NoiseValueRange : GenerationRule
         if (tree[position] == null)
         {
             if (!createNewTiles) return generatedTiles;
+            Debug.Log(position);
             tree[position] = new TileSuperposition(defaultTile);
             generatedTiles.Add(position);
         }
