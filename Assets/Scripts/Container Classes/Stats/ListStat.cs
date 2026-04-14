@@ -80,10 +80,7 @@ public class ListStat<T> : IModifiable<T>, IEnumerable<T>
         return cleanup;
     }
 
-    public void Add(IDataContainer<T> modifier)
-    {
-        Modifiers.Add(modifier);
-    }
+    public void Add(IDataContainer<T> modifier) => Modifiers.Add(modifier);
 
     public void Remove(T value)
     {
@@ -93,14 +90,17 @@ public class ListStat<T> : IModifiable<T>, IEnumerable<T>
         }
     }
 
-    public void Remove(IDataContainer modifier)
-    {
-        Modifiers.Remove(modifier as IDataContainer<T>);
-    }
+    public void Remove(IDataContainer modifier) => Modifiers.Remove(modifier as IDataContainer<T>);
 
-    public void Clear()
+    public void Clear() => Modifiers.Clear();
+
+    public int IndexOf(T modifier)
     {
-        Modifiers.Clear();
+        for (int i = 0; i < Modifiers.Count; i++)
+        {
+            if (Modifiers[i].Value.Equals(modifier)) return i;
+        }
+        return -1;
     }
 
     public bool Contains(T modifier)

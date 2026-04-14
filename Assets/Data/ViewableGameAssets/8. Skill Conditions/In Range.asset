@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fee621f2baaf3418e0c19d2c5ceab3, type: 3}
+  m_Name: In Range
+  m_EditorClassIdentifier: 
+  aliases:
+  - In Range
+  info: 
+  image: {fileID: 21300000, guid: b9198a484decb6c4e9619c047a230f58, type: 3}
+  hidden: 1
+  condition:
+    rid: 5747455457082212479
+  references:
+    version: 2
+    RefIds:
+    - rid: 5747455457082212479
+      type: {class: Trigger_SkillTriggerCheck, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 5747455457082212480
+        - rid: 5747455457082212481
+    - rid: 5747455457082212480
+      type: {class: 'Task_Filter_HasAnyTargets`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        targeting:
+          rid: 5747455457082212482
+    - rid: 5747455457082212481
+      type: {class: 'Task_QueueSkill`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        condition: {fileID: 11400000}
+    - rid: 5747455457082212482
+      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+        entitiesAffected: 8
+        sortingMethod: 1
+        lineOfSight: 0
+        ignoreIntangeable: 0
+        numberOfTargets: -1
+        offset: {x: 0, y: 0, z: 0}
+        vfx: {fileID: 0}
+        radius: 1.5
+        angle: 180

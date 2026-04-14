@@ -56,7 +56,7 @@ public class Rune_Order : Rune
 
     private void SetupSummon(Spell spell, Entity entity)
     {
-        entity.GetMechanic<Mechanic_Actions>().AddAction(move);
+        /*entity.GetMechanic<Mechanic_Actions>().AddAction(move);
         for (int i = 1; i < spell.runes.Count; i++)
         {
             if (spell.runes[i].element == RuneElement.Null) continue;
@@ -74,7 +74,7 @@ public class Rune_Order : Rune
                 }
         }
         Trigger_TurnStart.Subscribe(Invoke, entity);
-        spell.cleanup += Trigger_Die.Subscribe(y => SummonDeath(spell, entity), entity);
+        spell.cleanup += Trigger_Die.Subscribe(y => SummonDeath(spell, entity), entity);*/
     }
 
     private void SummonDeath(Spell spell, Entity entity)

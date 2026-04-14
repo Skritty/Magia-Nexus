@@ -70,4 +70,4 @@ public class Action : ViewableGameAsset
 // Earth, Wind, Fire, Water, Chaos, Order
 
 // Henshin, slash, move
-// Henshin, super punch, divekick
+// Henshin, super punch, divekickk

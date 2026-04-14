@@ -83,7 +83,7 @@ public class ShopSimple : MonoBehaviour
         }
     }
 
-    public void NextPhase() => GameManager.Instance.NextPhase();
+    //public void NextPhase() => GameManager.Instance.NextPhase();
 
     private void CreateItemUI(Item item, DisplayItem displayPrefab, Transform parent, int id)
     {

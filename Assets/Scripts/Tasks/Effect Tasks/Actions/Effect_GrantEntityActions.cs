@@ -12,7 +12,7 @@ public class Effect_GrantEntityActions : EffectTask
     {
         foreach (Action action in actions)
         {
-            Target.GetMechanic<Mechanic_Actions>().AddAction(action);
+            //Target.GetMechanic<Mechanic_Skills>().AddAction(action);
         }
     }
 }

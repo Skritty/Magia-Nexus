@@ -16,9 +16,8 @@ MonoBehaviour:
   - Arrow
   - Bow
   info: Fires an arrow at your target, dealing 80 damage
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: cf9b94f177796e34cb0b528627728198, type: 3}
   hidden: 0
-  UIColor: {r: 1, g: 1, b: 1, a: 1}
   maxUses: 0
   initialAnimationState: 3
   activateAnimationState: 4
@@ -30,7 +29,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   onTick: 0
   timing: 0
-  effectMultiplier: 1
   effects:
   - rid: 4023383589043568711
   references:

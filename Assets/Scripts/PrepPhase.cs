@@ -57,7 +57,7 @@ public class PrepPhase : MonoBehaviour
     public bool CreateTurn(Viewer viewer, List<string> turnActions, out string message)
     {
         // Check that the action list does not exceed max actions
-        int turnActionCount = GameManager.Instance.defaultActionsPerTurn;
+        /*int turnActionCount = GameManager.Instance.defaultActionsPerTurn;
         foreach (Item item in viewer.items)
         {
             turnActionCount += item.actionCountModifier;
@@ -66,7 +66,7 @@ public class PrepPhase : MonoBehaviour
         {
             message = $"Your turn must contain exactly {turnActionCount} actions!";
             return false;
-        }
+        }*/
 
         // Ensure that the viewer has the actions
         List<Action> actions = new List<Action>();
@@ -156,4 +156,4 @@ public class PrepPhase : MonoBehaviour
 // PREP PHASE CHAT COMMANDS
 // !actions (show your available actions)
 // !createTurn 2, 3, 5, 1, 2
-// !turn (show your current turn)
+// !turn (show your current turn)r current turn)

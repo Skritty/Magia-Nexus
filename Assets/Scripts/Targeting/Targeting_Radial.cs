@@ -31,10 +31,10 @@ public class Targeting_Radial : MultiTargeting
     {
         if (vfx is not VFX_AoE) return;
         Vector3 lookDir = owner.GetMechanic<Mechanic_Movement>().facingDir;
-        int ticksPerAction = owner.GetMechanic<Mechanic_Actions>().TicksPerAction;
-        float timePerAction = owner.GetMechanic<Mechanic_Actions>().TimePerAction;
-        VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : owner).transform, offset, lookDir, true, ticksPerAction);
-        aoe.ApplyAoE(radius, angle, timePerAction);
+        //int ticksPerAction = owner.GetMechanic<Mechanic_Actions>().TicksPerAction;
+        //float timePerAction = owner.GetMechanic<Mechanic_Actions>().TimePerAction;
+        //VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : owner).transform, offset, lookDir, true, ticksPerAction);
+        //aoe.ApplyAoE(radius, angle, timePerAction);
         //aoe.ApplyDamage(source as Effect_Damage<Effect>);
     }
 

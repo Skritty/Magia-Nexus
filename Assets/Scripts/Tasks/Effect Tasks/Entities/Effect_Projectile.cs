@@ -50,11 +50,12 @@ public class Effect_Projectile : Effect_CreateEntity
                         }
                     case ProjectileFanType.Sequence:
                         {
-                            int tickDelay = (int)(1f * Owner.GetMechanic<Mechanic_Actions>().TicksPerAction / projectileCount);
+                            /*int tickDelay = (int)(1f * Owner.GetMechanic<Mechanic_Actions>().TicksPerAction / projectileCount);
                             for (int tick = 0; tick < tickDelay; tick++)
                             {
                                 yield return new WaitForFixedUpdate();
-                            }
+                            }*/
+                            yield return null;
                             break;
                         }
                 }

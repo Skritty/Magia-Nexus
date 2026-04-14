@@ -28,7 +28,7 @@ public class Effect_Summon : Effect_CreateEntity
             Owner.Stat<Stat_Summons>().Add(spawnedEntity);
             Trigger_Expire.Subscribe(x => Owner.Stat<Stat_Summons>().Remove(spawnedEntity), spawnedEntity);
             Trigger_SummonCreated.Invoke(spawnedEntity, spawnedEntity, entity, this);
-            spawnedEntity.GetMechanic<Mechanic_Actions>().Tick();
+            //spawnedEntity.GetMechanic<Mechanic_Actions>().Tick();
         }
         yield return null;
     }

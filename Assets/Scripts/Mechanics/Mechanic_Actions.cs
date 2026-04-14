@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+/*using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -136,4 +136,4 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
     {
         currentAction?.Tick(Owner, TicksPerAction, tick);
     }
-}
+}*/

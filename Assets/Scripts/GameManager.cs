@@ -11,14 +11,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public float timePerTurn;
-    public int ticksPerTurn => (int)(timePerTurn * 50);
+    //public float timePerTurn;
+    /*public int ticksPerTurn => (int)(timePerTurn * 50);
     public int defaultActionsPerTurn;
     public Phase initialPhase;
     [ShowInInspector, ReadOnly]
     private Phase currentPhase;
     private Coroutine phaseTimer;
-    public TextMeshProUGUI timer;
+    public TextMeshProUGUI timer;*/
     [ShowInInspector]
     public List<ViewableGameAsset> viewableGameAssets = new();
     [ShowInInspector]
@@ -139,7 +139,7 @@ public class GameManager : Singleton<GameManager>
         return new CommandResponse(true, "");
     }
 
-    private void Start()
+    /*private void Start()
     {
         SceneManager.sceneLoaded += SceneDoneLoading;
     }
@@ -178,7 +178,7 @@ public class GameManager : Singleton<GameManager>
             yield return new WaitForFixedUpdate();
         }
         StartPhase(phase.nextPhase);
-    }
+    }*/
 
     public CommandResponse Command_ListHeldItems(string user, List<string> args)
     {

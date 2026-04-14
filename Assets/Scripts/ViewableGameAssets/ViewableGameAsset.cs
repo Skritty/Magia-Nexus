@@ -11,7 +11,6 @@ public class ViewableGameAsset : ScriptableObject
     public string info;
     public Sprite image;
     public bool hidden = true;
-    public Color UIColor = Color.white;
 
     public bool NameMatch(string s)
     {
