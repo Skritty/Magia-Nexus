@@ -1,7 +1,7 @@
 using TwitchLib.Api.Helix.Models.Search;
 using UnityEngine;
 
-public class Modifier_Scaling : Modifier<float>, ISolver<float>
+public class Modifier_Scaling : Modifier<float>, ISolver
 {
     public override float Value 
     { 

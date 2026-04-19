@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_DamageOverTime : ListStat<float>, IStat<float> { }
-public class Stat_DamageDealt : ListStat<float>, IStat<float> { }
-public class Stat_DamageTaken : ListStat<float>, IStat<float> { }
+public class Stat_DamageOverTime : ListStat<float>, IStat<List<float>> { }
+public class Stat_DamageDealt : ListStat<float>, IStat<List<float>> { }
+public class Stat_DamageTaken : ListStat<float>, IStat<List<float>> { }
 public class Stat_Invulnerable : BooleanPrioritySolver, IStat<bool> { }
 public class Stat_CurrentLife : StepCalculation, IStat<float> { }
 public class Stat_MaxLife : StepCalculation, IStat<float> { }
 public class Stat_Counter_DamageDealt : Stat_Counter, IStat<int> { }
-public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
+public class Mechanic_Damageable : Mechanic
 {
     #region Internal Variables
     [SerializeField, FoldoutGroup("@GetType()"), ShowIf("@Owner != null")]
@@ -25,8 +25,8 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
     {
         base.Initialize();
         baseLife = new DataContainer<float>();
-        baseLife.Value = Owner.Stat<Stat_MaxLife>().Value;
-        Owner.Stat<Stat_CurrentLife>().Add(baseLife);
+        baseLife.Value = Owner.GetStat<Stat_MaxLife>().Value;
+        Owner.GetStat<Stat_CurrentLife>().Add(baseLife);
     }
 
     public override void Tick()
@@ -36,12 +36,12 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
     private void HandleDoTDamage()
     {
-        if (Owner.Stat<Stat_DamageOverTime>().Modifiers.Count == 0) return;
+        if (Owner.GetStat<Stat_DamageOverTime>().Modifiers.Count == 0) return;
         // TODO: damage dealt mods won't apply like this
         DamageInstance damage = new DamageInstance();
         damage.EffectMultiplier = 1;
         damage.Target = Owner;
-        foreach (IDataContainer<float> modifier in Owner.Stat<Stat_DamageOverTime>().Modifiers)
+        foreach (IDataContainer<float> modifier in Owner.GetStat<Stat_DamageOverTime>().Modifiers)
         {
             damage.damageModifiers.Add(modifier as Modifier_Damage);
         }
@@ -50,7 +50,7 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
 
     public void TakeDamage(DamageInstance damage, bool triggered = false)
     {
-        if (Owner.Stat<Stat_CurrentLife>().Value <= 0 || damage.EffectMultiplier == 0 || damage.Target == null || !damage.Target.gameObject.activeSelf)
+        if (Owner.GetStat<Stat_CurrentLife>().Value <= 0 || damage.EffectMultiplier == 0 || damage.Target == null || !damage.Target.gameObject.activeSelf)
         {
             return;
         }
@@ -61,27 +61,27 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
             calculation.Add(d);
         }
         if(damage.Owner != null)
-        foreach (Modifier_Damage d in damage.Owner.Stat<Stat_DamageDealt>().Modifiers)
+        foreach (Modifier_Damage d in damage.Owner.GetStat<Stat_DamageDealt>().Modifiers)
         {
             calculation.Add(d);
         }
-        foreach (Modifier_Damage d in damage.Target.Stat<Stat_DamageTaken>().Modifiers)
+        foreach (Modifier_Damage d in damage.Target.GetStat<Stat_DamageTaken>().Modifiers)
         {
             calculation.Add(d);
         }
         calculation.Add(new Modifier_Damage(value: damage.EffectMultiplier, step: CalculationStep.Multiplicative, appliesTo: DamageType.All));
         damage.finalDamage = calculation.Value;
         if (damage.Owner != null)
-            damage.Owner.Stat<Stat_Counter_DamageDealt>()[damage.Target] += (int)damage.finalDamage;
-        damage.Target.Stat<Stat_Counter_DamageDealt>()[damage.Target] += (int)damage.finalDamage;
+            damage.Owner.GetStat<Stat_Counter_DamageDealt>()[damage.Target] += (int)damage.finalDamage;
+        damage.Target.GetStat<Stat_Counter_DamageDealt>()[damage.Target] += (int)damage.finalDamage;
         //Debug.Log($"({Time.time}) Dealing {damage.finalDamage} damage from {damage.Owner} to {damage.Target} ({Owner}). Moving from {baseLife.Value}hp to {baseLife.Value-damage.finalDamage}");
 
         /*// Apply tank contribution
         if (damage.finalDamage > 0)
             Owner.GetMechanic<Mechanic_PlayerOwner>().ApplyContribution(damage.owner, damage.calculatedDamage / 100f * TankContributionMultiplier);*/
 
-        baseLife.Value = Mathf.Clamp(baseLife.Value - damage.finalDamage, float.MinValue, Owner.Stat<Stat_MaxLife>().Value);
-        Owner.Stat<Stat_CurrentLife>().MarkAsChanged();
+        baseLife.Value = Mathf.Clamp(baseLife.Value - damage.finalDamage, float.MinValue, Owner.GetStat<Stat_MaxLife>().Value);
+        //Owner.GetStat<Stat_CurrentLife>().SetChanged();
 
         if (!triggered && damage.finalDamage != 0)
         {
@@ -91,13 +91,13 @@ public class Mechanic_Damageable : Mechanic<Mechanic_Damageable>
             Trigger_Damage.Invoke(damage, damage, damage.Owner, damage.Target);
         }
 
-        if (Owner.Stat<Stat_CurrentLife>().Value <= 0)
+        if (Owner.GetStat<Stat_CurrentLife>().Value <= 0)
         {
             //Owner.GetMechanic<Mechanic_Character>().DistributeRewards();
             Trigger_Die.Invoke(damage, damage, damage.Owner, damage.Target);
             Trigger_Expire.Invoke(Owner, Owner);
         }
 
-        healthBar.localScale = new Vector3(Owner.Stat<Stat_CurrentLife>().Value / Owner.Stat<Stat_MaxLife>().Value, 1, 1);
+        healthBar.localScale = new Vector3(Owner.GetStat<Stat_CurrentLife>().Value / Owner.GetStat<Stat_MaxLife>().Value, 1, 1);
     }
 }

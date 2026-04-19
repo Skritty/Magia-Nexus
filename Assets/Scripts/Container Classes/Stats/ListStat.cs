@@ -3,24 +3,11 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class ListStat<T> : IModifiable<T>, IEnumerable<T>
+public class ListStat<T> : IDataContainer<List<T>>, IModifiable<List<T>>, IEnumerable<T>
 {
-    [field: SerializeReference]
-    public InheritModifiers<T> ModifierInheritMethod { get; set; } = new NoInherit<T>();
+    public List<T> Value { get; private set; }
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()")]
-    private List<IDataContainer<T>> _modifiers = new();
-    public List<IDataContainer<T>> Modifiers
-    {
-        get
-        {
-            List<IDataContainer<T>> modifiers = ModifierInheritMethod.InheritedModifiers();
-            return modifiers == null ? _modifiers : modifiers;
-        }
-        set
-        {
-            _modifiers = value;
-        }
-    }
+    public List<IDataContainer<List<T>>> Modifiers { get; set; }
     public int Count => Modifiers.Count;
 
     public IEnumerator<T> GetEnumerator()
@@ -131,5 +118,15 @@ public class ListStat<T> : IModifiable<T>, IEnumerable<T>
         IModifiable<T> clone = (IModifiable<T>)MemberwiseClone();
         if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
         return clone;
+    }
+
+    public bool IsDefaultValue()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public bool TryGet<Type>(out Type data)
+    {
+        throw new System.NotImplementedException();
     }
 }

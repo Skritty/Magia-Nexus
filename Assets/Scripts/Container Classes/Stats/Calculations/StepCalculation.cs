@@ -17,7 +17,7 @@ public class StepCalculation : NumericalSolver
             }
             return _value;
         }
-        protected set
+        set
         {
             Modifiers.Clear();
             Modifiers.Add(new NumericalSolver(value, CalculationStep.Flat));

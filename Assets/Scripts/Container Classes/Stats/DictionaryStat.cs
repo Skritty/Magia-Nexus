@@ -2,24 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-public class DictionaryStat<Key, Value> : IModifiable<Value>, IEnumerable<Value>
+public class DictionaryStat<Key, Value> : IDataContainer<Dictionary<Key,Value>>, IModifiable<Dictionary<Key, Value>>, IEnumerable<Value>
 {
-    [field: SerializeReference]
-    public InheritModifiers<Value> ModifierInheritMethod { get; set; } = new NoInherit<Value>();
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
-    private List<IDataContainer<Value>> _modifiers = new();
-    public List<IDataContainer<Value>> Modifiers
-    {
-        get
-        {
-            List<IDataContainer<Value>> modifiers = ModifierInheritMethod.InheritedModifiers();
-            return modifiers == null ? _modifiers : modifiers;
-        }
-        set
-        {
-            _modifiers = value;
-        }
-    }
+    public List<IDataContainer<Dictionary<Key, Value>>> Modifiers { get; set; }
     public Dictionary<Key, IDataContainer<Value>> ModifierDictionary { get; set; } = new();
     public int Count => Modifiers.Count;
 

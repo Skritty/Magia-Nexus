@@ -16,7 +16,6 @@ public class PrioritySolver<T> : Solver<T>, IPriority
 {
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public byte Priority { get; set; }
-
     public System.Action AddModifier(T modifier, byte priority)
     {
         PrioritySolver<T> data = new PrioritySolver<T>();

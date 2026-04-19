@@ -63,6 +63,14 @@ public class GameManager : Singleton<GameManager>
         TwitchClient.Instance.RemoveCommand("actions", Command_ListActions);
         TwitchClient.Instance.RemoveCommand("turn", Command_ListTurn);
         TwitchClient.Instance.RemoveCommand("info", Command_Info);
+
+        Stats.ClearAllStats();
+        IModifier.ClearDurationModifiers();
+    }
+
+    public void FixedUpdate()
+    {
+        IModifier.Tick();
     }
 
     public Viewer JoinAsCPU()

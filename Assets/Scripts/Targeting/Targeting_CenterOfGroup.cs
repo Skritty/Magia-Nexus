@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stat_CenterEntity : Stat<Entity>, IStat<Entity> { }
+public class Stat_CenterEntity : Solver<Entity>, IStat<Entity> { }
 public class Targeting_CenterOfGroup : MultiTargeting
 {
     public override List<Entity> GetTargets(Entity owner, Entity proxy = null)
@@ -14,10 +14,10 @@ public class Targeting_CenterOfGroup : MultiTargeting
         foreach (Entity entity in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
         {
             // Can it be targeted?
-            if (entity.Stat<Stat_Untargetable>().Contains((owner, this))) continue;
+            if (entity.GetStat<Stat_Untargetable>().Contains((owner, this))) continue;
 
             // Is it in the affected entities?
-            if (entity.Stat<Stat_Team>().Value != owner.Stat<Stat_Team>().Value)
+            if (entity.GetStat<Stat_Team>().Value != owner.GetStat<Stat_Team>().Value)
             {
                 targetType = TargetFilter.Enemies;
             }
@@ -25,7 +25,7 @@ public class Targeting_CenterOfGroup : MultiTargeting
             {
                 targetType = TargetFilter.Self;
             }
-            else if (entity == owner.Stat<Stat_PlayerCharacter>().Value)
+            else if (entity == owner.GetStat<Stat_PlayerCharacter>().Value)
             {
                 targetType = TargetFilter.Owner;
             }
@@ -52,11 +52,11 @@ public class Targeting_CenterOfGroup : MultiTargeting
         }
         center /= targets.Count;
 
-        Entity centerEntity = owner.Stat<Stat_CenterEntity>().Value;
+        Entity centerEntity = owner.GetStat<Stat_CenterEntity>().Value;
         if(centerEntity == null)
         {
             centerEntity = new GameObject().AddComponent<Entity>();
-            owner.Stat<Stat_CenterEntity>().Set(centerEntity);
+            owner.GetStat<Stat_CenterEntity>().Value = centerEntity;
         }
         centerEntity.transform.position = center;
         return new List<Entity>() { centerEntity };

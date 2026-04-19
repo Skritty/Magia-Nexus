@@ -1,16 +1,17 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
 public class Stat_Team : PrioritySolver<int>, IStat<int> { }
 public class Stat_SummonCount : NumericalSolver, IStat<float> { }
-public class Stat_Summons : ListStat<Entity>, IStat<Entity> { }
-public class Stat_Proxies : ListStat<Entity>, IStat<Entity> { }
+public class Stat_Summons : ListStat<Entity>, IStat<List<Entity>> { }
+public class Stat_Proxies : ListStat<Entity>, IStat<List<Entity>> { }
 public class Stat_TeamPlayers : NumericalSolver, IStat<float> { }
 public class Stat_MaxSummons : NumericalSolver, IStat<float> { }
-public class Stat_PlayerCharacter : Stat<Entity>, IStat<Entity> { }
-public class Stat_LastKilledBy : Stat<Entity>, IStat<Entity> { }
-public class Stat_Viewer : Stat<Viewer>, IStat<Viewer> { }
-public class Mechanic_Assists : DictionaryStat<Viewer, Entity>, IStat<Entity> { }
-public class Mechanic_Character : Mechanic<Mechanic_Character>
+public class Stat_PlayerCharacter : Solver<Entity>, IStat<Entity> { } // TODO: Remake Stat class (data structure)?
+public class Stat_LastKilledBy : Solver<Entity>, IStat<Entity> { }
+public class Stat_Viewer : Solver<Viewer>, IStat<Viewer> { }
+public class Mechanic_Assists : DictionaryStat<Viewer, Entity>, IStat<Dictionary<Viewer, Entity>> { }
+public class Mechanic_Character : Mechanic
 {
     [FoldoutGroup("Character")]
     public TMPro.TextMeshProUGUI characterNamePlate;
@@ -19,8 +20,8 @@ public class Mechanic_Character : Mechanic<Mechanic_Character>
     {
         
         viewer.character = Owner;
-        Owner.AddModifier<Viewer, Stat_Viewer>(viewer, 0);
-        Owner.AddModifier<Entity, Stat_PlayerCharacter>(Owner, 0);
+        Owner.GetStat<Stat_Viewer>().Add(viewer);
+        Owner.GetStat<Stat_PlayerCharacter>().Add(Owner);
         Owner.name = viewer.viewerName;
         if (characterNamePlate != null)
             characterNamePlate.text = viewer.viewerName;

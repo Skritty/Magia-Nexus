@@ -5,7 +5,7 @@ using UnityEngine;
 public class Stat_ThinkingTime : NumericalSolver, IStat<float> { }
 public class Trigger_SkillTriggerCheck : Trigger<Trigger_SkillTriggerCheck, Entity> { }
 public class Trigger_DefaultSkill : Trigger<Trigger_DefaultSkill, Entity> { }
-public class Mechanic_Skills : Mechanic<Mechanic_Skills>
+public class Mechanic_Skills : Mechanic
 {
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private Skill queuedSkill;
@@ -27,7 +27,7 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
 
     public override void Tick()
     {
-        if (Owner.Stat<Stat_Stunned>().Value)
+        if (Owner.GetStat<Stat_Stunned>().Value)
         {
             EndSkill();
             return;
@@ -37,7 +37,7 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
         
         if (thinking)
         {
-            if (tick >= Owner.Stat<Stat_ThinkingTime>().Value)
+            if (tick >= Owner.GetStat<Stat_ThinkingTime>().Value)
             {
                 thinking = false;
                 Trigger_SkillTriggerCheck.Invoke(Owner, Owner);

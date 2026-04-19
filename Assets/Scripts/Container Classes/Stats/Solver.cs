@@ -3,62 +3,11 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public interface IModifiable
-{
-    public bool TryAdd(IDataContainer modifier);
-    public void Remove(IDataContainer modifier);
-    public bool Contains(IDataContainer modifier, out int count);
-    public IModifiable Clone(bool preserveModifiers);
-}
-
-public interface IModifiable<T> : IModifiable
-{
-    public List<IDataContainer<T>> Modifiers { get; set; }
-    public void Add(IDataContainer<T> modifier);
-}
-
-public interface IInheritableModifiers<T> : IModifiable<T>
-{
-    public new List<IDataContainer<T>> Modifiers { get; set; }
-    public InheritModifiers<T> ModifierInheritMethod { get; set; }
-}
-
-[Serializable]
-public abstract class InheritModifiers<T>
-{
-    public abstract List<IDataContainer<T>> InheritedModifiers();
-}
-
-public class NoInherit<T> : InheritModifiers<T>
-{
-    public override List<IDataContainer<T>> InheritedModifiers()
-    {
-        return null;
-    }
-}
-
-public class InheritFromPlayerCharacter<T> : InheritModifiers<T>
-{
-    public Entity self;
-    [SerializeReference]
-    public IStat<T> referenceStat;
-    public override List<IDataContainer<T>> InheritedModifiers()
-    {
-        return (self.Stat<Stat_PlayerCharacter>().Value.Stat(referenceStat) as IStat<T>).Modifiers;
-    }
-}
-
-public interface ISolver<T>
-{
-    public void Solve();
-    public void InverseSolve();
-    public void MarkAsChanged();
-}
-
-public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>, ISerializationCallbackReceiver
+public abstract class Solver<T> : IDataContainer<T>, IModifiable<T>, ISolver, ISerializationCallbackReceiver
 {
     protected T _value;
     protected bool changed;
+
     [ShowInInspector, FoldoutGroup("@GetType()")]
     public virtual T Value
     {
@@ -71,7 +20,7 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
             }
             return _value;
         }
-        protected set
+        set
         {
             Modifiers.Clear();
             Add(value);
@@ -79,37 +28,14 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
         }
     }
 
-    [field: SerializeReference]
-    public InheritModifiers<T> ModifierInheritMethod { get; set; } = new NoInherit<T>();
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
-    private List<IDataContainer<T>> _modifiers = new();
-    public List<IDataContainer<T>> Modifiers
-    {
-        get
-        {
-            List<IDataContainer<T>> modifiers = ModifierInheritMethod.InheritedModifiers();
-            return modifiers == null ? _modifiers : modifiers;
-        }
-        set
-        {
-            _modifiers = value;
-        }
-    }
+    public List<IDataContainer<T>> Modifiers { get; set; }
 
-    public bool IsDefaultValue() => Value.Equals(default(T));
-    public bool Get<Type>(out Type data)
+    public bool IsDefaultValue() => Value.Equals(default);
+    public bool TryGet<Type>(out Type data)
     {
         data = (Type)(Value as object);
         return data != null;
-    }
-
-    public void MarkAsChanged()
-    {
-        changed = true;
-        foreach (IDataContainer<T> modifier in Modifiers)
-        {
-            (modifier as ISolver<T>)?.MarkAsChanged();
-        }
     }
 
     public System.Action Add(T value)
@@ -142,6 +68,7 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
         Modifiers.Remove(modifier as IDataContainer<T>);
         changed = true;
     }
+
     public virtual bool Contains(IDataContainer modifier, out int count)
     {
         count = 0;
@@ -158,13 +85,8 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
 
     public virtual void Solve()
     {
-        foreach(IDataContainer<T> modifier in Modifiers)
-        {
-            _value = modifier.Value;
-            return;
-        }
+        if(Modifiers.Count > 0) _value = Modifiers[0].Value;
     }
-    public virtual void InverseSolve() { /* TODO: contribution via inverse solve */ }
 
     public IModifiable Clone(bool preserveModifiers)
     {
@@ -173,11 +95,7 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
         return clone;
     }
 
-    public void OnBeforeSerialize()
-    {
-        
-    }
-
+    public void OnBeforeSerialize() { }
     public void OnAfterDeserialize()
     {
         changed = true;

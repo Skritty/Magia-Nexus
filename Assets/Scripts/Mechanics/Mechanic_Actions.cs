@@ -8,7 +8,7 @@ public class Stat_Stunned : BooleanPrioritySolver, IStat<bool> { }
 public class Stat_Channeling : BooleanPrioritySolver, IStat<bool> { }
 public class Stat_Actions : ListPrioritySolver<Action>, IStat<List<Action>> { }
 public class Stat_Initiative : NumericalSolver, IStat<float> { }
-public class Mechanic_Actions : Mechanic<Mechanic_Actions>
+public class Mechanic_Actions : Mechanic
 {
     [FoldoutGroup("Actions")]
     public int tick = -1;
@@ -25,11 +25,11 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
     public override void Tick()
     {
         tick++;
-        if (tick < (TicksPerAction * actionsPerTurn) - Owner.Stat<Stat_Initiative>().Value)
+        if (tick < (TicksPerAction * actionsPerTurn) - Owner.GetStat<Stat_Initiative>().Value)
         {
-            Owner.AddModifier<bool, Stat_Stunned>(true, 1);
+            Owner.GetStat<Stat_Stunned>().AddModifier(true, 1);
         }
-        if (Owner.Stat<Stat_Stunned>().Value) return;
+        if (Owner.GetStat<Stat_Stunned>().Value) return;
         FetchNextAction();
         DoCurrentAction();
     }
@@ -40,31 +40,31 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
     public void AddAction(Action action)
     {
         CheckActionList();
-        Owner.Stat<Stat_Actions>().Value.Add(action);
-        actionsPerTurn = Owner.Stat<Stat_Actions>().Value.Count;
+        Owner.GetStat<Stat_Actions>().Value.Add(action);
+        actionsPerTurn = Owner.GetStat<Stat_Actions>().Value.Count;
     }
 
     public void AddAction(Action action, int phase)
     {
-        if (phase >= Owner.Stat<Stat_Actions>().Value.Count) actionsPerTurn = phase;
+        if (phase >= Owner.GetStat<Stat_Actions>().Value.Count) actionsPerTurn = phase;
         CheckActionList();
-        if (phase < 0 || phase >= Owner.Stat<Stat_Actions>().Value.Count)
+        if (phase < 0 || phase >= Owner.GetStat<Stat_Actions>().Value.Count)
         {
-            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {Owner.Stat<Stat_Actions>().Value.Count})");
+            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {Owner.GetStat<Stat_Actions>().Value.Count})");
             return;
         }
-        Owner.Stat<Stat_Actions>().Value[phase] = action;
+        Owner.GetStat<Stat_Actions>().Value[phase] = action;
     }
 
     public void SetAction(Action action, int phase)
     {
         CheckActionList();
-        if(phase < 0 || phase >= Owner.Stat<Stat_Actions>().Value.Count)
+        if(phase < 0 || phase >= Owner.GetStat<Stat_Actions>().Value.Count)
         {
-            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {Owner.Stat<Stat_Actions>().Value.Count})");
+            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {Owner.GetStat<Stat_Actions>().Value.Count})");
             return;
         }
-        Owner.Stat<Stat_Actions>().Value[phase] = action;
+        Owner.GetStat<Stat_Actions>().Value[phase] = action;
     }
 
     public void RemoveAction(Action action)
@@ -79,18 +79,18 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
 
     private void CheckActionList()
     {
-        if(Owner.Stat<Stat_Actions>().Value == null)
+        if(Owner.GetStat<Stat_Actions>().Value == null)
         {
-            Owner.Stat<Stat_Actions>().Add(actions);
+            Owner.GetStat<Stat_Actions>().Add(actions);
         }
         if (actions.Count != actionsPerTurn)
         {
             actions.Clear();
             for (int i = 0; i < actionsPerTurn; i++)
             {
-                if (Owner.Stat<Stat_Actions>().Value.Count > i)
+                if (Owner.GetStat<Stat_Actions>().Value.Count > i)
                 {
-                    actions.Add(Owner.Stat<Stat_Actions>().Value[i]);
+                    actions.Add(Owner.GetStat<Stat_Actions>().Value[i]);
                 }
                 else
                 {
@@ -102,12 +102,12 @@ public class Mechanic_Actions : Mechanic<Mechanic_Actions>
 
     private void FetchNextAction()
     {
-        List<Action> actions = Owner.Stat<Stat_Actions>().Value;
+        List<Action> actions = Owner.GetStat<Stat_Actions>().Value;
         if (actions == null || actions.Count == 0) return;
         if (tick % TicksPerAction == 0)
         {
             currentAction?.OnEnd(Owner);
-            if (Owner.Stat<Stat_Channeling>().Value)
+            if (Owner.GetStat<Stat_Channeling>().Value)
             {
                 Trigger_Channel.Invoke(Owner, Owner);
             }

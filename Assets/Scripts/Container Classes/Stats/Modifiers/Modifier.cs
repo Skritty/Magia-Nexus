@@ -43,7 +43,7 @@ public class Modifier<T> : IModifier<T>
     }
 
     public bool IsDefaultValue() => Value.Equals(default(T));
-    public bool Get<T1>(out T1 data)
+    public bool TryGet<T1>(out T1 data)
     {
         IDataContainer<T1> container = (IDataContainer<T1>)this;
         if (container == null) data = default;

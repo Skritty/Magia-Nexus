@@ -23,8 +23,8 @@ public class Task_Switch<T> : ITaskOwned<Entity, T>
 
     private bool IsFalse(Entity owner, T data)
     {
-        if (!owner.Stat<Stat_Switches>()[this]) return false;
-        owner.Stat<Stat_Switches>()[this] = false;
+        if (!owner.GetStat<Stat_Switches>()[this]) return false;
+        owner.GetStat<Stat_Switches>()[this] = false;
 
         foreach (ITask<T> task2 in falseTasks)
         {
@@ -35,8 +35,8 @@ public class Task_Switch<T> : ITaskOwned<Entity, T>
 
     private bool IsTrue(Entity owner, T data)
     {
-        if (owner.Stat<Stat_Switches>()[this]) return false;
-        owner.Stat<Stat_Switches>()[this] = true;
+        if (owner.GetStat<Stat_Switches>()[this]) return false;
+        owner.GetStat<Stat_Switches>()[this] = true;
 
         foreach (ITask<T> task2 in trueTasks)
         {
