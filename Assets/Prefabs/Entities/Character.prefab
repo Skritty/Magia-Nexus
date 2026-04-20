@@ -383,9 +383,10 @@ MonoBehaviour:
   - rid: 5747455456730153295
   - rid: 5747455456730153279
   - rid: 5747455456730153283
-  - rid: 5747455456730153783
   - rid: 5747455457082212435
   - rid: 5747455457082212498
+  - rid: 5747455594504913181
+  - rid: 5747455594504913186
   mechanics:
   - rid: 5987050868977958975
   - rid: 1083524128524730536
@@ -538,21 +539,6 @@ MonoBehaviour:
     - rid: 5747455456730153296
       type: {class: 'NoInherit`1[[System.Int32, mscorlib]]', ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 5747455456730153783
-      type: {class: Stat_ThinkingTime, ns: , asm: Assembly-CSharp}
-      data:
-        <ModifierInheritMethod>k__BackingField:
-          rid: 5747455456730153784
-        _modifiers:
-        - rid: 5747455457082212367
-        <Step>k__BackingField: 0
-    - rid: 5747455456730153784
-      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 5747455457082212367
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 5
     - rid: 5747455457082212434
       type: {class: 'DataContainer`1[[System.Int32, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
@@ -566,6 +552,8 @@ MonoBehaviour:
         - rid: 5747455457082212462
         - rid: 5747455457082212463
         - rid: 5747455457082212464
+        - rid: 5747455595328831917
+        - rid: 5747455594918838515
     - rid: 5747455457082212436
       type: {class: 'NoInherit`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data: 
@@ -630,6 +618,44 @@ MonoBehaviour:
     - rid: 5747455457983464046
       type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 5747455594504913181
+      type: {class: Stat_MaximumFocus, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5747455594504913182
+        _modifiers:
+        - rid: 5747455594504913185
+        <Step>k__BackingField: 0
+    - rid: 5747455594504913182
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5747455594504913185
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 100
+    - rid: 5747455594504913186
+      type: {class: Stat_FocusRecoveryRate, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5747455594504913187
+        _modifiers:
+        - rid: 5747455594504913191
+        <Step>k__BackingField: 0
+    - rid: 5747455594504913187
+      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5747455594504913191
+      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 20
+    - rid: 5747455594918838515
+      type: {class: 'DataContainer`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: {fileID: 11400000, guid: 8927429f68984c34584bd278b1d6debd, type: 2}
+    - rid: 5747455595328831917
+      type: {class: 'DataContainer`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: {fileID: 11400000, guid: add61c821da36f14db6be7e9c4a7fbbe, type: 2}
     - rid: 5987050868977958975
       type: {class: Mechanic_Character, ns: , asm: Assembly-CSharp}
       data:

@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Stat_ThinkingTime : NumericalSolver, IStat<float> { }
+public class Stat_MaximumFocus : NumericalSolver, IStat<float> { }
+public class Stat_CurrentFocus : NumericalSolver, IStat<float> { }
+public class Stat_FocusRecoveryRate : NumericalSolver, IStat<float> { }
 public class Stat_Skills : ListStat<Action>, IStat<Action> { }
 public class Stat_SkillConditions : ListStat<SkillCondition>, IStat<SkillCondition> { }
 public class Stat_Stunned : BooleanPrioritySolver, IStat<bool> { }
@@ -18,18 +20,21 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
     private Action activeSkill;
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private int tick;
-    [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
-    private bool thinking = true;
+    private DataContainer<float> baseFocus;
     private System.Action cleanup;
     public Dictionary<SkillCondition, Action> conditionBindings = new();
 
     public override void Initialize()
     {
-        for(int i = 0; i < Owner.Stat<Stat_Skills>().Count; i++)
+        for(int i = 0; i < Owner.Stat<Stat_SkillConditions>().Count; i++)
         {
             BindAction(Owner.Stat<Stat_Skills>()[i], Owner.Stat<Stat_SkillConditions>()[i]);
         }
         ConditionSetup();
+
+        baseFocus = new DataContainer<float>();
+        baseFocus.Value = Owner.Stat<Stat_MaximumFocus>().Value;
+        Owner.Stat<Stat_CurrentFocus>().Add(baseFocus);
     }
 
     public void ConditionSetup()
@@ -67,32 +72,35 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
             return;
         }
 
-        tick++;
-        
-        if (thinking)
+        baseFocus.Value = Mathf.Clamp(baseFocus.Value + Owner.Stat<Stat_FocusRecoveryRate>().Value / 50f, 0, Owner.Stat<Stat_MaximumFocus>().Value);
+        Owner.Stat<Stat_CurrentFocus>().MarkAsChanged();
+
+        if (activeSkill == null)
         {
-            if (tick >= Owner.Stat<Stat_ThinkingTime>().Value)
+            if(queuedSkill == null)
             {
-                thinking = false;
                 Trigger_SkillTriggerCheck.Invoke(Owner, Owner);
                 if (queuedSkill == null)
                 {
                     Trigger_DefaultSkill.Invoke(Owner, Owner);
                 }
+                return;
             }
-            return;
-        }
 
-        if (activeSkill == null && queuedSkill != null)
-        {
-            activeSkill = conditionBindings[queuedSkill];
-            queuedSkill = null;
-            tick = 0;
+            if(conditionBindings[queuedSkill].focusCost <= Owner.Stat<Stat_CurrentFocus>().Value)
+            {
+                activeSkill = conditionBindings[queuedSkill];
+                queuedSkill = null;
+                tick = 0;
+                baseFocus.Value = Mathf.Clamp(baseFocus.Value - activeSkill.focusCost, 0, Owner.Stat<Stat_MaximumFocus>().Value);
+                Owner.Stat<Stat_CurrentFocus>().MarkAsChanged();
+            }
         }
-
-        if(activeSkill && activeSkill.Tick(Owner, 25, tick)) // TODO: remove ticks per action
+        
+        if (activeSkill)
         {
-            EndSkill();
+            tick++;
+            if(activeSkill.Tick(Owner, tick)) EndSkill();
         }
     }
 
@@ -100,7 +108,6 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
     {
         activeSkill = null;
         tick = 0;
-        thinking = true;
     }
 }
 

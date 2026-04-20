@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Movement_Retreat
+  m_Name: Movement_Dodge
   m_EditorClassIdentifier: 
   aliases:
-  - Retreat
-  info: 
-  image: {fileID: 21300000, guid: 8f649c72934033e459f1e041b23e20da, type: 3}
-  hidden: 0
+  - Dodge
+  info: Quickly dodges away from your target
+  image: {fileID: 21300000, guid: 132a00a4a0468d84abadc66520af2577, type: 3}
+  hidden: 1
   initialAnimationState: 1
   activateAnimationState: 0
   movementSpeedOverDuration:
@@ -25,35 +25,36 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  focusCost: 0
-  ActionTickDuration: 100
+  focusCost: 20
+  ActionTickDuration: 20
   onTick: 1
   timing: 0
   effects:
-  - rid: 4023383616259883170
+  - rid: 5747455595328831902
+  - rid: 5747455595328831909
   references:
     version: 2
     RefIds:
-    - rid: 4023383616259883170
+    - rid: 5747455595328831902
       type: {class: Effect_ModifierActionDuration, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383616259883171
+          rid: 5747455595328831903
         modifier:
-          rid: 4023383616259883172
-    - rid: 4023383616259883171
+          rid: 5747455595328831904
+    - rid: 5747455595328831903
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 4023383616259883172
+    - rid: 5747455595328831904
       type: {class: Modifier_MovementDirectionSelector, ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField:
-          rid: 4023383616259883173
+          rid: 5747455595328831905
         <StatTag>k__BackingField:
-          rid: 4023383616259883174
+          rid: 5747455595328831906
         <Alignment>k__BackingField: 0
         <MaxStacks>k__BackingField: 1
         <StacksAdded>k__BackingField: 1
@@ -61,27 +62,63 @@ MonoBehaviour:
         <TickDuration>k__BackingField: 0
         <RefreshDuration>k__BackingField: 0
         <Priority>k__BackingField: 1
-    - rid: 4023383616259883173
+    - rid: 5747455595328831905
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383616259883175
-        movementSpeedMultiplier: 1
+          rid: 5747455595328831907
+        movementSpeedMultiplier: 5
         distanceFromTarget: 100
         threshold: 0.25
-    - rid: 4023383616259883174
+    - rid: 5747455595328831906
       type: {class: Stat_MovementSelector, ns: , asm: Assembly-CSharp}
       data:
         <ModifierInheritMethod>k__BackingField:
-          rid: 7009677036434751535
+          rid: 5747455595328831908
         _modifiers: []
         <Priority>k__BackingField: 0
-    - rid: 4023383616259883175
+    - rid: 5747455595328831907
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 7009677036434751535
+    - rid: 5747455595328831908
       type: {class: 'NoInherit`1[[MovementDirectionSelector, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5747455595328831909
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          rid: 5747455595328831910
+        modifier:
+          rid: 5747455595328831914
+    - rid: 5747455595328831910
+      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
+      data:
+        ignoreFrames: 0
+    - rid: 5747455595328831914
+      type: {class: Modifier_Boolean, ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: 0
+        <StatTag>k__BackingField:
+          rid: 5747455595328831915
+        <Alignment>k__BackingField: 0
+        <MaxStacks>k__BackingField: 1
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 1
+        <RefreshDuration>k__BackingField: 0
+        <Priority>k__BackingField: 99
+    - rid: 5747455595328831915
+      type: {class: Stat_Intangable, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5747455595328831916
+        _modifiers: []
+        <Priority>k__BackingField: 0
+    - rid: 5747455595328831916
+      type: {class: 'NoInherit`1[[System.Boolean, mscorlib]]', ns: , asm: Assembly-CSharp}
       data: 

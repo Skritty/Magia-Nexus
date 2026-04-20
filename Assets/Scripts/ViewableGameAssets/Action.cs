@@ -6,14 +6,14 @@ using UnityEngine;
 [Serializable, CreateAssetMenu(menuName = "ViewableGameAsset/Action")]
 public class Action : ViewableGameAsset
 {
-    public int maxUses;
     public AnimationState initialAnimationState = AnimationState.None;
     public AnimationState activateAnimationState = AnimationState.None;
     public AnimationCurve movementSpeedOverDuration;
-    public int ActionTickDuration => 25;// (int)(movementSpeedOverDuration.keys[movementSpeedOverDuration.length - 1].time * 50);
+    //public AnimationCurve focusExpenditureWeightOverTime;
+    public float focusCost;
+    public int ActionTickDuration;// (int)(movementSpeedOverDuration.keys[movementSpeedOverDuration.length - 1].time * 50);
     public bool onTick;
-    [Range(0,1)]
-    public float timing = 0;
+    public int timing = 0;
     [SerializeReference]
     public List<EffectTask> effects = new List<EffectTask>();
     public virtual void OnStart(Entity owner)
@@ -21,19 +21,16 @@ public class Action : ViewableGameAsset
         owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
         // TODO: return to this animation state after stunned
     }
-    public virtual bool Tick(Entity owner, int ticksPerAction, int tick)
+    public virtual bool Tick(Entity owner, int tick)
     {
-        owner.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate((tick % ticksPerAction) * 1f / ticksPerAction), step: CalculationStep.Multiplicative, tickDuration: 1));
-        if (onTick || tick % ticksPerAction == (int)(ticksPerAction * timing))
+        owner.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate(ActionTickDuration * 1f / tick), step: CalculationStep.Multiplicative, tickDuration: 1));
+        if (onTick || tick == timing)
         {
             owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
             DoEffects(owner);
         }
-        if(tick != 0 && tick % ticksPerAction == 0)
-        {
-            return true;
-        }
-        return false;
+        if(tick == ActionTickDuration) return true;
+        else return false;
     }
     public virtual void OnEnd(Entity owner)
     {
