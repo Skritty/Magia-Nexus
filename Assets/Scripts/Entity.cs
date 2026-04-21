@@ -10,7 +10,7 @@ public class Entity : MonoBehaviour
     [SerializeReference]
     private List<IStat> stats = new();
     [SerializeReference]
-    private List<IModifier<Trigger>> defaultTriggers = new();
+    private List<IValueContainer<Trigger>> defaultTriggers = new();
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
     private List<Mechanic> mechanics = new();
 
@@ -18,16 +18,16 @@ public class Entity : MonoBehaviour
     {
         foreach(IStat stat in stats)
         {
-            stat.AddStat(this);
+            this.AddStat(stat);
         }
         foreach (Mechanic mechanic in mechanics)
         {
             mechanic.AddInstance(this);
         }
-        foreach (IModifier<Trigger> trigger in defaultTriggers)
+        foreach (IValueContainer<Trigger> trigger in defaultTriggers)
         {
             trigger.Value.SubscribeToTasks(this, this);
-            trigger.AddToStat<Stat_Triggers>(this);
+            this.GetStat<Stat_Triggers>().AddModifier(trigger);
         }
     }
 

@@ -61,9 +61,9 @@ public abstract class Phase_Combat : Phase
         {
             spawn.owner.killGainMultiplier = killPointGain;
             Entity entity = Instantiate(GameManager.Instance.defaultPlayer, spawn.position, Quaternion.identity);
-            entity.GetMechanic<Mechanic_Character>().SetViewer(spawn.owner);
+            entity.GetStat<Mechanic_Character>().SetViewer(spawn.owner);
             spawn.owner.roundPoints = 0;
-            entity.Stat<Stat_Team>().Add(spawn.team);
+            Stats.GetStat<Stat_Team>(entity).Add(spawn.team);
             if (!remainingPlayers.TryAdd(spawn.team, 1)) remainingPlayers[spawn.team]++;
             spawn.owner.personality.Initialize(entity);
             cleanup += Trigger_Die.Subscribe(x => TrackKill(x.Target, entity), entity);
@@ -76,10 +76,10 @@ public abstract class Phase_Combat : Phase
             {
                 turnActionCount += item.actionCountModifier;
             }
-            entity.GetMechanic<Mechanic_Actions>().actionsPerTurn = turnActionCount;
+            entity.GetStat<Mechanic_Actions>().actionsPerTurn = turnActionCount;
             for (int i = 0; i < turnActionCount; i++)
             {
-                entity.GetMechanic<Mechanic_Actions>().AddAction(i < spawn.owner.actions.Count ? spawn.owner.actions[i] : null);
+                entity.GetStat<Mechanic_Actions>().AddAction(i < spawn.owner.actions.Count ? spawn.owner.actions[i] : null);
             }
         }
     }
@@ -87,13 +87,13 @@ public abstract class Phase_Combat : Phase
     private void TrackKill(Entity dead, Entity owner)
     {
         if (dead != owner) return;
-        int team = dead.Stat<Stat_Team>().Value;
+        int team = Stats.GetStat<Stat_Team>(dead).Value;
         if (!remainingPlayers.ContainsKey(team)) return;
         remainingPlayers[team]--;
         if (remainingPlayers[team] <= 0) remainingPlayers.Remove(team);
 
         Debug.Log($"{dead} DIED");
-        dead.Stat<Stat_Viewer>().Value.deaths++;
+        Stats.GetStat<Stat_Viewer>(dead).Value.deaths++;
 
         if (remainingPlayers.Count == 1)
         {

@@ -2,7 +2,7 @@ public class Effect_Damage : Effect_Hit
 {
     public override void DoEffect(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        if (Target.GetMechanic<Mechanic_Damageable>() == null)
+        if (Target.GetStat<Mechanic_Damageable>() == null)
         {
             base.DoEffect(Owner, Target, multiplier, triggered);
             return;
@@ -19,7 +19,7 @@ public class Effect_Damage : Effect_Hit
         if (!triggered) damageInstance.PostHitTriggers();
         damageInstance.CalculateDamageType();
         
-        Target.GetMechanic<Mechanic_Damageable>().TakeDamage(damageInstance, triggered);
+        Target.GetStat<Mechanic_Damageable>().TakeDamage(damageInstance, triggered);
     }
 
     public new Effect_Damage Clone()

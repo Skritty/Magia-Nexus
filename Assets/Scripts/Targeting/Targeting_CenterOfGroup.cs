@@ -14,10 +14,10 @@ public class Targeting_CenterOfGroup : MultiTargeting
         foreach (Entity entity in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
         {
             // Can it be targeted?
-            if (entity.GetStat<Stat_Untargetable>().Contains((owner, this))) continue;
+            if (entity.GetStat<Stat_Untargetable>().Contains((owner, this), out _)) continue;
 
             // Is it in the affected entities?
-            if (entity.GetStat<Stat_Team>().Value != owner.GetStat<Stat_Team>().Value)
+            if (entity.GetStat<Stat_Team>().Value != entity.GetStat<Stat_Team>().Value)
             {
                 targetType = TargetFilter.Enemies;
             }
@@ -25,7 +25,7 @@ public class Targeting_CenterOfGroup : MultiTargeting
             {
                 targetType = TargetFilter.Self;
             }
-            else if (entity == owner.GetStat<Stat_PlayerCharacter>().Value)
+            else if (entity == entity.GetStat<Stat_PlayerCharacter>().Value)
             {
                 targetType = TargetFilter.Owner;
             }

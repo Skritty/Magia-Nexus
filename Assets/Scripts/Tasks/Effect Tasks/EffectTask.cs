@@ -36,7 +36,7 @@ public abstract class EffectTask :
     }
     public virtual bool DoTask(Entity owner, Entity target, Effect data, bool triggered, Entity proxy = null)
     {
-        DoEffect(owner, target, data != null ? data.EffectMultiplier : owner.Stat<Stat_EffectMultiplier>().Value, data != null);
+        DoEffect(owner, target, data != null ? data.EffectMultiplier : Stats.GetStat<Stat_EffectMultiplier>(owner).Value, data != null);
         return true;
     }
     public bool DoTaskTargetSelector(Entity owner, Effect data, bool triggered, Entity proxy = null)

@@ -17,10 +17,10 @@ public class Targeting_Radial : MultiTargeting
     protected override bool IsValidTarget(Entity owner, Entity proxy, Entity target, bool firstTarget)
     {
         Vector3 dirToEntity = target.transform.position - GetCenter(owner, proxy);
-        if (dirToEntity.magnitude > radius * owner.Stat<Stat_AoESize>().Value) return false;
+        if (dirToEntity.magnitude > radius * Stats.GetStat<Stat_AoESize>(owner).Value) return false;
         if (angle >= 180) return true;
 
-        Vector3 dirToTarget = owner.GetMechanic<Mechanic_Movement>().facingDir;
+        Vector3 dirToTarget = Stats.GetStat<Mechanic_Movement>(owner).facingDir;
         float fromTo = Mathf.Rad2Deg * Mathf.Acos(Vector3.Dot(dirToEntity, dirToTarget) / (dirToEntity.magnitude * dirToTarget.magnitude));
         if (float.IsNaN(fromTo)) fromTo = 0;
         if (fromTo > angle) return false;
@@ -30,9 +30,9 @@ public class Targeting_Radial : MultiTargeting
     protected override void DoFX(Entity owner, Entity proxy, List<Entity> targets)
     {
         if (vfx is not VFX_AoE) return;
-        Vector3 lookDir = owner.GetMechanic<Mechanic_Movement>().facingDir;
-        int ticksPerAction = owner.GetMechanic<Mechanic_Actions>().TicksPerAction;
-        float timePerAction = owner.GetMechanic<Mechanic_Actions>().TimePerAction;
+        Vector3 lookDir = Stats.GetStat<Mechanic_Movement>(owner).facingDir;
+        int ticksPerAction = Stats.GetStat<Mechanic_Actions>(owner).TicksPerAction;
+        float timePerAction = Stats.GetStat<Mechanic_Actions>(owner).TimePerAction;
         VFX_AoE aoe = vfx.PlayVFX<VFX_AoE>((proxy != null ? proxy : owner).transform, offset, lookDir, true, ticksPerAction);
         aoe.ApplyAoE(radius, angle, timePerAction);
         //aoe.ApplyDamage(source as Effect_Damage<Effect>);

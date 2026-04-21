@@ -2,31 +2,33 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public interface IDataContainer
+public interface IValueContainer
 {
     public bool IsDefaultValue();
     public bool TryGet<Type>(out Type data);
 }
 
-public interface IDataContainer<T> : IDataContainer
+public interface IValueContainer<T> : IValueContainer
 {
     public T Value { get; }
+    public void AddTo(IModifiable<T> modifiable);
+    public void RemoveFrom(IModifiable<T> modifiable);
 }
 
 [Serializable]
-public abstract class DataContainer : IDataContainer
+public abstract class ValueContainer : IValueContainer
 {
     public abstract bool IsDefaultValue();
     public abstract bool TryGet<Type>(out Type data);
 }
 
 [Serializable]
-public class DataContainer<T> : DataContainer, IDataContainer<T>
+public class ValueContainer<T> : ValueContainer, IValueContainer<T>
 {
     [field: SerializeReference, FoldoutGroup("@GetType()")]
     public T Value { get; set; }
-    public DataContainer() { }
-    public DataContainer(T value)
+    public ValueContainer() { }
+    public ValueContainer(T value)
     {
         Value = value;
     }
@@ -36,4 +38,8 @@ public class DataContainer<T> : DataContainer, IDataContainer<T>
         data = (Type)(Value as object);
         return data != null;
     }
+
+    public void AddTo(IModifiable<T> modifiable) => modifiable.Modifiers.Add(this);
+
+    public void RemoveFrom(IModifiable<T> modifiable) => modifiable.Modifiers.Remove(this);
 }

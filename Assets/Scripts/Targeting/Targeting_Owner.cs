@@ -6,6 +6,6 @@ public class Targeting_Owner : Targeting
 {
     public override List<Entity> GetTargets(Entity owner, Entity proxy = null)
     {
-        return new List<Entity>() { owner.Stat<Stat_PlayerCharacter>().Value };
+        return new List<Entity>() { Stats.GetStat<Stat_PlayerCharacter>(owner).Value };
     }
 }

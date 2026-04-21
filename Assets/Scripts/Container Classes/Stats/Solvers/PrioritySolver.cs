@@ -34,13 +34,13 @@ public class PrioritySolver<T> : Solver<T>, IPriority
             return;
         }
         byte highestPriority = 0;
-        foreach (IDataContainer<T> modifier in Modifiers)
+        foreach (IValueContainer<T> modifier in Modifiers)
         {
             if (modifier is not IPriority) continue;
             if ((modifier as IPriority).Priority > highestPriority) highestPriority = (modifier as IPriority).Priority;
         }
-        List<IDataContainer<T>> priorityModifiers = new List<IDataContainer<T>>();
-        foreach (IDataContainer<T> modifier in Modifiers)
+        List<IValueContainer<T>> priorityModifiers = new List<IValueContainer<T>>();
+        foreach (IValueContainer<T> modifier in Modifiers)
         {
             if (modifier is not IPriority)
             {
@@ -56,7 +56,7 @@ public class PrioritySolver<T> : Solver<T>, IPriority
         _value = HandleSamePriorityModifiers(priorityModifiers);
     }
 
-    protected virtual T HandleSamePriorityModifiers(List<IDataContainer<T>> modifiers)
+    protected virtual T HandleSamePriorityModifiers(List<IValueContainer<T>> modifiers)
     {
         return modifiers[0].Value;
     }

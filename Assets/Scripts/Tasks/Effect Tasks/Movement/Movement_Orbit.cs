@@ -15,17 +15,17 @@ public class Movement_Orbit : MovementDirectionSelector
 
     private void SetMoveDir(Entity target, float multiplier)
     {
-        float orbitDist = orbitDistance * target.Stat<Stat_AoESize>().Value;
+        float orbitDist = orbitDistance * Stats.GetStat<Stat_AoESize>(target).Value;
         Vector3 dirToTarget = Vector3.zero;
         bool zero = false;
-        if (target.Stat<Stat_MovementTarget>().Value != null)
+        if (Stats.GetStat<Stat_MovementTarget>(target).Value != null)
         {
-            dirToTarget = target.transform.position - target.Stat<Stat_MovementTarget>().Value.transform.position;
+            dirToTarget = target.transform.position - Stats.GetStat<Stat_MovementTarget>(target).Value.transform.position;
         }
         if (dirToTarget == Vector3.zero)
         {
             zero = true;
-            dirToTarget = target.Stat<Stat_MovementTarget>().Value.GetMechanic<Mechanic_Movement>().facingDir;
+            dirToTarget = Stats.GetStat<Stat_MovementTarget>(target).Value.GetStat<Mechanic_Movement>().facingDir;
             Debug.Log(dirToTarget);
         }
         //if (dirToTarget == Vector3.zero) dirToTarget = Target.transform.position + Target.transform.up * orbitDistance;
@@ -45,7 +45,7 @@ public class Movement_Orbit : MovementDirectionSelector
             perpendicularVector = Vector3.Lerp(dirToTarget, perpendicularVector, dirToTarget.magnitude / orbitDist);
         }
         
-        target.GetMechanic<Mechanic_Movement>().facingDir = perpendicularVector;
-        target.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value: multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
+        target.GetStat<Mechanic_Movement>().facingDir = perpendicularVector;
+        target.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value: multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
     }
 }

@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using UnityEditor.Animations;
 using UnityEngine;
 
-public class Mechanic_AnimationStates : Mechanic<Mechanic_AnimationStates>
+public class Mechanic_AnimationStates : Mechanic
 {
     [FoldoutGroup("Animation States")]
     public Animator animator;

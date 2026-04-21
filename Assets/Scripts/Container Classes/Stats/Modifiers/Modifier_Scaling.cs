@@ -9,7 +9,7 @@ public class Modifier_Scaling : Modifier<float>, ISolver
         set => base.Value = value; 
     }
 
-    public IDataContainer<float> statReference;
+    public IValueContainer<float> statReference;
     public float baseMultiplierReferenceValue;
 
     public void Solve()

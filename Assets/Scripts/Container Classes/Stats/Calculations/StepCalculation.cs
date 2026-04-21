@@ -59,10 +59,10 @@ public class StepCalculation : NumericalSolver
                     break;
                 }
         }
-        calcStep.Modifiers.Add(modifier as IDataContainer<float>);
+        calcStep.Modifiers.Add(modifier as IValueContainer<float>);
         changed = true;
     }
-    public override void Add(IDataContainer<float> modifier)
+    public override void AddModifier(IValueContainer<float> modifier)
     {
         if(modifier is ICalculationComponent) AddModifier(modifier, (modifier as ICalculationComponent).Step);
         else AddModifier(modifier, CalculationStep.Flat);

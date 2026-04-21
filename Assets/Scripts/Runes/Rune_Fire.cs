@@ -102,8 +102,8 @@ public class Rune_Fire : Rune
                 {
                     spell.cleanup += Trigger_ActionStart.Subscribe(x =>
                     {
-                        spell.Owner.Stat<Stat_DamageDealt>().Add(multiplierPerConjureUse);
-                        spell.cleanup += () => spell.Owner.Stat<Stat_DamageDealt>().Remove(multiplierPerConjureUse);
+                        spell.Owner.GetStat<Stat_DamageDealt>().AddModifier(multiplierPerConjureUse);
+                        spell.cleanup += () => Stats.GetStat<Stat_DamageDealt>(spell.Owner).RemoveModifier(multiplierPerConjureUse);
                     }, spell.Owner);
                     break;
                 }
@@ -115,7 +115,7 @@ public class Rune_Fire : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(projectile => projectile.Stat<Stat_PiercesRemaining>().Add(2), spell.effect);
+                    spell.cleanup += Trigger_ProjectileCreated.Subscribe(projectile => Stats.GetStat<Stat_PiercesRemaining>(projectile).Add(2), spell.effect);
                     break;
                 }
             case SpellShape.Summon:
@@ -130,7 +130,7 @@ public class Rune_Fire : Rune
         }
     }
 
-    private void CurseExplode(Spell spell, IModifier modifier)
+    private void CurseExplode(Spell spell, Modifier modifier)
     {
         Effect_Damage explosion = curseExplosion.Clone();
         spell.cleanup += Trigger_PreHit.Subscribe(x => x.runes.AddRange(spell.runes), explosion);

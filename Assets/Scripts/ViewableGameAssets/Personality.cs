@@ -23,10 +23,10 @@ public class Personality : ViewableGameAsset
     public void SetPersonality(Entity entity)
     {
         // TODO: lock target won't get cleared when changed - fix that (maybe add a set function?)
-        entity.Stat<Stat_LockTarget>().Add(lockTarget);
-        entity.Stat<Stat_LockTarget>().Add(lockMovementTarget);
-        entity.Stat<Stat_TargetingMethod>().Add(targeting);
-        entity.Stat<Stat_MovementTargetingMethod>().Add(movement);
-        entity.Stat<Stat_MovementSelector>().Add(movementSelector);
+        Stats.GetStat<Stat_LockTarget>(entity).Add(lockTarget);
+        Stats.GetStat<Stat_LockTarget>(entity).Add(lockMovementTarget);
+        Stats.GetStat<Stat_TargetingMethod>(entity).Add(targeting);
+        Stats.GetStat<Stat_MovementTargetingMethod>(entity).Add(movement);
+        Stats.GetStat<Stat_MovementSelector>(entity).Add(movementSelector);
     }
 }

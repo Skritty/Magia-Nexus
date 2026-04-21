@@ -12,9 +12,19 @@ public static class Stats
         }
     }
 
-    public static T GetStat<T>(this object boundObject, bool createAndBindOnDefault = false)
+    public static T GetStat<T>(this object boundObject, bool createAndBindOnDefault = true, bool useActivator = true)
     {
-        return GetStat<T>(boundObject, default, createAndBindOnDefault);
+        return GetStat(boundObject, useActivator ? Activator.CreateInstance<T>() : default, createAndBindOnDefault);
+    }
+
+    public static T GetAndCreateStat<T>(params object[] boundObjects)
+    {
+        int bindingHash = 0;
+        foreach(object boundObject in boundObjects)
+        {
+            bindingHash += boundObject.GetHashCode();
+        }
+        return GetStat<T>(bindingHash, true, true);
     }
 
     public static T GetStat<T>(this object boundObject, T existingInstance, bool createAndBindOnDefault = false)
@@ -28,7 +38,7 @@ public static class Stats
                 Instances[type].Add(boundObject, existingInstance);
                 return (T)Instances[type][boundObject];
             }
-            else return default;
+            else return existingInstance;
         }
         else if (Instances[type].TryGetValue(boundObject, out var instance))
         {
@@ -36,7 +46,7 @@ public static class Stats
         }
         else if (createAndBindOnDefault)
         {
-            Instances[type].Add(boundObject, default);
+            Instances[type].Add(boundObject, existingInstance);
             return (T)Instances[type][boundObject];
         }
         else return existingInstance;
@@ -49,7 +59,7 @@ public static class Stats
         {
             Instances.Add(type, new Dictionary<object, object>());
         }
-        Instances[type].Add(boundObject, default);
+        Instances[type].Add(boundObject, instance);
     }
 
     public static void RemoveStat(this object boundObject, object instance)

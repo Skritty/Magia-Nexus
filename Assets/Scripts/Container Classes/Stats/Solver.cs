@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public abstract class Solver<T> : IDataContainer<T>, IModifiable<T>, ISolver, ISerializationCallbackReceiver
+public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver, ISerializationCallbackReceiver
 {
     protected T _value;
     protected bool changed;
@@ -29,7 +29,7 @@ public abstract class Solver<T> : IDataContainer<T>, IModifiable<T>, ISolver, IS
     }
 
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
-    public List<IDataContainer<T>> Modifiers { get; set; }
+    public List<IValueContainer<T>> Modifiers { get; set; } = new();
 
     public bool IsDefaultValue() => Value.Equals(default);
     public bool TryGet<Type>(out Type data)
@@ -40,39 +40,30 @@ public abstract class Solver<T> : IDataContainer<T>, IModifiable<T>, ISolver, IS
 
     public System.Action Add(T value)
     {
-        DataContainer<T> data = new DataContainer<T>(value);
-        Add(data);
-        return () => Modifiers.Remove(data);
+        ValueContainer<T> modifier = new ValueContainer<T>(value);
+        AddModifier(modifier);
+        return () => RemoveModifier(modifier);
     }
 
-    public bool TryAdd(IDataContainer modifier)
+    public virtual void AddModifier(IValueContainer<T> modifier)
     {
-        IDataContainer<T> cast = modifier as IDataContainer<T>;
-        if (cast == null)
-        {
-            Debug.LogWarning($"{modifier} failed to add!");
-            return false;
-        }
-        Add(cast);
-        return true;
-    }
-
-    public virtual void Add(IDataContainer<T> modifier)
-    {
-        Modifiers.Add(modifier);
+        modifier.AddTo(this);
         changed = true;
     }
 
-    public virtual void Remove(IDataContainer modifier)
+    public void RemoveModifier(IValueContainer<T> modifier)
     {
-        Modifiers.Remove(modifier as IDataContainer<T>);
+        modifier.RemoveFrom(this);
         changed = true;
     }
 
-    public virtual bool Contains(IDataContainer modifier, out int count)
+    public void AddTo(IModifiable<T> modifiable) => modifiable.Modifiers.Add(this);
+    public void RemoveFrom(IModifiable<T> modifiable) => modifiable.Modifiers.Remove(this);
+
+    public virtual bool Contains(IValueContainer modifier, out int count)
     {
         count = 0;
-        foreach (IDataContainer m in Modifiers)
+        foreach (IValueContainer m in Modifiers)
         {
             if (m.Equals(modifier)) count++;
         }
@@ -91,7 +82,7 @@ public abstract class Solver<T> : IDataContainer<T>, IModifiable<T>, ISolver, IS
     public IModifiable Clone(bool preserveModifiers)
     {
         IModifiable<T> clone = (IModifiable<T>)MemberwiseClone();
-        if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
+        if(preserveModifiers) clone.Modifiers = new List<IValueContainer<T>>(Modifiers);
         return clone;
     }
 

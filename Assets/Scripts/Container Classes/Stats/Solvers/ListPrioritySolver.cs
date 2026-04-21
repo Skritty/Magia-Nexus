@@ -19,7 +19,7 @@ public class ListPrioritySolver<T> : PrioritySolver<List<T>>
             }
         }).Reverse();
 
-        foreach (IDataContainer<List<T>> modifier in ordered)
+        foreach (IValueContainer<List<T>> modifier in ordered)
         {
             for (int i = 0; i < modifier.Value.Count; i++)
             {

@@ -13,22 +13,31 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
 
     public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
-        if (target.Stat<Stat_MovementTarget>().Value == null)
+        Targeting targeting = owner.GetStat<Stat_MovementTargetingMethod>().Value;
+        if (targeting != null)
+            foreach (Entity entity in owner.GetStat<Stat_MovementTargetingMethod>().Value.GetTargets(owner))
+            {
+                // TODO: don't do this every frame
+                owner.GetStat<Stat_MovementTarget>().AddModifier(new Modifier<Entity>(value: entity, tickDuration: 1));
+                break;
+            }
+
+        if (Stats.GetStat<Stat_MovementTarget>(target).Value == null)
         {
-            target.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
+            target.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
         }
         else
         {
-            Vector3 dirFromTarget = target.transform.position - target.Stat<Stat_MovementTarget>().Value.transform.position;
+            Vector3 dirFromTarget = target.transform.position - Stats.GetStat<Stat_MovementTarget>(target).Value.transform.position;
             dirFromTarget = dirFromTarget.normalized * distanceFromTarget - dirFromTarget;
             if (dirFromTarget.magnitude <= threshold)
             {
-                target.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
+                target.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
             }
             else
             {
-                target.GetMechanic<Mechanic_Movement>().facingDir = dirFromTarget.normalized;
-                target.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value: movementSpeedMultiplier * multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
+                target.GetStat<Mechanic_Movement>().facingDir = dirFromTarget.normalized;
+                target.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value: movementSpeedMultiplier * multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
             }
         }
     }

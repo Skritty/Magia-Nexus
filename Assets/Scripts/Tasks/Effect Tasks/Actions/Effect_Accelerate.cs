@@ -5,7 +5,7 @@ public class Effect_Accelerate : EffectTask
     {
         for(int i = 0; i < ticks * multiplier; i++)
         {
-            Target.GetMechanic<Mechanic_Actions>().Tick();
+            Target.GetStat<Mechanic_Actions>().Tick();
         }
     }
 }

@@ -18,15 +18,19 @@ public class Action : ViewableGameAsset
     public List<EffectTask> effects = new List<EffectTask>();
     public virtual void OnStart(Entity owner)
     {
-        owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
+        owner.GetStat<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
         // TODO: return to this animation state after stunned
     }
     public virtual bool Tick(Entity owner, int ticksPerAction, int tick)
     {
-        owner.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate((tick % ticksPerAction) * 1f / ticksPerAction), step: CalculationStep.Multiplicative, tickDuration: 1));
+        owner.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(
+            value: movementSpeedOverDuration.Evaluate((tick % ticksPerAction) * 1f / ticksPerAction),
+            step: CalculationStep.Multiplicative,
+            tickDuration: 1));
+
         if (onTick || tick % ticksPerAction == (int)(ticksPerAction * timing))
         {
-            owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
+            owner.GetStat<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
             DoEffects(owner);
         }
         if(tick != 0 && tick % ticksPerAction == 0)

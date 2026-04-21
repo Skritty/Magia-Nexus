@@ -7,9 +7,9 @@ public class Stat_Summons : ListStat<Entity>, IStat<List<Entity>> { }
 public class Stat_Proxies : ListStat<Entity>, IStat<List<Entity>> { }
 public class Stat_TeamPlayers : NumericalSolver, IStat<float> { }
 public class Stat_MaxSummons : NumericalSolver, IStat<float> { }
-public class Stat_PlayerCharacter : Solver<Entity>, IStat<Entity> { } // TODO: Remake Stat class (data structure)?
-public class Stat_LastKilledBy : Solver<Entity>, IStat<Entity> { }
-public class Stat_Viewer : Solver<Viewer>, IStat<Viewer> { }
+public class Stat_PlayerCharacter : ValueContainer<Entity>, IStat<Entity> { } // TODO: Remake Stat class (data structure)?
+public class Stat_LastKilledBy : ValueContainer<Entity>, IStat<Entity> { }
+public class Stat_Viewer : ValueContainer<Viewer>, IStat<Viewer> { }
 public class Mechanic_Assists : DictionaryStat<Viewer, Entity>, IStat<Dictionary<Viewer, Entity>> { }
 public class Mechanic_Character : Mechanic
 {
@@ -20,8 +20,8 @@ public class Mechanic_Character : Mechanic
     {
         
         viewer.character = Owner;
-        Owner.GetStat<Stat_Viewer>().Add(viewer);
-        Owner.GetStat<Stat_PlayerCharacter>().Add(Owner);
+        Owner.GetStat<Stat_Viewer>().Value = viewer;
+        Owner.GetStat<Stat_PlayerCharacter>().Value = Owner;
         Owner.name = viewer.viewerName;
         if (characterNamePlate != null)
             characterNamePlate.text = viewer.viewerName;

@@ -39,22 +39,22 @@ public class Mechanic_Projectile : Mechanic
             if (!task.DoTask(Owner, target, null, false)) break;
         }
 
-        if (splitProjectile != null && Owner.GetStat<Stat_SplitsRemaining>().Value > 0)
+        if (splitProjectile != null && Stats.GetStat<Stat_SplitsRemaining>(Owner).Value > 0)
         {
-            Owner.GetStat<Stat_SplitsRemaining>().Add(-1);
+            Stats.GetStat<Stat_SplitsRemaining>(Owner).Add(-1);
 
             Effect_Projectile split = (Effect_Projectile)splitProjectile.Clone();
             (split.targetSelector as Targeting_Exclude)?.ignoredEntities.Add(target);
-            split.numberOfProjectiles += (int)Owner.GetStat<Stat_PlayerCharacter>().Value.GetStat<Stat_AdditionalSplits>().Value;
+            split.numberOfProjectiles += (int)Stats.GetStat<Stat_AdditionalSplits>(Stats.GetStat<Stat_PlayerCharacter>(Owner).Value).Value;
             split.DoTask(Owner);
 
             Trigger_Expire.Invoke(Owner, Owner);
             return;
         }
 
-        if (Owner.GetStat<Stat_PiercesRemaining>().Value > 0)
+        if (Stats.GetStat<Stat_PiercesRemaining>(Owner).Value > 0)
         {
-            Owner.GetStat<Stat_PiercesRemaining>().Add(-1);
+            Stats.GetStat<Stat_PiercesRemaining>(Owner).Add(-1);
             Trigger_ProjectilePierce.Invoke(Owner, Owner);
             return;
         }

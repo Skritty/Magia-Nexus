@@ -12,10 +12,10 @@ public class Targeting_StatSortedFloat : Targeting_StatSorted<float>
     protected override int SortTargets(Entity owner, Entity e1, Entity e2)
     {
         int comparison = 0;
-        float e1Stat = (e1.Stat(stat) as IDataContainer<float>).Value;
-        float e2Stat = (e2.Stat(stat) as IDataContainer<float>).Value;
-        float e1Enmity = e1.Stat<Stat_Enmity>().Value;
-        float e2Enmity = e2.Stat<Stat_Enmity>().Value;
+        float e1Stat = (e1.GetStat(stat) as IValueContainer<float>).Value;
+        float e2Stat = (e2.GetStat(stat) as IValueContainer<float>).Value;
+        float e1Enmity = Stats.GetStat<Stat_Enmity>(e1).Value;
+        float e2Enmity = Stats.GetStat<Stat_Enmity>(e2).Value;
         switch (sortingMethod)
         {
             case TargetSorting.Highest:
@@ -49,10 +49,10 @@ public class Targeting_StatSortedFloatPercent : Targeting_StatSorted<float>
     protected override int SortTargets(Entity owner, Entity e1, Entity e2)
     {
         int comparison = 0;
-        float e1Stat = (e1.Stat(stat) as IDataContainer<float>).Value / (e1.Stat(maximum) as IDataContainer<float>).Value;
-        float e2Stat = (e2.Stat(stat) as IDataContainer<float>).Value / (e2.Stat(maximum) as IDataContainer<float>).Value;
-        float e1Enmity = e1.Stat<Stat_Enmity>().Value;
-        float e2Enmity = e2.Stat<Stat_Enmity>().Value;
+        float e1Stat = (e1.GetStat(stat) as IValueContainer<float>).Value / (e1.GetStat(maximum) as IValueContainer<float>).Value;
+        float e2Stat = (e2.GetStat(stat) as IValueContainer<float>).Value / (e2.GetStat(maximum) as IValueContainer<float>).Value;
+        float e1Enmity = Stats.GetStat<Stat_Enmity>(e1).Value;
+        float e2Enmity = Stats.GetStat<Stat_Enmity>(e2).Value;
         switch (sortingMethod)
         {
             case TargetSorting.Highest:
@@ -84,10 +84,10 @@ public class Targeting_StatSortedInt : Targeting_StatSorted<int>
     protected override int SortTargets(Entity owner, Entity e1, Entity e2)
     {
         int comparison = 0;
-        int e1Stat = (e1.Stat(stat) as IDataContainer<int>).Value;
-        int e2Stat = (e2.Stat(stat) as IDataContainer<int>).Value;
-        float e1Enmity = e1.Stat<Stat_Enmity>().Value;
-        float e2Enmity = e2.Stat<Stat_Enmity>().Value;
+        int e1Stat = (e1.GetStat(stat) as IValueContainer<int>).Value;
+        int e2Stat = (e2.GetStat(stat) as IValueContainer<int>).Value;
+        float e1Enmity = Stats.GetStat<Stat_Enmity>(e1).Value;
+        float e2Enmity = Stats.GetStat<Stat_Enmity>(e2).Value;
         switch (sortingMethod)
         {
             case TargetSorting.Highest:
@@ -121,10 +121,10 @@ public class Targeting_StatSortedIntPercent : Targeting_StatSorted<int>
     protected override int SortTargets(Entity owner, Entity e1, Entity e2)
     {
         int comparison = 0;
-        int e1Stat = (e1.Stat(stat) as IDataContainer<int>).Value / (e1.Stat(maximum) as IDataContainer<int>).Value;
-        int e2Stat = (e2.Stat(stat) as IDataContainer<int>).Value / (e2.Stat(maximum) as IDataContainer<int>).Value;
-        float e1Enmity = e1.Stat<Stat_Enmity>().Value;
-        float e2Enmity = e2.Stat<Stat_Enmity>().Value;
+        int e1Stat = (e1.GetStat(stat) as IValueContainer<int>).Value / (e1.GetStat(maximum) as IValueContainer<int>).Value;
+        int e2Stat = (e2.GetStat(stat) as IValueContainer<int>).Value / (e2.GetStat(maximum) as IValueContainer<int>).Value;
+        float e1Enmity = Stats.GetStat<Stat_Enmity>(e1).Value;
+        float e2Enmity = Stats.GetStat<Stat_Enmity>(e2).Value;
         switch (sortingMethod)
         {
             case TargetSorting.Highest:

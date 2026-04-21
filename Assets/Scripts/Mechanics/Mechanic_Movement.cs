@@ -23,15 +23,6 @@ public class Mechanic_Movement : Mechanic
 
     public void Move()
     {
-        Targeting targeting = Owner.GetStat<Stat_MovementTargetingMethod>().Value;
-        if(targeting != null)
-            foreach (Entity entity in Owner.GetStat<Stat_MovementTargetingMethod>().Value.GetTargets(Owner))
-            {
-                // TODO: don't do this every frame
-                Owner.GetStat<Stat_MovementTarget>().AddModifier(entity, 1);
-                break;
-            }
-
         if (Owner.GetStat<Stat_MovementTarget>().Value == null) return;
 
         Owner.GetStat<Stat_MovementSelector>().Value?.DoTask(Owner);
@@ -42,8 +33,9 @@ public class Mechanic_Movement : Mechanic
             Owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.GetStat<Mechanic_Movement>().facingDir);
         }
 
+        float movementSpeed = Owner.GetStat<Stat_MovementSpeed>().Value;
         Owner.transform.position +=
-            Owner.GetStat<Stat_MovementSpeed>().Value
+            movementSpeed
             * Time.fixedDeltaTime
             * facingDir.normalized;
         if (obeyMapEdge)

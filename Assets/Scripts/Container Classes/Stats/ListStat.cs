@@ -1,25 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using UnityEngine;
 
-public class ListStat<T> : IDataContainer<List<T>>, IModifiable<List<T>>, IEnumerable<T>
+public class ListStat<T> : CollectionContainer<T>
 {
-    public List<T> Value { get; private set; }
-    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()")]
-    public List<IDataContainer<List<T>>> Modifiers { get; set; }
-    public int Count => Modifiers.Count;
-
-    public IEnumerator<T> GetEnumerator()
-    {
-        return ToList.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
     public T this[int index]
     {
         get
@@ -29,34 +11,22 @@ public class ListStat<T> : IDataContainer<List<T>>, IModifiable<List<T>>, IEnume
         }
     }
 
-    public List<T> ToList
+    public System.Action Add(T value)
     {
-        get
+        ValueContainer<T> modifier = new ValueContainer<T>(value);
+        AddModifier(modifier);
+        return () => RemoveModifier(modifier);
+    }
+
+    public void Remove(T value)
+    {
+        foreach (IValueContainer<T> modifier in Modifiers.ToArray())
         {
-            List<T> list = new List<T>();
-            foreach (IDataContainer<T> data in Modifiers)
-            {
-                list.Add(data.Value);
-            }
-            return list;
+            if (modifier.Value.Equals(value)) RemoveModifier(modifier);
         }
     }
 
-    public bool TryAdd(IDataContainer modifier)
-    {
-        IDataContainer<T> cast = (IDataContainer<T>)modifier;
-        if (cast == null) return false;
-        Modifiers.Add(cast);
-        return true;
-    }
-
-    public System.Action Add(T value)
-    {
-        DataContainer<T> data = new DataContainer<T>(value);
-        Modifiers.Add(data);
-        return () => Modifiers.Remove(data);
-    }
-
+    public System.Action AddRange(params T[] values) => AddRange(values);
     public System.Action AddRange(IEnumerable<T> values)
     {
         System.Action cleanup = null;
@@ -65,68 +35,5 @@ public class ListStat<T> : IDataContainer<List<T>>, IModifiable<List<T>>, IEnume
             cleanup += Add(value);
         }
         return cleanup;
-    }
-
-    public void Add(IDataContainer<T> modifier)
-    {
-        Modifiers.Add(modifier);
-    }
-
-    public void Remove(T value)
-    {
-        foreach (IDataContainer<T> m in Modifiers.ToArray())
-        {
-            if(m.Value.Equals(value)) Modifiers.Remove(m);
-        }
-    }
-
-    public void Remove(IDataContainer modifier)
-    {
-        Modifiers.Remove(modifier as IDataContainer<T>);
-    }
-
-    public void Clear()
-    {
-        Modifiers.Clear();
-    }
-
-    public bool Contains(T modifier)
-    {
-        foreach (IDataContainer m in Modifiers)
-        {
-            if (m.Equals(modifier)) return true;
-        }
-        return false;
-    }
-
-    public bool Contains(IDataContainer modifier, out int count)
-    {
-        count = 0;
-        foreach (IDataContainer m in Modifiers)
-        {
-            if (m.Equals(modifier)) count++;
-        }
-        if (count > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public IModifiable Clone(bool preserveModifiers)
-    {
-        IModifiable<T> clone = (IModifiable<T>)MemberwiseClone();
-        if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
-        return clone;
-    }
-
-    public bool IsDefaultValue()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public bool TryGet<Type>(out Type data)
-    {
-        throw new System.NotImplementedException();
     }
 }

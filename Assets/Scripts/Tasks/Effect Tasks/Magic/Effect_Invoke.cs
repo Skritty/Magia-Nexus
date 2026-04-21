@@ -10,8 +10,8 @@ public class Effect_Invoke : EffectTask
         Spell spell;
         if (useOwnerRunes)
         {
-            if (Owner.Stat<Stat_Runes>().Count == 0) return;
-            spell = new Spell(Owner, Owner.Stat<Stat_Runes>().ToList);
+            if (Stats.GetStat<Stat_Runes>(Owner).Count == 0) return;
+            spell = new Spell(Owner, Stats.GetStat<Stat_Runes>(Owner).ToList);
         }
         else
         {
@@ -19,7 +19,7 @@ public class Effect_Invoke : EffectTask
             spell = new Spell(Owner, runes);
         }
         spell.GenerateSpell(null);
-        Owner.Stat<Stat_Runes>().Clear();
+        Stats.GetStat<Stat_Runes>(Owner).Clear();
     }
 
     public new Effect_Invoke Clone()

@@ -65,12 +65,12 @@ public class GameManager : Singleton<GameManager>
         TwitchClient.Instance.RemoveCommand("info", Command_Info);
 
         Stats.ClearAllStats();
-        IModifier.ClearDurationModifiers();
+        Modifier.ClearDurationModifiers();
     }
 
     public void FixedUpdate()
     {
-        IModifier.Tick();
+        Modifier.Tick();
     }
 
     public Viewer JoinAsCPU()

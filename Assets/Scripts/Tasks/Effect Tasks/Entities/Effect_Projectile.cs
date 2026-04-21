@@ -22,7 +22,7 @@ public class Effect_Projectile : Effect_CreateEntity
 
     protected override IEnumerator SpawnEntity(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Owner.Stat<Stat_Projectiles>().Value);
+        int projectileCount = numberOfProjectiles + (ignoreAdditionalProjectiles ? 0 : (int)Stats.GetStat<Stat_Projectiles>(Owner).Value);
         for (int i = 0; i < projectileCount; i++)
         {
             Entity spawnedEntity = Create(Owner, Target, multiplier, triggered, i);
@@ -32,25 +32,25 @@ public class Effect_Projectile : Effect_CreateEntity
                 {
                     case ProjectileFanType.EvenlySpaced:
                         {
-                            spawnedEntity.GetMechanic<Mechanic_Movement>().facingDir =
+                            spawnedEntity.GetStat<Mechanic_Movement>().facingDir =
                                 Quaternion.Euler(0, 0,
                                 Mathf.Lerp(-projectileFanAngle, projectileFanAngle,
                                 i * 1f / (projectileCount - 1)))
-                                * spawnedEntity.GetMechanic<Mechanic_Movement>().facingDir;
+                                * spawnedEntity.GetStat<Mechanic_Movement>().facingDir;
                             break;
                         }
                     case ProjectileFanType.Shotgun:
                         {
-                            spawnedEntity.GetMechanic<Mechanic_Movement>().facingDir =
+                            spawnedEntity.GetStat<Mechanic_Movement>().facingDir =
                                 Quaternion.Euler(0, 0,
                                 Mathf.Lerp(-projectileFanAngle, projectileFanAngle,
                                 UnityEngine.Random.Range(0f, 1f)))
-                                * spawnedEntity.GetMechanic<Mechanic_Movement>().facingDir;
+                                * spawnedEntity.GetStat<Mechanic_Movement>().facingDir;
                             break;
                         }
                     case ProjectileFanType.Sequence:
                         {
-                            int tickDelay = (int)(1f * Owner.GetMechanic<Mechanic_Actions>().TicksPerAction / projectileCount);
+                            int tickDelay = (int)(1f * Owner.GetStat<Mechanic_Actions>().TicksPerAction / projectileCount);
                             for (int tick = 0; tick < tickDelay; tick++)
                             {
                                 yield return new WaitForFixedUpdate();
@@ -58,7 +58,7 @@ public class Effect_Projectile : Effect_CreateEntity
                             break;
                         }
                 }
-            spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.GetMechanic<Mechanic_Movement>().facingDir);
+            spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.GetStat<Mechanic_Movement>().facingDir);
             Trigger_ProjectileCreated.Invoke(spawnedEntity, spawnedEntity, entity, this, Owner);
         }
     }

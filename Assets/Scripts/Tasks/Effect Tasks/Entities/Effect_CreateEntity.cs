@@ -19,7 +19,7 @@ public class Effect_CreateEntity : EffectTask
 
     protected virtual IEnumerator SpawnEntity(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        Create(Owner, Target, multiplier, triggered, 0).GetMechanic<Mechanic_Actions>().Tick();
+        Create(Owner, Target, multiplier, triggered, 0).GetStat<Mechanic_Actions>().Tick();
         yield return null;
     }
 
@@ -28,19 +28,19 @@ public class Effect_CreateEntity : EffectTask
         Entity spawnedEntity = GameObject.Instantiate(entity, spawnOnTarget ? Target.transform.position : Owner.transform.position, Quaternion.identity);
         spawnedEntity.gameObject.SetActive(true);
         spawnedEntity.gameObject.name = spawnedEntity.gameObject.name + id;
-        spawnedEntity.AddModifier<Entity, Stat_PlayerCharacter>(Owner, 0);
-        spawnedEntity.AddModifier<Viewer, Stat_Viewer>(Owner.Stat<Stat_Viewer>().Value, 0);
-        spawnedEntity.Stat<Stat_Team>().Add(Owner.Stat<Stat_Team>().Value);
+        spawnedEntity.GetStat<Stat_PlayerCharacter>().Value = Owner;
+        spawnedEntity.GetStat<Stat_Viewer>().Value = Stats.GetStat<Stat_Viewer>(Owner).Value;
+        Stats.GetStat<Stat_Team>(spawnedEntity).Add(Stats.GetStat<Stat_Team>(Owner).Value);
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                spawnedEntity.Stat<Stat_MovementTarget>().Add(Owner);
+                Stats.GetStat<Stat_MovementTarget>(spawnedEntity).Add(Owner);
                 break;
             case EffectTargetSelector.Target:
-                spawnedEntity.Stat<Stat_MovementTarget>().Add(Target);
+                Stats.GetStat<Stat_MovementTarget>(spawnedEntity).Add(Target);
                 break;
         }
-        spawnedEntity.GetMechanic<Mechanic_Movement>().facingDir = (Target.transform.position - Owner.transform.position).normalized;
+        spawnedEntity.GetStat<Mechanic_Movement>().facingDir = (Target.transform.position - Owner.transform.position).normalized;
 
         return spawnedEntity;
     }

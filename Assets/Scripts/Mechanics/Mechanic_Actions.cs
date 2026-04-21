@@ -25,11 +25,11 @@ public class Mechanic_Actions : Mechanic
     public override void Tick()
     {
         tick++;
-        if (tick < (TicksPerAction * actionsPerTurn) - Owner.GetStat<Stat_Initiative>().Value)
+        if (tick < (TicksPerAction * actionsPerTurn) - Stats.GetStat<Stat_Initiative>(Owner).Value)
         {
-            Owner.GetStat<Stat_Stunned>().AddModifier(true, 1);
+            Stats.GetStat<Stat_Stunned>(Owner).AddModifier(true, 1);
         }
-        if (Owner.GetStat<Stat_Stunned>().Value) return;
+        if (Stats.GetStat<Stat_Stunned>(Owner).Value) return;
         FetchNextAction();
         DoCurrentAction();
     }
@@ -40,31 +40,31 @@ public class Mechanic_Actions : Mechanic
     public void AddAction(Action action)
     {
         CheckActionList();
-        Owner.GetStat<Stat_Actions>().Value.Add(action);
-        actionsPerTurn = Owner.GetStat<Stat_Actions>().Value.Count;
+        Stats.GetStat<Stat_Actions>(Owner).Value.Add(action);
+        actionsPerTurn = Stats.GetStat<Stat_Actions>(Owner).Value.Count;
     }
 
     public void AddAction(Action action, int phase)
     {
-        if (phase >= Owner.GetStat<Stat_Actions>().Value.Count) actionsPerTurn = phase;
+        if (phase >= Stats.GetStat<Stat_Actions>(Owner).Value.Count) actionsPerTurn = phase;
         CheckActionList();
-        if (phase < 0 || phase >= Owner.GetStat<Stat_Actions>().Value.Count)
+        if (phase < 0 || phase >= Stats.GetStat<Stat_Actions>(Owner).Value.Count)
         {
-            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {Owner.GetStat<Stat_Actions>().Value.Count})");
+            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {Stats.GetStat<Stat_Actions>(Owner).Value.Count})");
             return;
         }
-        Owner.GetStat<Stat_Actions>().Value[phase] = action;
+        Stats.GetStat<Stat_Actions>(Owner).Value[phase] = action;
     }
 
     public void SetAction(Action action, int phase)
     {
         CheckActionList();
-        if(phase < 0 || phase >= Owner.GetStat<Stat_Actions>().Value.Count)
+        if(phase < 0 || phase >= Stats.GetStat<Stat_Actions>(Owner).Value.Count)
         {
-            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {Owner.GetStat<Stat_Actions>().Value.Count})");
+            Debug.LogWarning($"Add Action phase not in range (Adding {action.name} at phase {phase} / {Stats.GetStat<Stat_Actions>(Owner).Value.Count})");
             return;
         }
-        Owner.GetStat<Stat_Actions>().Value[phase] = action;
+        Stats.GetStat<Stat_Actions>(Owner).Value[phase] = action;
     }
 
     public void RemoveAction(Action action)
@@ -79,18 +79,18 @@ public class Mechanic_Actions : Mechanic
 
     private void CheckActionList()
     {
-        if(Owner.GetStat<Stat_Actions>().Value == null)
+        if(Stats.GetStat<Stat_Actions>(Owner).Value == null)
         {
-            Owner.GetStat<Stat_Actions>().Add(actions);
+            Stats.GetStat<Stat_Actions>(Owner).Add(actions);
         }
         if (actions.Count != actionsPerTurn)
         {
             actions.Clear();
             for (int i = 0; i < actionsPerTurn; i++)
             {
-                if (Owner.GetStat<Stat_Actions>().Value.Count > i)
+                if (Stats.GetStat<Stat_Actions>(Owner).Value.Count > i)
                 {
-                    actions.Add(Owner.GetStat<Stat_Actions>().Value[i]);
+                    actions.Add(Stats.GetStat<Stat_Actions>(Owner).Value[i]);
                 }
                 else
                 {
@@ -102,12 +102,12 @@ public class Mechanic_Actions : Mechanic
 
     private void FetchNextAction()
     {
-        List<Action> actions = Owner.GetStat<Stat_Actions>().Value;
+        List<Action> actions = Stats.GetStat<Stat_Actions>(Owner).Value;
         if (actions == null || actions.Count == 0) return;
         if (tick % TicksPerAction == 0)
         {
             currentAction?.OnEnd(Owner);
-            if (Owner.GetStat<Stat_Channeling>().Value)
+            if (Stats.GetStat<Stat_Channeling>(Owner).Value)
             {
                 Trigger_Channel.Invoke(Owner, Owner);
             }

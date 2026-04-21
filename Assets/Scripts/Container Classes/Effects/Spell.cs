@@ -47,7 +47,7 @@ public class Spell : Effect
 
     private void SetUpProjectile(Entity entity)
     {
-        entity.Stat<Stat_Runes>().AddRange(runes);
+        Stats.GetStat<Stat_Runes>(entity).AddRange(runes);
     }
 
     public void GenerateSpell(Spell chainCast)
@@ -56,7 +56,7 @@ public class Spell : Effect
         SubscribeOnHit(x => x.EffectMultiplier = EffectMultiplier);
         if (addRunesToHit) SubscribeOnHit(x => x.runes.AddRange(runes));
         SubscribeOnHit(x => Trigger_SpellEffectApplied.Invoke(x, Owner, this, effect, Owner, this));
-        Owner.GetMechanic<Mechanic_Magic>().ownedSpells.Add(this);
+        Owner.GetStat<Mechanic_Magic>().ownedSpells.Add(this);
         if (!channeled) CastFromProxies();
     }
 
@@ -92,7 +92,7 @@ public class Spell : Effect
     {
         this.maxStages = maxStages;
         channeled = true;
-        System.Action removeChanneling = Owner.Stat<Stat_Channeling>().Add(true);
+        System.Action removeChanneling = Stats.GetStat<Stat_Channeling>(Owner).Add(true);
         cleanup += Trigger_Channel.Subscribe(ChannelSpell, Owner);
         cleanup += Trigger_SpellMaxStage.Subscribe(_ => FinishChanneling(removeChanneling), this);
     }
@@ -123,7 +123,7 @@ public class Spell : Effect
 
     public void CastSpell(Entity proxy)
     {
-        int targets = additionalCastTargets + (int)Owner.Stat<Stat_CastTargets>().Value;
+        int targets = additionalCastTargets + (int)Stats.GetStat<Stat_CastTargets>(Owner).Value;
         targets = Mathf.Clamp(targets, 1, int.MaxValue);
         for (int t = 0; t < targets; t++)
         {
@@ -146,6 +146,6 @@ public class Spell : Effect
     {
         Trigger_SpellFinished.Invoke(this, Owner, this);
         cleanup?.Invoke();
-        Owner.GetMechanic<Mechanic_Magic>().ownedSpells.Remove(this);
+        Owner.GetStat<Mechanic_Magic>().ownedSpells.Remove(this);
     }
 }

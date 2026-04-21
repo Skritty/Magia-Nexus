@@ -9,8 +9,8 @@ public class Targeting_Distance : MultiTargeting
         int comparison = 0;
         float e1dist = Vector3.Distance(owner.transform.position, e1.transform.position);
         float e2dist = Vector3.Distance(owner.transform.position, e2.transform.position);
-        float e1Enmity = e1.Stat<Stat_Enmity>().Value;
-        float e2Enmity = e2.Stat<Stat_Enmity>().Value;
+        float e1Enmity = Stats.GetStat<Stat_Enmity>(e1).Value;
+        float e2Enmity = Stats.GetStat<Stat_Enmity>(e2).Value;
         switch (sortingMethod)
         {
             case TargetSorting.Highest:

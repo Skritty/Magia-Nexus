@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector.Editor.Validation;
 using UnityEngine;
 
 [Flags]
@@ -29,13 +30,13 @@ public abstract class Targeting
     public abstract List<Entity> GetTargets(Entity owner, Entity proxy = null);
     public virtual List<Entity> GetTargets<T>(T triggerData, Entity owner, Entity proxy = null)
     {
-        if (owner.Stat<Stat_LockTarget>().Value)
+        if (Stats.GetStat<Stat_LockTarget>(owner).Value)
         {
-            List<Entity> lockedTargets = owner.Stat<Stat_LockedTargets>().Value;
+            List<Entity> lockedTargets = Stats.GetStat<Stat_LockedTargets>(owner).Value;
             if (lockedTargets == null)
             {
                 lockedTargets = new List<Entity>();
-                owner.Stat<Stat_LockedTargets>().Add(lockedTargets);
+                Stats.GetStat<Stat_LockedTargets>(owner).Add(lockedTargets);
             }
             lockedTargets.RemoveAll(x => x == null || x.gameObject.activeSelf == false);
             if (lockedTargets.Count == 0)
@@ -50,9 +51,10 @@ public abstract class Targeting
     {
         if (ignoreFrames > 0)
         {
-            target.AddModifier<(Entity, object), Stat_Untargetable>(
-                new UnityObjectModifier<(Entity, object)>((owner, this))
-                , ignoreFrames);
+            target.GetStat<Stat_Untargetable>().AddModifier(
+                new Modifier<(Entity, object)>(
+                    value: (owner, this), 
+                    tickDuration: ignoreFrames));
         }
     }
     public virtual void OnDrawGizmos(Transform owner) { }
@@ -78,11 +80,11 @@ public abstract class MultiTargeting : Targeting
     {
         if(proxy != null)
         {
-            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, owner.GetMechanic<Mechanic_Movement>().facingDir) * offset; // Direction still determined by owner
+            return proxy.transform.position + Quaternion.FromToRotation(Vector3.up, Stats.GetStat<Mechanic_Movement>(owner).facingDir) * offset; // Direction still determined by owner
         }
         else
         {
-            return owner.transform.position + Quaternion.FromToRotation(Vector3.up, owner.GetMechanic<Mechanic_Movement>().facingDir) * offset;
+            return owner.transform.position + Quaternion.FromToRotation(Vector3.up, Stats.GetStat<Mechanic_Movement>(owner).facingDir) * offset;
         }
         
     }
@@ -96,12 +98,12 @@ public abstract class MultiTargeting : Targeting
         bool firstTarget = true;
         foreach (Entity entity in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
         {
-            if (!ignoreIntangeable && entity.Stat<Stat_Intangable>().Value) continue;
+            if (!ignoreIntangeable && entity.GetStat<Stat_Intangable>().Value) continue;
             // Can it be targeted?
-            if (entity.Stat<Stat_Untargetable>().Contains((owner, this))) continue;
+            if (entity.GetStat<Stat_Untargetable>().Contains((owner, this), out _)) continue;
 
             // Is it in the affected entities?
-            if(entity.Stat<Stat_Team>().Value != owner.Stat<Stat_Team>().Value)
+            if(entity.GetStat<Stat_Team>().Value != Stats.GetStat<Stat_Team>(owner).Value)
             {
                 targetType = TargetFilter.Enemies;
             }
@@ -109,7 +111,7 @@ public abstract class MultiTargeting : Targeting
             {
                 targetType = TargetFilter.Self;
             }
-            else if (entity == owner.Stat<Stat_PlayerCharacter>().Value)
+            else if (entity == owner.GetStat<Stat_PlayerCharacter>().Value)
             {
                 targetType = TargetFilter.Owner;
             }
@@ -136,7 +138,7 @@ public abstract class MultiTargeting : Targeting
 
         if(numberOfTargets >= 0)
         {
-            int actualNumberOfTargets = numberOfTargets + (int)owner.Stat<Stat_AdditionalTargets>().Value;
+            int actualNumberOfTargets = numberOfTargets + (int)owner.GetStat<Stat_AdditionalTargets>().Value;
             if (numberOfTargets >= 0 && targets.Count > actualNumberOfTargets)
                 targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
         }

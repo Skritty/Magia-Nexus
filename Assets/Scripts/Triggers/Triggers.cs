@@ -9,11 +9,11 @@ public class Trigger_MovementDirectionCalc : Trigger<Trigger_MovementDirectionCa
 public class Trigger_Damage : Trigger<Trigger_Damage, DamageInstance> { }
 public class Trigger_Die : Trigger<Trigger_Die, DamageInstance> { }
 public class Trigger_ProjectilePierce : Trigger<Trigger_ProjectilePierce, Entity> { }
-public class Trigger_ModifierGained : Trigger<Trigger_ModifierGained, IModifier> { }
-public class Trigger_ModifierLost : Trigger<Trigger_ModifierLost, IModifier> { }
-public class Trigger_BuffGained : Trigger<Trigger_BuffGained, IModifier> { }
-public class Trigger_BuffLost : Trigger<Trigger_BuffLost, IModifier> { }
-public class Trigger_DebuffGained : Trigger<Trigger_DebuffGained, IModifier>//, IDataContainer<IModifier>, IDataContainer<int> OR IDataContainer_Counter(<int>)
+public class Trigger_ModifierGained : Trigger<Trigger_ModifierGained, Modifier> { }
+public class Trigger_ModifierLost : Trigger<Trigger_ModifierLost, Modifier> { }
+public class Trigger_BuffGained : Trigger<Trigger_BuffGained, Modifier> { }
+public class Trigger_BuffLost : Trigger<Trigger_BuffLost, Modifier> { }
+public class Trigger_DebuffGained : Trigger<Trigger_DebuffGained, Modifier>//, IDataContainer<IModifier>, IDataContainer<int> OR IDataContainer_Counter(<int>)
 {
     /*IModifier _modifier;
     IModifier IDataContainer<IModifier>.Value => _modifier;
@@ -46,7 +46,7 @@ public class Trigger_DebuffGained : Trigger<Trigger_DebuffGained, IModifier>//, 
         return new Trigger_DebuffGained().Get(out IModifier data);
     }*/
 }
-public class Trigger_DebuffLost : Trigger<Trigger_DebuffLost, IModifier> { }
+public class Trigger_DebuffLost : Trigger<Trigger_DebuffLost, Modifier> { }
 public class Trigger_GameEnd : Trigger<Trigger_GameEnd, Viewer> { }
 public class Trigger_RoundEnd : Trigger<Trigger_RoundEnd, Viewer> { }
 public class Trigger_ActionStart : Trigger<Trigger_ActionStart, Action> { }

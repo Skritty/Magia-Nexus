@@ -40,8 +40,8 @@ public class Mechanic_Magic : Mechanic
         {
             vfx.visualEffect.enabled = true;
         }
-        Owner.GetStat<Stat_Runes>().Add(rune);
-        List<Rune> runes = Owner.GetStat<Stat_Runes>().ToList;
+        Stats.GetStat<Stat_Runes>(Owner).Add(rune);
+        List<Rune> runes = Stats.GetStat<Stat_Runes>(Owner).ToList;
         Trigger_RuneGained.Invoke(rune, Owner, rune);
         vfx.visualEffect.SetInt("RuneCount", runes.Count);
         runeInfo?.Dispose();

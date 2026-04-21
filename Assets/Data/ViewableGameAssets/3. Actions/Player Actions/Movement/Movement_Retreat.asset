@@ -30,58 +30,21 @@ MonoBehaviour:
   onTick: 1
   timing: 0
   effects:
-  - rid: 4023383616259883170
+  - rid: 5747455617716977813
   references:
     version: 2
     RefIds:
-    - rid: 4023383616259883170
-      type: {class: Effect_ModifierActionDuration, ns: , asm: Assembly-CSharp}
-      data:
-        useTargetAsProxy: 0
-        propagateTarget: 0
-        targetSelector:
-          rid: 4023383616259883171
-        modifier:
-          rid: 4023383616259883172
-    - rid: 4023383616259883171
-      type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-    - rid: 4023383616259883172
-      type: {class: Modifier_MovementDirectionSelector, ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField:
-          rid: 4023383616259883173
-        <StatTag>k__BackingField:
-          rid: 4023383616259883174
-        <Alignment>k__BackingField: 0
-        <MaxStacks>k__BackingField: 1
-        <StacksAdded>k__BackingField: 1
-        <PerPlayer>k__BackingField: 0
-        <TickDuration>k__BackingField: 0
-        <RefreshDuration>k__BackingField: 0
-        <Priority>k__BackingField: 1
-    - rid: 4023383616259883173
+    - rid: 5747455617716977813
       type: {class: Movement_DistanceFromTarget, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383616259883175
+          rid: 5747455617716977814
         movementSpeedMultiplier: 1
         distanceFromTarget: 100
         threshold: 0.25
-    - rid: 4023383616259883174
-      type: {class: Stat_MovementSelector, ns: , asm: Assembly-CSharp}
-      data:
-        <ModifierInheritMethod>k__BackingField:
-          rid: 7009677036434751535
-        _modifiers: []
-        <Priority>k__BackingField: 0
-    - rid: 4023383616259883175
+    - rid: 5747455617716977814
       type: {class: Targeting_Self, ns: , asm: Assembly-CSharp}
       data:
         ignoreFrames: 0
-    - rid: 7009677036434751535
-      type: {class: 'NoInherit`1[[MovementDirectionSelector, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 

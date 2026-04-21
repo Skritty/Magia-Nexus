@@ -83,72 +83,33 @@ MonoBehaviour:
   - rid: 4023383595816845811
   - rid: 5987050865069916326
   - rid: 5987050870616883429
+  defaultTriggers: []
   mechanics: []
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1000
-      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1001
-      type: {class: 'NoInherit`1[[Trigger, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1002
-      type: {class: 'NoInherit`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data: 
-    - rid: 1003
-      type: {class: 'NoInherit`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 
     - rid: 4023383589837865500
       type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
       data:
-        <ModifierInheritMethod>k__BackingField:
-          rid: 1001
-        _modifiers: []
+        <Modifiers>k__BackingField: []
     - rid: 4023383595816845811
       type: {class: Stat_AoESize, ns: , asm: Assembly-CSharp}
       data:
-        <ModifierInheritMethod>k__BackingField:
-          rid: 1002
-        _modifiers:
-        - rid: 5987051001417040110
+        <Modifiers>k__BackingField: []
         <Step>k__BackingField: 0
     - rid: 5987050865069916326
       type: {class: Stat_PlayerCharacter, ns: , asm: Assembly-CSharp}
       data:
-        <ModifierInheritMethod>k__BackingField:
-          rid: 1003
-        _modifiers: []
+        <Value>k__BackingField: {fileID: 0}
     - rid: 5987050869617852731
       type: {class: Stat_EffectMultiplier, ns: , asm: Assembly-CSharp}
       data:
-        <ModifierInheritMethod>k__BackingField:
-          rid: 1000
-        _modifiers:
-        - rid: 5987051003583922351
+        <Modifiers>k__BackingField: []
         <Step>k__BackingField: 0
     - rid: 5987050870616883429
       type: {class: Stat_DamageDealt, ns: , asm: Assembly-CSharp}
       data:
-        <ModifierInheritMethod>k__BackingField:
-          rid: 5987051001417040106
-        _modifiers: []
-    - rid: 5987051001417040106
-      type: {class: 'InheritFromPlayerCharacter`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        self: {fileID: 6345354840142092050}
-        referenceStat:
-          rid: -2
-    - rid: 5987051001417040110
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 1
-    - rid: 5987051003583922351
-      type: {class: 'DataContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField: 1
+        <Modifiers>k__BackingField: []
 --- !u!1 &7062227953910008534
 GameObject:
   m_ObjectHideFlags: 0
