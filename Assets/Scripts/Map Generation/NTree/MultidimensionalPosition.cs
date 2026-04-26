@@ -17,6 +17,14 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
     {
         position = new int[dimensions];
     }
+    public MultidimensionalPosition(int dimensions, int fill)
+    {
+        position = new int[dimensions];
+        for (int axis = 0; axis < Dimensions; axis++)
+        {
+            position[axis] = fill;
+        }
+    }
     public MultidimensionalPosition(params int[] position)
     {
         this.position = position;

@@ -639,11 +639,9 @@ public class NTree<T>
         if (root == null)
         {
             root = CreateNode(position, -1, (byte)(depth + 1));
-            // Add sign sector
-            if (root.children[position.GetIndexAtDepth(31)] == null)
-            {
-                root.AddChild(new NTreeNode(position, -1, 31));
-            }
+            // Add sign sectors
+            root.AddChild(new NTreeNode(new MultidimensionalPosition(position.Dimensions, 0), -1, 31));
+            root.AddChild(new NTreeNode(new MultidimensionalPosition(position.Dimensions, -1), -1, 31));
             //Debug.Log($"New Root {root}(D{root.depth}, L{root.leafCount})");
         }
         else if(root.depth <= depth)

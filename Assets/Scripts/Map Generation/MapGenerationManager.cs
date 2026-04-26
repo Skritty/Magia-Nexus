@@ -1,9 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UIElements;
+using Skritty.Tools.Utilities;
 
 [Serializable]
 public abstract class MapGenerator
@@ -12,7 +11,7 @@ public abstract class MapGenerator
     public virtual void DrawGizmos(NTree<TileSuperposition> tree) {  }
 }
 
-public class MapGenerationManager : Skritty.Tools.Utilities.Singleton<MapGenerationManager>
+public class MapGenerationManager : Singleton<MapGenerationManager>
 {
     [NonSerialized]
     private NTree<TileSuperposition>[] mapRepresentationLODs;
