@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable, CreateAssetMenu(menuName = "ViewableGameAsset/Action")]
@@ -8,33 +9,65 @@ public class Action : ViewableGameAsset
 {
     public AnimationState initialAnimationState = AnimationState.None;
     public AnimationState activateAnimationState = AnimationState.None;
+    public int tickDuration;
+    public DamageType tags;
     public AnimationCurve movementSpeedOverDuration;
-    //public AnimationCurve focusExpenditureWeightOverTime;
     public float focusCost;
-    public int ActionTickDuration;// (int)(movementSpeedOverDuration.keys[movementSpeedOverDuration.length - 1].time * 50);
+    public AnimationCurve focusExpenditureWeightOverTime;
+    [ReadOnly]
+    public float totalWeight;
+    public float FocusCost(int tick)
+    {
+        return focusExpenditureWeightOverTime.Evaluate(tick * 1f / tickDuration) / totalWeight * focusCost;
+    }
+    
     public bool onTick;
-    public int timing = 0;
+    [Range(0,1), HideIf("@onTick")]
+    public float timing = 0;
+    public List<CancelRange> cancelRanges = new();
+    public bool Cancelable(int tick, Action other)
+    {
+        foreach(CancelRange cr in cancelRanges)
+        {
+            if (cr.range.x * tickDuration <= tick && 
+                cr.range.y * tickDuration <= tick &&
+                (((int)cr.cancelableBy) & ((int)other.tags)) != 0) 
+                return true;
+        }
+        return false;
+    }
+
+    [Serializable]
+    public class CancelRange
+    {
+        [MinMaxSlider(0, 1)]
+        public Vector2 range;
+        public DamageType cancelableBy = DamageType.All;
+    }
+
     [SerializeReference]
     public List<EffectTask> effects = new List<EffectTask>();
     public virtual void OnStart(Entity owner)
     {
         owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
+        Trigger_ActionStart.Invoke(this, this, owner);
+        Trigger_EntityUsedAction.Invoke(new Effect(owner, owner.Stat<Stat_MovementTarget>().Value), this, owner);
         // TODO: return to this animation state after stunned
     }
     public virtual bool Tick(Entity owner, int tick)
     {
-        owner.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate(ActionTickDuration * 1f / tick), step: CalculationStep.Multiplicative, tickDuration: 1));
-        if (onTick || tick == timing)
+        owner.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate(tickDuration * 1f / tick), step: CalculationStep.Multiplicative, tickDuration: 1));
+        if (onTick || tick == (int)(tickDuration * timing))
         {
             owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
             DoEffects(owner);
         }
-        if(tick == ActionTickDuration) return true;
+        if(tick == tickDuration) return true;
         else return false;
     }
     public virtual void OnEnd(Entity owner)
     {
-        
+        Trigger_ActionEnd.Invoke(this, this, owner);
     }
     public void DoEffects(Entity owner)
     {
@@ -46,6 +79,16 @@ public class Action : ViewableGameAsset
                 continue;
             }
             effect.DoTask(owner);
+        }
+    }
+
+    private void OnValidate()
+    {
+        tickDuration = Mathf.Clamp(tickDuration, 0, 500);
+        totalWeight = 0;
+        for(int i = 0; i < tickDuration; i++)
+        {
+            totalWeight += focusExpenditureWeightOverTime.Evaluate(i * 1f / tickDuration);
         }
     }
 }

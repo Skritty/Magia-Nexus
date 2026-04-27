@@ -5,8 +5,10 @@ using UnityEngine;
 public class Stat_MaximumFocus : NumericalSolver, IStat<float> { }
 public class Stat_CurrentFocus : NumericalSolver, IStat<float> { }
 public class Stat_FocusRecoveryRate : NumericalSolver, IStat<float> { }
+public class Stat_FocusDepleationStunDuration : NumericalSolver, IStat<float> { }
 public class Stat_Skills : ListStat<Action>, IStat<Action> { }
 public class Stat_SkillConditions : ListStat<SkillCondition>, IStat<SkillCondition> { }
+public class Stat_SkillReactions : ListStat<SkillCondition>, IStat<SkillCondition> { }
 public class Stat_Stunned : BooleanPrioritySolver, IStat<bool> { }
 public class Stat_Channeling : BooleanPrioritySolver, IStat<bool> { }
 public class Stat_Initiative : NumericalSolver, IStat<float> { }
@@ -15,21 +17,18 @@ public class Trigger_DefaultSkill : Trigger<Trigger_DefaultSkill, Entity> { }
 public class Mechanic_Skills : Mechanic<Mechanic_Skills>
 {
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
-    private SkillCondition queuedSkill;
+    private SkillCondition queuedTrigger;
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private Action activeSkill;
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private int tick;
     private DataContainer<float> baseFocus;
     private System.Action cleanup;
-    public Dictionary<SkillCondition, Action> conditionBindings = new();
+    [FoldoutGroup("Skills")]
+    public SerializedDictionary<SkillCondition, Action> conditionBindings = new();
 
     public override void Initialize()
     {
-        for(int i = 0; i < Owner.Stat<Stat_SkillConditions>().Count; i++)
-        {
-            BindAction(Owner.Stat<Stat_Skills>()[i], Owner.Stat<Stat_SkillConditions>()[i]);
-        }
         ConditionSetup();
 
         baseFocus = new DataContainer<float>();
@@ -41,9 +40,23 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
     {
         cleanup?.Invoke();
         cleanup = null;
-        foreach (SkillCondition condition in Owner.Stat<Stat_SkillConditions>())
+        if(conditionBindings.Count > 0)
         {
-            cleanup += condition.condition.SubscribeToTasks(Owner, 0);
+            foreach (var binding in conditionBindings)
+            {
+                cleanup += binding.Key.condition.SubscribeToTasks(Owner, 0);
+            }
+        }
+        else
+        {
+            foreach (SkillCondition condition in Owner.Stat<Stat_SkillConditions>())
+            {
+                cleanup += condition.condition.SubscribeToTasks(Owner, 0);
+            }
+            foreach (SkillCondition condition in Owner.Stat<Stat_SkillReactions>())
+            {
+                cleanup += condition.condition.SubscribeToTasks(Owner, 0);
+            }
         }
     }
 
@@ -58,14 +71,21 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
 
     public void QueueSkill(SkillCondition condition)
     {
-        if(queuedSkill != null) Debug.Log($"{queuedSkill.name} priority = {Owner.Stat<Stat_SkillConditions>().IndexOf(queuedSkill)} | " +
+        if (!conditionBindings.ContainsKey(condition)) return;
+        if(queuedTrigger != null) Debug.Log($"{queuedTrigger.name} priority = {Owner.Stat<Stat_SkillConditions>().IndexOf(queuedTrigger)} | " +
             $"{condition.name} priority = {Owner.Stat<Stat_SkillConditions>().IndexOf(condition)}");
-        if (queuedSkill != null && Owner.Stat<Stat_SkillConditions>().IndexOf(queuedSkill) < Owner.Stat<Stat_SkillConditions>().IndexOf(condition)) return;
-        queuedSkill = condition;
+
+        if (queuedTrigger != null && !Owner.Stat<Stat_SkillConditions>().Contains(queuedTrigger) && Owner.Stat<Stat_SkillConditions>().IndexOf(queuedTrigger) < Owner.Stat<Stat_SkillConditions>().IndexOf(condition)) return;
+        queuedTrigger = condition;
     }
 
     public override void Tick()
     {
+        if (Owner.Stat<Stat_CurrentFocus>().Value == 0)
+        {
+            Owner.Stat<Stat_Stunned>().Add(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.Stat<Stat_FocusDepleationStunDuration>().Value));
+        }
+
         if (Owner.Stat<Stat_Stunned>().Value)
         {
             EndSkill();
@@ -77,37 +97,62 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
 
         if (activeSkill == null)
         {
-            if(queuedSkill == null)
+            if(queuedTrigger == null)
             {
                 Trigger_SkillTriggerCheck.Invoke(Owner, Owner);
-                if (queuedSkill == null)
+                if (queuedTrigger == null)
                 {
                     Trigger_DefaultSkill.Invoke(Owner, Owner);
                 }
-                return;
+                if (queuedTrigger == null) return;
             }
 
-            if(conditionBindings[queuedSkill].focusCost <= Owner.Stat<Stat_CurrentFocus>().Value)
-            {
-                activeSkill = conditionBindings[queuedSkill];
-                queuedSkill = null;
-                tick = 0;
-                baseFocus.Value = Mathf.Clamp(baseFocus.Value - activeSkill.focusCost, 0, Owner.Stat<Stat_MaximumFocus>().Value);
-                Owner.Stat<Stat_CurrentFocus>().MarkAsChanged();
-            }
+            TryStartSkill(conditionBindings[queuedTrigger]);
         }
         
         if (activeSkill)
         {
+            if (queuedTrigger && activeSkill.Cancelable(tick, conditionBindings[queuedTrigger]))
+            {
+                TryStartSkill(conditionBindings[queuedTrigger]);
+            }
+
+            float cost = activeSkill.FocusCost(tick);
+            if (!float.IsNaN(cost))
+            {
+                baseFocus.Value = Mathf.Clamp(baseFocus.Value - cost, 0, Owner.Stat<Stat_MaximumFocus>().Value);
+                Owner.Stat<Stat_CurrentFocus>().MarkAsChanged();
+            }
+
+            if (activeSkill.Tick(Owner, tick)) EndSkill();
+
+            if (Owner.Stat<Stat_CurrentFocus>().Value == 0)
+            {
+                Owner.Stat<Stat_Stunned>().Add(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.Stat<Stat_FocusDepleationStunDuration>().Value));
+            }
+
             tick++;
-            if(activeSkill.Tick(Owner, tick)) EndSkill();
         }
+    }
+
+    public bool TryStartSkill(Action skill)
+    {
+        if (conditionBindings[queuedTrigger].focusCost <= Owner.Stat<Stat_CurrentFocus>().Value)
+        {
+            EndSkill();
+            tick = 0;
+            activeSkill = skill;
+            queuedTrigger = null;
+            activeSkill.OnStart(Owner);
+            return true;
+        }
+        return false;
     }
 
     public void EndSkill()
     {
+        activeSkill?.OnStart(Owner);
         activeSkill = null;
-        tick = 0;
     }
 }
 

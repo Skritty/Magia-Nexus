@@ -385,6 +385,7 @@ MonoBehaviour:
   - rid: 5747455456730153283
   - rid: 5747455457082212435
   - rid: 5747455457082212498
+  - rid: 5747455752159363160
   - rid: 5747455594504913181
   - rid: 5747455594504913186
   mechanics:
@@ -549,9 +550,9 @@ MonoBehaviour:
         <ModifierInheritMethod>k__BackingField:
           rid: 5747455457082212436
         _modifiers:
+        - rid: 5747455457082212464
         - rid: 5747455457082212462
         - rid: 5747455457082212463
-        - rid: 5747455457082212464
         - rid: 5747455595328831917
         - rid: 5747455594918838515
     - rid: 5747455457082212436
@@ -575,9 +576,8 @@ MonoBehaviour:
         <ModifierInheritMethod>k__BackingField:
           rid: 5747455457082212499
         _modifiers:
-        - rid: 5747455457082212500
-        - rid: 5747455457082212502
         - rid: 5747455457082212501
+        - rid: 5747455457082212500
     - rid: 5747455457082212499
       type: {class: 'NoInherit`1[[SkillCondition, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data: 
@@ -656,6 +656,21 @@ MonoBehaviour:
       type: {class: 'DataContainer`1[[Action, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: {fileID: 11400000, guid: add61c821da36f14db6be7e9c4a7fbbe, type: 2}
+    - rid: 5747455752159363160
+      type: {class: Stat_SkillReactions, ns: , asm: Assembly-CSharp}
+      data:
+        <ModifierInheritMethod>k__BackingField:
+          rid: 5747455752159363161
+        _modifiers:
+        - rid: 5747455754407773010
+        - rid: 5747455457082212502
+    - rid: 5747455752159363161
+      type: {class: 'NoInherit`1[[SkillCondition, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5747455754407773010
+      type: {class: 'DataContainer`1[[SkillCondition, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField: {fileID: 11400000, guid: c41e71da6f38a1341b3f50cb28010a9e, type: 2}
     - rid: 5987050868977958975
       type: {class: Mechanic_Character, ns: , asm: Assembly-CSharp}
       data:

@@ -19,16 +19,74 @@ MonoBehaviour:
   hidden: 1
   initialAnimationState: 1
   activateAnimationState: 0
+  tickDuration: 10
+  tags: 0
   movementSpeedOverDuration:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   focusCost: 20
-  ActionTickDuration: 20
+  focusExpenditureWeightOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.00077056885
+      value: 0.59705734
+      inSlope: 1.6624608
+      outSlope: 1.6624608
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2272653
+      value: 0.976158
+      inSlope: 0.52313113
+      outSlope: 0.52313113
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: -0.6161986
+      outSlope: -0.6161986
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  totalWeight: 8.139777
   onTick: 1
   timing: 0
+  cancelRanges:
+  - range: {x: 0, y: 0.10425244}
+    cancelableBy: 2147483647
+  - range: {x: 0.9053498, y: 1}
+    cancelableBy: 2147483647
   effects:
   - rid: 5747455595328831902
   - rid: 5747455595328831909

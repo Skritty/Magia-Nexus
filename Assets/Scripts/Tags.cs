@@ -37,6 +37,11 @@ public enum DamageType
     All = int.MaxValue
 }
 
+public class DamageTypeTest : TileSuperposition
+{
+
+}
+
 public enum EffectTag
 {
     None,

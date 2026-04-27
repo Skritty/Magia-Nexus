@@ -8,23 +8,14 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
 {
     public Entity selectedCharacter;
     public ViewableGameAssetUIItem defaultVGAUI;
-    public RectTransform skills, skillConditions;
+    public RectTransform skills, conditions, reactions;
     public Sprite lineImage;
     public Vector2 graphScale;
     public float lineWidth;
-    private Entity previouslySelected;
+    public List<Entity> partyMembers;
     public void OnPointerDown(PointerEventData eventData)
     {
         // Add character list/clicking on characters in the scene (character select)
-    }
-
-    private void Update()
-    {
-        if(previouslySelected != selectedCharacter)
-        {
-            previouslySelected = selectedCharacter;
-            UpdateUI();
-        }
     }
 
     public void UpdateUI()
@@ -44,12 +35,12 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
         foreach (Action skill in selectedCharacter.Stat<Stat_Skills>())
         {
             ViewableGameAssetUIItem VGAUI = defaultVGAUI.RequestObject<ViewableGameAssetUIItem>();
-            VGAUI.transform.parent = skills;
+            VGAUI.transform.SetParent(skills, true);
             VGAUI.asset = skill;
             VGAUI.UpdateUI();
         }
 
-        foreach (Transform conditionUI in skillConditions)
+        foreach (Transform conditionUI in conditions)
         {
             if (conditionUI.TryGetComponent(out ViewableGameAssetUIItem VGAUI))
             {
@@ -59,8 +50,23 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
         foreach (SkillCondition condition in selectedCharacter.Stat<Stat_SkillConditions>())
         {
             ViewableGameAssetUIItem VGAUI = defaultVGAUI.RequestObject<ViewableGameAssetUIItem>();
-            VGAUI.transform.parent = skillConditions;
+            VGAUI.transform.SetParent(conditions, true);
             VGAUI.asset = condition;
+            VGAUI.UpdateUI();
+        }
+
+        foreach (Transform reactionUI in reactions)
+        {
+            if (reactionUI.TryGetComponent(out ViewableGameAssetUIItem VGAUI))
+            {
+                VGAUI.ReleaseObject();
+            }
+        }
+        foreach (SkillCondition reaction in selectedCharacter.Stat<Stat_SkillReactions>())
+        {
+            ViewableGameAssetUIItem VGAUI = defaultVGAUI.RequestObject<ViewableGameAssetUIItem>();
+            VGAUI.transform.SetParent(reactions, true);
+            VGAUI.asset = reaction;
             VGAUI.UpdateUI();
         }
         UpdateSkillConnections();
@@ -119,7 +125,7 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
     public void ReorderSkillConditions()
     {
         List<SkillCondition> reordered = new();
-        foreach (Transform conditionUI in skillConditions)
+        foreach (Transform conditionUI in conditions)
         {
             if (conditionUI.TryGetComponent(out ViewableGameAssetUIItem VGAUI))
             {
@@ -129,5 +135,12 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
         selectedCharacter.Stat<Stat_SkillConditions>().Clear();
         selectedCharacter.Stat<Stat_SkillConditions>().AddRange(reordered);
         UpdateSkillConnections();
+    }
+
+    public void SelectPartyMember(int number)
+    {
+        if (partyMembers.Count <= number) return;
+        selectedCharacter = partyMembers[number];
+        UpdateUI();
     }
 }

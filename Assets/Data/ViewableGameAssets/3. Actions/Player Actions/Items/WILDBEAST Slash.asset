@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f904f9057a4b9a4fb54037a9dfdfc6c, type: 3}
-  m_Name: Player_Slash
+  m_Name: WILDBEAST Slash
   m_EditorClassIdentifier: 
   aliases:
   - Slash
@@ -20,7 +20,7 @@ MonoBehaviour:
   hidden: 0
   initialAnimationState: 3
   activateAnimationState: 4
-  tickDuration: 40
+  tickDuration: 50
   tags: 139266
   movementSpeedOverDuration:
     serializedVersion: 2
@@ -64,7 +64,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  focusCost: 30
+  focusCost: 25
   focusExpenditureWeightOverTime:
     serializedVersion: 2
     m_Curve:
@@ -98,14 +98,10 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  totalWeight: 25.242188
+  totalWeight: 31.55625
   onTick: 0
-  timing: 0.4
-  cancelRanges:
-  - range: {x: 0, y: 0.25514403}
-    cancelableBy: 2147483647
-  - range: {x: 0, y: 1}
-    cancelableBy: 2147483647
+  timing: 0.7
+  cancelRanges: []
   effects:
   - rid: 4023383589043568720
   references:
@@ -125,7 +121,7 @@ MonoBehaviour:
     - rid: 4023383589043568722
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        _effectMultiplier: 1.6
+        _effectMultiplier: 2
         triggerPlayerCharacter: 0
         preHit:
           tasks: []
@@ -134,7 +130,7 @@ MonoBehaviour:
         runes: []
         finalDamage: 0
         damageModifiers:
-        - <Value>k__BackingField: 10
+        - <Value>k__BackingField: 20
           <StatTag>k__BackingField:
             rid: -2
           <Alignment>k__BackingField: 0
@@ -157,5 +153,5 @@ MonoBehaviour:
         numberOfTargets: -1
         offset: {x: 0, y: 0, z: 0}
         vfx: {fileID: 0}
-        radius: 1.75
-        angle: 30
+        radius: 2
+        angle: 60

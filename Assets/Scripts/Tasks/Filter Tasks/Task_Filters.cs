@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 // These filters are for use primarily with Effect_AddTrigger in the inspector, but can be used in code as well
 

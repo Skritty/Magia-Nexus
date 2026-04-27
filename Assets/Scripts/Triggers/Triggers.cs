@@ -50,6 +50,7 @@ public class Trigger_DebuffLost : Trigger<Trigger_DebuffLost, IModifier> { }
 public class Trigger_GameEnd : Trigger<Trigger_GameEnd, Viewer> { }
 public class Trigger_RoundEnd : Trigger<Trigger_RoundEnd, Viewer> { }
 public class Trigger_ActionStart : Trigger<Trigger_ActionStart, Action> { }
+public class Trigger_EntityUsedAction : Trigger<Trigger_EntityUsedAction, Effect> { }
 public class Trigger_ActionEnd : Trigger<Trigger_ActionEnd, Action> { }
 public class Trigger_TurnStart : Trigger<Trigger_TurnStart, Entity> { }
 public class Trigger_TurnEnd : Trigger<Trigger_TurnEnd, Entity> { }
