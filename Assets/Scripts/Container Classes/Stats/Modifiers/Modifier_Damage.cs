@@ -37,7 +37,7 @@ public class Modifier_Damage : Modifier_Numerical, IHasDamageTypes, ICalculation
         Value = baseValue;
     }
 
-    public Modifier_Damage Clone()
+    public new Modifier_Damage Clone()
     {
         Modifier_Damage clone = (Modifier_Damage)MemberwiseClone();
         clone.StatTag = StatTag;

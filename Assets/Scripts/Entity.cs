@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Entity : MonoBehaviour
+public class Entity : MonoBehaviour, IBindable
 {
     public System.Action cleanup;
 
     [SerializeReference]
-    private List<IStat> stats = new();
+    private List<IValueContainer> stats = new();
     [SerializeReference]
     private List<IValueContainer<Trigger>> defaultTriggers = new();
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
@@ -16,7 +16,7 @@ public class Entity : MonoBehaviour
 
     private void Awake()
     {
-        foreach(IStat stat in stats)
+        foreach(IValueContainer stat in stats)
         {
             this.AddStat(stat);
         }
@@ -29,6 +29,11 @@ public class Entity : MonoBehaviour
             trigger.Value.SubscribeToTasks(this, this);
             this.GetStat<Stat_Triggers>().AddModifier(trigger);
         }
+    }
+
+    public void Bind(object boundObject)
+    {
+        if(boundObject is IValueContainer) (boundObject as IValueContainer).BoundObject = this;
     }
 
     private void Start()

@@ -15,14 +15,14 @@ public class Movement_DistanceFromTarget : MovementDirectionSelector
     {
         Targeting targeting = owner.GetStat<Stat_MovementTargetingMethod>().Value;
         if (targeting != null)
-            foreach (Entity entity in owner.GetStat<Stat_MovementTargetingMethod>().Value.GetTargets(owner))
+            foreach (Entity entity in owner.GetStat<Stat_MovementTargetingMethod>().Value.Solve(owner))
             {
                 // TODO: don't do this every frame
                 owner.GetStat<Stat_MovementTarget>().AddModifier(new Modifier<Entity>(value: entity, tickDuration: 1));
                 break;
             }
 
-        if (Stats.GetStat<Stat_MovementTarget>(target).Value == null)
+        if (target.GetStat<Stat_MovementTarget>().Value == null)
         {
             target.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value: 0, step: CalculationStep.Multiplicative, tickDuration: 1));
         }

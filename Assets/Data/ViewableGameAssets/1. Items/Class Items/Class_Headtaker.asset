@@ -17,6 +17,7 @@ MonoBehaviour:
   image: {fileID: 0}
   hidden: 1
   UIColor: {r: 0.57861626, g: 0.57861626, b: 0.57861626, a: 1}
+  classification: 0
   cost: 0
   craftingRecipe: []
   grantedActions:
@@ -36,21 +37,26 @@ MonoBehaviour:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 5987051021247971714
+          numberOfTargets: -1
+          ignoreFrames: 0
+          targetingConditions: []
+          targetingSorting:
+            rid: -2
         triggerOnce: 0
         triggerOrder: 0
         bindingObject: 1
         triggerModifier:
-          <Value>k__BackingField:
-            rid: 4023383639793074479
-          <StatTag>k__BackingField:
-            rid: 4023383639793074483
-          <Alignment>k__BackingField: 0
           <MaxStacks>k__BackingField: 0
           <StacksAdded>k__BackingField: 1
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
+          <Tag>k__BackingField:
+            rid: -2
+          <StatTag>k__BackingField:
+            rid: 5747455773293936734
+          <Value>k__BackingField:
+            rid: 4023383639793074479
     - rid: 4023383639793074479
       type: {class: Trigger_ActionStart, ns: , asm: Assembly-CSharp}
       data:
@@ -62,26 +68,20 @@ MonoBehaviour:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383639793074481
+          numberOfTargets: -1
+          ignoreFrames: 0
+          targetingConditions:
+          - rid: 5747455773293936735
+          - rid: 5747455773293936736
+          - rid: 5747455773293936737
+          targetingSorting:
+            rid: -2
         hit:
           rid: 4023383639793074482
-    - rid: 4023383639793074481
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        lineOfSight: 0
-        ignoreIntangeable: 0
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1.75
-        angle: 30
     - rid: 4023383639793074482
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        _effectMultiplier: 0
+        _effectMultiplier: 0.8
         triggerPlayerCharacter: 0
         preHit:
           tasks: []
@@ -90,37 +90,33 @@ MonoBehaviour:
         runes: []
         finalDamage: 0
         damageModifiers:
-        - <Value>k__BackingField: 100
-          <StatTag>k__BackingField:
-            rid: -2
-          <Alignment>k__BackingField: 0
-          <MaxStacks>k__BackingField: 0
+        - <MaxStacks>k__BackingField: 0
           <StacksAdded>k__BackingField: 1
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
+          <Tag>k__BackingField:
+            rid: -2
+          <StatTag>k__BackingField:
+            rid: -2
+          <Value>k__BackingField: 10
           <Step>k__BackingField: 0
           <AppliesTo>k__BackingField: 0
           <DamageType>k__BackingField: 139299
-    - rid: 4023383639793074483
+    - rid: 5747455773293936734
       type: {class: Stat_Triggers, ns: , asm: Assembly-CSharp}
       data:
-        <ModifierInheritMethod>k__BackingField:
-          rid: 5987051021247971329
-        _modifiers: []
-    - rid: 5987051021247971329
-      type: {class: 'NoInherit`1[[Trigger, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+        <Modifiers>k__BackingField: []
+    - rid: 5747455773293936735
+      type: {class: TargetingCondition_NotIntangible, ns: , asm: Assembly-CSharp}
       data: 
-    - rid: 5987051021247971714
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+    - rid: 5747455773293936736
+      type: {class: TargetingCondition_EntityRelation, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        lineOfSight: 0
-        ignoreIntangeable: 0
-        numberOfTargets: -1
+        entitiesAffected: 16
+    - rid: 5747455773293936737
+      type: {class: TargetingCondition_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        radius: 2
+        angle: 30
         offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 0
-        angle: 180

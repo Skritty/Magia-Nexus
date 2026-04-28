@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using UnityEngine;
 
 public class Stat_CenterEntity : Solver<Entity>, IStat<Entity> { }
@@ -62,3 +62,4 @@ public class Targeting_CenterOfGroup : MultiTargeting
         return new List<Entity>() { centerEntity };
     }
 }
+*/

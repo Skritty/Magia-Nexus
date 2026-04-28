@@ -115,7 +115,7 @@ public class Task_Filter_IsTargetableBy<T> : ITask<T> where T : Effect
     public Targeting targeting;
     public bool DoTask(T effect)
     {
-        return targeting.GetTargets(effect, effect.Owner)
+        return targeting.Solve(effect.Owner)
             .Contains(selector == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
     }
 }
@@ -357,7 +357,7 @@ public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
 
     public bool DoTask(Entity owner, T data)
     {
-        return targeting.GetTargets(owner).Count > 0;
+        return targeting.Solve(owner).Count > 0;
     }
 
     public bool DoTask(T data)

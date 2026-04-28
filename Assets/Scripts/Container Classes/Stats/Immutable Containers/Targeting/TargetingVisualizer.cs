@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TargetingVisualizer : MonoBehaviour
 {
-    public static MultiTargeting toVisualize;
+    public static Targeting toVisualize;
     [SerializeReference]
-    public MultiTargeting toVisualizeManual;
+    public Targeting toVisualizeManual;
     
     private void OnDrawGizmos()
     {

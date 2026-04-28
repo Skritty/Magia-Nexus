@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 [CreateAssetMenu(menuName = "Rune/Water")]
 public class Rune_Water : Rune
@@ -89,4 +89,4 @@ public class Rune_Water : Rune
                 }
         }
     }
-}
+}*/

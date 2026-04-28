@@ -52,7 +52,14 @@ MonoBehaviour:
         useTargetAsProxy: 0
         propagateTarget: 0
         targetSelector:
-          rid: 4023383614162207232
+          numberOfTargets: -1
+          ignoreFrames: 0
+          targetingConditions:
+          - rid: 5747455773293936719
+          - rid: 5747455773293936720
+          - rid: 5747455773293936721
+          targetingSorting:
+            rid: -2
         hit:
           rid: 4023383589043568722
     - rid: 4023383589043568722
@@ -67,28 +74,29 @@ MonoBehaviour:
         runes: []
         finalDamage: 0
         damageModifiers:
-        - <Value>k__BackingField: 100
-          <StatTag>k__BackingField:
-            rid: -2
-          <Alignment>k__BackingField: 0
-          <MaxStacks>k__BackingField: 0
+        - <MaxStacks>k__BackingField: 0
           <StacksAdded>k__BackingField: 1
           <PerPlayer>k__BackingField: 0
           <TickDuration>k__BackingField: 0
           <RefreshDuration>k__BackingField: 0
+          <Tag>k__BackingField:
+            rid: -2
+          <StatTag>k__BackingField:
+            rid: -2
+          <Value>k__BackingField: 100
           <Step>k__BackingField: 0
           <AppliesTo>k__BackingField: 0
           <DamageType>k__BackingField: 139299
-    - rid: 4023383614162207232
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+    - rid: 5747455773293936719
+      type: {class: TargetingCondition_NotIntangible, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 5747455773293936720
+      type: {class: TargetingCondition_EntityRelation, ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        lineOfSight: 0
-        ignoreIntangeable: 0
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1.75
+        entitiesAffected: 16
+    - rid: 5747455773293936721
+      type: {class: TargetingCondition_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        radius: 2
         angle: 30
+        offset: {x: 0, y: 0, z: 0}

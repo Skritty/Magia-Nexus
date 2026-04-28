@@ -21,7 +21,7 @@ public class Mechanic_Projectile : Mechanic
     public override void Tick()
     {
         if (tasks.Count == 0) return;
-        foreach (Entity target in aoe.GetTargets(Owner))
+        foreach (Entity target in aoe.Solve(Owner))
         {
             OnHit(target);
         }
@@ -44,7 +44,8 @@ public class Mechanic_Projectile : Mechanic
             Stats.GetStat<Stat_SplitsRemaining>(Owner).Add(-1);
 
             Effect_Projectile split = (Effect_Projectile)splitProjectile.Clone();
-            (split.targetSelector as Targeting_Exclude)?.ignoredEntities.Add(target);
+            
+            split.targetSelector.targetingConditions.Add(new TargetingCondition_Exclude(target));
             split.numberOfProjectiles += (int)Stats.GetStat<Stat_AdditionalSplits>(Stats.GetStat<Stat_PlayerCharacter>(Owner).Value).Value;
             split.DoTask(Owner);
 

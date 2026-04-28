@@ -26,12 +26,11 @@ public class PrioritySolver<T> : Solver<T>, IPriority
         return () => Modifiers.Remove(data);
     }
 
-    public override void Solve()
+    public override T Solve(object boundObject)
     {
         if (Modifiers.Count == 0)
         {
-            _value = default;
-            return;
+            return _value = default;
         }
         byte highestPriority = 0;
         foreach (IValueContainer<T> modifier in Modifiers)
@@ -53,7 +52,7 @@ public class PrioritySolver<T> : Solver<T>, IPriority
             }
         }
         if (priorityModifiers.Count == 0) _value = default;
-        _value = HandleSamePriorityModifiers(priorityModifiers);
+        return _value = HandleSamePriorityModifiers(priorityModifiers);
     }
 
     protected virtual T HandleSamePriorityModifiers(List<IValueContainer<T>> modifiers)

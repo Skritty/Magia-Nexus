@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -110,13 +110,13 @@ public class Rune_Order : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    /*spell.lifetime += GameManager.Instance.ticksPerTurn * 2;
+                    *//*spell.lifetime += GameManager.Instance.ticksPerTurn * 2;
                     spell.castSpell.projectileFanAngle = 180f;
                     spell.castSpell.movementTarget = MovementTarget.Owner;
                     Movement_Orbit orbit = new Movement_Orbit();
                     orbit.orbitDistance = 1.75f;
                     spell.proxyBlueprint.Stat<Stat_Movement>().movementSelector = orbit;
-                    spell.proxyBlueprint.Stat<Stat_Movement>().baseMovementSpeed = 4;*/
+                    spell.proxyBlueprint.Stat<Stat_Movement>().baseMovementSpeed = 4;*//*
                     break;
                 }
             case SpellShape.Summon:
@@ -131,3 +131,4 @@ public class Rune_Order : Rune
         }
     }
 }
+*/

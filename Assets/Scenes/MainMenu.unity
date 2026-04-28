@@ -3544,6 +3544,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 5747455621132451910
       type: {class: Mechanic_Skills, ns: , asm: Assembly-CSharp}
       data:
@@ -9345,13 +9347,13 @@ MonoBehaviour:
       type: {class: Stat_MovementTargetingMethod, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField:
-        - rid: 5747455621132451945
+        - rid: 5747455773293936738
         <Priority>k__BackingField: 0
     - rid: 5747455621132451929
       type: {class: Stat_TargetingMethod, ns: , asm: Assembly-CSharp}
       data:
         <Modifiers>k__BackingField:
-        - rid: 5747455621132451947
+        - rid: 5747455773293936747
         <Priority>k__BackingField: 0
     - rid: 5747455621132451931
       type: {class: 'ValueContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
@@ -9376,38 +9378,6 @@ MonoBehaviour:
       type: {class: 'ValueContainer`1[[System.Single, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 5
-    - rid: 5747455621132451945
-      type: {class: 'ValueContainer`1[[Targeting, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField:
-          rid: 5747455621132451946
-    - rid: 5747455621132451946
-      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        lineOfSight: 0
-        ignoreIntangeable: 0
-        numberOfTargets: 1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-    - rid: 5747455621132451947
-      type: {class: 'ValueContainer`1[[Targeting, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data:
-        <Value>k__BackingField:
-          rid: 5747455621132451948
-    - rid: 5747455621132451948
-      type: {class: Targeting_Distance, ns: , asm: Assembly-CSharp}
-      data:
-        ignoreFrames: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        lineOfSight: 0
-        ignoreIntangeable: 0
-        numberOfTargets: 1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
     - rid: 5747455621132451949
       type: {class: Stat_AoESize, ns: , asm: Assembly-CSharp}
       data:
@@ -9452,6 +9422,50 @@ MonoBehaviour:
       type: {class: 'ValueContainer`1[[System.Int32, mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
         <Value>k__BackingField: 1
+    - rid: 5747455773293936738
+      type: {class: 'ValueContainer`1[[Targeting, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField:
+          rid: 5747455773293936739
+    - rid: 5747455773293936739
+      type: {class: Targeting, ns: , asm: Assembly-CSharp}
+      data:
+        numberOfTargets: 1
+        ignoreFrames: 0
+        targetingConditions:
+        - rid: 5747455773293936743
+        targetingSorting:
+          rid: 5747455773293936745
+    - rid: 5747455773293936743
+      type: {class: TargetingCondition_EntityRelation, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 16
+    - rid: 5747455773293936745
+      type: {class: TargetingSorting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        sortingMethod: 2
+    - rid: 5747455773293936747
+      type: {class: 'ValueContainer`1[[Targeting, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        <Value>k__BackingField:
+          rid: 5747455773293936748
+    - rid: 5747455773293936748
+      type: {class: Targeting, ns: , asm: Assembly-CSharp}
+      data:
+        numberOfTargets: 1
+        ignoreFrames: 0
+        targetingConditions:
+        - rid: 5747455773293936749
+        targetingSorting:
+          rid: 5747455773293936750
+    - rid: 5747455773293936749
+      type: {class: TargetingCondition_EntityRelation, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 16
+    - rid: 5747455773293936750
+      type: {class: TargetingSorting_Distance, ns: , asm: Assembly-CSharp}
+      data:
+        sortingMethod: 2
 --- !u!4 &2028557426
 Transform:
   m_ObjectHideFlags: 0

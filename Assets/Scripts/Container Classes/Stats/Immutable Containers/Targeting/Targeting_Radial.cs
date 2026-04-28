@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,9 +14,9 @@ public class Targeting_Radial : MultiTargeting
     [Range(0, 180)]
     public float angle = 180;
 
-    protected override bool IsValidTarget(Entity owner, Entity proxy, Entity target, bool firstTarget)
+    protected override bool IsValidTarget(Entity owner, Entity target, bool firstTarget)
     {
-        Vector3 dirToEntity = target.transform.position - GetCenter(owner, proxy);
+        Vector3 dirToEntity = target.transform.position - GetCenter(owner);
         if (dirToEntity.magnitude > radius * Stats.GetStat<Stat_AoESize>(owner).Value) return false;
         if (angle >= 180) return true;
 
@@ -27,7 +27,7 @@ public class Targeting_Radial : MultiTargeting
         return true;
     }
 
-    protected override void DoFX(Entity owner, Entity proxy, List<Entity> targets)
+    protected override void DoFX(Entity owner, List<Entity> targets)
     {
         if (vfx is not VFX_AoE) return;
         Vector3 lookDir = Stats.GetStat<Mechanic_Movement>(owner).facingDir;
@@ -47,4 +47,4 @@ public class Targeting_Radial : MultiTargeting
         Gizmos.DrawLine(source.position, Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up * radius);
         Gizmos.DrawLine(source.position, Quaternion.AngleAxis(-angle, Vector3.forward) * Vector3.up * radius);
     }
-}
+}*/

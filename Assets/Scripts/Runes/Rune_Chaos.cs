@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -111,3 +111,4 @@ public class Rune_Chaos : Rune
         (Stats.GetStat<Stat_MovementSelector>(entity).Value as Movement_HomeToTarget).homingRateDegreesPerSecond += 30f;
     }
 }
+*/

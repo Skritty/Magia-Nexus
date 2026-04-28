@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver, ISerializationCallbackReceiver
+public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>, ISerializationCallbackReceiver
 {
     protected T _value;
     protected bool changed;
@@ -16,7 +16,7 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver, I
             if (changed)
             {
                 changed = false;
-                Solve();
+                Solve(BoundObject);
             }
             return _value;
         }
@@ -27,6 +27,7 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver, I
             changed = true;
         }
     }
+    public object BoundObject { get; set; }
 
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
     public List<IValueContainer<T>> Modifiers { get; set; } = new();
@@ -74,9 +75,14 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver, I
         return false;
     }
 
-    public virtual void Solve()
+    public virtual T Solve(object boundObject)
     {
-        if(Modifiers.Count > 0) _value = Modifiers[0].Value;
+        if(Modifiers.Count > 0)
+        {
+            Modifiers[0].BoundObject = boundObject;
+            _value = Modifiers[0].Value;
+        }
+        return _value;
     }
 
     public IModifiable Clone(bool preserveModifiers)

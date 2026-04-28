@@ -109,6 +109,6 @@ public class Stat_Removeable : NumericalSolver, IStat<float> { }
 public class Stat_Knockback : NumericalSolver, IStat<float> { }
 public class Stat_Enmity : NumericalSolver, IStat<float> { }
 public class Stat_Intangable : PrioritySolver<bool>, IStat<bool> { }
-public class Stat_Untargetable : ListStat<(Entity entity, object source)>, IStat<List<(Entity entity, object source)>> { }
+public class Stat_Untargetable : ListStat<(object owner, object source)>, IStat<List<(object owner, object source)>> { }
 public class Stat_TargetingMethod : PrioritySolver<Targeting>, IStat<Targeting> { }
 public class Stat_Dummy : ListStat<bool>, IStat<List<bool>> { }
