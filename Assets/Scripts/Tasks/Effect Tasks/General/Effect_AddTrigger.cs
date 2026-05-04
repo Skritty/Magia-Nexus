@@ -37,7 +37,7 @@ public class Effect_AddTrigger : EffectTask
         Trigger_ModifierGained.Subscribe(x => 
         {
             // Subscribe to trigger if its the first modifier
-            if(owner.Stat<Stat_Triggers>().Contains(triggerModifier, out int count) && count == 1)
+            if(Stats.GetStat<Stat_Triggers>(owner).Contains(triggerModifier, out int count) && count == 1)
             {
                 triggerCleanup += triggerModifier.Value.SubscribeToTasks(target, binding, triggerOrder, triggerOnce);
             }
@@ -47,13 +47,13 @@ public class Effect_AddTrigger : EffectTask
         cleanup = Trigger_ModifierLost.Subscribe(x =>
         {
             // If there are no more of this modifier, unsubscribe
-            if (!owner.Stat<Stat_Triggers>().Contains(triggerModifier, out _))
+            if (!Stats.GetStat<Stat_Triggers>(owner).Contains(triggerModifier, out _))
             {
                 triggerCleanup?.Invoke();
                 cleanup?.Invoke();
             }
         }, triggerModifier, 9999);
 
-        target.AddModifier(triggerModifier);
+        triggerModifier.AddToStatTag(target);
     }
 }

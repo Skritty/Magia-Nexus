@@ -12,7 +12,7 @@ public class Task_Filter_IsPlayerCharacter : ITask<Entity>
 {
     public bool DoTask(Entity entity)
     {
-        return entity.Stat<Stat_PlayerCharacter>().Value == entity;
+        return Stats.GetStat<Stat_PlayerCharacter>(entity).Value == entity;
     }
 }
 
@@ -21,7 +21,7 @@ public class Task_Filter_IsProxy : ITaskOwned<Entity, Entity>
 {
     public bool DoTask(Entity owner, Entity entity)
     {
-        return entity.Stat<Stat_PlayerCharacter>().Value != entity;
+        return Stats.GetStat<Stat_PlayerCharacter>(entity).Value != entity;
     }
 
     public bool DoTask(Entity data) => false;
@@ -35,14 +35,14 @@ public class Task_Filter_HasItems : ITask<Entity>
     public int multiples = 1;
     public bool DoTask(Entity entity)
     {
-        if (entity.GetMechanic<Mechanic_Character>() == null) return false;
+        if (entity.GetStat<Mechanic_Character>() == null) return false;
 
         List<Item> itemsLeft = new List<Item>();
         for (int i = 0; i < multiples; i++)
         {
             itemsLeft.AddRange(items);
         }
-        foreach (Item item in entity.Stat<Stat_Viewer>().Value.items)
+        foreach (Item item in Stats.GetStat<Stat_Viewer>(entity).Value.items)
         {
             itemsLeft.Remove(item);
         }
@@ -114,7 +114,7 @@ public class Task_Filter_IsTargetableBy<T> : ITask<T> where T : Effect
     public Targeting targeting;
     public bool DoTask(T effect)
     {
-        return targeting.GetTargets(effect, effect.Owner)
+        return targeting.Solve(effect.Owner)
             .Contains(selector == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
     }
 }
@@ -356,7 +356,7 @@ public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
 
     public bool DoTask(Entity owner, T data)
     {
-        return targeting.GetTargets(owner).Count > 0;
+        return targeting.Solve(owner).Count > 0;
     }
 
     public bool DoTask(T data)

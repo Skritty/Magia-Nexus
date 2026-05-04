@@ -3,7 +3,7 @@ using System.Linq;
 
 public class ListPrioritySolver<T> : PrioritySolver<List<T>>
 {
-    public override void Solve()
+    public override List<T> Solve(object boundObject)
     {
         _value = new List<T>();
 
@@ -19,7 +19,7 @@ public class ListPrioritySolver<T> : PrioritySolver<List<T>>
             }
         }).Reverse();
 
-        foreach (IDataContainer<List<T>> modifier in ordered)
+        foreach (IValueContainer<List<T>> modifier in ordered)
         {
             for (int i = 0; i < modifier.Value.Count; i++)
             {
@@ -27,5 +27,7 @@ public class ListPrioritySolver<T> : PrioritySolver<List<T>>
                 else _value[i] = modifier.Value[i];
             }
         }
+
+        return _value;
     }
 }

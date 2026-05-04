@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,11 +40,11 @@ public class Rune_Order : Rune
         Entity owner = spell.Owner;
         float lMult = lifeMultiplier;
         float dMult = damageMultiplier;
-        while (!owner.Stat<Stat_PlayerCharacter>().Value)
+        while (!Stats.GetStat<Stat_PlayerCharacter>(owner).Value)
         {
             lMult *= lifeMultiplier;
             dMult *= damageMultiplier;
-            owner = owner.Stat<Stat_PlayerCharacter>().Value;
+            owner = Stats.GetStat<Stat_PlayerCharacter>(owner).Value;
         }
         (spell.effect as Effect_Summon).lifeMultiplier = lMult;
         (spell.effect as Effect_Summon).damageMultiplier = dMult;
@@ -56,11 +56,11 @@ public class Rune_Order : Rune
 
     private void SetupSummon(Spell spell, Entity entity)
     {
-        /*entity.GetMechanic<Mechanic_Actions>().AddAction(move);
+        entity.GetStat<Mechanic_Actions>().AddAction(move);
         for (int i = 1; i < spell.runes.Count; i++)
         {
             if (spell.runes[i].element == RuneElement.Null) continue;
-            entity.GetMechanic<Mechanic_Actions>().AddAction(summonRunes[spell.runes[i].element]);
+            entity.GetStat<Mechanic_Actions>().AddAction(summonRunes[spell.runes[i].element]);
         }
         switch (spell.runes[spell.runes.Count - 1].element)
         {
@@ -69,17 +69,17 @@ public class Rune_Order : Rune
             case RuneElement.Order:
                 {
                     meleeOverride.DoEffect(spell.Owner, entity, 1, false);
-                    entity.Stat<Stat_Runes>().AddRange(spell.runes);
+                    Stats.GetStat<Stat_Runes>(entity).AddRange(spell.runes);
                     break;
                 }
         }
         Trigger_TurnStart.Subscribe(Invoke, entity);
-        spell.cleanup += Trigger_Die.Subscribe(y => SummonDeath(spell, entity), entity);*/
+        spell.cleanup += Trigger_Die.Subscribe(y => SummonDeath(spell, entity), entity);
     }
 
     private void SummonDeath(Spell spell, Entity entity)
     {
-        spell.Owner.Stat<Stat_Summons>().Remove(entity);
+        Stats.GetStat<Stat_Summons>(spell.Owner).Remove(entity);
         spell.Stage++;
     }
 
@@ -110,13 +110,13 @@ public class Rune_Order : Rune
                 }
             case SpellShape.Projectile:
                 {
-                    /*spell.lifetime += GameManager.Instance.ticksPerTurn * 2;
+                    *//*spell.lifetime += GameManager.Instance.ticksPerTurn * 2;
                     spell.castSpell.projectileFanAngle = 180f;
                     spell.castSpell.movementTarget = MovementTarget.Owner;
                     Movement_Orbit orbit = new Movement_Orbit();
                     orbit.orbitDistance = 1.75f;
                     spell.proxyBlueprint.Stat<Stat_Movement>().movementSelector = orbit;
-                    spell.proxyBlueprint.Stat<Stat_Movement>().baseMovementSpeed = 4;*/
+                    spell.proxyBlueprint.Stat<Stat_Movement>().baseMovementSpeed = 4;*//*
                     break;
                 }
             case SpellShape.Summon:
@@ -131,3 +131,4 @@ public class Rune_Order : Rune
         }
     }
 }
+*/

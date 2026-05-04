@@ -1,152 +1,52 @@
-using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using UnityEngine;
-public class DictionaryStat<Key, Value> : IModifiable<Value>, IEnumerable<Value>
+
+public class DictionaryStat<Key, Value> : CollectionContainer<(Key key, Value value)>
 {
-    [field: SerializeReference]
-    public InheritModifiers<Value> ModifierInheritMethod { get; set; } = new NoInherit<Value>();
-    [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
-    private List<IDataContainer<Value>> _modifiers = new();
-    public List<IDataContainer<Value>> Modifiers
-    {
-        get
-        {
-            List<IDataContainer<Value>> modifiers = ModifierInheritMethod.InheritedModifiers();
-            return modifiers == null ? _modifiers : modifiers;
-        }
-        set
-        {
-            _modifiers = value;
-        }
-    }
-    public Dictionary<Key, IDataContainer<Value>> ModifierDictionary { get; set; } = new();
-    public int Count => Modifiers.Count;
-
-    public IEnumerator<Value> GetEnumerator()
-    {
-        return ToList.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
+    private Dictionary<Key, Value> dictionary = new();
     public Value this[Key key]
     {
         get
         {
-            if (ModifierDictionary.Count == 0 || !ModifierDictionary.ContainsKey(key)) return default;
-            return ModifierDictionary[key].Value;
+            if (Count == 0 || !dictionary.ContainsKey(key)) return default;
+            return dictionary[key];
         }
         set
         {
-            ModifierDictionary.Remove(key);
-            Add(key, value);
-        }
-    }
-
-    public List<Value> ToList
-    {
-        get
-        {
-            List<Value> list = new List<Value>();
-            foreach (IDataContainer<Value> data in Modifiers)
+            if(dictionary.ContainsKey(key))
             {
-                list.Add(data.Value);
+                dictionary[key] = value;
             }
-            return list;
+            else Add(key, value);
         }
-    }
-
-    public bool TryAdd(IDataContainer modifier)
-    {
-        IDataContainer<Value> cast = (IDataContainer<Value>)modifier;
-        if (cast == null) return false;
-        Modifiers.Add(cast);
-        return true;
-    }
-
-    public System.Action Add(Value value)
-    {
-        DataContainer<Value> data = new DataContainer<Value>(value);
-        Modifiers.Add(data);
-        return () => Modifiers.Remove(data);
     }
 
     public System.Action Add(Key key, Value value)
     {
-        DataContainer<Value> data = new DataContainer<Value>(value);
-        Modifiers.Add(data);
-        ModifierDictionary.Add(key, data);
-        return () =>
-        {
-            Modifiers.Remove(data);
-            ModifierDictionary.Remove(key);
-        };
+        var modifier = new ValueContainer<(Key key, Value value)>((key, value));
+        AddModifier(modifier);
+        return () => RemoveModifier(modifier);
     }
 
-    public System.Action AddRange(IEnumerable<Value> values)
+    public override void AddModifier(IValueContainer<(Key key, Value value)> modifier)
     {
-        System.Action cleanup = null;
-        foreach (Value value in values)
-        {
-            cleanup += Add(value);
-        }
-        return cleanup;
+        modifier.AddTo(this);
+        dictionary.Add(modifier.Value.key, modifier.Value.value);
     }
 
-    public void Add(IDataContainer<Value> modifier)
+    public void Remove(Key key)
     {
-        Modifiers.Add(modifier);
-    }
-
-    public void Remove(Value value)
-    {
-        foreach (IDataContainer<Value> m in Modifiers.ToArray())
+        foreach (IValueContainer<(Key key, Value value)> keyValuePair in Modifiers.ToArray())
         {
-            if (m.Value.Equals(value)) Modifiers.Remove(m);
+            if (keyValuePair.Value.key.Equals(key))
+            {
+                RemoveModifier(keyValuePair);
+            }
         }
     }
 
-    public void Remove(IDataContainer modifier)
+    public override void RemoveModifier(IValueContainer<(Key key, Value value)> modifier)
     {
-        Modifiers.Remove(modifier as IDataContainer<Value>);
-    }
-
-    public void Clear()
-    {
-        Modifiers.Clear();
-    }
-
-    public bool Contains(Value modifier)
-    {
-        foreach (IDataContainer m in Modifiers)
-        {
-            if (m.Equals(modifier)) return true;
-        }
-        return false;
-    }
-
-    public bool Contains(IDataContainer modifier, out int count)
-    {
-        count = 0;
-        foreach (IDataContainer m in Modifiers)
-        {
-            if (m.Equals(modifier)) count++;
-        }
-        if (count > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public IModifiable Clone(bool preserveModifiers)
-    {
-        IModifiable<Value> clone = (IModifiable<Value>)MemberwiseClone();
-        if (preserveModifiers) clone.Modifiers = new List<IDataContainer<Value>>(Modifiers);
-        return clone;
+        modifier.RemoveFrom(this);
+        dictionary.Remove(modifier.Value.key);
     }
 }

@@ -34,11 +34,11 @@ public class NumericalSolver : Solver<float>, ICalculationComponent
 
     public NumericalSolver(float value, CalculationStep method)
     {
-        Modifiers.Add(new DataContainer<float>(value));
+        Modifiers.Add(new ValueContainer<float>(value));
         Step = method;
     }
 
-    public override void Solve()
+    public override float Solve(object boundObject)
     {
         switch (Step)
         {
@@ -55,9 +55,9 @@ public class NumericalSolver : Solver<float>, ICalculationComponent
                 }
         }
         
-        foreach (IDataContainer<float> modifier in Modifiers)
+        foreach (IValueContainer<float> modifier in Modifiers)
         {
-            (modifier as Solver<float>)?.Solve();
+            modifier.BoundObject = boundObject;
 
             switch (Step)
             {
@@ -74,6 +74,7 @@ public class NumericalSolver : Solver<float>, ICalculationComponent
                     }
             }
         }
+        return _value;
     }
 
     public NumericalSolver Clone()

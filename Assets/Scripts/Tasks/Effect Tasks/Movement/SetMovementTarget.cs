@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using UnityEngine.Analytics;
 
 public class SetMovementTarget : EffectTask
 {
@@ -7,14 +8,14 @@ public class SetMovementTarget : EffectTask
 
     public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
-        owner.GetMechanic<Mechanic_Movement>().facingDir = target.transform.position - owner.transform.position;
+        owner.GetStat<Mechanic_Movement>().facingDir = target.transform.position - owner.transform.position;
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                owner.AddModifier<Entity, Stat_MovementTarget>(owner, 1);
+                owner.GetStat<Stat_MovementTarget>().AddModifier(new Modifier<Entity>(value: owner, tickDuration: 1));
                 break;
             case EffectTargetSelector.Target:
-                owner.AddModifier<Entity, Stat_MovementTarget>(target, 1);
+                owner.GetStat<Stat_MovementTarget>().AddModifier(new Modifier<Entity>(value: target, tickDuration: 1));
                 break;
         }
     }

@@ -10,7 +10,7 @@ public class Effect_GrantRunes : EffectTask
     {
         foreach (Rune rune in runes)
         {
-            Owner.GetMechanic<Mechanic_Magic>().AddRune(rune);
+            Owner.GetStat<Mechanic_Magic>().AddRune(rune);
         }
     }
 }

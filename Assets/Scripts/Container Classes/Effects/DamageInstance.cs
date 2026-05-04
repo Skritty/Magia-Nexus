@@ -23,22 +23,22 @@ public class DamageInstance : Hit
                 break;
             }
         }
-        if (isAttack && Owner.Stat<Stat_Enchantments>().Count > 0)
+        if (isAttack && Stats.GetStat<Stat_Enchantments>(Owner).Count > 0)
         {
-            runes.AddRange(Owner.Stat<Stat_Enchantments>().Dequeue());
+            runes.AddRange(Stats.GetStat<Stat_Enchantments>(Owner).Dequeue());
         }
 
         // Check rune crystals on the target
-        foreach (Rune rune in Target.Stat<Stat_RuneCrystals>())
+        foreach (Rune rune in Stats.GetStat<Stat_RuneCrystals>(Target))
         {
             runes.Add(rune);
         }
-        Target.Stat<Stat_RuneCrystals>().Clear();
+        Stats.GetStat<Stat_RuneCrystals>(Target).Clear();
 
         if (runes.Count == 0) return;
 
         // Generate the magic effect
-        int spellPhase = (int)Owner.Stat<Stat_PlayerCharacter>().Value.Stat<Stat_SpellPhase>().Value % runes.Count;
+        int spellPhase = (int)Stats.GetStat<Stat_SpellPhase>(Stats.GetStat<Stat_PlayerCharacter>(Owner).Value).Value % runes.Count;
         runes[spellPhase].MagicEffect(this, spellPhase);
         for (int i = 1; i < runes.Count; i++)
         {

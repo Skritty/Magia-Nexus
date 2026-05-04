@@ -1,40 +1,37 @@
 using UnityEngine;
+
+public class Stat_CounterInt : ValueContainer<int>, IStat<int> { }
+public class Stat_CounterFloat : ValueContainer<float>, IStat<float> { }
 public class Effect_Counter : EffectTask
 {
-    [SerializeReference]
-    public Stat_Counter counter;
     public EffectTargetSelector selector;
     public int countIncrease;
     public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
         Entity entity = owner;
         if (selector == EffectTargetSelector.Target) entity = target;
-        (owner.Stat(counter) as Stat_Counter)[entity] += countIncrease;
+        (GetHashCode() + entity.GetHashCode()).GetStat<Stat_CounterInt>().Value += countIncrease;
     }
 }
 public class Task_Filter_Count<T> : ITaskOwned<Entity, T>
 {
-    [SerializeReference]
-    public Stat_Counter counter;
     public int countIncrease;
     public int threshold;
     public bool DoTask(T data) => false;
     public bool DoTask(Entity owner, T data)
     {
-        if (((owner.Stat(counter) as Stat_Counter)[this] += countIncrease) >= threshold) return true;
+        if (((GetHashCode() + owner.GetHashCode() + data.GetHashCode()).GetStat<Stat_CounterInt>().Value += countIncrease) >= threshold) return true;
         return false;
     }
 }
 public class Task_Filter_CountData<T> : ITaskOwned<Entity, T>
 {
-    [SerializeReference]
-    public Stat_Counter counter;
     public int countIncrease;
     public int threshold;
     public bool DoTask(T data) => false;
     public bool DoTask(Entity owner, T data)
     {
-        if (((owner.Stat(counter) as Stat_Counter)[data] += countIncrease) >= threshold) return true;
+        if (((GetHashCode()+owner.GetHashCode()+data.GetHashCode()).GetStat<Stat_CounterInt>().Value += countIncrease) >= threshold) return true;
         return false;
     }
 }
@@ -45,8 +42,6 @@ public class Task_Filter_CountEffect<T> :
     ITaskOwned<Entity, Hit>,
     ITaskOwned<Entity, DamageInstance>
 {
-    [SerializeReference]
-    public Stat_Counter counter;
     public int countIncrease;
     public int threshold;
     public EffectTargetSelector selector;
@@ -55,7 +50,7 @@ public class Task_Filter_CountEffect<T> :
     {
         Entity entity = data.Owner;
         if (selector == EffectTargetSelector.Target) entity = data.Target;
-        if (((owner.Stat(counter) as Stat_Counter)[entity] += countIncrease) >= threshold) return true;
+        if (((GetHashCode() + entity.GetHashCode() + data.GetHashCode()).GetStat<Stat_CounterInt>().Value += countIncrease) >= threshold) return true;
         return false;
     }
 

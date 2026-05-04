@@ -2,12 +2,12 @@ using System.Collections.Generic;
 
 public class BooleanPrioritySolver : PrioritySolver<bool>
 {
-    protected override bool HandleSamePriorityModifiers(List<IDataContainer<bool>> modifiers)
+    protected override bool HandleSamePriorityModifiers(List<IValueContainer<bool>> modifiers)
     {
         bool value = false;
-        foreach (IDataContainer<bool> modifier in modifiers)
+        foreach (IValueContainer<bool> modifier in modifiers)
         {
-            (modifier as ISolver<bool>)?.Solve();
+            modifier.BoundObject = BoundObject;
             return value |= modifier.Value;
         }
         return value;

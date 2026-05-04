@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,8 +23,8 @@ public class Rune_Earth : Rune
 
     public override void MagicEffectModifier(DamageInstance damage, int currentRuneIndex)
     {
-        Trigger_PostHit.Subscribe(x => 
-        x.Target.Stat<Stat_RuneCrystals>()
+        Trigger_PostHit.Subscribe(x =>
+        Stats.GetStat<Stat_RuneCrystals>(x.Target)
         .Add(damage.runes[(currentRuneIndex + 1) % damage.runes.Count]));
     }
 
@@ -81,4 +81,4 @@ public class Rune_Earth : Rune
                 }
         }
     }
-}
+}*/

@@ -3,62 +3,11 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public interface IModifiable
-{
-    public bool TryAdd(IDataContainer modifier);
-    public void Remove(IDataContainer modifier);
-    public bool Contains(IDataContainer modifier, out int count);
-    public IModifiable Clone(bool preserveModifiers);
-}
-
-public interface IModifiable<T> : IModifiable
-{
-    public List<IDataContainer<T>> Modifiers { get; set; }
-    public void Add(IDataContainer<T> modifier);
-}
-
-public interface IInheritableModifiers<T> : IModifiable<T>
-{
-    public new List<IDataContainer<T>> Modifiers { get; set; }
-    public InheritModifiers<T> ModifierInheritMethod { get; set; }
-}
-
-[Serializable]
-public abstract class InheritModifiers<T>
-{
-    public abstract List<IDataContainer<T>> InheritedModifiers();
-}
-
-public class NoInherit<T> : InheritModifiers<T>
-{
-    public override List<IDataContainer<T>> InheritedModifiers()
-    {
-        return null;
-    }
-}
-
-public class InheritFromPlayerCharacter<T> : InheritModifiers<T>
-{
-    public Entity self;
-    [SerializeReference]
-    public IStat<T> referenceStat;
-    public override List<IDataContainer<T>> InheritedModifiers()
-    {
-        return (self.Stat<Stat_PlayerCharacter>().Value.Stat(referenceStat) as IStat<T>).Modifiers;
-    }
-}
-
-public interface ISolver<T>
-{
-    public void Solve();
-    public void InverseSolve();
-    public void MarkAsChanged();
-}
-
-public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>, ISerializationCallbackReceiver
+public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>, ISerializationCallbackReceiver
 {
     protected T _value;
     protected bool changed;
+
     [ShowInInspector, FoldoutGroup("@GetType()")]
     public virtual T Value
     {
@@ -67,85 +16,55 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
             if (changed)
             {
                 changed = false;
-                Solve();
+                Solve(BoundObject);
             }
             return _value;
         }
-        protected set
+        set
         {
             Modifiers.Clear();
             Add(value);
             changed = true;
         }
     }
+    public object BoundObject { get; set; }
 
-    [field: SerializeReference]
-    public InheritModifiers<T> ModifierInheritMethod { get; set; } = new NoInherit<T>();
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
-    private List<IDataContainer<T>> _modifiers = new();
-    public List<IDataContainer<T>> Modifiers
-    {
-        get
-        {
-            List<IDataContainer<T>> modifiers = ModifierInheritMethod.InheritedModifiers();
-            return modifiers == null ? _modifiers : modifiers;
-        }
-        set
-        {
-            _modifiers = value;
-        }
-    }
+    public List<IValueContainer<T>> Modifiers { get; set; } = new();
 
-    public bool IsDefaultValue() => Value.Equals(default(T));
-    public bool Get<Type>(out Type data)
+    public bool IsDefaultValue() => Value.Equals(default);
+    public bool TryGet<Type>(out Type data)
     {
         data = (Type)(Value as object);
         return data != null;
     }
 
-    public void MarkAsChanged()
-    {
-        changed = true;
-        foreach (IDataContainer<T> modifier in Modifiers)
-        {
-            (modifier as ISolver<T>)?.MarkAsChanged();
-        }
-    }
-
     public System.Action Add(T value)
     {
-        DataContainer<T> data = new DataContainer<T>(value);
-        Add(data);
-        return () => Modifiers.Remove(data);
+        ValueContainer<T> modifier = new ValueContainer<T>(value);
+        AddModifier(modifier);
+        return () => RemoveModifier(modifier);
     }
 
-    public bool TryAdd(IDataContainer modifier)
+    public virtual void AddModifier(IValueContainer<T> modifier)
     {
-        IDataContainer<T> cast = modifier as IDataContainer<T>;
-        if (cast == null)
-        {
-            Debug.LogWarning($"{modifier} failed to add!");
-            return false;
-        }
-        Add(cast);
-        return true;
-    }
-
-    public virtual void Add(IDataContainer<T> modifier)
-    {
-        Modifiers.Add(modifier);
+        modifier.AddTo(this);
         changed = true;
     }
 
-    public virtual void Remove(IDataContainer modifier)
+    public void RemoveModifier(IValueContainer<T> modifier)
     {
-        Modifiers.Remove(modifier as IDataContainer<T>);
+        modifier.RemoveFrom(this);
         changed = true;
     }
-    public virtual bool Contains(IDataContainer modifier, out int count)
+
+    public void AddTo(IModifiable<T> modifiable) => modifiable.Modifiers.Add(this);
+    public void RemoveFrom(IModifiable<T> modifiable) => modifiable.Modifiers.Remove(this);
+
+    public virtual bool Contains(IValueContainer modifier, out int count)
     {
         count = 0;
-        foreach (IDataContainer m in Modifiers)
+        foreach (IValueContainer m in Modifiers)
         {
             if (m.Equals(modifier)) count++;
         }
@@ -156,28 +75,24 @@ public abstract class Solver<T> : IModifiable<T>, ISolver<T>, IDataContainer<T>,
         return false;
     }
 
-    public virtual void Solve()
+    public virtual T Solve(object boundObject)
     {
-        foreach(IDataContainer<T> modifier in Modifiers)
+        if(Modifiers.Count > 0)
         {
-            _value = modifier.Value;
-            return;
+            Modifiers[0].BoundObject = boundObject;
+            _value = Modifiers[0].Value;
         }
+        return _value;
     }
-    public virtual void InverseSolve() { /* TODO: contribution via inverse solve */ }
 
     public IModifiable Clone(bool preserveModifiers)
     {
         IModifiable<T> clone = (IModifiable<T>)MemberwiseClone();
-        if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
+        if(preserveModifiers) clone.Modifiers = new List<IValueContainer<T>>(Modifiers);
         return clone;
     }
 
-    public void OnBeforeSerialize()
-    {
-        
-    }
-
+    public void OnBeforeSerialize() { }
     public void OnAfterDeserialize()
     {
         changed = true;

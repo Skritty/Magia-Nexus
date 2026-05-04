@@ -4,7 +4,7 @@ using UnityEngine;
 public class Effect_RemoveModifier : EffectTask
 {
     [SerializeReference]
-    public IModifier modifier;
+    public Modifier modifier;
     public int stacksRemoved = 1;
     [ShowIf("@modifier == null")]
     public Alignment alignmentRemoved;
@@ -15,11 +15,12 @@ public class Effect_RemoveModifier : EffectTask
         {
             if(modifier == null)
             {
-                Target.RemoveOldestDurationModifier(alignmentRemoved);
+                //Target.RemoveOldestDurationModifier(alignmentRemoved); TODO
             }
             else
             {
-                Target.RemoveModifier(modifier);
+
+                modifier.RemoveFromStatTag(Target);
             }
         }
     }

@@ -1,11 +1,12 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-[LabelText("Filter: Contains X of modifier on stat")]
+// TODO
+/*[LabelText("Filter: Contains X of modifier on stat")]
 public class FilterTask_ModifierGate : EffectTask
 {
     [SerializeReference]
-    public IModifier modifier;
+    public Modifier modifier;
 
     public float requiredAmount;
     public int stacksAddedOnSuccess;
@@ -16,7 +17,7 @@ public class FilterTask_ModifierGate : EffectTask
 
     public override bool DoTask(Entity owner, Entity target, Effect data, bool triggered, Entity proxy = null)
     {
-        IStat stat = owner.Stat(modifier.Tag);
+        IModifiable stat = owner.GetStat(modifier.Tag);
         if (stat != null && stat.Contains(modifier, out int count) && count >= requiredAmount)
         {
             if (stacksAddedOnSuccess != 0)
@@ -54,4 +55,4 @@ public class FilterTask_ModifierGate : EffectTask
             return false | invert;
         }
     }
-}
+}*/

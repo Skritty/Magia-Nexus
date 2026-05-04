@@ -7,7 +7,7 @@ public class Effect
     protected float _effectMultiplier;
     public float EffectMultiplier 
     {
-        get => _effectMultiplier * (Owner == null ? 1 : Owner.Stat<Stat_EffectMultiplier>().Value);
+        get => _effectMultiplier * (Owner == null ? 1 : Stats.GetStat<Stat_EffectMultiplier>(Owner).Value);
         set => _effectMultiplier = value;
     }
     public Entity Owner { get; set; }

@@ -9,7 +9,7 @@ public class Modifier_Numerical : Modifier<float>, ICalculationComponent
     public CalculationStep Step { get; set; }
     
     public Modifier_Numerical() { }
-    public Modifier_Numerical(float value = default, CalculationStep step = CalculationStep.Flat, IStat<float> tag = default, Alignment alignment = Alignment.Neutral,
+    public Modifier_Numerical(float value = default, CalculationStep step = CalculationStep.Flat, IModifiable<float> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false,
         int tickDuration = 0, bool refreshDuration = false)
     {

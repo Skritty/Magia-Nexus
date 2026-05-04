@@ -11,7 +11,7 @@ public class Modifier_Priority<T> : Modifier<T>, IPriority
 
     public Modifier_Priority() { }
 
-    public Modifier_Priority(T value = default, byte priority = 0, IStat<T> tag = default, Alignment alignment = Alignment.Neutral,
+    public Modifier_Priority(T value = default, byte priority = 0, IModifiable<T> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false,
         int tickDuration = 0, bool refreshDuration = false)
     {

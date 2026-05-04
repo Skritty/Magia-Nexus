@@ -6,9 +6,9 @@ using UnityEngine;
 public class Effect_Modifer : EffectTask
 {
     [SerializeReference, FoldoutGroup("@GetType()")]
-    public IModifier modifier;
+    public Modifier modifier;
     public Effect_Modifer() { }
-    public Effect_Modifer(IModifier modifier)
+    public Effect_Modifer(Modifier modifier)
     {
         this.modifier = modifier;
     }
@@ -25,11 +25,7 @@ public class Effect_Modifer : EffectTask
         {
             Modifier_Numerical clone = (modifier as Modifier_Numerical).Clone();
             clone.Value *= multiplier;
-            target.AddModifier(clone);
         }
-        else
-        {
-            target.TryAddModifier(modifier);
-        }
+        modifier.AddToStatTag(target);
     }
 }

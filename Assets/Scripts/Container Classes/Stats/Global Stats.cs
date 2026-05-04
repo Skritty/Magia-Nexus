@@ -4,11 +4,9 @@ using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public interface IStat : IModifiable { }
-public interface IStat<T> : IStat, IModifiable<T> { }
 
-[Serializable]
-public class Stat<T> : IDataContainer<T>, IModifiable<T>, IInheritableModifiers<T>
+/*[Serializable]
+public class Stat<T, Self> : IBoundInstance<object, Self>, IDataContainer<T>, IModifiable<T>, IInheritableModifiers<T> where Self : Stat<T, Self>
 {
     [ShowInInspector, FoldoutGroup("@GetType()")]
     public T Value
@@ -25,8 +23,11 @@ public class Stat<T> : IDataContainer<T>, IModifiable<T>, IInheritableModifiers<
         }
     }
 
+    public static T GetValue(object boundObject) => IBoundInstance<object, Self>.GetInstance(boundObject).Value;
+    public static void SetValue(object boundObject, T value) => IBoundInstance<object, Self>.GetInstance(boundObject).Value = value;
+
     [field: SerializeReference]
-    public InheritModifiers<T> ModifierInheritMethod { get; set; } = new NoInherit<T>();
+    public ModifierInheritence<T> ModifierInheritMethod { get; set; } = new NoInherit<T>();
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
     private List<IDataContainer<T>> _modifiers = new();
     public List<IDataContainer<T>> Modifiers
@@ -99,8 +100,8 @@ public class Stat<T> : IDataContainer<T>, IModifiable<T>, IInheritableModifiers<
         if(preserveModifiers) clone.Modifiers = new List<IDataContainer<T>>(Modifiers);
         return clone;
     }
-}
-public class Stat_Triggers : ListStat<Trigger>, IStat<Trigger> { }
+}*/
+public class Stat_Triggers : ListStat<Trigger>, IStat<List<Trigger>> { }
 public class Stat_PreventExpire : EnumPrioritySolver<Alignment>, IStat<Alignment> { }
 public class Stat_AoESize : NumericalSolver, IStat<float> { }
 public class Stat_AdditionalTargets : NumericalSolver, IStat<float> { }
@@ -108,6 +109,6 @@ public class Stat_Removeable : NumericalSolver, IStat<float> { }
 public class Stat_Knockback : NumericalSolver, IStat<float> { }
 public class Stat_Enmity : NumericalSolver, IStat<float> { }
 public class Stat_Intangable : PrioritySolver<bool>, IStat<bool> { }
-public class Stat_Untargetable : ListStat<(Entity, object)>, IStat<(Entity, object)> { }
+public class Stat_Untargetable : ListStat<(object owner, object source)>, IStat<List<(object owner, object source)>> { }
 public class Stat_TargetingMethod : PrioritySolver<Targeting>, IStat<Targeting> { }
-public class Stat_Dummy : ListStat<bool>, IStat<bool> { }
+public class Stat_Dummy : ListStat<bool>, IStat<List<bool>> { }

@@ -18,8 +18,8 @@ public abstract class EffectTask :
     public bool useTargetAsProxy;
     [FoldoutGroup("@GetType()")]
     public bool propagateTarget;
-    [SerializeReference, FoldoutGroup("@GetType()")]
-    public Targeting targetSelector = new Targeting_Self();
+    [FoldoutGroup("@GetType()")]
+    public Targeting targetSelector;
 
     public abstract void DoEffect(Entity owner, Entity target, float multiplier, bool triggered);
     public bool DoTaskNoData(Entity owner, Entity proxy = null) => DoTaskTargetSelector(owner, null, false, proxy);
@@ -36,14 +36,13 @@ public abstract class EffectTask :
     }
     public virtual bool DoTask(Entity owner, Entity target, Effect data, bool triggered, Entity proxy = null)
     {
-        DoEffect(owner, target, data != null ? data.EffectMultiplier : owner.Stat<Stat_EffectMultiplier>().Value, data != null);
+        DoEffect(owner, target, data != null ? data.EffectMultiplier : Stats.GetStat<Stat_EffectMultiplier>(owner).Value, data != null);
         return true;
     }
     public bool DoTaskTargetSelector(Entity owner, Effect data, bool triggered, Entity proxy = null)
     {
-        List<Entity> targets = null;
-        targets = targetSelector.GetTargets(data, owner, proxy);
-        foreach (Entity target in targets)
+        // TODO: readd proxy
+        foreach (Entity target in targetSelector.Solve(owner))
         {
             DoTask(owner, target, data, triggered, proxy);
         }

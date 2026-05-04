@@ -15,11 +15,11 @@ public class Stat_Equipment_FingerL : Stat_Equipment, IStat { }
 public class Stat_Equipment_FingerR : Stat_Equipment, IStat { }
 public class Stat_Equipment_WristL : Stat_Equipment, IStat { }
 public class Stat_Equipment_WristR : Stat_Equipment, IStat { }
-public class Mechanic_Inventory : Mechanic<Mechanic_Inventory>
+public class Mechanic_Inventory : Mechanic
 {
     public override void Initialize()
     {
-        Owner.Stat<Stat_Equipment_Body>().Value?.OnGained(Owner);
-        Owner.Stat<Stat_Equipment_Back>().Value?.OnGained(Owner);
+        Owner.GetStat<Stat_Equipment_Body>().Value?.OnGained(Owner);
+        Owner.GetStat<Stat_Equipment_Back>().Value?.OnGained(Owner);
     }
 }

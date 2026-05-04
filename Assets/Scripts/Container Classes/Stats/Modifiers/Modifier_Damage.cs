@@ -4,10 +4,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public class Modifier_Damage : Modifier<float>, IHasDamageTypes, ICalculationComponent 
+public class Modifier_Damage : Modifier_Numerical, IHasDamageTypes, ICalculationComponent 
 {
-    [field: SerializeField, FoldoutGroup("@GetType()")]
-    public CalculationStep Step { get; private set; }
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public DamageType AppliesTo { get; private set; }
     [field: SerializeField, FoldoutGroup("@GetType()"), HideIf("@Step != CalculationStep.Flat")]
@@ -15,7 +13,7 @@ public class Modifier_Damage : Modifier<float>, IHasDamageTypes, ICalculationCom
 
     public Modifier_Damage() { }
 
-    public Modifier_Damage(float value = default, CalculationStep step = CalculationStep.Flat, DamageType appliesTo = DamageType.True, DamageType damageType = DamageType.True, IStat<float> tag = default, Alignment alignment = Alignment.Neutral,
+    public Modifier_Damage(float value = default, CalculationStep step = CalculationStep.Flat, DamageType appliesTo = DamageType.True, DamageType damageType = DamageType.True, IModifiable<float> tag = default, Alignment alignment = Alignment.Neutral,
         int maxStacks = 0, int stacksAdded = 1, bool perPlayer = false,
         int tickDuration = 0, bool refreshDuration = false)
     {
@@ -39,7 +37,7 @@ public class Modifier_Damage : Modifier<float>, IHasDamageTypes, ICalculationCom
         Value = baseValue;
     }
 
-    public Modifier_Damage Clone()
+    public new Modifier_Damage Clone()
     {
         Modifier_Damage clone = (Modifier_Damage)MemberwiseClone();
         clone.StatTag = StatTag;

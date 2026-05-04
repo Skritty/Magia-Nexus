@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Stat_CastTargets : NumericalSolver, IStat<float> { }
 public class Stat_SpellPhase : NumericalSolver, IStat<float> { }
-public class Stat_Runes : ListStat<Rune>, IStat<Rune> { }
-public class Stat_RuneCrystals : ListStat<Rune>, IStat<Rune> { }
+public class Stat_Runes : ListStat<Rune>, IStat<List<Rune>> { }
+public class Stat_RuneCrystals : ListStat<Rune>, IStat<List<Rune>> { }
 public class Stat_Enchantments : QueueStat<List<Rune>>, IStat<List<Rune>> { }
-public class Mechanic_Magic : Mechanic<Mechanic_Magic>
+public class Mechanic_Magic : Mechanic
 {
     public Spell originSpell;
     [FoldoutGroup("Magic")]
@@ -28,7 +28,7 @@ public class Mechanic_Magic : Mechanic<Mechanic_Magic>
 
     public override void Tick()
     {
-        if (Owner.Stat<Stat_Runes>().Count == 0)
+        if (Owner.GetStat<Stat_Runes>().Count == 0)
         {
             vfx.visualEffect.enabled = false;
         }
@@ -40,8 +40,8 @@ public class Mechanic_Magic : Mechanic<Mechanic_Magic>
         {
             vfx.visualEffect.enabled = true;
         }
-        Owner.Stat<Stat_Runes>().Add(rune);
-        List<Rune> runes = Owner.Stat<Stat_Runes>().ToList;
+        Stats.GetStat<Stat_Runes>(Owner).Add(rune);
+        List<Rune> runes = Stats.GetStat<Stat_Runes>(Owner).ToList;
         Trigger_RuneGained.Invoke(rune, Owner, rune);
         vfx.visualEffect.SetInt("RuneCount", runes.Count);
         runeInfo?.Dispose();
