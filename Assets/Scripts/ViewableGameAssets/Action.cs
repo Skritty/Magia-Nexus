@@ -49,17 +49,17 @@ public class Action : ViewableGameAsset
     public List<EffectTask> effects = new List<EffectTask>();
     public virtual void OnStart(Entity owner)
     {
-        owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
+        owner.GetStat<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
         Trigger_ActionStart.Invoke(this, this, owner);
-        Trigger_EntityUsedAction.Invoke(new Effect(owner, owner.Stat<Stat_MovementTarget>().Value), this, owner);
+        Trigger_EntityUsedAction.Invoke(new Effect(owner, owner.GetStat<Stat_MovementTarget>().Value), this, owner);
         // TODO: return to this animation state after stunned
     }
     public virtual bool Tick(Entity owner, int tick)
     {
-        owner.AddModifier<float, Stat_MovementSpeed>(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate(tickDuration * 1f / tick), step: CalculationStep.Multiplicative, tickDuration: 1));
+        owner.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate(tickDuration * 1f / tick), step: CalculationStep.Multiplicative, tickDuration: 1));
         if (onTick || tick == (int)(tickDuration * timing))
         {
-            owner.GetMechanic<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
+            owner.GetStat<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
             DoEffects(owner);
         }
         if(tick == tickDuration) return true;

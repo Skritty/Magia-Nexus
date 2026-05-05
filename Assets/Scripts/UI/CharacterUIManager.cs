@@ -32,7 +32,7 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
                 VGAUI.ReleaseObject();
             }
         }
-        foreach (Action skill in selectedCharacter.Stat<Stat_Skills>())
+        foreach (Action skill in selectedCharacter.GetStat<Stat_Skills>())
         {
             ViewableGameAssetUIItem VGAUI = defaultVGAUI.RequestObject<ViewableGameAssetUIItem>();
             VGAUI.transform.SetParent(skills, true);
@@ -47,7 +47,7 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
                 VGAUI.ReleaseObject();
             }
         }
-        foreach (SkillCondition condition in selectedCharacter.Stat<Stat_SkillConditions>())
+        foreach (SkillCondition condition in selectedCharacter.GetStat<Stat_SkillConditions>())
         {
             ViewableGameAssetUIItem VGAUI = defaultVGAUI.RequestObject<ViewableGameAssetUIItem>();
             VGAUI.transform.SetParent(conditions, true);
@@ -62,7 +62,7 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
                 VGAUI.ReleaseObject();
             }
         }
-        foreach (SkillCondition reaction in selectedCharacter.Stat<Stat_SkillReactions>())
+        foreach (SkillCondition reaction in selectedCharacter.GetStat<Stat_SkillReactions>())
         {
             ViewableGameAssetUIItem VGAUI = defaultVGAUI.RequestObject<ViewableGameAssetUIItem>();
             VGAUI.transform.SetParent(reactions, true);
@@ -74,7 +74,7 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
 
     private void UpdateSkillConnections()
     {
-        foreach(var pair in selectedCharacter.GetMechanic<Mechanic_Skills>().conditionBindings)
+        foreach(var pair in selectedCharacter.GetStat<Mechanic_Skills>().conditionBindings)
         {
             
         }
@@ -103,7 +103,7 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
 
     public void BindSkill(Action skill, SkillCondition condition)
     {
-        selectedCharacter.GetMechanic<Mechanic_Skills>().BindAction(skill, condition);
+        selectedCharacter.GetStat<Mechanic_Skills>().BindAction(skill, condition);
         Debug.Log($"Bound {skill.name} to {condition.name}");
     }
 
@@ -117,8 +117,8 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
                 reordered.Add(VGAUI.asset as Action);
             }
         }
-        selectedCharacter.Stat<Stat_Skills>().Clear();
-        selectedCharacter.Stat<Stat_Skills>().AddRange(reordered);
+        selectedCharacter.GetStat<Stat_Skills>().Clear();
+        selectedCharacter.GetStat<Stat_Skills>().AddRange(reordered);
         UpdateSkillConnections();
     }
 
@@ -132,8 +132,8 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
                 reordered.Add(VGAUI.asset as SkillCondition);
             }
         }
-        selectedCharacter.Stat<Stat_SkillConditions>().Clear();
-        selectedCharacter.Stat<Stat_SkillConditions>().AddRange(reordered);
+        selectedCharacter.GetStat<Stat_SkillConditions>().Clear();
+        selectedCharacter.GetStat<Stat_SkillConditions>().AddRange(reordered);
         UpdateSkillConnections();
     }
 

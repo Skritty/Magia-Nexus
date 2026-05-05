@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>, ISerializationCallbackReceiver
 {
     protected T _value;
-    protected bool changed;
+    protected bool changed = true;
 
     [ShowInInspector, FoldoutGroup("@GetType()")]
     public virtual T Value

@@ -14,7 +14,7 @@ public class Stat_Channeling : BooleanPrioritySolver, IStat<bool> { }
 public class Stat_Initiative : NumericalSolver, IStat<float> { }
 public class Trigger_SkillTriggerCheck : Trigger<Trigger_SkillTriggerCheck, Entity> { }
 public class Trigger_DefaultSkill : Trigger<Trigger_DefaultSkill, Entity> { }
-public class Mechanic_Skills : Mechanic<Mechanic_Skills>
+public class Mechanic_Skills : Mechanic
 {
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private SkillCondition queuedTrigger;
@@ -22,7 +22,6 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
     private Action activeSkill;
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private int tick;
-    private DataContainer<float> baseFocus;
     private System.Action cleanup;
     [FoldoutGroup("Skills")]
     public SerializedDictionary<SkillCondition, Action> conditionBindings = new();
@@ -30,10 +29,7 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
     public override void Initialize()
     {
         ConditionSetup();
-
-        baseFocus = new DataContainer<float>();
-        baseFocus.Value = Owner.Stat<Stat_MaximumFocus>().Value;
-        Owner.Stat<Stat_CurrentFocus>().Add(baseFocus);
+        Owner.GetStat<Stat_CurrentFocus>().Value = Owner.GetStat<Stat_MaximumFocus>().Value;
     }
 
     public void ConditionSetup()
@@ -49,11 +45,11 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
         }
         else
         {
-            foreach (SkillCondition condition in Owner.Stat<Stat_SkillConditions>())
+            foreach (SkillCondition condition in Owner.GetStat<Stat_SkillConditions>())
             {
                 cleanup += condition.condition.SubscribeToTasks(Owner, 0);
             }
-            foreach (SkillCondition condition in Owner.Stat<Stat_SkillReactions>())
+            foreach (SkillCondition condition in Owner.GetStat<Stat_SkillReactions>())
             {
                 cleanup += condition.condition.SubscribeToTasks(Owner, 0);
             }
@@ -72,28 +68,27 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
     public void QueueSkill(SkillCondition condition)
     {
         if (!conditionBindings.ContainsKey(condition)) return;
-        if(queuedTrigger != null) Debug.Log($"{queuedTrigger.name} priority = {Owner.Stat<Stat_SkillConditions>().IndexOf(queuedTrigger)} | " +
-            $"{condition.name} priority = {Owner.Stat<Stat_SkillConditions>().IndexOf(condition)}");
+        if(queuedTrigger != null) Debug.Log($"{queuedTrigger.name} priority = {Owner.GetStat<Stat_SkillConditions>().IndexOf(queuedTrigger)} | " +
+            $"{condition.name} priority = {Owner.GetStat<Stat_SkillConditions>().IndexOf(condition)}");
 
-        if (queuedTrigger != null && !Owner.Stat<Stat_SkillConditions>().Contains(queuedTrigger) && Owner.Stat<Stat_SkillConditions>().IndexOf(queuedTrigger) < Owner.Stat<Stat_SkillConditions>().IndexOf(condition)) return;
+        if (queuedTrigger != null && !Owner.GetStat<Stat_SkillConditions>().Contains(queuedTrigger) && Owner.GetStat<Stat_SkillConditions>().IndexOf(queuedTrigger) < Owner.GetStat<Stat_SkillConditions>().IndexOf(condition)) return;
         queuedTrigger = condition;
     }
 
     public override void Tick()
     {
-        if (Owner.Stat<Stat_CurrentFocus>().Value == 0)
+        if (Owner.GetStat<Stat_CurrentFocus>().Value == 0)
         {
-            Owner.Stat<Stat_Stunned>().Add(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.Stat<Stat_FocusDepleationStunDuration>().Value));
+            Owner.GetStat<Stat_Stunned>().AddModifier(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.GetStat<Stat_FocusDepleationStunDuration>().Value));
         }
 
-        if (Owner.Stat<Stat_Stunned>().Value)
+        if (Owner.GetStat<Stat_Stunned>().Value)
         {
             EndSkill();
             return;
         }
 
-        baseFocus.Value = Mathf.Clamp(baseFocus.Value + Owner.Stat<Stat_FocusRecoveryRate>().Value / 50f, 0, Owner.Stat<Stat_MaximumFocus>().Value);
-        Owner.Stat<Stat_CurrentFocus>().MarkAsChanged();
+        Owner.GetStat<Stat_CurrentFocus>().Value = Mathf.Clamp(Owner.GetStat<Stat_CurrentFocus>().Value + Owner.GetStat<Stat_FocusRecoveryRate>().Value / 50f, 0, Owner.GetStat<Stat_MaximumFocus>().Value);
 
         if (activeSkill == null)
         {
@@ -120,16 +115,10 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
             float cost = activeSkill.FocusCost(tick);
             if (!float.IsNaN(cost))
             {
-                baseFocus.Value = Mathf.Clamp(baseFocus.Value - cost, 0, Owner.Stat<Stat_MaximumFocus>().Value);
-                Owner.Stat<Stat_CurrentFocus>().MarkAsChanged();
+                Owner.GetStat<Stat_CurrentFocus>().Value = Mathf.Clamp(Owner.GetStat<Stat_CurrentFocus>().Value - cost, 0, Owner.GetStat<Stat_MaximumFocus>().Value);
             }
 
             if (activeSkill.Tick(Owner, tick)) EndSkill();
-
-            if (Owner.Stat<Stat_CurrentFocus>().Value == 0)
-            {
-                Owner.Stat<Stat_Stunned>().Add(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.Stat<Stat_FocusDepleationStunDuration>().Value));
-            }
 
             tick++;
         }
@@ -137,7 +126,7 @@ public class Mechanic_Skills : Mechanic<Mechanic_Skills>
 
     public bool TryStartSkill(Action skill)
     {
-        if (conditionBindings[queuedTrigger].focusCost <= Owner.Stat<Stat_CurrentFocus>().Value)
+        if (conditionBindings[queuedTrigger].focusCost <= Owner.GetStat<Stat_CurrentFocus>().Value)
         {
             EndSkill();
             tick = 0;
@@ -167,7 +156,7 @@ public class Task_QueueSkill<T> : ITaskOwned<Entity, T>
     public bool DoTask(Entity owner, T data)
     {
         // ID: based on the index in Stat_SkillConditions
-        owner.GetMechanic<Mechanic_Skills>().QueueSkill(condition);
+        owner.GetStat<Mechanic_Skills>().QueueSkill(condition);
         return true;
     }
 }

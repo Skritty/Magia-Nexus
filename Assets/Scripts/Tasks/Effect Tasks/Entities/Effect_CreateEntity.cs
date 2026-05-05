@@ -19,7 +19,7 @@ public class Effect_CreateEntity : EffectTask
 
     protected virtual IEnumerator SpawnEntity(Entity Owner, Entity Target, float multiplier, bool triggered)
     {
-        Create(Owner, Target, multiplier, triggered, 0).GetStat<Mechanic_Actions>().Tick();
+        Create(Owner, Target, multiplier, triggered, 0).GetStat<Mechanic_Skills>().Tick();
         yield return null;
     }
 

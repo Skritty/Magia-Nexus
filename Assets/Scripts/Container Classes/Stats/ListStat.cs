@@ -36,4 +36,24 @@ public class ListStat<T> : CollectionContainer<T>
         }
         return cleanup;
     }
+
+    public bool Contains(T value)
+    {
+        foreach (IValueContainer<T> modifier in Modifiers)
+        {
+            if (modifier.Value.Equals(value)) return true;
+        }
+        return false;
+    }
+
+    public int IndexOf(T value)
+    {
+        int i = 0;
+        foreach (IValueContainer<T> modifier in Modifiers)
+        {
+            if (modifier.Value.Equals(value)) return i;
+            i++;
+        }
+        return -1;
+    }
 }

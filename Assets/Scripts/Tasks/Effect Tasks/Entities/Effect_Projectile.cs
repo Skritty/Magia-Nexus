@@ -48,16 +48,17 @@ public class Effect_Projectile : Effect_CreateEntity
                                 * spawnedEntity.GetStat<Mechanic_Movement>().facingDir;
                             break;
                         }
-                    case ProjectileFanType.Sequence:
-                        {
-                            int tickDelay = (int)(1f * Owner.GetStat<Mechanic_Actions>().TicksPerAction / projectileCount);
-                            for (int tick = 0; tick < tickDelay; tick++)
+                        /*case ProjectileFanType.Sequence:
                             {
-                                yield return new WaitForFixedUpdate();
-                            }
-                            break;
-                        }
+                                int tickDelay = (int)(1f * Owner.GetStat<Mechanic_Skills>().TicksPerAction / projectileCount);
+                                for (int tick = 0; tick < tickDelay; tick++)
+                                {
+                                    yield return new WaitForFixedUpdate();
+                                }
+                                break;
+                            }*/
                 }
+            yield return new WaitForFixedUpdate(); // REMOVE THIS
             spawnedEntity.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.GetStat<Mechanic_Movement>().facingDir);
             Trigger_ProjectileCreated.Invoke(spawnedEntity, spawnedEntity, entity, this, Owner);
         }

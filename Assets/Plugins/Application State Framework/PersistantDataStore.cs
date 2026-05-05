@@ -41,20 +41,20 @@ namespace Skritty.Tools.Utilities
 
         #region Scriptable Object
         [SerializeField]
-        private SerializedDictionary<string, dynamic> data = new SerializedDictionary<string, dynamic>();
+        private SerializedDictionary<string, object> data = new SerializedDictionary<string, object>();
 
         public T Get<T>(string key)
         {
-            dynamic value;
+            object value;
             if (data.TryGetValue(key, out value))
             {
-                if (value == null) return default(T);
+                if (value == null) return default;
                 return (T)value;
             }
-            return default(T);
+            return default;
         }
 
-        public void Set(string key, dynamic value)
+        public void Set(string key, object value)
         {
             if (!data.TryAdd(key, value))
                 data[key] = value;

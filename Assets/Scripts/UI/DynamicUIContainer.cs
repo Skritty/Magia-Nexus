@@ -25,7 +25,7 @@ namespace Skritty.Tools.Utilities
         [Header("References")]
         [SerializeField, Sirenix.OdinInspector.ShowInInspector]
         private SerializedDictionary<string, Object> references = new SerializedDictionary<string, Object>();
-        public Dictionary<string, dynamic> data = new Dictionary<string, dynamic>();
+        public Dictionary<string, object> data = new Dictionary<string, object>();
 
         public T Get<T>(string key) where T : Object
         {
@@ -70,11 +70,13 @@ namespace Skritty.Tools.Utilities
             }
         }
 
+#if UNITY_EDITOR
         protected override void OnValidate()
         {
             foreach (AutoAssign a in autoAssigns)
                 if(a.assignToSingleton != null)
                     a.type = a.assignToSingleton.AssemblyQualifiedName;
         }
+#endif
     }
 }
