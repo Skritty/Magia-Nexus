@@ -29,6 +29,14 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
     {
         this.position = position;
     }
+    public MultidimensionalPosition(params float[] position)
+    {
+        this.position = new int[position.Length];
+        for (int axis = 0; axis < Dimensions; axis++)
+        {
+            this.position[axis] = (int)position[axis];
+        }
+    }
     public MultidimensionalPosition(MultidimensionalPosition other)
     {
         position = new int[other.Dimensions];
@@ -69,12 +77,52 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
         return newPosition;
     }
 
+    public static MultidimensionalPosition operator +(MultidimensionalPosition operand, int other)
+    {
+        MultidimensionalPosition newPosition = new(operand);
+        for (int axis = 0; axis < newPosition.Dimensions; axis++)
+        {
+            newPosition[axis] += other;
+        }
+        return newPosition;
+    }
+
     public static MultidimensionalPosition operator -(MultidimensionalPosition operand, MultidimensionalPosition other)
     {
         MultidimensionalPosition newPosition = new(operand);
         for (int axis = 0; axis < newPosition.Dimensions; axis++)
         {
             newPosition[axis] -= other[axis];
+        }
+        return newPosition;
+    }
+
+    public static MultidimensionalPosition operator -(MultidimensionalPosition operand, int other)
+    {
+        MultidimensionalPosition newPosition = new(operand);
+        for (int axis = 0; axis < newPosition.Dimensions; axis++)
+        {
+            newPosition[axis] -= other;
+        }
+        return newPosition;
+    }
+
+    public static MultidimensionalPosition operator *(MultidimensionalPosition operand, int other)
+    {
+        MultidimensionalPosition newPosition = new(operand);
+        for (int axis = 0; axis < newPosition.Dimensions; axis++)
+        {
+            newPosition[axis] *= other;
+        }
+        return newPosition;
+    }
+
+    public static MultidimensionalPosition operator /(MultidimensionalPosition operand, int other)
+    {
+        MultidimensionalPosition newPosition = new(operand);
+        for (int axis = 0; axis < newPosition.Dimensions; axis++)
+        {
+            newPosition[axis] = (int)(newPosition[axis] * 1f / other);
         }
         return newPosition;
     }
@@ -139,6 +187,7 @@ public class MultidimensionalPosition : IEnumerable, IEqualityComparer<Multidime
         for (int axis = 0; axis < Dimensions; axis++)
         {
             newPosition[axis] = position[axis] & (~0 << depth);
+
         }
         return newPosition;
     }

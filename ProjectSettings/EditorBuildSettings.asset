@@ -15,3 +15,4 @@ EditorBuildSettings:
     path: Assets/Scenes/Combat.unity
     guid: 84275e14c3308684e90b9ef8b24b432e
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

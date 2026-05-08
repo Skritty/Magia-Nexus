@@ -20,7 +20,7 @@ public class NTreeGenerator<NodeDataType> : MonoBehaviour where NodeDataType : n
             float x = radius * Mathf.Sin(theta) * Mathf.Cos(phi);
             float y = radius * Mathf.Sin(theta) * Mathf.Sin(phi);
             float z = radius * Mathf.Cos(theta);
-            MultidimensionalPosition position = new MultidimensionalPosition((ushort)(x + spawnRadius), (ushort)(z + spawnRadius), (ushort)(y + spawnRadius), (ushort)i);
+            MultidimensionalPosition position = new MultidimensionalPosition(x + spawnRadius, z + spawnRadius, y + spawnRadius, i);
             NodeDataType node = new NodeDataType();
             tree.TryAddData(node, position, out _);
         }

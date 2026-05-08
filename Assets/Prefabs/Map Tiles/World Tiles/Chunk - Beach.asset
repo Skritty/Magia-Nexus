@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95f741a524e65f4d849bb9e5692bec3, type: 3}
   m_Name: Chunk - Beach
   m_EditorClassIdentifier: 
-  tasks:
-  - rid: 5185998389326119176
+  tasks: []
   terrainNoise:
   - rid: 5185998389326119535
   - rid: 5185998389326119531
@@ -36,13 +35,13 @@ MonoBehaviour:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
             optionsSerializer: 00000100000000
             generated: 0
-          noiseRange: {x: 100, y: 101}
+          noiseRange: {x: 0, y: 1}
           solveType: 0
         - tileOptions:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
             optionsSerializer: 00000000010000
             generated: 0
-          noiseRange: {x: 99, y: 100}
+          noiseRange: {x: -1, y: 0}
           solveType: 0
         noisePasses:
         - rid: 5185998389326119537
@@ -59,14 +58,10 @@ MonoBehaviour:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
             optionsSerializer: 00000000000100
             generated: 0
-          noiseRange: {x: 99, y: 99}
+          noiseRange: {x: -1, y: -1}
           solveType: 4
         noisePasses:
         - rid: 5185998400560562395
-    - rid: 5185998389326119176
-      type: {class: Task_InstantiateAtPosition, ns: , asm: Assembly-CSharp}
-      data:
-        obj: {fileID: 6808951896328773572, guid: d55c90afb956d0e45ab729715f0659fc, type: 3}
     - rid: 5185998389326119531
       type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
       data:

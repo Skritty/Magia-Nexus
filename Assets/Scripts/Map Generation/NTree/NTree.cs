@@ -545,8 +545,8 @@ public class NTree<T>
 
     public T this[int x, int y, int z]
     {
-        get => GetDataAtPosition(new MultidimensionalPosition((ushort)x, (ushort)y, (ushort)z));
-        set => TryAddData(value, new MultidimensionalPosition((ushort)x, (ushort)y, (ushort)z), out _, true);
+        get => GetDataAtPosition(new MultidimensionalPosition(x, y, z));
+        set => TryAddData(value, new MultidimensionalPosition(x, y, z), out _, true);
     }
 
     private static NTreeNode CreateNode(MultidimensionalPosition position, int id = -1, byte depth = 0)
@@ -578,13 +578,16 @@ public class NTree<T>
             return null;
         }
 
-        return root.children[position.GetIndexAtDepth(31)].GetLeaf(position, targetDepth);
+        return root.GetLeaf(position, targetDepth);
     }
 
     public T GetDataAtPosition(MultidimensionalPosition position, byte targetDepth = 0)
     {
         NTreeNode node = GetNodeAtPosition(position, targetDepth);
-        if (node == null) return default;
+        if (node == null)
+        {
+            return default;
+        }
         return data[node.id];
     }
 
@@ -638,13 +641,10 @@ public class NTree<T>
         depth = position.GetDepth(); //position.GetDepth(depth);
         if (root == null)
         {
-            root = CreateNode(position, -1, (byte)(depth + 1));
-            // Add sign sectors
-            root.AddChild(new NTreeNode(new MultidimensionalPosition(position.Dimensions, 0), -1, 31));
-            root.AddChild(new NTreeNode(new MultidimensionalPosition(position.Dimensions, -1), -1, 31));
+            root = CreateNode(new MultidimensionalPosition(position.Dimensions, 0), -1, 32);
             //Debug.Log($"New Root {root}(D{root.depth}, L{root.leafCount})");
         }
-        else if(root.depth <= depth)
+        /*else if(root.depth <= depth)
         {
             // Old root that is at a lower depth than the new one? Attach it with a new branch
             NTreeNode oldRoot = root.children[position.GetIndexAtDepth(31)]; // YOU WERE HERE!! ------------------------------------------------------------------------------------------------------------
@@ -655,7 +655,7 @@ public class NTree<T>
             root.AddSector(oldRoot, position);
             Profiler.EndSample();
             //Debug.Log($"New Root {root}(D{root.depth}, L{root.leafCount})");
-        }
+        }*/
 
         if(leaf.parent == null)
         {

@@ -21,7 +21,7 @@ public class MapGenerator_EntropicPropagation : MapGenerator
         entropicMap.Clear();
         if (startWithSeedTileInstead)
         {
-            MultidimensionalPosition position = new MultidimensionalPosition((ushort)(generationBounds.center.x), (ushort)(generationBounds.center.y), (ushort)(generationBounds.center.z));
+            MultidimensionalPosition position = new MultidimensionalPosition(generationBounds.center.x, generationBounds.center.y, generationBounds.center.z);
             if (tree[position] != null)
             {
                 if(tree[position].Entropy > 1)
@@ -41,7 +41,7 @@ public class MapGenerator_EntropicPropagation : MapGenerator
                 {
                     for (int z = (int)-generationBounds.extents.z; z < generationBounds.extents.z; z++)
                     {
-                        MultidimensionalPosition position = new MultidimensionalPosition((ushort)(generationBounds.center.x + x), (ushort)(generationBounds.center.y + y), (ushort)(generationBounds.center.z + z));
+                        MultidimensionalPosition position = new MultidimensionalPosition(generationBounds.center.x + x, generationBounds.center.y + y, generationBounds.center.z + z);
                         TileSuperposition tile = tree[position];
                         if (tile != null && tile.Entropy != 0)
                         {

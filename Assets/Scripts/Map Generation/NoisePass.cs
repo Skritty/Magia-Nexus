@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SimplexNoise;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -37,11 +38,12 @@ public class NoisePass_WeightedAveragePositionalChunkTerrainNoise : NoisePass
 {
     public override float NoiseMod(float noise, MultidimensionalPosition position, int seed = 0)
     {
-        int amt = 0; // This is twice the distance for 2d (4x for 3d?)
+        float amt = 0; // This is twice the distance for 2d (4x for 3d?)
         float totalNoise = 0;
-        foreach ((ChunkTile chunk, int distance) chunk in MapGenerationManager.Instance.GetNearbyChunks(position))
+        foreach ((ChunkTile chunk, float distance) chunk in MapGenerationManager.Instance.GetNearbyChunks(position))
         {
             if (chunk.chunk == null) return noise;
+            if (chunk.distance <= 0) continue;
             amt += chunk.distance;
             float chunkNoise = 0;
             foreach (NoisePass pass in chunk.chunk.terrainNoise)

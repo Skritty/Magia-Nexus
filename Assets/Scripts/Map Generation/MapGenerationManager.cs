@@ -16,7 +16,8 @@ public class MapGenerationManager : Singleton<MapGenerationManager>
     [NonSerialized]
     private NTree<TileSuperposition>[] mapRepresentationLODs;
 
-    public int chunkDimensions = 32;
+    public int chunkBit = 3;
+    public int chunkSize => 1 << chunkBit;
     public Bounds chunkGenBounds;
     public Bounds initialTerrainGenBounds;
     public Transform center;
@@ -40,7 +41,7 @@ public class MapGenerationManager : Singleton<MapGenerationManager>
         Vector3 centerSnapped = new Vector3((int)center.position.x, (int)center.position.y, (int)center.position.z);
         mapRepresentationLODs = new NTree<TileSuperposition>[2];
         Generate(worldGeneration, 0, chunkGenBounds);
-        //Generate(mapGeneration, 1, initialTerrainGenBounds);
+        Generate(mapGeneration, 1, initialTerrainGenBounds);
     }
 
     private void FixedUpdate()
@@ -104,46 +105,60 @@ public class MapGenerationManager : Singleton<MapGenerationManager>
 
     public ChunkTile GetChunk(MultidimensionalPosition position)
     {
-        MultidimensionalPosition chunkPos = new MultidimensionalPosition(position.Dimensions);
-        for(int axis = 0; axis < chunkPos.Dimensions; axis++)
-        {
-            chunkPos[axis] = (ushort)(position[axis] * 1f / chunkDimensions);
-        }
-        chunkPos[1] = 0;// TODO: Remove
-        ChunkTile chunk = mapRepresentationLODs[0].GetDataAtPosition(chunkPos).GetTiles()[0] as ChunkTile;
+        MultidimensionalPosition chunkPos = position.PositionAtDepth(chunkBit) / chunkSize;
+        chunkPos[1] = 0; // TODO: Remove for 3d chunks
+        TileSuperposition tile = mapRepresentationLODs[0].GetDataAtPosition(chunkPos);
+        if (tile == null) return null;
+        List<GenerationTile> tiles = tile.GetTiles();
+        if (tiles.Count == 0) return null;
+        ChunkTile chunk = tiles[0] as ChunkTile;
         return chunk;
     }
 
-    public List<(ChunkTile chunk, int distance)> GetNearbyChunks(MultidimensionalPosition position)
+    public List<(ChunkTile chunk, float distance)> GetNearbyChunks(MultidimensionalPosition position)
     {
-        List<(ChunkTile chunk, int distance)> chunks = new();
-        for(int x = 0; x < 2; x++)
-        {
-            int xOffset = 0;
-            if (x > 0) xOffset = (int)(chunkDimensions * 0.5f * (position[0] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
-            for (int y = 0; y < 2; y++)
-            {
-                y = 2; // TODO: Remove
-                int yOffset = 0;
-                //if (y > 0) yOffset = (int)(chunkDimensions * 0.5f * (position[1] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
-                for (int z = 0; z < 2; z++)
-                {
-                    int zOffset = 0;
-                    if (z > 0) zOffset = (int)(chunkDimensions * 0.5f * (position[2] % chunkDimensions > chunkDimensions * 0.5f ? 1 : -1));
+        int halfChunk = (int)(chunkSize * 0.5f);
+        List<(ChunkTile chunk, float distance)> chunks = new();
+        RecursiveIteration(-1, true, new MultidimensionalPosition(position.Dimensions));
+        return chunks;
 
-                    MultidimensionalPosition chunkPos = new MultidimensionalPosition(
-                        (ushort)((position[0] + xOffset) / chunkDimensions), 
-                        0,//(ushort)((position[1] + yOffset) / chunkDimensions), 
-                        (ushort)((position[2] + zOffset) / chunkDimensions));
-                    ChunkTile chunk = mapRepresentationLODs[0].GetDataAtPosition(chunkPos).GetTiles()[0] as ChunkTile;
-                    chunkPos[0] = (ushort)(chunkPos[0] * chunkDimensions + 0.5f * chunkDimensions);
-                    chunkPos[1] = position[1];
-                    chunkPos[2] = (ushort)(chunkPos[2] * chunkDimensions + 0.5f * chunkDimensions);
-                    chunks.Add((chunk, (int)Mathf.Clamp(chunkDimensions - chunkPos.Distance(position), 0, chunkDimensions)));
-                }
+        void RecursiveIteration(int axis, bool skip, MultidimensionalPosition offsetPosition)
+        {
+            if(axis >= 0)
+            {
+                if (skip) offsetPosition[axis] = position[axis];
+                else offsetPosition[axis] = position[axis] + GetClosestChunkOffset(axis);
+            }
+
+            if (++axis < position.Dimensions)
+            {
+                RecursiveIteration(axis, true, offsetPosition);
+                if (axis == 1) return; // TODO: remove this for 3d chunks
+                RecursiveIteration(axis, false, offsetPosition);
+            }
+            else
+            {
+                ChunkTile chunk = GetChunk(offsetPosition);
+                if (chunk == null) return;
+
+                float dist = position.Distance(offsetPosition.PositionAtDepth(chunkBit) + halfChunk);
+                float inverseDist = chunkSize - dist;
+                chunks.Add((chunk, inverseDist));
             }
         }
-        return chunks;
+
+        int GetClosestChunkOffset(int axis)
+        {
+            int offsetFromChunk = position[axis] % chunkSize;
+            if (Math.Abs(offsetFromChunk) >= halfChunk)
+            {
+                return halfChunk * (offsetFromChunk < 0 ? -1 : 1);
+            }
+            else
+            {
+                return -halfChunk * (offsetFromChunk < 0 ? -1 : 1);
+            }
+        }
     }
 
     public void SaveMap() { }

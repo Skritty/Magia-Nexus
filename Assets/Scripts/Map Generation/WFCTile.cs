@@ -27,7 +27,7 @@ public class WFCTile : IEquatable<WFCTile>
     public WFCTile(string groupPrefabAssetPath, int x, int y, int z)
     {
         this.groupUID = groupPrefabAssetPath;
-        position = new MultidimensionalPosition((ushort)x, (ushort)y, (ushort)z);
+        position = new MultidimensionalPosition(x, y, z);
         content = null;
         holeAllowedTileRefs = new();
         connections = new WFCConnection[6];
