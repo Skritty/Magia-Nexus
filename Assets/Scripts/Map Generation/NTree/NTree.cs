@@ -45,7 +45,7 @@ public class NTree<T>
             else
             {
                 // Leaf node
-                this.position = position.Clone();
+                this.position = new(position);
             }
             return this;
         }
@@ -545,8 +545,8 @@ public class NTree<T>
 
     public T this[int x, int y, int z]
     {
-        get => GetDataAtPosition(new MultidimensionalPosition((ushort)x, (ushort)y, (ushort)z));
-        set => TryAddData(value, new MultidimensionalPosition((ushort)x, (ushort)y, (ushort)z), out _, true);
+        get => GetDataAtPosition(new MultidimensionalPosition(x, y, z));
+        set => TryAddData(value, new MultidimensionalPosition(x, y, z), out _, true);
     }
 
     private static NTreeNode CreateNode(MultidimensionalPosition position, int id = -1, byte depth = 0)
@@ -573,17 +573,21 @@ public class NTree<T>
 
     private NTreeNode GetNodeAtPosition(MultidimensionalPosition position, byte targetDepth = 0)
     {
-        if (root == null || position.Depth > root.depth)
+        if (root == null || position.GetDepth() > root.depth)
         {
             return null;
         }
+
         return root.GetLeaf(position, targetDepth);
     }
 
     public T GetDataAtPosition(MultidimensionalPosition position, byte targetDepth = 0)
     {
         NTreeNode node = GetNodeAtPosition(position, targetDepth);
-        if (node == null) return default;
+        if (node == null)
+        {
+            return default;
+        }
         return data[node.id];
     }
 
@@ -598,6 +602,7 @@ public class NTree<T>
         {
             if (overrideAtPosition)
             {
+                // Override the data at this position
                 dataIndex = this.data.Count;
                 this.data.Add(data);
                 GetNodeAtPosition(position).id = dataIndex;
@@ -605,6 +610,7 @@ public class NTree<T>
             }
             else
             {
+                // This position already contains data and cannot be overridden
                 dataIndex = 0;
                 return false;
             }
@@ -632,23 +638,24 @@ public class NTree<T>
         NTreeNode leaf = nodes[index];
         //Debug.Log($"({positions[0]},{positions[1]},{positions[2]})");
         // Higher Depth Root
-        depth = position.GetDepth(depth);
-        if(root == null)
+        depth = position.GetDepth(); //position.GetDepth(depth);
+        if (root == null)
         {
-            root = CreateNode(position, -1, (byte)(depth + 1));
+            root = CreateNode(new MultidimensionalPosition(position.Dimensions, 0), -1, 32);
             //Debug.Log($"New Root {root}(D{root.depth}, L{root.leafCount})");
         }
-        else if(root.depth <= depth)
+        /*else if(root.depth <= depth)
         {
             // Old root that is at a lower depth than the new one? Attach it with a new branch
-            NTreeNode oldRoot = root;
+            NTreeNode oldRoot = root.children[position.GetIndexAtDepth(31)]; // YOU WERE HERE!! ------------------------------------------------------------------------------------------------------------
+            root.depth = (byte)(depth + 1);
             //Debug.Log($"Old Root {root}(D{root.depth}, L{root.leafCount})");
             root = CreateNode(position, -1, (byte)(depth + 1));
             Profiler.BeginSample("AddSector");
             root.AddSector(oldRoot, position);
             Profiler.EndSample();
             //Debug.Log($"New Root {root}(D{root.depth}, L{root.leafCount})");
-        }
+        }*/
 
         if(leaf.parent == null)
         {

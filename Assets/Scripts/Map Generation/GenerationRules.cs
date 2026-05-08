@@ -38,7 +38,7 @@ public class GenerationRule_ChunkReference : GenerationRule
             virtualOffset.z = pass.NoiseMod(virtualOffset.z, position, 2);
         }
 
-        MultidimensionalPosition virtualPosition = new((ushort)(position[0] + virtualOffset.x), (ushort)(position[1] + virtualOffset.y), (ushort)(position[2] + virtualOffset.z));
+        MultidimensionalPosition virtualPosition = new(position[0] + virtualOffset.x, position[1] + virtualOffset.y, position[2] + virtualOffset.z);
         ChunkTile chunk = manager.GetChunk(virtualPosition);
         if (chunk == null) return generatedTiles;
         foreach (GenerationRule rule in chunk.generationRules)
@@ -190,8 +190,8 @@ public class GenerationRule_MapConstraints : GenerationRule
         // Apply rule
         foreach (Vector3 offset in offsets)
         {
-            MultidimensionalPosition offsetPosition = new MultidimensionalPosition((ushort)(position[0] + offset.x), (ushort)(position[1] + offset.y), (ushort)(position[2] + offset.z));
-            if (offsetPosition[0] >= ushort.MaxValue || offsetPosition[1] >= ushort.MaxValue || offsetPosition[2] >= ushort.MaxValue) continue;
+            MultidimensionalPosition offsetPosition = new MultidimensionalPosition(position[0] + offset.x, position[1] + offset.y, position[2] + offset.z);
+            //if (offsetPosition[0] >= ushort.MaxValue || offsetPosition[1] >= ushort.MaxValue || offsetPosition[2] >= ushort.MaxValue) continue;
 
             TileSuperposition offsetTile = tree[offsetPosition];
             if (offsetTile == null)

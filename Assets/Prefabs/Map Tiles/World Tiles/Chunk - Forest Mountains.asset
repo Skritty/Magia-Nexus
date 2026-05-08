@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95f741a524e65f4d849bb9e5692bec3, type: 3}
   m_Name: Chunk - Forest Mountains
   m_EditorClassIdentifier: 
-  tasks:
-  - rid: 5185998389326119178
+  tasks: []
   terrainNoise:
   - rid: 5185998389326119549
   - rid: 5185998389326119545
@@ -39,20 +38,16 @@ MonoBehaviour:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
             optionsSerializer: 00000000010000
             generated: 0
-          noiseRange: {x: 97, y: 100}
+          noiseRange: {x: -3, y: 0}
           solveType: 0
         - tileOptions:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
             optionsSerializer: 01000001000000
             generated: 0
-          noiseRange: {x: 100, y: 101}
+          noiseRange: {x: 0, y: 1}
           solveType: 0
         noisePasses:
         - rid: 5185998389326119550
-    - rid: 5185998389326119178
-      type: {class: Task_InstantiateAtPosition, ns: , asm: Assembly-CSharp}
-      data:
-        obj: {fileID: 4848793234238623373, guid: 5dea0137bae180a448a66de46bf8dbf0, type: 3}
     - rid: 5185998389326119545
       type: {class: NoisePass_GradientNoise2D, ns: , asm: Assembly-CSharp}
       data:
@@ -97,7 +92,7 @@ MonoBehaviour:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
             optionsSerializer: 00000001000000
             generated: 0
-          noiseRange: {x: 120, y: 300}
+          noiseRange: {x: 20, y: 200}
           solveType: 2
         noisePasses:
         - rid: 5185998400560562397
@@ -127,7 +122,7 @@ MonoBehaviour:
             tileset: {fileID: 11400000, guid: bf8ac0d97b39be04c930b916a3bb1489, type: 2}
             optionsSerializer: 01000000000000
             generated: 0
-          noiseRange: {x: 96, y: 300}
+          noiseRange: {x: -4, y: 200}
           solveType: 2
         noisePasses:
         - rid: 5185998400560562400
