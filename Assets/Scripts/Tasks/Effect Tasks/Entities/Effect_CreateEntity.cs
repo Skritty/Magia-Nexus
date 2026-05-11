@@ -30,14 +30,14 @@ public class Effect_CreateEntity : EffectTask
         spawnedEntity.gameObject.name = spawnedEntity.gameObject.name + id;
         spawnedEntity.GetStat<Stat_PlayerCharacter>().Value = Owner;
         spawnedEntity.GetStat<Stat_Viewer>().Value = Stats.GetStat<Stat_Viewer>(Owner).Value;
-        Stats.GetStat<Stat_Team>(spawnedEntity).Add(Stats.GetStat<Stat_Team>(Owner).Value);
+        Stats.GetStat<Stat_Faction>(spawnedEntity).Add(Stats.GetStat<Stat_Faction>(Owner).Value);
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:
-                Stats.GetStat<Stat_MovementTarget>(spawnedEntity).Add(Owner);
+                Stats.GetStat<Stat_Targets>(spawnedEntity).Add(Owner);
                 break;
             case EffectTargetSelector.Target:
-                Stats.GetStat<Stat_MovementTarget>(spawnedEntity).Add(Target);
+                Stats.GetStat<Stat_Targets>(spawnedEntity).Add(Target);
                 break;
         }
         spawnedEntity.GetStat<Mechanic_Movement>().facingDir = (Target.transform.position - Owner.transform.position).normalized;

@@ -16,7 +16,7 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>
             if (changed)
             {
                 changed = false;
-                Solve(BoundObject);
+                Solve();
             }
             return _value;
         }
@@ -27,7 +27,6 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>
             changed = true;
         }
     }
-    public object BoundObject { get; set; }
 
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
     public List<IValueContainer<T>> Modifiers { get; set; } = new();
@@ -75,11 +74,10 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>
         return false;
     }
 
-    public virtual T Solve(object boundObject)
+    public virtual T Solve()
     {
         if(Modifiers.Count > 0)
         {
-            Modifiers[0].BoundObject = boundObject;
             _value = Modifiers[0].Value;
         }
         return _value;

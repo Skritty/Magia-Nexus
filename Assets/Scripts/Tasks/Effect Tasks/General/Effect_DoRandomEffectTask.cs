@@ -10,14 +10,14 @@ public class Effect_DoRandomEffectTask<T> : EffectTask
     public bool useProxyAsOwner;
     [SerializeReference]
     public List<EffectTask> effects;
-    public List<Action> actions; // TODO: actions should NOT be a source of truth
+    public List<Skill> actions; // TODO: actions should NOT be a source of truth
 
     public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
         WeightedChance<EffectTask> random = new WeightedChance<EffectTask>();
         if (actions.Count > 0)
         {
-            foreach (Action action in actions)
+            foreach (Skill action in actions)
             {
                 random.Add(action.effects[0], 1);
             }

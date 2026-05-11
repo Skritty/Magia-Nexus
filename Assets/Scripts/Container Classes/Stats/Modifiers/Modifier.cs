@@ -30,7 +30,6 @@ public abstract class Modifier : IValueContainer
         durationModifiers.Clear();
     }
 
-    public object BoundObject { get; set; }
     public Alignment Alignment { get; protected set; }
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public int MaxStacks { get; protected set; }

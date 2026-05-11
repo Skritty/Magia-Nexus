@@ -10,7 +10,7 @@ public class Personality : ViewableGameAsset
     [SerializeReference]
     public Targeting movement;
     [SerializeReference]
-    public MovementDirectionSelector movementSelector;
+    public MovementTargetPositionSelector movementSelector;
     [SerializeReference]
     public Trigger conditionalTrigger;
 
@@ -26,7 +26,6 @@ public class Personality : ViewableGameAsset
         //Stats.GetStat<Stat_LockTarget>(entity).Add(lockTarget);
         //Stats.GetStat<Stat_LockTarget>(entity).Add(lockMovementTarget);
         Stats.GetStat<Stat_TargetingMethod>(entity).Add(targeting);
-        Stats.GetStat<Stat_MovementTargetingMethod>(entity).Add(movement);
         Stats.GetStat<Stat_MovementSelector>(entity).Add(movementSelector);
     }
 }

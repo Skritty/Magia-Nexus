@@ -114,7 +114,7 @@ public class Task_Filter_IsTargetableBy<T> : ITask<T> where T : Effect
     public Targeting targeting;
     public bool DoTask(T effect)
     {
-        return targeting.Solve(effect.Owner)
+        return targeting.FindTargets(effect.Owner)
             .Contains(selector == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
     }
 }
@@ -291,12 +291,56 @@ public class Task_Filter_GoldSpent : ITask<Viewer>
 
 #region Other Filters
 [LabelText("Is: Specific Action?")]
-public class Task_Filter_IsSpecificAction : ITask<Action>
+public class Task_Filter_IsSpecificAction : ITask<Skill>
 {
-    public Action comparison;
-    public bool DoTask(Action action)
+    public Skill comparison;
+    public bool DoTask(Skill action)
     {
         return comparison == action;
+    }
+}
+
+[LabelText("Filter: Skill Tags")]
+public class Task_Filter_SkillTags : ITask<Skill>, ITaskOwned<Entity, (Entity entity, Skill skill)>
+{
+    public DamageType tags;
+    public bool DoTask(Skill action)
+    {
+        return action.tags.HasFlag(tags);
+    }
+
+    public bool DoTask(Entity owner, (Entity entity, Skill skill) data)
+    {
+        return data.skill.tags.HasFlag(tags);
+    }
+
+    public bool DoTask((Entity entity, Skill skill) data)
+    {
+        return data.skill.tags.HasFlag(tags);
+    }
+}
+
+[LabelText("Filter: Has Any Targets")]
+public class Task_Filter_IsMainTarget : ITaskOwned<Entity, Entity>, ITaskOwned<Entity, (Entity entity, Skill skill)>
+{
+    public bool DoTask(Entity owner, Entity data)
+    {
+        return owner.GetStat<Stat_Targets>().Value == data;
+    }
+
+    public bool DoTask(Entity data)
+    {
+        return false;
+    }
+
+    public bool DoTask(Entity owner, (Entity entity, Skill skill) data)
+    {
+        return owner.GetStat<Stat_Targets>().Value == data.entity;
+    }
+
+    public bool DoTask((Entity entity, Skill skill) data)
+    {
+        return false;
     }
 }
 
@@ -348,6 +392,7 @@ public class Task_Filter_Matching<T> : ITask<T>
     }
 }
 
+public class StatContext_EntityOwner : ValueContainer<Entity> { }
 [LabelText("Filter: Has Any Targets")]
 public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
 {
@@ -356,7 +401,7 @@ public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
 
     public bool DoTask(Entity owner, T data)
     {
-        return targeting.Solve(owner).Count > 0;
+        return targeting.FindTargets(owner).Count > 0;
     }
 
     public bool DoTask(T data)

@@ -21,7 +21,7 @@ public class Mechanic_Projectile : Mechanic
     public override void Tick()
     {
         if (tasks.Count == 0) return;
-        foreach (Entity target in aoe.Solve(Owner))
+        foreach (Entity target in aoe.FindTargets(Owner))
         {
             OnHit(target);
         }

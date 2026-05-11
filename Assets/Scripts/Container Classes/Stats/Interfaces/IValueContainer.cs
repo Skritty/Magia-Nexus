@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IValueContainer
 {
-    public object BoundObject { get; set; }
     public bool IsDefaultValue();
     public bool TryGet<Type>(out Type data);
 }
@@ -19,7 +18,6 @@ public interface IValueContainer<T> : IValueContainer
 [Serializable]
 public abstract class ValueContainer : IValueContainer
 {
-    public object BoundObject { get; set; }
     public abstract bool IsDefaultValue();
     public abstract bool TryGet<Type>(out Type data);
 }

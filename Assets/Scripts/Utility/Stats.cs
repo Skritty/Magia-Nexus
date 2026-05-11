@@ -36,7 +36,6 @@ public static class Stats
             {
                 Instances.Add(type, new Dictionary<object, object>());
                 Instances[type].Add(boundObject, existingInstance);
-                (boundObject as IBindable).Bind(existingInstance);
                 return (T)Instances[type][boundObject];
             }
             else return existingInstance;
@@ -48,7 +47,6 @@ public static class Stats
         else if (createAndBindOnDefault)
         {
             Instances[type].Add(boundObject, existingInstance);
-            (boundObject as IBindable).Bind(existingInstance);
             return (T)Instances[type][boundObject];
         }
         else return existingInstance;
@@ -62,7 +60,6 @@ public static class Stats
             Instances.Add(type, new Dictionary<object, object>());
         }
         Instances[type].Add(boundObject, instance);
-        (boundObject as IBindable).Bind(instance);
     }
 
     public static void RemoveStat(this object boundObject, object instance)
@@ -91,11 +88,6 @@ public static class Stats
         Instances.Clear();
         _instances = null;
     }
-}
-
-public interface IBindable
-{
-    void Bind(object boundObject);
 }
 
 public interface IBoundInstance : IDisposable

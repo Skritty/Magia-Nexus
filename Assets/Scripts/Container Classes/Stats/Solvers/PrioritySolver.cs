@@ -26,7 +26,7 @@ public class PrioritySolver<T> : Solver<T>, IPriority
         return () => Modifiers.Remove(data);
     }
 
-    public override T Solve(object boundObject)
+    public override T Solve()
     {
         if (Modifiers.Count == 0)
         {

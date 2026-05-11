@@ -32,7 +32,7 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
                 VGAUI.ReleaseObject();
             }
         }
-        foreach (Action skill in selectedCharacter.GetStat<Stat_Skills>())
+        foreach (Skill skill in selectedCharacter.GetStat<Stat_Skills>())
         {
             ViewableGameAssetUIItem VGAUI = defaultVGAUI.RequestObject<ViewableGameAssetUIItem>();
             VGAUI.transform.SetParent(skills, true);
@@ -101,7 +101,7 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
         rect.rotation = Quaternion.Euler(new Vector3(0, 0, 180 * Mathf.Atan(dif.y / dif.x) / Mathf.PI));
     }
 
-    public void BindSkill(Action skill, SkillCondition condition)
+    public void BindSkill(Skill skill, SkillCondition condition)
     {
         selectedCharacter.GetStat<Mechanic_Skills>().BindAction(skill, condition);
         Debug.Log($"Bound {skill.name} to {condition.name}");
@@ -109,12 +109,12 @@ public class CharacterUIManager : Singleton<CharacterUIManager>, IPointerDownHan
 
     public void ReorderSkills()
     {
-        List<Action> reordered = new();
+        List<Skill> reordered = new();
         foreach (Transform skillUI in skills)
         {
             if (skillUI.TryGetComponent(out ViewableGameAssetUIItem VGAUI))
             {
-                reordered.Add(VGAUI.asset as Action);
+                reordered.Add(VGAUI.asset as Skill);
             }
         }
         selectedCharacter.GetStat<Stat_Skills>().Clear();

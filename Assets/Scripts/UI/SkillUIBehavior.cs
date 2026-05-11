@@ -6,17 +6,17 @@ public class SkillUIBehavior : MonoBehaviour, IDropEvent
 {
     public void OnDrop(Transform other)
     {
-        Action skill = null;
+        Skill skill = null;
         SkillCondition condition = null;
         ViewableGameAssetUIItem VGAUI = null;
         if (transform.TryGetComponent(out VGAUI))
         {
-            if (VGAUI.asset is Action) skill = (Action)VGAUI.asset;
+            if (VGAUI.asset is Skill) skill = (Skill)VGAUI.asset;
             else if (VGAUI.asset is SkillCondition) condition = (SkillCondition)VGAUI.asset;
         }
         if (other.TryGetComponent(out VGAUI))
         {
-            if (VGAUI.asset is Action) skill = (Action)VGAUI.asset;
+            if (VGAUI.asset is Skill) skill = (Skill)VGAUI.asset;
             else if (VGAUI.asset is SkillCondition) condition = (SkillCondition)VGAUI.asset;
         }
 
@@ -24,7 +24,7 @@ public class SkillUIBehavior : MonoBehaviour, IDropEvent
         {
             CharacterUIManager.Instance.BindSkill(skill, condition);
         }
-        else if (skill != null && other.TryGetComponent(out VGAUI) && VGAUI.asset is Action)
+        else if (skill != null && other.TryGetComponent(out VGAUI) && VGAUI.asset is Skill)
         {
             CharacterUIManager.Instance.ReorderSkills();
         }

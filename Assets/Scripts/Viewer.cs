@@ -16,7 +16,7 @@ public class Viewer
     [SerializeReference]
     public Personality personality;
     public List<Item> items = new List<Item>();
-    public List<Action> actions = new List<Action>();
+    public List<Skill> actions = new List<Skill>();
     public Entity character;
 
     // Persistent Data

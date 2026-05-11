@@ -6,7 +6,7 @@ public class Stat_MaximumFocus : NumericalSolver, IStat<float> { }
 public class Stat_CurrentFocus : NumericalSolver, IStat<float> { }
 public class Stat_FocusRecoveryRate : NumericalSolver, IStat<float> { }
 public class Stat_FocusDepleationStunDuration : NumericalSolver, IStat<float> { }
-public class Stat_Skills : ListStat<Action>, IStat<Action> { }
+public class Stat_Skills : ListStat<Skill>, IStat<Skill> { }
 public class Stat_SkillConditions : ListStat<SkillCondition>, IStat<SkillCondition> { }
 public class Stat_SkillReactions : ListStat<SkillCondition>, IStat<SkillCondition> { }
 public class Stat_Stunned : BooleanPrioritySolver, IStat<bool> { }
@@ -14,17 +14,19 @@ public class Stat_Channeling : BooleanPrioritySolver, IStat<bool> { }
 public class Stat_Initiative : NumericalSolver, IStat<float> { }
 public class Trigger_SkillTriggerCheck : Trigger<Trigger_SkillTriggerCheck, Entity> { }
 public class Trigger_DefaultSkill : Trigger<Trigger_DefaultSkill, Entity> { }
+public class Trigger_OnEntityStartSkill : Trigger<Trigger_OnEntityStartSkill, (Entity entity, Skill skill)> { }
+public class Trigger_OnEntityEndSkill : Trigger<Trigger_OnEntityEndSkill, (Entity entity, Skill skill)> { }
 public class Mechanic_Skills : Mechanic
 {
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private SkillCondition queuedTrigger;
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
-    private Action activeSkill;
+    private Skill activeSkill;
     [FoldoutGroup("Skills"), ReadOnly, ShowInInspector]
     private int tick;
     private System.Action cleanup;
     [FoldoutGroup("Skills")]
-    public SerializedDictionary<SkillCondition, Action> conditionBindings = new();
+    public SerializedDictionary<SkillCondition, Skill> conditionBindings = new();
 
     public override void Initialize()
     {
@@ -56,7 +58,7 @@ public class Mechanic_Skills : Mechanic
         }
     }
 
-    public void BindAction(Action action, SkillCondition condition)
+    public void BindAction(Skill action, SkillCondition condition)
     {
         if (conditionBindings.ContainsKey(condition))
         {
@@ -124,7 +126,7 @@ public class Mechanic_Skills : Mechanic
         }
     }
 
-    public bool TryStartSkill(Action skill)
+    public bool TryStartSkill(Skill skill)
     {
         if (conditionBindings[queuedTrigger].focusCost <= Owner.GetStat<Stat_CurrentFocus>().Value)
         {

@@ -10,18 +10,17 @@ public abstract class ImmutableContainer<T> : IValueContainer<T>, ISolver<T>
     {
         get
         {
-            Solve(BoundObject);
+            Solve();
             return _value;
         }
     }
-    public object BoundObject { get; set; }
     public bool IsDefaultValue() => Value.Equals(default);
     public bool TryGet<Type>(out Type data)
     {
         data = (Type)(Value as object);
         return data != null;
     }
-    public abstract T Solve(object boundObject);
+    public abstract T Solve();
 
     public void AddTo(IModifiable<T> modifiable) => modifiable.Modifiers.Add(this);
     public void RemoveFrom(IModifiable<T> modifiable) => modifiable.Modifiers.Remove(this);

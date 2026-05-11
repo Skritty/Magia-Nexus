@@ -12,7 +12,7 @@ public class StepCalculation : NumericalSolver
         {
             if (changed)
             {
-                Solve(BoundObject);
+                Solve();
                 changed = false;
             }
             return _value;

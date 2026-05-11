@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class Entity : MonoBehaviour, IBindable
+public class Entity : MonoBehaviour
 {
     public System.Action cleanup;
 
@@ -29,11 +29,6 @@ public class Entity : MonoBehaviour, IBindable
             trigger.Value.SubscribeToTasks(this, this);
             this.GetStat<Stat_Triggers>().AddModifier(trigger);
         }
-    }
-
-    public void Bind(object boundObject)
-    {
-        if(boundObject is IValueContainer) (boundObject as IValueContainer).BoundObject = this;
     }
 
     private void Start()

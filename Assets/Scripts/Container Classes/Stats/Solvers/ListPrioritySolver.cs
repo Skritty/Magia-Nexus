@@ -3,7 +3,7 @@ using System.Linq;
 
 public class ListPrioritySolver<T> : PrioritySolver<List<T>>
 {
-    public override List<T> Solve(object boundObject)
+    public override List<T> Solve()
     {
         _value = new List<T>();
 
