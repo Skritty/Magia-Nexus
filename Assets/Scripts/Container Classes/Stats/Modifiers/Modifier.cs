@@ -41,7 +41,6 @@ public abstract class Modifier : IValueContainer
     public int TickDuration { get; protected set; }
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public bool RefreshDuration { get; protected set; }
-    [field: SerializeReference, FoldoutGroup("@GetType()")]
     public virtual IModifiable Tag { get; protected set; }
 
     public virtual bool IsDefaultValue() => true;
