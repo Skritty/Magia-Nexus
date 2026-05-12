@@ -70,8 +70,8 @@ public class Mechanic_Skills : Mechanic
     public void QueueSkill(SkillCondition condition)
     {
         if (!conditionBindings.ContainsKey(condition)) return;
-        if(queuedTrigger != null) Debug.Log($"{queuedTrigger.name} priority = {Owner.GetStat<Stat_SkillConditions>().IndexOf(queuedTrigger)} | " +
-            $"{condition.name} priority = {Owner.GetStat<Stat_SkillConditions>().IndexOf(condition)}");
+        //if(queuedTrigger != null) Debug.Log($"{queuedTrigger.name} priority = {Owner.GetStat<Stat_SkillConditions>().IndexOf(queuedTrigger)} | " +
+        //    $"{condition.name} priority = {Owner.GetStat<Stat_SkillConditions>().IndexOf(condition)}");
 
         if (queuedTrigger != null && !Owner.GetStat<Stat_SkillConditions>().Contains(queuedTrigger) && Owner.GetStat<Stat_SkillConditions>().IndexOf(queuedTrigger) < Owner.GetStat<Stat_SkillConditions>().IndexOf(condition)) return;
         queuedTrigger = condition;
@@ -81,13 +81,19 @@ public class Mechanic_Skills : Mechanic
     {
         if (Owner.GetStat<Stat_CurrentFocus>().Value == 0)
         {
-            Owner.GetStat<Stat_Stunned>().AddModifier(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.GetStat<Stat_FocusDepleationStunDuration>().Value));
+            Owner.GetStat<Stat_Stunned>().AddModifier(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.GetStat<Stat_FocusDepleationStunDuration>().Value + 1));
         }
 
         if (Owner.GetStat<Stat_Stunned>().Value)
         {
-            EndSkill();
+            if(activeSkill != null) EndSkill();
+            Owner.GetStat<Stat_CurrentFocus>().Value = Mathf.Clamp(Owner.GetStat<Stat_CurrentFocus>().Value + Owner.GetStat<Stat_FocusRecoveryRate>().Value * 0.5f / 50f, 0, Owner.GetStat<Stat_MaximumFocus>().Value);
             return;
+        }
+
+        if(activeSkill == null)
+        {
+            Owner.GetStat<Mechanic_Movement>().movementTargetPosition = Owner.transform.position;
         }
 
         Owner.GetStat<Stat_CurrentFocus>().Value = Mathf.Clamp(Owner.GetStat<Stat_CurrentFocus>().Value + Owner.GetStat<Stat_FocusRecoveryRate>().Value / 50f, 0, Owner.GetStat<Stat_MaximumFocus>().Value);
@@ -135,6 +141,7 @@ public class Mechanic_Skills : Mechanic
             activeSkill = skill;
             queuedTrigger = null;
             activeSkill.OnStart(Owner);
+            //Debug.Log($"{Owner} started {activeSkill}");
             return true;
         }
         return false;

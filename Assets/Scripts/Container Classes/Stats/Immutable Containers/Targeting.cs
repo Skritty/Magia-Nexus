@@ -27,11 +27,11 @@ public class Targeting : ImmutableContainer<List<Entity>>
 
     public override List<Entity> Solve()
     {
-        Entity owner = "statContextData".GetStat<StatContext_EntityOwner>().Value;
+        Entity owner = "statContextData".GetStat<StatContext_EntityOwner>().Value; // TODO: remove
         List<Entity> targets = new List<Entity>();
         _value = targets;
 
-        if (owner == null) return _value;
+        if (owner == null || numberOfTargets == 0) return _value;
 
         // If this is a default targeting, just return the owner (this might not be desired)
         if(targetingConditions.Count == 0 && targetingSorting == null)
@@ -55,11 +55,11 @@ public class Targeting : ImmutableContainer<List<Entity>>
                     valid = false;
                     break;
                 }
-                if (valid)
-                {
-                    targets.Add(target);
-                    Ignore(owner, target);
-                }
+            }
+            if (valid)
+            {
+                targets.Add(target);
+                Ignore(owner, target);
             }
         }
 

@@ -9,6 +9,6 @@ public class Movement_Directional : MovementTargetPositionSelector
 
     protected override Vector3 GetMovementTargetPosition(Entity owner, Entity target, float multiplier)
     {
-        return target.transform.rotation * localDirection.normalized * 0.01f;
+        return target.transform.rotation * localDirection.normalized;
     }
 }

@@ -20,7 +20,7 @@ public class Modifier_Numerical : Modifier<float>, ICalculationComponent
         MaxStacks = maxStacks;
         StacksAdded = stacksAdded;
         PerPlayer = perPlayer;
-        TickDuration = tickDuration;
+        TickDuration = tickDuration + 1; // TODO: If this breaks things...
         RefreshDuration = refreshDuration;
     }
 

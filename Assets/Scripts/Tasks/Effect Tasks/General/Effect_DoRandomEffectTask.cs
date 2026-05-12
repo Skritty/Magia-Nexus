@@ -19,7 +19,7 @@ public class Effect_DoRandomEffectTask<T> : EffectTask
         {
             foreach (Skill action in actions)
             {
-                random.Add(action.effects[0], 1);
+                //random.Add(action.effects[0], 1); TODO
             }
         }
         else

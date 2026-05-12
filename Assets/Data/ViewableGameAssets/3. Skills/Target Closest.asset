@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399fa3ad2d935794e96d6c36d751c325, type: 3}
   m_Name: Target Closest
   m_EditorClassIdentifier: 
-  aliases: []
+  aliases:
+  - Target Closest
   info: 
   image: {fileID: 0}
   hidden: 1
   initialAnimationState: 0
   activateAnimationState: 0
-  tickDuration: 1
+  tickDuration: 10
   tags: 0
   movementSpeedOverDuration:
     serializedVersion: 2
@@ -26,25 +27,44 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  focusCost: 0
+  focusCost: 2
   focusExpenditureWeightOverTime:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  totalWeight: 0
-  onTick: 0
-  timing: 0
+  totalWeight: 10
   cancelRanges: []
-  effects:
-  - rid: 8649661411163898155
+  effectTimings:
+  - onTick: 0
+    timing: 0
+    effects:
+    - rid: 8649661436586361533
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 8649661411163898155
+    - rid: 8649661436586361533
       type: {class: SetTargets, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
@@ -56,21 +76,21 @@ MonoBehaviour:
           targetingSorting:
             rid: -2
         targeting:
-          rid: 8649661411163898156
-    - rid: 8649661411163898156
+          rid: 8649661436586361534
+    - rid: 8649661436586361534
       type: {class: Targeting, ns: , asm: Assembly-CSharp}
       data:
         numberOfTargets: 1
         ignoreFrames: 0
         targetingConditions:
-        - rid: 8649661411163898157
+        - rid: 8649661436586361535
         targetingSorting:
-          rid: 8649661411163898158
-    - rid: 8649661411163898157
+          rid: 8649661436586361536
+    - rid: 8649661436586361535
       type: {class: TargetingCondition_EntityRelation, ns: , asm: Assembly-CSharp}
       data:
         entitiesAffected: 16
-    - rid: 8649661411163898158
+    - rid: 8649661436586361536
       type: {class: TargetingSorting_Distance, ns: , asm: Assembly-CSharp}
       data:
-        sortingMethod: 1
+        sortingMethod: 2

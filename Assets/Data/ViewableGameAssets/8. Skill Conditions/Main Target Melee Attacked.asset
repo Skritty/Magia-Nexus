@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fee621f2baaf3418e0c19d2c5ceab3, type: 3}
   m_Name: Main Target Melee Attacked
   m_EditorClassIdentifier: 
-  aliases: []
+  aliases:
+  - Main Target Melee Attacked
   info: 
   image: {fileID: 0}
   hidden: 1
@@ -21,40 +22,26 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 8649661411163897933
       type: {class: Trigger_OnEntityStartSkill, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 8649661411163897934
+        - rid: 8649661436246360196
+        - rid: 8649661435463336670
         - rid: 8649661411163897936
-        - rid: 8649661411163897937
-    - rid: 8649661411163897934
-      type: {class: Task_Filter_IsMainTarget, ns: , asm: Assembly-CSharp}
-      data: {}
+        - rid: 8649661432705319231
     - rid: 8649661411163897936
       type: {class: Task_Filter_SkillTags, ns: , asm: Assembly-CSharp}
       data:
         tags: 139264
-    - rid: 8649661411163897937
-      type: {class: 'Task_Filter_HasAnyTargets`1[[System.ValueTuple`2[[Entity, Assembly-CSharp],[Action, Assembly-CSharp]], mscorlib]]', ns: , asm: Assembly-CSharp}
+    - rid: 8649661432705319231
+      type: {class: 'Task_QueueSkill`1[[System.ValueTuple`2[[Entity, Assembly-CSharp],[Skill, Assembly-CSharp]], mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
-        targeting:
-          rid: 8649661411163897938
-    - rid: 8649661411163897938
-      type: {class: Targeting, ns: , asm: Assembly-CSharp}
+        condition: {fileID: 11400000}
+    - rid: 8649661435463336670
+      type: {class: 'Task_Filter_IsMainTargetInRage`1[[System.ValueTuple`2[[Entity, Assembly-CSharp],[Skill, Assembly-CSharp]], mscorlib]]', ns: , asm: Assembly-CSharp}
       data:
-        _value: []
-        numberOfTargets: -1
-        ignoreFrames: 0
-        targetingConditions:
-        - rid: 8649661411163897939
-        targetingSorting:
-          rid: -2
-    - rid: 8649661411163897939
-      type: {class: TargetingCondition_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        radius: 1.5
-        angle: 180
-        offset: {x: 0, y: 0, z: 0}
+        range: {x: 0, y: 1.5}
+    - rid: 8649661436246360196
+      type: {class: Task_Filter_IsMainTarget, ns: , asm: Assembly-CSharp}
+      data: 

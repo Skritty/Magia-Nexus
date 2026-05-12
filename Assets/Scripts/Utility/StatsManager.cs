@@ -1,5 +1,22 @@
 using System;
 using System.Collections.Generic;
+using TwitchLib.Client.Models;
+using UnityEngine;
+public class StatsManager : MonoBehaviour
+{
+    private void OnDisable()
+    {
+        Stats.ClearAllStats();
+        Modifier.ClearDurationModifiers();
+    }
+
+    public void FixedUpdate()
+    {
+        Modifier.Tick();
+    }
+}
+
+
 public static class Stats
 {
     private static Dictionary<Type, Dictionary<object, object>> _instances;

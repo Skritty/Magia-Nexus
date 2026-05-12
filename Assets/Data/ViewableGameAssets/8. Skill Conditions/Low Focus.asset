@@ -10,28 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58fee621f2baaf3418e0c19d2c5ceab3, type: 3}
-  m_Name: When Attacked
+  m_Name: Low Focus
   m_EditorClassIdentifier: 
   aliases:
-  - When Hurt
+  - Low Focus
   info: 
   image: {fileID: 0}
   hidden: 1
   condition:
-    rid: 5747455754407773007
+    rid: 8649661438522294513
   references:
     version: 2
     RefIds:
-    - rid: 5747455754407773007
-      type: {class: Trigger_EntityUsedAction, ns: , asm: Assembly-CSharp}
+    - rid: 8649661438522294513
+      type: {class: Trigger_SkillTriggerCheck, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 5747455754407773009
-        - rid: 5747455754407773008
-    - rid: 5747455754407773008
-      type: {class: 'Task_QueueSkill`1[[Effect, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+        - rid: 8649661438522294515
+        - rid: 8649661438522294516
+    - rid: 8649661438522294515
+      type: {class: 'Task_Filter_FocusRange`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        percentageRange: {x: 0, y: 0.2}
+    - rid: 8649661438522294516
+      type: {class: 'Task_QueueSkill`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
         condition: {fileID: 11400000}
-    - rid: 5747455754407773009
-      type: {class: 'Task_Filter_IsTarget`1[[Effect, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data: 

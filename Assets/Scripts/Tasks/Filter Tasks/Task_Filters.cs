@@ -304,9 +304,9 @@ public class Task_Filter_IsSpecificAction : ITask<Skill>
 public class Task_Filter_SkillTags : ITask<Skill>, ITaskOwned<Entity, (Entity entity, Skill skill)>
 {
     public DamageType tags;
-    public bool DoTask(Skill action)
+    public bool DoTask(Skill skill)
     {
-        return action.tags.HasFlag(tags);
+        return skill.tags.HasFlag(tags);
     }
 
     public bool DoTask(Entity owner, (Entity entity, Skill skill) data)
@@ -320,7 +320,7 @@ public class Task_Filter_SkillTags : ITask<Skill>, ITaskOwned<Entity, (Entity en
     }
 }
 
-[LabelText("Filter: Has Any Targets")]
+[LabelText("Is: Entity the Main Target")]
 public class Task_Filter_IsMainTarget : ITaskOwned<Entity, Entity>, ITaskOwned<Entity, (Entity entity, Skill skill)>
 {
     public bool DoTask(Entity owner, Entity data)
@@ -339,6 +339,25 @@ public class Task_Filter_IsMainTarget : ITaskOwned<Entity, Entity>, ITaskOwned<E
     }
 
     public bool DoTask((Entity entity, Skill skill) data)
+    {
+        return false;
+    }
+}
+
+[LabelText("Is: Entity's Main Target In Range")]
+public class Task_Filter_IsMainTargetInRage<T> : ITaskOwned<Entity, T>
+{
+    public Vector2 range;
+    public bool DoTask(Entity owner, T data)
+    {
+        Entity target = owner.GetStat<Stat_Targets>().Value;
+        if (target == null) return false;
+        float dist = Vector3.Distance(target.transform.position, owner.transform.position);
+        if (dist >= range.x && dist <= range.y) return true;
+        return false;
+    }
+
+    public bool DoTask(T data)
     {
         return false;
     }
@@ -393,7 +412,7 @@ public class Task_Filter_Matching<T> : ITask<T>
 }
 
 public class StatContext_EntityOwner : ValueContainer<Entity> { }
-[LabelText("Filter: Has Any Targets")]
+[LabelText("Filter: Has Targets in Targeting")]
 public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
 {
     [SerializeReference]
@@ -402,6 +421,78 @@ public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
     public bool DoTask(Entity owner, T data)
     {
         return targeting.FindTargets(owner).Count > 0;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
+
+[LabelText("Is: Main Target In Range?")]
+public class Task_Filter_MainTargetInRange<T> : ITaskOwned<Entity, T>
+{
+    public bool invert;
+    [SerializeReference]
+    public Vector2 distanceRange;
+
+    public bool DoTask(Entity owner, T data)
+    {
+        Entity mainTarget = owner.GetStat<Stat_Targets>().Value;
+        if (mainTarget == null) return false;
+        float dist = Vector3.Distance(mainTarget.transform.position, owner.transform.position);
+        return (dist >= distanceRange.x && dist <= distanceRange.y) ^ invert;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
+
+[LabelText("Filter: Has Targets")]
+public class Task_Filter_HasTargets<T> : ITaskOwned<Entity, T>
+{
+    public bool invert;
+
+    public bool DoTask(Entity owner, T data)
+    {
+        bool targets = owner.GetStat<Stat_Targets>().Value != null;
+        return targets ^ invert;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
+
+[LabelText("Filter: Targets Have No Targets")]
+public class Task_Filter_TargetsHaveNoTargets<T> : ITaskOwned<Entity, T>
+{
+    public Targeting targeting;
+    public bool DoTask(Entity owner, T data)
+    {
+        foreach(Entity target in targeting.FindTargets(owner))
+        {
+            if (target.GetStat<Stat_Targets>().Value == null) return true;
+        }
+        return false;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
+
+public class Task_Filter_FocusRange<T> : ITaskOwned<Entity, T>
+{
+    public Vector2 percentageRange;
+    public bool DoTask(Entity owner, T data)
+    {
+        float focusPercent = owner.GetStat<Stat_CurrentFocus>().Value / owner.GetStat<Stat_MaximumFocus>().Value;
+        return focusPercent >= percentageRange.x && focusPercent <= percentageRange.y;
     }
 
     public bool DoTask(T data)

@@ -12,39 +12,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399fa3ad2d935794e96d6c36d751c325, type: 3}
   m_Name: Basic Strike
   m_EditorClassIdentifier: 
-  aliases: []
-  info: 
+  aliases:
+  - Basic Strike
+  info: This is a basic strike that deals 6 damage
   image: {fileID: 0}
   hidden: 1
-  initialAnimationState: 0
-  activateAnimationState: 0
-  tickDuration: 40
-  tags: 0
+  initialAnimationState: 3
+  activateAnimationState: 4
+  tickDuration: 50
+  tags: 1187875
   movementSpeedOverDuration:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  focusCost: 0
+  focusCost: 24
   focusExpenditureWeightOverTime:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.2446779
+      outSlope: 1.2446779
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.74783283
+      value: 0.93081105
+      inSlope: 0.260283
+      outSlope: 0.260283
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.07179143
+      outWeight: 0.13700636
+    - serializedVersion: 3
+      time: 1
+      value: 0.2
+      inSlope: -2.8981214
+      outSlope: -2.8981214
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  totalWeight: 0
-  onTick: 0
-  timing: 0.751
-  cancelRanges: []
-  effects:
-  - rid: 8649661411163898140
+  totalWeight: 27.554815
+  cancelRanges:
+  - range: {x: 0, y: 0.25173616}
+    cancelableBy: 2147483647
+  effectTimings:
+  - onTick: 0
+    timing: 0.75
+    effects:
+    - rid: 8649661436586361522
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 8649661411163898140
+    - rid: 8649661436586361522
       type: {class: Effect_Damage, ns: , asm: Assembly-CSharp}
       data:
         useTargetAsProxy: 0
@@ -53,16 +93,26 @@ MonoBehaviour:
           numberOfTargets: 1
           ignoreFrames: 0
           targetingConditions:
-          - rid: 8649661411163898142
-          - rid: 8649661411163898144
+          - rid: 8649661436586361523
+          - rid: 8649661436586361524
           targetingSorting:
             rid: -2
         hit:
-          rid: 8649661411163898141
-    - rid: 8649661411163898141
+          rid: 8649661436586361525
+    - rid: 8649661436586361523
+      type: {class: TargetingCondition_EntityRelation, ns: , asm: Assembly-CSharp}
+      data:
+        entitiesAffected: 16
+    - rid: 8649661436586361524
+      type: {class: TargetingCondition_Radial, ns: , asm: Assembly-CSharp}
+      data:
+        radius: 1
+        angle: 180
+        offset: {x: 0, y: 0, z: 0}
+    - rid: 8649661436586361525
       type: {class: DamageInstance, ns: , asm: Assembly-CSharp}
       data:
-        _effectMultiplier: 1.6
+        _effectMultiplier: 1.2
         triggerPlayerCharacter: 0
         preHit:
           tasks: []
@@ -80,17 +130,7 @@ MonoBehaviour:
             rid: -2
           <StatTag>k__BackingField:
             rid: -2
-          <Value>k__BackingField: 10
+          <Value>k__BackingField: 5
           <Step>k__BackingField: 0
           <AppliesTo>k__BackingField: 0
           <DamageType>k__BackingField: 1187875
-    - rid: 8649661411163898142
-      type: {class: TargetingCondition_EntityRelation, ns: , asm: Assembly-CSharp}
-      data:
-        entitiesAffected: 16
-    - rid: 8649661411163898144
-      type: {class: TargetingCondition_Radial, ns: , asm: Assembly-CSharp}
-      data:
-        radius: 0.6
-        angle: 20
-        offset: {x: 0, y: 0, z: 0}

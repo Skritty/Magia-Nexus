@@ -26,27 +26,18 @@ MonoBehaviour:
       type: {class: Trigger_SkillTriggerCheck, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 5747455457082212480
+        - rid: 8649661437051667343
+        - rid: 8649661432705319025
         - rid: 5747455457082212481
-    - rid: 5747455457082212480
-      type: {class: 'Task_Filter_HasAnyTargets`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
-      data:
-        targeting:
-          rid: 5747455457082212482
     - rid: 5747455457082212481
       type: {class: 'Task_QueueSkill`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
         condition: {fileID: 11400000}
-    - rid: 5747455457082212482
-      type: {class: Targeting_Radial, ns: , asm: Assembly-CSharp}
+    - rid: 8649661432705319025
+      type: {class: 'Task_Filter_MainTargetInRange`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
-        ignoreFrames: 0
-        entitiesAffected: 8
-        sortingMethod: 1
-        lineOfSight: 0
-        ignoreIntangeable: 0
-        numberOfTargets: -1
-        offset: {x: 0, y: 0, z: 0}
-        vfx: {fileID: 0}
-        radius: 1.5
-        angle: 180
+        invert: 0
+        distanceRange: {x: 0, y: 1}
+    - rid: 8649661437051667343
+      type: {class: Task_Filter_IsOwner, ns: , asm: Assembly-CSharp}
+      data: 

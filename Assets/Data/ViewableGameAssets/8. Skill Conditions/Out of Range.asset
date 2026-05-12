@@ -10,28 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58fee621f2baaf3418e0c19d2c5ceab3, type: 3}
-  m_Name: Default
+  m_Name: Out of Range
   m_EditorClassIdentifier: 
   aliases:
-  - Default
+  - Out of Range
   info: 
-  image: {fileID: 21300000, guid: 9a4f561d8db0d9046a0b8188cb432f6d, type: 3}
+  image: {fileID: 21300000, guid: b9198a484decb6c4e9619c047a230f58, type: 3}
   hidden: 1
   condition:
-    rid: 5747455457082212474
+    rid: 5747455457082212479
   references:
     version: 2
     RefIds:
-    - rid: 5747455457082212474
-      type: {class: Trigger_DefaultSkill, ns: , asm: Assembly-CSharp}
+    - rid: 5747455457082212479
+      type: {class: Trigger_SkillTriggerCheck, ns: , asm: Assembly-CSharp}
       data:
         tasks:
-        - rid: 8649661437051667344
-        - rid: 5747455457082212475
-    - rid: 5747455457082212475
+        - rid: 8649661437051667342
+        - rid: 8649661432705319025
+        - rid: 5747455457082212481
+    - rid: 5747455457082212481
       type: {class: 'Task_QueueSkill`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
       data:
         condition: {fileID: 11400000}
-    - rid: 8649661437051667344
+    - rid: 8649661432705319025
+      type: {class: 'Task_Filter_MainTargetInRange`1[[Entity, Assembly-CSharp]]', ns: , asm: Assembly-CSharp}
+      data:
+        invert: 1
+        distanceRange: {x: 0, y: 1}
+    - rid: 8649661437051667342
       type: {class: Task_Filter_IsOwner, ns: , asm: Assembly-CSharp}
       data: 

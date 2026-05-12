@@ -20,17 +20,14 @@ public class Skill : ViewableGameAsset
     {
         return focusExpenditureWeightOverTime.Evaluate(tick * 1f / tickDuration) / totalWeight * focusCost;
     }
-    
-    public bool onTick;
-    [Range(0,1), HideIf("@onTick")]
-    public float timing = 0;
+
     public List<CancelRange> cancelRanges = new();
     public bool Cancelable(int tick, Skill other)
     {
         foreach(CancelRange cr in cancelRanges)
         {
-            if (cr.range.x * tickDuration <= tick && 
-                cr.range.y * tickDuration <= tick &&
+            if (tick >= cr.range.x * tickDuration&&
+                tick <= cr.range.y * tickDuration &&
                 (((int)cr.cancelableBy) & ((int)other.tags)) != 0) 
                 return true;
         }
@@ -45,8 +42,18 @@ public class Skill : ViewableGameAsset
         public DamageType cancelableBy = DamageType.All;
     }
 
-    [SerializeReference]
-    public List<EffectTask> effects = new List<EffectTask>();
+    public List<EffectTiming> effectTimings = new List<EffectTiming>();
+
+    [Serializable]
+    public class EffectTiming
+    {
+        public bool onTick;
+        [Range(0, 1), HideIf("@onTick")]
+        public float timing = 0;
+        [SerializeReference]
+        public List<EffectTask> effects = new List<EffectTask>();
+    }
+
     public virtual void OnStart(Entity owner)
     {
         owner.GetStat<Mechanic_AnimationStates>().AnimationState = initialAnimationState;
@@ -55,12 +62,15 @@ public class Skill : ViewableGameAsset
     }
     public virtual bool Tick(Entity owner, int tick)
     {
-        owner.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate(tickDuration * 1f / tick), step: CalculationStep.Multiplicative, tickDuration: 1));
-        if (onTick || tick == (int)(tickDuration * timing))
+        foreach(EffectTiming effectTiming in effectTimings)
         {
-            owner.GetStat<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
-            DoEffects(owner);
+            if(effectTiming.onTick || tick == (int)(tickDuration * effectTiming.timing))
+            {
+                owner.GetStat<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
+                DoEffects(owner, effectTiming);
+            }
         }
+        //owner.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value:movementSpeedOverDuration.Evaluate(tickDuration * 1f / tick), step: CalculationStep.Multiplicative, tickDuration: 1));
         if(tick == tickDuration) return true;
         else return false;
     }
@@ -68,9 +78,9 @@ public class Skill : ViewableGameAsset
     {
         Trigger_OnEntityEndSkill.Invoke((owner, this), this, owner);
     }
-    public void DoEffects(Entity owner)
+    public void DoEffects(Entity owner, EffectTiming effectTiming)
     {
-        foreach (EffectTask effect in effects)
+        foreach (EffectTask effect in effectTiming.effects)
         {
             if(effect == null)
             {
