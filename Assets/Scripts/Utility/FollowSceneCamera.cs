@@ -6,5 +6,6 @@ public class FollowSceneCamera : MonoBehaviour
     {
         if (Camera.current == null) return;
         transform.position = Camera.current.transform.position;
+        transform.rotation = Camera.current.transform.rotation;
     }
 }

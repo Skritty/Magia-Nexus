@@ -54,7 +54,7 @@ public class MapGenerationManager : Singleton<MapGenerationManager>
 
             Bounds generationBounds = new Bounds(centerSnapped - transform.position, size);
 
-            Generate(mapGeneration, 1, generationBounds);
+            //Generate(mapGeneration, 1, generationBounds);
             //Generate(levelGeneration, 1);
         }
     }
