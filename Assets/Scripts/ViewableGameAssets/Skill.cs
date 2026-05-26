@@ -50,6 +50,8 @@ public class Skill : ViewableGameAsset
         public bool onTick;
         [Range(0, 1), HideIf("@onTick")]
         public float timing = 0;
+        [MinMaxSlider(0, 1), HideIf("@!onTick")]
+        public Vector2 timingRange = new Vector2(0, 1);
         [SerializeReference]
         public List<EffectTask> effects = new List<EffectTask>();
     }
@@ -64,7 +66,10 @@ public class Skill : ViewableGameAsset
     {
         foreach(EffectTiming effectTiming in effectTimings)
         {
-            if(effectTiming.onTick || tick == (int)(tickDuration * effectTiming.timing))
+            if((effectTiming.onTick 
+                && (tick >= (int)(tickDuration * effectTiming.timingRange.x))
+                && (tick <= (int)(tickDuration * effectTiming.timingRange.y))) 
+                || (!effectTiming.onTick && (tick == (int)(tickDuration * effectTiming.timing))))
             {
                 owner.GetStat<Mechanic_AnimationStates>().AnimationState = activateAnimationState;
                 DoEffects(owner, effectTiming);

@@ -89,7 +89,7 @@ public class Modifier<T> : Modifier, IValueContainer<T>
     /// </summary>
     public override void AddToStatTag(object boundObject)
     {
-        boundObject.GetStat(StatTag).AddModifier(this);
+        boundObject.GetStat(StatTag).Add(this);
     }
 
     public void AddTo(IModifiable<T> modifiable)
@@ -117,7 +117,7 @@ public class Modifier<T> : Modifier, IValueContainer<T>
             if (TickDuration > 0)
             {
                 // Remove it after the duration expires
-                durationModifiers.Add((() => modifiable.RemoveModifier(this), TickDuration));
+                durationModifiers.Add((() => modifiable.Remove(this), TickDuration));
             }
         }
         switch (Alignment)

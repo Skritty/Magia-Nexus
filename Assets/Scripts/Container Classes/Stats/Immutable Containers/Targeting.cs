@@ -81,7 +81,7 @@ public class Targeting : ImmutableContainer<List<Entity>>
     {
         if (ignoreFrames > 0)
         {
-            target.GetStat<Stat_Untargetable>().AddModifier(
+            target.GetStat<Stat_Untargetable>().Add(
                 new Modifier<(object, object)>(
                     value: (boundObject, this),
                     tickDuration: ignoreFrames));

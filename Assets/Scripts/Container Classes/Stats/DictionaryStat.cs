@@ -23,11 +23,11 @@ public class DictionaryStat<Key, Value> : CollectionContainer<(Key key, Value va
     public System.Action Add(Key key, Value value)
     {
         var modifier = new ValueContainer<(Key key, Value value)>((key, value));
-        AddModifier(modifier);
-        return () => RemoveModifier(modifier);
+        Add(modifier);
+        return () => Remove(modifier);
     }
 
-    public override void AddModifier(IValueContainer<(Key key, Value value)> modifier)
+    public override void Add(IValueContainer<(Key key, Value value)> modifier)
     {
         modifier.AddTo(this);
         dictionary.Add(modifier.Value.key, modifier.Value.value);
@@ -39,12 +39,12 @@ public class DictionaryStat<Key, Value> : CollectionContainer<(Key key, Value va
         {
             if (keyValuePair.Value.key.Equals(key))
             {
-                RemoveModifier(keyValuePair);
+                Remove(keyValuePair);
             }
         }
     }
 
-    public override void RemoveModifier(IValueContainer<(Key key, Value value)> modifier)
+    public override void Remove(IValueContainer<(Key key, Value value)> modifier)
     {
         modifier.RemoveFrom(this);
         dictionary.Remove(modifier.Value.key);

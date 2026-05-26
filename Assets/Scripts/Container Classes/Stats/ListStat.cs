@@ -14,15 +14,15 @@ public class ListStat<T> : CollectionContainer<T>
     public System.Action Add(T value)
     {
         ValueContainer<T> modifier = new ValueContainer<T>(value);
-        AddModifier(modifier);
-        return () => RemoveModifier(modifier);
+        Add(modifier);
+        return () => Remove(modifier);
     }
 
     public void Remove(T value)
     {
         foreach (IValueContainer<T> modifier in Modifiers.ToArray())
         {
-            if (modifier.Value.Equals(value)) RemoveModifier(modifier);
+            if (modifier.Value.Equals(value)) Remove(modifier);
         }
     }
 

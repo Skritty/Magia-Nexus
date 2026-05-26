@@ -9,6 +9,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: stats.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: 'stats.Array.data[9]'
+      value: 8649661729939653608
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: 'managedReferences[8649661390949712302]'
       value: 'Assembly-CSharp ValueContainer`1[[Factions, Assembly-CSharp]]'
       objectReference: {fileID: 0}
@@ -147,6 +155,10 @@ PrefabInstance:
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: 'managedReferences[8649661439632736265]'
       value: 'Assembly-CSharp ValueContainer`1[[System.Single, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: 'managedReferences[8649661729939653608]'
+      value: Assembly-CSharp Stat_Triggers
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661432705318980].<Step>k__BackingField
@@ -309,6 +321,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: managedReferences[8649661729939653608].<Modifiers>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: 'managedReferences[8649661276207710302].<Modifiers>k__BackingField.Array.data[0]'
       value: 8649661432705318983
       objectReference: {fileID: 0}
@@ -338,7 +354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[0].key
@@ -351,7 +367,7 @@ PrefabInstance:
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[2].key
       value: 
-      objectReference: {fileID: 11400000, guid: 43ce0e9b73aae404094d03fcd65491f4, type: 2}
+      objectReference: {fileID: 11400000, guid: 4fad6893b5b84074d99e4037677913c1, type: 2}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[3].key
       value: 
@@ -360,6 +376,10 @@ PrefabInstance:
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[4].key
       value: 
       objectReference: {fileID: 11400000, guid: 64161bec4ec44564a91d764b204d4fa5, type: 2}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[5].key
+      value: 
+      objectReference: {fileID: 11400000, guid: 3566ee0acda7a334a8786fcac272b8e2, type: 2}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[0].value
       value: 
@@ -371,7 +391,7 @@ PrefabInstance:
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[2].value
       value: 
-      objectReference: {fileID: 11400000, guid: cde2af081d0e6cf43a96693ea93cbbb3, type: 2}
+      objectReference: {fileID: 11400000, guid: 16b052c1cdc7aeb45bc377b380f9ff65, type: 2}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[3].value
       value: 
@@ -380,6 +400,10 @@ PrefabInstance:
       propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[4].value
       value: 
       objectReference: {fileID: 11400000, guid: 768da5ca6d2c6db4695e32b8b29a5c8b, type: 2}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: managedReferences[8649661276207710358].conditionBindings.serializedPairs.Array.data[5].value
+      value: 
+      objectReference: {fileID: 11400000, guid: 3a5482d0d23a5804c883f08da2e9cb96, type: 2}
     - target: {fileID: 1221730734440505896, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: m_text
       value: Bandit Melee

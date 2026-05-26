@@ -23,7 +23,7 @@ public class Effect_Summon : Effect_CreateEntity
         {
             if (Stats.GetStat<Stat_Summons>(Owner).Count >= maxSummons) break;
             Entity spawnedEntity = Create(Owner, Target, multiplier, triggered, i);
-            spawnedEntity.GetStat<Stat_MaxLife>().AddModifier(new NumericalSolver(lifeMultiplier, CalculationStep.Multiplicative));
+            spawnedEntity.GetStat<Stat_MaxLife>().Add(new NumericalSolver(lifeMultiplier, CalculationStep.Multiplicative));
             // TODO: summon position
             Stats.GetStat<Stat_Summons>(Owner).Add(spawnedEntity);
             Trigger_Expire.Subscribe(x => Stats.GetStat<Stat_Summons>(Owner).Remove(spawnedEntity), spawnedEntity);

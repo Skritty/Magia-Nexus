@@ -16,7 +16,6 @@ public class StatsManager : MonoBehaviour
     }
 }
 
-
 public static class Stats
 {
     private static Dictionary<Type, Dictionary<object, object>> _instances;
@@ -46,7 +45,7 @@ public static class Stats
 
     public static T GetStat<T>(this object boundObject, T existingInstance, bool createAndBindOnDefault = false)
     {
-        Type type = typeof(T);
+        Type type = existingInstance.GetType(); //typeof(T);
         if (!Instances.ContainsKey(type))
         {
             if (createAndBindOnDefault)

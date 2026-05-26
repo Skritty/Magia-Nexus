@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: stats.Array.size
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: 'stats.Array.data[9]'
@@ -19,6 +19,10 @@ PrefabInstance:
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: 'stats.Array.data[10]'
       value: 8649661432705319510
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: 'stats.Array.data[11]'
+      value: 8649661730110308483
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: 'managedReferences[8649661432705319509]'
@@ -71,6 +75,10 @@ PrefabInstance:
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: 'managedReferences[8649661439632736263]'
       value: 'Assembly-CSharp ValueContainer`1[[System.Single, mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: 'managedReferences[8649661730110308483]'
+      value: Assembly-CSharp Stat_Triggers
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661432705319509].<Step>k__BackingField
@@ -130,6 +138,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
       propertyPath: managedReferences[8649661432705319510].<Modifiers>k__BackingField.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: managedReferences[8649661730110308483].<Modifiers>k__BackingField.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}

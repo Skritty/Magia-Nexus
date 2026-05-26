@@ -12,7 +12,7 @@ public abstract class MovementTargetPositionSelector : EffectTask
     public override void DoEffect(Entity owner, Entity target, float multiplier, bool triggered)
     {
         target.GetStat<Mechanic_Movement>().movementTargetPosition = GetMovementTargetPosition(owner, target, multiplier);
-        target.GetStat<Stat_MovementSpeed>().AddModifier(new Modifier_Numerical(value: movementSpeedMultiplier * multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
+        target.GetStat<Stat_MovementSpeed>().Add(new Modifier_Numerical(value: movementSpeedMultiplier * multiplier, step: CalculationStep.Multiplicative, tickDuration: 1));
     }
 
     protected abstract Vector3 GetMovementTargetPosition(Entity owner, Entity target, float multiplier);

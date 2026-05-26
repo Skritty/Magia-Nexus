@@ -62,7 +62,7 @@ public class StepCalculation : NumericalSolver
         calcStep.Modifiers.Add(modifier as IValueContainer<float>);
         changed = true;
     }
-    public override void AddModifier(IValueContainer<float> modifier)
+    public override void Add(IValueContainer<float> modifier)
     {
         if(modifier is ICalculationComponent) AddModifier(modifier, (modifier as ICalculationComponent).Step);
         else AddModifier(modifier, CalculationStep.Flat);

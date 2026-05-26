@@ -81,7 +81,7 @@ public class Mechanic_Skills : Mechanic
     {
         if (Owner.GetStat<Stat_CurrentFocus>().Value == 0)
         {
-            Owner.GetStat<Stat_Stunned>().AddModifier(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.GetStat<Stat_FocusDepleationStunDuration>().Value + 1));
+            Owner.GetStat<Stat_Stunned>().Add(new Modifier_Priority<bool>(value: true, priority: byte.MaxValue, tickDuration: (int)Owner.GetStat<Stat_FocusDepleationStunDuration>().Value + 1));
         }
 
         if (Owner.GetStat<Stat_Stunned>().Value)

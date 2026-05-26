@@ -2,7 +2,7 @@ public class QueueStat<T> : CollectionContainer<T>
 {
     public void Enqueue(T value)
     {
-        AddModifier(new ValueContainer<T>(value));
+        Add(new ValueContainer<T>(value));
     }
 
     public T Dequeue()
@@ -13,8 +13,8 @@ public class QueueStat<T> : CollectionContainer<T>
         return modifier.Value;
     }
 
-    public override void RemoveModifier(IValueContainer<T> modifier)
+    public override void Remove(IValueContainer<T> modifier)
     {
-        base.RemoveModifier(modifier);
+        base.Remove(modifier);
     }
 }

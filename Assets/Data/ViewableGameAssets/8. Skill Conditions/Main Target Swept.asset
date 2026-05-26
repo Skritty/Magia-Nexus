@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fee621f2baaf3418e0c19d2c5ceab3, type: 3}
+  m_Name: Main Target Swept
+  m_EditorClassIdentifier: 
+  aliases:
+  - Main Target Swept
+  info: 
+  image: {fileID: 0}
+  hidden: 1
+  condition:
+    rid: 8649661411163897933
+  references:
+    version: 2
+    RefIds:
+    - rid: 8649661411163897933
+      type: {class: Trigger_OnEntityStartSkill, ns: , asm: Assembly-CSharp}
+      data:
+        tasks:
+        - rid: 8649661436246360196
+        - rid: 8649661435463336670
+        - rid: 8649661411163897936
+        - rid: 8649661432705319231
+    - rid: 8649661411163897936
+      type: {class: Task_Filter_SkillTags, ns: , asm: Assembly-CSharp}
+      data:
+        tags: 4194304
+    - rid: 8649661432705319231
+      type: {class: 'Task_QueueSkill`1[[System.ValueTuple`2[[Entity, Assembly-CSharp],[Skill, Assembly-CSharp]], mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        condition: {fileID: 11400000}
+    - rid: 8649661435463336670
+      type: {class: 'Task_Filter_IsMainTargetInRage`1[[System.ValueTuple`2[[Entity, Assembly-CSharp],[Skill, Assembly-CSharp]], mscorlib]]', ns: , asm: Assembly-CSharp}
+      data:
+        range: {x: 0, y: 1.5}
+    - rid: 8649661436246360196
+      type: {class: Task_Filter_IsMainTarget, ns: , asm: Assembly-CSharp}
+      data: 

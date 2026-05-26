@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -29,8 +30,9 @@ public class Effect_CreateEntity : EffectTask
         spawnedEntity.gameObject.SetActive(true);
         spawnedEntity.gameObject.name = spawnedEntity.gameObject.name + id;
         spawnedEntity.GetStat<Stat_PlayerCharacter>().Value = Owner;
-        spawnedEntity.GetStat<Stat_Viewer>().Value = Stats.GetStat<Stat_Viewer>(Owner).Value;
-        Stats.GetStat<Stat_Faction>(spawnedEntity).Add(Stats.GetStat<Stat_Faction>(Owner).Value);
+
+        spawnedEntity.GetStat<Stat_Faction>().Add(Owner.GetStat<Stat_Faction>());
+        //spawnedEntity.GetStat<Stat_DamageDealt>().Add(Owner.GetStat<Stat_DamageDealt>());
         switch (movementTarget)
         {
             case EffectTargetSelector.Owner:

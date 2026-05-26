@@ -11,9 +11,12 @@ public class InheritFromParent<T> : ImmutableContainer<T>
     [SerializeReference]
     public IValueContainer<T> referenceStat;
 
-    public override T Solve() => _value = 
-        "statContextData".GetStat<StatContext_EntityOwner>().Value
-        .GetStat<Stat_Parent>().Value.GetStat(referenceStat).Value;
+    public override T Solve() 
+    {
+        Entity owner = "statContextData".GetStat<StatContext_EntityOwner>().Value;
+        if (owner == null) return default;
+        return _value = owner.GetStat<Stat_Parent>().Value.GetStat(referenceStat).Value;
+    } 
 }
 
 /// <summary>
@@ -24,7 +27,10 @@ public class InheritFromStat<T> : ImmutableContainer<T>
     [SerializeReference, InfoBox("Can cause cyclical referecing!!", infoMessageType: InfoMessageType.Warning)]
     public IValueContainer<T> referenceStat;
 
-    public override T Solve() => _value = 
-        "statContextData".GetStat<StatContext_EntityOwner>().Value
-        .GetStat(referenceStat).Value;
+    public override T Solve()
+    {
+        Entity owner = "statContextData".GetStat<StatContext_EntityOwner>().Value;
+        if (owner == null) return default;
+        return _value = owner.GetStat(referenceStat).Value;
+    }
 }

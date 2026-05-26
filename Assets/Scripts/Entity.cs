@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour
     public System.Action cleanup;
 
     [SerializeReference]
-    private List<IValueContainer> stats = new();
+    private List<IStat> stats = new();
     [SerializeReference]
     private List<IValueContainer<Trigger>> defaultTriggers = new();
     [SerializeReference, HideReferenceObjectPicker, ListDrawerSettings(ShowFoldout = false, HideRemoveButton = true)]
@@ -16,7 +16,7 @@ public class Entity : MonoBehaviour
 
     private void Awake()
     {
-        foreach(IValueContainer stat in stats)
+        foreach(IStat stat in stats)
         {
             this.AddStat(stat);
         }
@@ -27,7 +27,7 @@ public class Entity : MonoBehaviour
         foreach (IValueContainer<Trigger> trigger in defaultTriggers)
         {
             trigger.Value.SubscribeToTasks(this, this);
-            this.GetStat<Stat_Triggers>().AddModifier(trigger);
+            this.GetStat<Stat_Triggers>().Add(trigger);
         }
     }
 

@@ -8,6 +8,6 @@ public interface IModifiable
 public interface IModifiable<T> : IModifiable
 {
     public List<IValueContainer<T>> Modifiers { get; set; }
-    public void AddModifier(IValueContainer<T> modifier);
-    public void RemoveModifier(IValueContainer<T> modifier);
+    public void Add(IValueContainer<T> modifier);
+    public void Remove(IValueContainer<T> modifier);
 }

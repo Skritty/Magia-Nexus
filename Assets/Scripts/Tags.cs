@@ -36,7 +36,7 @@ public enum DamageType
     Ranged = 1 << 18,
     AoE = 1 << 19,
     Strike = 1 << 20,
-    Stab = 1 << 21,
+    Lunge = 1 << 21,
     Sweep = 1 << 22,
     Maneuver = 1 << 23,
 

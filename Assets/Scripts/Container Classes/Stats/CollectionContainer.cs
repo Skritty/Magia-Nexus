@@ -20,8 +20,8 @@ public class CollectionContainer<T> : IModifiable<T>, IEnumerable<T>
             return list;
         }
     }
-    public virtual void AddModifier(IValueContainer<T> modifier) => modifier.AddTo(this);
-    public virtual void RemoveModifier(IValueContainer<T> modifier) => modifier.RemoveFrom(this);
+    public virtual void Add(IValueContainer<T> modifier) => modifier.AddTo(this);
+    public virtual void Remove(IValueContainer<T> modifier) => modifier.RemoveFrom(this);
 
     public virtual bool Contains(IValueContainer modifier, out int count)
     {

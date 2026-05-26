@@ -41,17 +41,17 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>
     public System.Action Add(T value)
     {
         ValueContainer<T> modifier = new ValueContainer<T>(value);
-        AddModifier(modifier);
-        return () => RemoveModifier(modifier);
+        Add(modifier);
+        return () => Remove(modifier);
     }
 
-    public virtual void AddModifier(IValueContainer<T> modifier)
+    public virtual void Add(IValueContainer<T> modifier)
     {
         modifier.AddTo(this);
         changed = true;
     }
 
-    public void RemoveModifier(IValueContainer<T> modifier)
+    public void Remove(IValueContainer<T> modifier)
     {
         modifier.RemoveFrom(this);
         changed = true;

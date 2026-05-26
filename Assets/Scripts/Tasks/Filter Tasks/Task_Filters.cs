@@ -109,36 +109,48 @@ public class Task_Filter_IsTarget<T> : ITaskOwned<Entity, T> where T : Effect
 [LabelText("Filter: Is Targetable By")]
 public class Task_Filter_IsTargetableBy<T> : ITask<T> where T : Effect
 {
-    public EffectTargetingSelector selector;
+    public EffectTargetingSelector targetingOwner;
+    public EffectTargetingSelector targetableBy;
     [SerializeReference]
     public Targeting targeting;
     public bool DoTask(T effect)
     {
-        return targeting.FindTargets(effect.Owner)
-            .Contains(selector == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
+        return targeting.FindTargets(targetingOwner == EffectTargetingSelector.Owner ? effect.Target : effect.Owner)
+            .Contains(targetableBy == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
     }
 }
 
 [LabelText("Filter: Damage Types")]
-public class Task_Filter_DamageType : ITask<DamageInstance>, ITask<Effect>
+public class Task_Filter_DamageType : ITask<DamageInstance>, ITask<Hit>, ITask<Effect>
 {
     public DamageType damageTypes;
+    public bool excluded;
     public bool DoTask(DamageInstance damage)
     {
         foreach (Modifier_Damage modifier in damage.damageModifiers)
         {
-            if (modifier.DamageType.HasFlag(damageTypes)) return true;
+            if (excluded)
+            {
+                if (((~(int)modifier.DamageType) & ((int)damageTypes)) != (int)damageTypes) return false;
+            }
+            else
+            {
+                if ((((int)modifier.DamageType) & ((int)damageTypes)) == (int)damageTypes) return true;
+            }
+            
         }
-        return false;
+        return false ^ excluded;
     }
     public bool DoTask(Effect damage)
     {
         if (damage is not DamageInstance) return false;
-        foreach (Modifier_Damage modifier in (damage as DamageInstance).damageModifiers)
-        {
-            if (modifier.DamageType.HasFlag(damageTypes)) return true;
-        }
-        return false;
+        return DoTask(damage as DamageInstance);
+    }
+
+    public bool DoTask(Hit damage)
+    {
+        if (damage is not DamageInstance) return false;
+        return DoTask(damage as DamageInstance);
     }
 }
 
@@ -475,9 +487,9 @@ public class Task_Filter_TargetsHaveNoTargets<T> : ITaskOwned<Entity, T>
     {
         foreach(Entity target in targeting.FindTargets(owner))
         {
-            if (target.GetStat<Stat_Targets>().Value == null) return true;
+            if (target.GetStat<Stat_Targets>().Value != null) return false;
         }
-        return false;
+        return true;
     }
 
     public bool DoTask(T data)

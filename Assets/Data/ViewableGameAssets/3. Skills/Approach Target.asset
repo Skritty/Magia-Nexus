@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 399fa3ad2d935794e96d6c36d751c325, type: 3}
-  m_Name: Move
+  m_Name: Approach Target
   m_EditorClassIdentifier: 
   aliases:
-  - Move
+  - Approach Target
   info: 
   image: {fileID: 0}
   hidden: 1
