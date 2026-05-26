@@ -1,7 +1,15 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-public class Stat_Team : PrioritySolver<int>, IStat<int> { }
+public enum Factions
+{
+    PlayerCharacters,
+    BeastsPeaceful,
+    BeastsPredator,
+    BeastsDangerous,
+    Bandits
+}
+public class Stat_Faction : PrioritySolver<Factions>, IStat<Factions> { }
 public class Stat_SummonCount : NumericalSolver, IStat<float> { }
 public class Stat_Summons : ListStat<Entity>, IStat<List<Entity>> { }
 public class Stat_Proxies : ListStat<Entity>, IStat<List<Entity>> { }

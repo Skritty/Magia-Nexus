@@ -30,7 +30,6 @@ public abstract class Modifier : IValueContainer
         durationModifiers.Clear();
     }
 
-    public object BoundObject { get; set; }
     public Alignment Alignment { get; protected set; }
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public int MaxStacks { get; protected set; }
@@ -42,7 +41,6 @@ public abstract class Modifier : IValueContainer
     public int TickDuration { get; protected set; }
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public bool RefreshDuration { get; protected set; }
-    [field: SerializeReference, FoldoutGroup("@GetType()")]
     public virtual IModifiable Tag { get; protected set; }
 
     public virtual bool IsDefaultValue() => true;
@@ -91,7 +89,7 @@ public class Modifier<T> : Modifier, IValueContainer<T>
     /// </summary>
     public override void AddToStatTag(object boundObject)
     {
-        boundObject.GetStat(StatTag).AddModifier(this);
+        boundObject.GetStat(StatTag).Add(this);
     }
 
     public void AddTo(IModifiable<T> modifiable)
@@ -119,7 +117,7 @@ public class Modifier<T> : Modifier, IValueContainer<T>
             if (TickDuration > 0)
             {
                 // Remove it after the duration expires
-                durationModifiers.Add((() => modifiable.RemoveModifier(this), TickDuration));
+                durationModifiers.Add((() => modifiable.Remove(this), TickDuration));
             }
         }
         switch (Alignment)

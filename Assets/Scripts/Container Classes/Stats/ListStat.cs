@@ -14,15 +14,15 @@ public class ListStat<T> : CollectionContainer<T>
     public System.Action Add(T value)
     {
         ValueContainer<T> modifier = new ValueContainer<T>(value);
-        AddModifier(modifier);
-        return () => RemoveModifier(modifier);
+        Add(modifier);
+        return () => Remove(modifier);
     }
 
     public void Remove(T value)
     {
         foreach (IValueContainer<T> modifier in Modifiers.ToArray())
         {
-            if (modifier.Value.Equals(value)) RemoveModifier(modifier);
+            if (modifier.Value.Equals(value)) Remove(modifier);
         }
     }
 
@@ -35,5 +35,25 @@ public class ListStat<T> : CollectionContainer<T>
             cleanup += Add(value);
         }
         return cleanup;
+    }
+
+    public bool Contains(T value)
+    {
+        foreach (IValueContainer<T> modifier in Modifiers)
+        {
+            if (modifier.Value.Equals(value)) return true;
+        }
+        return false;
+    }
+
+    public int IndexOf(T value)
+    {
+        int i = 0;
+        foreach (IValueContainer<T> modifier in Modifiers)
+        {
+            if (modifier.Value.Equals(value)) return i;
+            i++;
+        }
+        return -1;
     }
 }

@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399fa3ad2d935794e96d6c36d751c325, type: 3}
+  m_Name: Sidestep
+  m_EditorClassIdentifier: 
+  aliases:
+  - Sidestep
+  info: 
+  image: {fileID: 0}
+  hidden: 1
+  initialAnimationState: 1
+  activateAnimationState: 1
+  tickDuration: 30
+  tags: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  focusCost: 26
+  focusExpenditureWeightOverTime:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  totalWeight: 30
+  cancelRanges: []
+  effectTimings:
+  - onTick: 0
+    timing: 0
+    timingRange: {x: 0, y: 0}
+    effects:
+    - rid: 8649661436586361532
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8649661436586361532
+      type: {class: Movement_Directional, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          numberOfTargets: -1
+          ignoreFrames: 0
+          targetingConditions: []
+          targetingSorting:
+            rid: -2
+        movementSpeedMultiplier: 3
+        localDirection: {x: 0, y: 0, z: -1}

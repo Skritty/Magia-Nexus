@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 399fa3ad2d935794e96d6c36d751c325, type: 3}
+  m_Name: Roll
+  m_EditorClassIdentifier: 
+  aliases:
+  - Roll
+  info: 
+  image: {fileID: 0}
+  hidden: 1
+  initialAnimationState: 1
+  activateAnimationState: 1
+  tickDuration: 30
+  tags: 0
+  movementSpeedOverDuration:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  focusCost: 28
+  focusExpenditureWeightOverTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  totalWeight: 0
+  cancelRanges: []
+  effectTimings:
+  - onTick: 0
+    timing: 0
+    timingRange: {x: 0, y: 0}
+    effects:
+    - rid: 8649661436586361531
+    - rid: 8649661727634883010
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8649661436586361531
+      type: {class: Movement_Directional, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          numberOfTargets: -1
+          ignoreFrames: 0
+          targetingConditions: []
+          targetingSorting:
+            rid: -2
+        movementSpeedMultiplier: 1
+        localDirection: {x: 0, y: 0, z: 1}
+    - rid: 8649661727634883010
+      type: {class: Effect_Modifer, ns: , asm: Assembly-CSharp}
+      data:
+        useTargetAsProxy: 0
+        propagateTarget: 0
+        targetSelector:
+          numberOfTargets: -1
+          ignoreFrames: 0
+          targetingConditions: []
+          targetingSorting:
+            rid: -2
+        modifier:
+          rid: 8649661727634883011
+    - rid: 8649661727634883011
+      type: {class: Modifier_Damage, ns: , asm: Assembly-CSharp}
+      data:
+        <MaxStacks>k__BackingField: 1
+        <StacksAdded>k__BackingField: 1
+        <PerPlayer>k__BackingField: 0
+        <TickDuration>k__BackingField: 30
+        <RefreshDuration>k__BackingField: 0
+        <StatTag>k__BackingField:
+          rid: 8649661727634883012
+        <Value>k__BackingField: 0
+        <Step>k__BackingField: 2
+        <AppliesTo>k__BackingField: 4194304
+        <DamageType>k__BackingField: 0
+    - rid: 8649661727634883012
+      type: {class: Stat_DamageTaken, ns: , asm: Assembly-CSharp}
+      data:
+        <Modifiers>k__BackingField: []

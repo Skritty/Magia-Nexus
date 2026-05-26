@@ -11,7 +11,7 @@ public class CharacterAI : ViewableGameAsset
     public bool ignoreRequirements;
     public int maxItemsPurchased = 1;
     public List<WeightedAsset<Item>> itemPurchasingBehavior;
-    public List<WeightedAsset<Action>> turnCreationBehavior;
+    public List<WeightedAsset<Skill>> turnCreationBehavior;
     public List<WeightedAsset<Personality>> personalitySettingBehavior;
 
     public void PurchaseItems(Viewer viewer)
@@ -53,13 +53,13 @@ public class CharacterAI : ViewableGameAsset
 
     public void CreateTurn(Viewer viewer)
     {
-        HashSet<Action> availableActions = FindAvailableActions(viewer);
+        HashSet<Skill> availableActions = FindAvailableActions(viewer);
         if (!ignoreRequirements && availableActions.Count == 0) return;
-        Action[] turnActions = new Action[GetActionCount(viewer)];
+        Skill[] turnActions = new Skill[GetActionCount(viewer)];
 
-        List<WeightedAsset<Action>> weightedAssets = new();
-        WeightedChance<WeightedAsset<Action>> random = new();
-        foreach (WeightedAsset<Action> asset in turnCreationBehavior)
+        List<WeightedAsset<Skill>> weightedAssets = new();
+        WeightedChance<WeightedAsset<Skill>> random = new();
+        foreach (WeightedAsset<Skill> asset in turnCreationBehavior)
         {
             if (!ignoreRequirements && !availableActions.Contains(asset.asset)) continue;
             random.Add(asset, asset.weight);
@@ -91,13 +91,13 @@ public class CharacterAI : ViewableGameAsset
         if (viewer != null) viewer.personality = personality;
     }
 
-    public HashSet<Action> FindAvailableActions(Viewer viewer)
+    public HashSet<Skill> FindAvailableActions(Viewer viewer)
     {
-        HashSet<Action> actions = new HashSet<Action>();
+        HashSet<Skill> actions = new HashSet<Skill>();
         if (viewer == null) return actions;
         foreach (Item item in viewer.items)
         {
-            foreach (Action action in item.grantedActions)
+            foreach (Skill action in item.grantedActions)
             {
                 if (!actions.Contains(action))
                 {

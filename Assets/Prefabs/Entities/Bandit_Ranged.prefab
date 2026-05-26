@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8502278747626842624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: 'managedReferences[8649661390949712303]'
+      value: 'Assembly-CSharp ValueContainer`1[[Factions, Assembly-CSharp]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: managedReferences[8649661390949712303].<Value>k__BackingField
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: managedReferences[8649661390949712300].<Modifiers>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 214511987484225945, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: 'managedReferences[8649661390949712300].<Modifiers>k__BackingField.Array.data[0]'
+      value: 8649661390949712303
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795672646578808869, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6092589816525064531, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}
+      propertyPath: m_Name
+      value: Bandit_Ranged
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: caefb886944ee2e4199b0ccc314f3460, type: 3}

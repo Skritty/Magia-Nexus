@@ -11,14 +11,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
-    public float timePerTurn;
-    public int ticksPerTurn => (int)(timePerTurn * 50);
+    //public float timePerTurn;
+    /*public int ticksPerTurn => (int)(timePerTurn * 50);
     public int defaultActionsPerTurn;
     public Phase initialPhase;
     [ShowInInspector, ReadOnly]
     private Phase currentPhase;
     private Coroutine phaseTimer;
-    public TextMeshProUGUI timer;
+    public TextMeshProUGUI timer;*/
     [ShowInInspector]
     public List<ViewableGameAsset> viewableGameAssets = new();
     [ShowInInspector]
@@ -147,7 +147,7 @@ public class GameManager : Singleton<GameManager>
         return new CommandResponse(true, "");
     }
 
-    private void Start()
+    /*private void Start()
     {
         SceneManager.sceneLoaded += SceneDoneLoading;
     }
@@ -186,7 +186,7 @@ public class GameManager : Singleton<GameManager>
             yield return new WaitForFixedUpdate();
         }
         StartPhase(phase.nextPhase);
-    }
+    }*/
 
     public CommandResponse Command_ListHeldItems(string user, List<string> args)
     {
@@ -225,7 +225,7 @@ public class GameManager : Singleton<GameManager>
         if(args.Count > 0) return new CommandResponse(true, "");
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} Your turn will be: ";
-        foreach (Action action in GameManager.Instance.viewers[user].actions)
+        foreach (Skill action in GameManager.Instance.viewers[user].actions)
         {
             message += $"{action.name}, ";
         }
@@ -254,10 +254,10 @@ public class GameManager : Singleton<GameManager>
     {
         if (!GameManager.Instance.viewers.ContainsKey(user)) return new CommandResponse(false, "Use \'!join\" to join the game!");
         string message = $"@{user} You have: ";
-        HashSet<Action> actions = new HashSet<Action>();
+        HashSet<Skill> actions = new HashSet<Skill>();
         foreach (Item item in GameManager.Instance.viewers[user].items)
         {
-            foreach(Action action in item.grantedActions)
+            foreach(Skill action in item.grantedActions)
             {
                 if (actions.Contains(action)) continue;
                 actions.Add(action);
@@ -273,7 +273,7 @@ public class GameManager : Singleton<GameManager>
     {
         if (args.Count == 0) return new CommandResponse(true, "");
         string message = $"@{user} ";
-        HashSet<Action> actions = new HashSet<Action>();
+        HashSet<Skill> actions = new HashSet<Skill>();
 
         string name = string.Join(" ", args);
         bool found = false;

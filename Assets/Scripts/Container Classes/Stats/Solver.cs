@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>, ISerializationCallbackReceiver
 {
     protected T _value;
-    protected bool changed;
+    protected bool changed = true;
 
     [ShowInInspector, FoldoutGroup("@GetType()")]
     public virtual T Value
@@ -16,7 +16,7 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>
             if (changed)
             {
                 changed = false;
-                Solve(BoundObject);
+                Solve();
             }
             return _value;
         }
@@ -27,7 +27,6 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>
             changed = true;
         }
     }
-    public object BoundObject { get; set; }
 
     [field: SerializeReference, PropertyOrder(1), FoldoutGroup("@GetType()"), ReadOnly]
     public List<IValueContainer<T>> Modifiers { get; set; } = new();
@@ -42,17 +41,17 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>
     public System.Action Add(T value)
     {
         ValueContainer<T> modifier = new ValueContainer<T>(value);
-        AddModifier(modifier);
-        return () => RemoveModifier(modifier);
+        Add(modifier);
+        return () => Remove(modifier);
     }
 
-    public virtual void AddModifier(IValueContainer<T> modifier)
+    public virtual void Add(IValueContainer<T> modifier)
     {
         modifier.AddTo(this);
         changed = true;
     }
 
-    public void RemoveModifier(IValueContainer<T> modifier)
+    public void Remove(IValueContainer<T> modifier)
     {
         modifier.RemoveFrom(this);
         changed = true;
@@ -75,11 +74,10 @@ public abstract class Solver<T> : IValueContainer<T>, IModifiable<T>, ISolver<T>
         return false;
     }
 
-    public virtual T Solve(object boundObject)
+    public virtual T Solve()
     {
         if(Modifiers.Count > 0)
         {
-            Modifiers[0].BoundObject = boundObject;
             _value = Modifiers[0].Value;
         }
         return _value;

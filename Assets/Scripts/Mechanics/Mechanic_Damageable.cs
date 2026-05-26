@@ -54,18 +54,18 @@ public class Mechanic_Damageable : Mechanic
         DamageCalculation calculation = new DamageCalculation();
         foreach(Modifier_Damage d in damage.damageModifiers)
         {
-            calculation.AddModifier(d);
+            calculation.Add(d);
         }
         if(damage.Owner != null)
         foreach (Modifier_Damage d in damage.Owner.GetStat<Stat_DamageDealt>().Modifiers)
         {
-            calculation.AddModifier(d);
+            calculation.Add(d);
         }
         foreach (Modifier_Damage d in damage.Target.GetStat<Stat_DamageTaken>().Modifiers)
         {
-            calculation.AddModifier(d);
+            calculation.Add(d);
         }
-        calculation.AddModifier(new Modifier_Damage(value: damage.EffectMultiplier, step: CalculationStep.Multiplicative, appliesTo: DamageType.All));
+        calculation.Add(new Modifier_Damage(value: damage.EffectMultiplier, step: CalculationStep.Multiplicative, appliesTo: DamageType.All));
         damage.finalDamage = calculation.Value;
         if (damage.Owner != null)
         {

@@ -38,7 +38,7 @@ public class NumericalSolver : Solver<float>, ICalculationComponent
         Step = method;
     }
 
-    public override float Solve(object boundObject)
+    public override float Solve()
     {
         switch (Step)
         {
@@ -57,8 +57,6 @@ public class NumericalSolver : Solver<float>, ICalculationComponent
         
         foreach (IValueContainer<float> modifier in Modifiers)
         {
-            modifier.BoundObject = boundObject;
-
             switch (Step)
             {
                 case CalculationStep.Flat:

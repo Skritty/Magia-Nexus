@@ -16,17 +16,21 @@ public class PrioritySolver<T> : Solver<T>, IPriority
 {
     [field: SerializeField, FoldoutGroup("@GetType()")]
     public byte Priority { get; set; }
-    public System.Action AddModifier(T modifier, byte priority)
+    public System.Action Add(T value, byte priority)
     {
         PrioritySolver<T> data = new PrioritySolver<T>();
-        data._value = modifier;
+        data.Value = value;
         data.Priority = priority;
         Modifiers.Add(data);
         changed = true;
-        return () => Modifiers.Remove(data);
+        return () =>
+        {
+            Modifiers.Remove(data);
+            changed = true;
+        };
     }
 
-    public override T Solve(object boundObject)
+    public override T Solve()
     {
         if (Modifiers.Count == 0)
         {

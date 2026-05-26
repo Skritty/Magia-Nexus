@@ -5,6 +5,5 @@
 }*/
 public interface ISolver<T> //: ISolver
 {
-    public object BoundObject { get; set; }
-    public T Solve(object boundObject);
+    public T Solve();
 }

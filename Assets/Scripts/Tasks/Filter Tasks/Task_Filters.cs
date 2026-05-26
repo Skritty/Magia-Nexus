@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 // These filters are for use primarily with Effect_AddTrigger in the inspector, but can be used in code as well
 
@@ -110,36 +109,48 @@ public class Task_Filter_IsTarget<T> : ITaskOwned<Entity, T> where T : Effect
 [LabelText("Filter: Is Targetable By")]
 public class Task_Filter_IsTargetableBy<T> : ITask<T> where T : Effect
 {
-    public EffectTargetingSelector selector;
+    public EffectTargetingSelector targetingOwner;
+    public EffectTargetingSelector targetableBy;
     [SerializeReference]
     public Targeting targeting;
     public bool DoTask(T effect)
     {
-        return targeting.Solve(effect.Owner)
-            .Contains(selector == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
+        return targeting.FindTargets(targetingOwner == EffectTargetingSelector.Owner ? effect.Target : effect.Owner)
+            .Contains(targetableBy == EffectTargetingSelector.Owner ? effect.Target : effect.Owner);
     }
 }
 
 [LabelText("Filter: Damage Types")]
-public class Task_Filter_DamageType : ITask<DamageInstance>, ITask<Effect>
+public class Task_Filter_DamageType : ITask<DamageInstance>, ITask<Hit>, ITask<Effect>
 {
     public DamageType damageTypes;
+    public bool excluded;
     public bool DoTask(DamageInstance damage)
     {
         foreach (Modifier_Damage modifier in damage.damageModifiers)
         {
-            if (modifier.DamageType.HasFlag(damageTypes)) return true;
+            if (excluded)
+            {
+                if (((~(int)modifier.DamageType) & ((int)damageTypes)) != (int)damageTypes) return false;
+            }
+            else
+            {
+                if ((((int)modifier.DamageType) & ((int)damageTypes)) == (int)damageTypes) return true;
+            }
+            
         }
-        return false;
+        return false ^ excluded;
     }
     public bool DoTask(Effect damage)
     {
         if (damage is not DamageInstance) return false;
-        foreach (Modifier_Damage modifier in (damage as DamageInstance).damageModifiers)
-        {
-            if (modifier.DamageType.HasFlag(damageTypes)) return true;
-        }
-        return false;
+        return DoTask(damage as DamageInstance);
+    }
+
+    public bool DoTask(Hit damage)
+    {
+        if (damage is not DamageInstance) return false;
+        return DoTask(damage as DamageInstance);
     }
 }
 
@@ -292,12 +303,75 @@ public class Task_Filter_GoldSpent : ITask<Viewer>
 
 #region Other Filters
 [LabelText("Is: Specific Action?")]
-public class Task_Filter_IsSpecificAction : ITask<Action>
+public class Task_Filter_IsSpecificAction : ITask<Skill>
 {
-    public Action comparison;
-    public bool DoTask(Action action)
+    public Skill comparison;
+    public bool DoTask(Skill action)
     {
         return comparison == action;
+    }
+}
+
+[LabelText("Filter: Skill Tags")]
+public class Task_Filter_SkillTags : ITask<Skill>, ITaskOwned<Entity, (Entity entity, Skill skill)>
+{
+    public DamageType tags;
+    public bool DoTask(Skill skill)
+    {
+        return skill.tags.HasFlag(tags);
+    }
+
+    public bool DoTask(Entity owner, (Entity entity, Skill skill) data)
+    {
+        return data.skill.tags.HasFlag(tags);
+    }
+
+    public bool DoTask((Entity entity, Skill skill) data)
+    {
+        return data.skill.tags.HasFlag(tags);
+    }
+}
+
+[LabelText("Is: Entity the Main Target")]
+public class Task_Filter_IsMainTarget : ITaskOwned<Entity, Entity>, ITaskOwned<Entity, (Entity entity, Skill skill)>
+{
+    public bool DoTask(Entity owner, Entity data)
+    {
+        return owner.GetStat<Stat_Targets>().Value == data;
+    }
+
+    public bool DoTask(Entity data)
+    {
+        return false;
+    }
+
+    public bool DoTask(Entity owner, (Entity entity, Skill skill) data)
+    {
+        return owner.GetStat<Stat_Targets>().Value == data.entity;
+    }
+
+    public bool DoTask((Entity entity, Skill skill) data)
+    {
+        return false;
+    }
+}
+
+[LabelText("Is: Entity's Main Target In Range")]
+public class Task_Filter_IsMainTargetInRage<T> : ITaskOwned<Entity, T>
+{
+    public Vector2 range;
+    public bool DoTask(Entity owner, T data)
+    {
+        Entity target = owner.GetStat<Stat_Targets>().Value;
+        if (target == null) return false;
+        float dist = Vector3.Distance(target.transform.position, owner.transform.position);
+        if (dist >= range.x && dist <= range.y) return true;
+        return false;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
     }
 }
 
@@ -349,7 +423,8 @@ public class Task_Filter_Matching<T> : ITask<T>
     }
 }
 
-[LabelText("Filter: Has Any Targets")]
+public class StatContext_EntityOwner : ValueContainer<Entity> { }
+[LabelText("Filter: Has Targets in Targeting")]
 public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
 {
     [SerializeReference]
@@ -357,7 +432,79 @@ public class Task_Filter_HasAnyTargets<T> : ITaskOwned<Entity, T>
 
     public bool DoTask(Entity owner, T data)
     {
-        return targeting.Solve(owner).Count > 0;
+        return targeting.FindTargets(owner).Count > 0;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
+
+[LabelText("Is: Main Target In Range?")]
+public class Task_Filter_MainTargetInRange<T> : ITaskOwned<Entity, T>
+{
+    public bool invert;
+    [SerializeReference]
+    public Vector2 distanceRange;
+
+    public bool DoTask(Entity owner, T data)
+    {
+        Entity mainTarget = owner.GetStat<Stat_Targets>().Value;
+        if (mainTarget == null) return false;
+        float dist = Vector3.Distance(mainTarget.transform.position, owner.transform.position);
+        return (dist >= distanceRange.x && dist <= distanceRange.y) ^ invert;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
+
+[LabelText("Filter: Has Targets")]
+public class Task_Filter_HasTargets<T> : ITaskOwned<Entity, T>
+{
+    public bool invert;
+
+    public bool DoTask(Entity owner, T data)
+    {
+        bool targets = owner.GetStat<Stat_Targets>().Value != null;
+        return targets ^ invert;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
+
+[LabelText("Filter: Targets Have No Targets")]
+public class Task_Filter_TargetsHaveNoTargets<T> : ITaskOwned<Entity, T>
+{
+    public Targeting targeting;
+    public bool DoTask(Entity owner, T data)
+    {
+        foreach(Entity target in targeting.FindTargets(owner))
+        {
+            if (target.GetStat<Stat_Targets>().Value != null) return false;
+        }
+        return true;
+    }
+
+    public bool DoTask(T data)
+    {
+        return false;
+    }
+}
+
+public class Task_Filter_FocusRange<T> : ITaskOwned<Entity, T>
+{
+    public Vector2 percentageRange;
+    public bool DoTask(Entity owner, T data)
+    {
+        float focusPercent = owner.GetStat<Stat_CurrentFocus>().Value / owner.GetStat<Stat_MaximumFocus>().Value;
+        return focusPercent >= percentageRange.x && focusPercent <= percentageRange.y;
     }
 
     public bool DoTask(T data)

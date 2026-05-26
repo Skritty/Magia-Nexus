@@ -30,7 +30,7 @@ public class DamageCalculation : NumericalSolver
         return subcalculation;
     }
 
-    public override void AddModifier(IValueContainer<float> modifier)
+    public override void Add(IValueContainer<float> modifier)
     {
         CalculationStep step = CalculationStep.Flat;
         DamageType appliesTo = DamageType.True;
@@ -69,7 +69,7 @@ public class DamageCalculation : NumericalSolver
 
                     if (validModifier)
                     {
-                        AddSubcalculation(damageType).AddModifier(modifier);
+                        AddSubcalculation(damageType).Add(modifier);
                     }
                     break;
                 }

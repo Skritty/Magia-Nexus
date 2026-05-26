@@ -19,51 +19,58 @@ public class Targeting : ImmutableContainer<List<Entity>>
     [SerializeReference, FoldoutGroup("@GetType()")]
     public TargetingSorting targetingSorting = null;
 
-    public override List<Entity> Solve(object boundObject)
+    public List<Entity> FindTargets(Entity owner)
     {
+        "statContextData".GetStat<StatContext_EntityOwner>().Value = owner;
+        return Solve();
+    }
+
+    public override List<Entity> Solve()
+    {
+        Entity owner = "statContextData".GetStat<StatContext_EntityOwner>().Value; // TODO: remove
         List<Entity> targets = new List<Entity>();
         _value = targets;
 
-        if (boundObject == null) return _value;
+        if (owner == null || numberOfTargets == 0) return _value;
 
         // If this is a default targeting, just return the owner (this might not be desired)
-        if(targetingConditions.Count == 0 && targetingSorting == null && boundObject is Entity)
+        if(targetingConditions.Count == 0 && targetingSorting == null)
         {
-            if (boundObject.GetStat<Stat_Untargetable>().Contains((boundObject, this), out _)) return _value;
-            Ignore(boundObject, boundObject);
-            targets.Add(boundObject as Entity);
+            if (owner.GetStat<Stat_Untargetable>().Contains((owner, this), out _)) return _value;
+            Ignore(owner, owner);
+            targets.Add(owner);
             return _value;
         }
 
         bool valid;
         foreach (Entity target in Entity.FindObjectsByType<Entity>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)) // TODO: Don't use find objects by type
         {
-            if (target.GetStat<Stat_Untargetable>().Contains((boundObject, this), out _)) continue;
+            if (target.GetStat<Stat_Untargetable>().Contains((owner, this), out _)) continue;
 
             valid = true;
             foreach (TargetingCondition condition in targetingConditions)
             {
-                if (!condition.IsValid(boundObject, target))
+                if (!condition.IsValid(owner, target))
                 {
                     valid = false;
                     break;
                 }
-                if (valid)
-                {
-                    targets.Add(target);
-                    Ignore(boundObject, target);
-                }
+            }
+            if (valid)
+            {
+                targets.Add(target);
+                Ignore(owner, target);
             }
         }
 
         if(targetingSorting != null)
         {
-            targets.Sort((x, y) => targetingSorting.SortTargets(boundObject, x, y));
+            targets.Sort((x, y) => targetingSorting.SortTargets(owner, x, y));
         }
 
         if (numberOfTargets >= 0)
         {
-            int actualNumberOfTargets = numberOfTargets + (int)boundObject.GetStat<Stat_AdditionalTargets>().Value;
+            int actualNumberOfTargets = numberOfTargets + (int)owner.GetStat<Stat_AdditionalTargets>().Value;
             if (targets.Count > actualNumberOfTargets)
                 targets.RemoveRange(actualNumberOfTargets, targets.Count - actualNumberOfTargets);
         }
@@ -74,7 +81,7 @@ public class Targeting : ImmutableContainer<List<Entity>>
     {
         if (ignoreFrames > 0)
         {
-            target.GetStat<Stat_Untargetable>().AddModifier(
+            target.GetStat<Stat_Untargetable>().Add(
                 new Modifier<(object, object)>(
                     value: (boundObject, this),
                     tickDuration: ignoreFrames));
@@ -173,7 +180,7 @@ public class TargetingCondition_EntityRelation : TargetingCondition
         if (owner == null) return false;
 
         TargetFilter targetType;
-        if (target.GetStat<Stat_Team>().Value != owner.GetStat<Stat_Team>().Value)
+        if (target.GetStat<Stat_Faction>().Value != owner.GetStat<Stat_Faction>().Value)
         {
             targetType = TargetFilter.Enemies;
         }

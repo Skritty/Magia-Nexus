@@ -32,9 +32,20 @@ public enum DamageType
     Spell = 1 << 14,
     DoT = 1 << 15, 
     Projectile = 1 << 16, // Gains projectile behaviors (chain, multiple projectiles)
-    AoE = 1 << 17,
+    Melee = 1 << 17,
+    Ranged = 1 << 18,
+    AoE = 1 << 19,
+    Strike = 1 << 20,
+    Lunge = 1 << 21,
+    Sweep = 1 << 22,
+    Maneuver = 1 << 23,
 
     All = int.MaxValue
+}
+
+public class DamageTypeTest : TileSuperposition
+{
+
 }
 
 public enum EffectTag

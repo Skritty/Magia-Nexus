@@ -21,7 +21,7 @@ public class Item : ViewableGameAsset
         }
     }
     public List<Item> craftingRecipe = new List<Item>();
-    public List<Action> grantedActions = new List<Action>();
+    public List<Skill> grantedActions = new List<Skill>();
     public List<Personality> grantedPersonalities = new List<Personality>();
     public int actionCountModifier;
     [SerializeReference]

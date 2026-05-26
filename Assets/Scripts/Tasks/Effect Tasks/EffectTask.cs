@@ -11,7 +11,7 @@ public abstract class EffectTask :
     ITaskOwned<Entity, Hit>,
     ITaskOwned<Entity, Spell>,
     ITaskOwned<Entity, Entity>,
-    ITaskOwned<Entity, Action>,
+    ITaskOwned<Entity, Skill>,
     ITaskOwned<Entity, Rune>
 {
     [FoldoutGroup("@GetType()")]
@@ -36,13 +36,13 @@ public abstract class EffectTask :
     }
     public virtual bool DoTask(Entity owner, Entity target, Effect data, bool triggered, Entity proxy = null)
     {
-        DoEffect(owner, target, data != null ? data.EffectMultiplier : Stats.GetStat<Stat_EffectMultiplier>(owner).Value, data != null);
+        DoEffect(owner, target, data != null ? data.EffectMultiplier : owner.GetStat<Stat_EffectMultiplier>().Value, data != null);
         return true;
     }
     public bool DoTaskTargetSelector(Entity owner, Effect data, bool triggered, Entity proxy = null)
     {
         // TODO: readd proxy
-        foreach (Entity target in targetSelector.Solve(owner))
+        foreach (Entity target in targetSelector.FindTargets(owner))
         {
             DoTask(owner, target, data, triggered, proxy);
         }
@@ -76,13 +76,13 @@ public abstract class EffectTask :
     public bool DoTask(Entity owner, DamageInstance data) => DoTask(owner, data as Effect);
     public bool DoTask(Entity owner, Hit data) => DoTask(owner, data as Effect);
     public bool DoTask(Entity owner, Spell data) => DoTask(owner, data as Effect);
-    public bool DoTask(Entity owner, Action data) => DoTaskTargetSelector(owner, null, true);
+    public bool DoTask(Entity owner, Skill data) => DoTaskTargetSelector(owner, null, true);
     public bool DoTask(Entity owner, Rune data) => DoTaskTargetSelector(owner, null, true);
     public bool DoTask(Effect data) => false;
     public bool DoTask(DamageInstance data) => false;
     public bool DoTask(Hit data) => false;
     public bool DoTask(Spell data) => false;
-    public bool DoTask(Action data) => false;
+    public bool DoTask(Skill data) => false;
     public bool DoTask(Rune data) => false;
     #endregion
     public EffectTask Clone()

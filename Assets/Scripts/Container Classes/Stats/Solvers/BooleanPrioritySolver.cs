@@ -7,7 +7,6 @@ public class BooleanPrioritySolver : PrioritySolver<bool>
         bool value = false;
         foreach (IValueContainer<bool> modifier in modifiers)
         {
-            modifier.BoundObject = BoundObject;
             return value |= modifier.Value;
         }
         return value;

@@ -12,4 +12,11 @@ public class Effect
     }
     public Entity Owner { get; set; }
     public Entity Target { get; set; }
+
+    public Effect() { }
+    public Effect(Entity owner, Entity target) 
+    { 
+        Owner = owner;
+        Target = target;
+    }
 }

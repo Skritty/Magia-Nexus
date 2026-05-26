@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PrepPhase : MonoBehaviour
 {
-    public List<Action> availableActions = new List<Action>();
+    public List<Skill> availableActions = new List<Skill>();
 
     private void OnEnable()
     {
@@ -28,12 +28,12 @@ public class PrepPhase : MonoBehaviour
         UpdateActionDisplay();
     }
 
-    public HashSet<Action> FindAvailableActions(Viewer viewer)
+    public HashSet<Skill> FindAvailableActions(Viewer viewer)
     {
-        HashSet<Action> actions = new HashSet<Action>();
+        HashSet<Skill> actions = new HashSet<Skill>();
         foreach (Item item in viewer.items)
         {
-            foreach (Action action in item.grantedActions)
+            foreach (Skill action in item.grantedActions)
             {
                 if (!actions.Contains(action))
                 {
@@ -46,7 +46,7 @@ public class PrepPhase : MonoBehaviour
 
     public void FindAllAvailableActions()
     {
-        HashSet<Action> actions = new HashSet<Action>();
+        HashSet<Skill> actions = new HashSet<Skill>();
         foreach (KeyValuePair<string, Viewer> viewer in GameManager.Instance.viewers)
         {
             actions.AddRange(FindAvailableActions(viewer.Value));
@@ -57,7 +57,7 @@ public class PrepPhase : MonoBehaviour
     public bool CreateTurn(Viewer viewer, List<string> turnActions, out string message)
     {
         // Check that the action list does not exceed max actions
-        int turnActionCount = GameManager.Instance.defaultActionsPerTurn;
+        /*int turnActionCount = GameManager.Instance.defaultActionsPerTurn;
         foreach (Item item in viewer.items)
         {
             turnActionCount += item.actionCountModifier;
@@ -66,15 +66,15 @@ public class PrepPhase : MonoBehaviour
         {
             message = $"Your turn must contain exactly {turnActionCount} actions!";
             return false;
-        }
+        }*/
 
         // Ensure that the viewer has the actions
-        List<Action> actions = new List<Action>();
-        HashSet<Action> ownedActions = FindAvailableActions(viewer);
+        List<Skill> actions = new List<Skill>();
+        HashSet<Skill> ownedActions = FindAvailableActions(viewer);
         string turn = "";
         foreach (string input in turnActions)
         {
-            Action action = GetActionFromNameOrID(input);
+            Skill action = GetActionFromNameOrID(input);
             if (action == null)
             {
                 message = "This action doesn't exist!";
@@ -93,7 +93,7 @@ public class PrepPhase : MonoBehaviour
         return true;
     }
 
-    private Action GetActionFromNameOrID(string input)
+    private Skill GetActionFromNameOrID(string input)
     {
         int id;
         if (int.TryParse(input, out id))
@@ -115,7 +115,7 @@ public class PrepPhase : MonoBehaviour
     public CommandResponse Command_ListActions(string user, List<string> args)
     {
         string message = $"@{user} You have: ";
-        foreach (Action action in FindAvailableActions(GameManager.Instance.viewers[user]))
+        foreach (Skill action in FindAvailableActions(GameManager.Instance.viewers[user]))
         {
             message += $"{action.name}, ";
         }
@@ -143,7 +143,7 @@ public class PrepPhase : MonoBehaviour
     public CommandResponse Command_ListTurn(string user, List<string> args)
     {
         string message = $"@{user} Your turn will be: ";
-        foreach (Action action in GameManager.Instance.viewers[user].actions)
+        foreach (Skill action in GameManager.Instance.viewers[user].actions)
         {
             message += $"{action.name}, ";
         }
@@ -156,4 +156,4 @@ public class PrepPhase : MonoBehaviour
 // PREP PHASE CHAT COMMANDS
 // !actions (show your available actions)
 // !createTurn 2, 3, 5, 1, 2
-// !turn (show your current turn)
+// !turn (show your current turn)r current turn)

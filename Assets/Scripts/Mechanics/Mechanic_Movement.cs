@@ -1,19 +1,23 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Stat_MovementSpeed : NumericalSolver, IStat<float> { }
-public class Stat_MovementTarget : PrioritySolver<Entity>, IStat<Entity> { }
-public class Stat_MovementTargetingMethod : PrioritySolver<Targeting>, IStat<Targeting> { }
-public class Stat_MovementSelector : PrioritySolver<MovementDirectionSelector>, IStat<MovementDirectionSelector> { }
-//public class Stat_MovementDirection : NumericalSolver, IStat { } TODO: make vector3 solver
+public class Stat_Targets : PrioritySolver<Entity>, IStat<Entity> { }
+public class Stat_MovementSelector : PrioritySolver<MovementTargetPositionSelector>, IStat<MovementTargetPositionSelector> { }
 public class Mechanic_Movement : Mechanic
 {
     [FoldoutGroup("Movement")]
-    public Vector3 facingDir = Vector3.right;
+    public NavMeshAgent agent;
+    [FoldoutGroup("Movement")]
+    public Vector3 movementTargetPosition;
+    [FoldoutGroup("Movement")]
+    public Vector3 facingDir;
     [FoldoutGroup("Movement")]
     public bool rotate = false;
     [FoldoutGroup("Movement")]
-    public bool obeyMapEdge = false;
+    public bool useNavmesh = true;
+    private Vector3 previousTargetPosition;
 
     public override void Tick()
     {
@@ -23,24 +27,38 @@ public class Mechanic_Movement : Mechanic
 
     public void Move()
     {
-        if (Owner.GetStat<Stat_MovementTarget>().Value == null) return;
-
+        if (movementTargetPosition == Owner.transform.position)
+        {
+            if (useNavmesh)
+            {
+                agent.isStopped = true;
+            }
+        }
         Owner.GetStat<Stat_MovementSelector>().Value?.DoTask(Owner);
         Trigger_MovementDirectionCalc.Invoke(Owner, Owner);
 
-        if (rotate)
-        {
-            Owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, Owner.GetStat<Mechanic_Movement>().facingDir);
-        }
+        if (Owner.GetStat<Stat_MovementSpeed>().Value == 0) return;
 
-        float movementSpeed = Owner.GetStat<Stat_MovementSpeed>().Value;
-        Owner.transform.position +=
-            movementSpeed
-            * Time.fixedDeltaTime
-            * facingDir.normalized;
-        if (obeyMapEdge)
+        if (useNavmesh)
         {
-            Owner.transform.position = Vector3.ClampMagnitude(Owner.transform.position, 15f);// TODO: Change this to pathing
+            NavMesh.SamplePosition(movementTargetPosition, out NavMeshHit hit, 1000, 1);
+            NavMeshPath path = new NavMeshPath();// TODO: Do NOT calculate the path every frame
+            if (!NavMesh.CalculatePath(Owner.transform.position, hit.position, 1, path)) return;
+
+            /*if (path.corners.Length > 1)
+            {
+                facingDir = (path.corners[1] - Owner.transform.position).normalized;
+            }*/
+
+            agent.speed = Owner.GetStat<Stat_MovementSpeed>().Value;
+            agent.SetPath(path);
+            agent.isStopped = false;
+        }
+        else
+        {
+            if (rotate) Owner.transform.localRotation = Quaternion.FromToRotation(Vector3.up, facingDir);
+            facingDir = (movementTargetPosition - Owner.transform.position).normalized;
+            Owner.transform.position += facingDir * Owner.GetStat<Stat_MovementSpeed>().Value * Time.fixedDeltaTime;
         }
     }
 }
